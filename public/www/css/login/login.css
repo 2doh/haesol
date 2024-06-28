@@ -1,0 +1,106 @@
+.login {
+  width: 1180px;
+  height: 960px;
+  background-color: #f3f9fa;
+  margin: 0 auto;
+}
+.login-inner {
+  width: 688px;
+  height: 100%;
+  margin: 0 auto;
+  padding-top: 50px;
+}
+.login-logo {
+  width: 250px;
+  height: 100px;
+  background-color: olivedrab;
+  margin: 0 auto;
+}
+.login-wrap {
+  margin-top: 25px;
+  width: 688px;
+  height: 500px;
+}
+.login-wrap-navi {
+  display: flex;
+  justify-content: space-around;
+}
+.login-navi-login {
+  width: 100%;
+  height: 50px;
+  background-color: #fff000;
+}
+.login-navi-find-id {
+  width: 100%;
+  height: 50px;
+  background-color: #efeeed;
+}
+.login-navi-fine-pass {
+  width: 100%;
+  height: 50px;
+  background-color: #efeeed;
+}
+.login-wrap-panel {
+  margin: 75px auto 0;
+  width: 290px;
+  height: 350px;
+  background-color: lightseagreen;
+}
+.login-wrap-panel-userid {
+  width: 100%;
+  height: 62px;
+}
+.login-panel-userid-title {
+  width: 100%;
+  height: 22px;
+}
+.login-panel-userid-input {
+  margin-top: 10px;
+  width: 100%;
+  height: 30px;
+}
+.login-wrap-panel-userpass {
+  width: 100%;
+  height: 62px;
+}
+.login-panel-userpass-title {
+  margin-top: 25px;
+  width: 100%;
+  height: 22px;
+}
+.login-panel-userpass-input {
+  margin-top: 10px;
+  width: 100%;
+  height: 30px;
+}
+.login-wrap-panel-loginbt {
+  margin-top: 40px;
+  width: 100%;
+  height: 45px;
+}
+.login-wrap-panel-social {
+  margin-top: 50px;
+}
+.login-panel-social-title {
+  height: 18px;
+}
+.login-panel-social-list {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+.login-panel-social-naver {
+  width: 80px;
+  height: 30px;
+  background-color: yellowgreen;
+}
+.login-panel-social-kakao {
+  width: 80px;
+  height: 30px;
+  background-color: palegoldenrod;
+}
+.login-panel-social-google {
+  width: 80px;
+  height: 30px;
+  background-color: black;
+}
