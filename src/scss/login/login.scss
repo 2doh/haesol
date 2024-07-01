@@ -1,0 +1,104 @@
+@import "../mixin";
+@mixin social() {
+  width: 80px;
+  height: 30px;
+  flex-shrink: 0;
+  @include flex-center();
+}
+
+.login {
+  width: 1180px;
+  height: 960px;
+  background-color: #f3f9fa;
+  margin: 0 auto;
+}
+.login-inner {
+  width: 688px;
+  height: 100%;
+  margin: 0 auto;
+  padding-top: 50px;
+}
+.login-inner-logowrap {
+  @include flex-center();
+}
+.login-logo {
+  width: 250px;
+  height: 100px;
+}
+.login-wrap {
+  margin-top: 25px;
+  width: 688px;
+  height: 500px;
+  background-color: #fbfaf9;
+  border: 1px solid #886348;
+}
+
+.login-wrap-panel {
+  margin: 75px auto 0;
+  width: 290px;
+  height: 350px;
+
+  .login-wrap-panel-userid {
+    width: 100%;
+    height: 62px;
+  }
+  .login-panel-userid-title {
+    width: 100%;
+    height: 22px;
+    font-size: 20px;
+  }
+  .login-panel-userid-input {
+    margin-top: 10px;
+    width: 100%;
+    height: 30px;
+    @include input();
+  }
+  .login-wrap-panel-userpass {
+    width: 100%;
+    height: 62px;
+    font-size: 20px;
+  }
+  .login-panel-userpass-title {
+    margin-top: 25px;
+    width: 100%;
+    height: 22px;
+  }
+  .login-panel-userpass-input {
+    margin-top: 10px;
+    width: 100%;
+    height: 30px;
+    @include input();
+  }
+  .login-wrap-panel-loginbt {
+    margin-top: 40px;
+    width: 100%;
+    height: 45px;
+    font-size: 20px;
+    background-color: #e7d9d9;
+    @include input();
+  }
+  .login-wrap-panel-social {
+    margin-top: 50px;
+  }
+  .login-panel-social-title {
+    height: 18px;
+    font-size: 16px;
+  }
+  .login-panel-social-list {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .login-panel-social-naver {
+    @include social();
+    background: #22d61e;
+  }
+  .login-panel-social-kakao {
+    @include social();
+    background-color: #ffeb38;
+  }
+  .login-panel-social-google {
+    @include social();
+    background-color: black;
+  }
+}
