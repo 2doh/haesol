@@ -7,6 +7,7 @@ module.exports = {
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
+    "prettier",
   ],
   overrides: [
     {
@@ -26,6 +27,8 @@ module.exports = {
   },
   plugins: ["@typescript-eslint", "react"],
   rules: {
-    "react/react-in-jsx-scope": "warn",
+    "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/no-unused-vars": "off",
+    "react/prop-types": "off",
   },
 };

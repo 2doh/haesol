@@ -1,0 +1,25 @@
+@import "../mixin";
+
+.login-wrap-navi {
+  display: flex;
+  justify-content: space-around;
+
+  .login-navi-login {
+    width: 100%;
+    height: 50px;
+    font-size: 20px;
+    @include flex-center();
+  }
+  .login-navi-find-id {
+    width: 100%;
+    height: 50px;
+    font-size: 20px;
+    @include flex-center();
+  }
+  .login-navi-find-pass {
+    width: 100%;
+    height: 50px;
+    font-size: 20px;
+    @include flex-center();
+  }
+}
