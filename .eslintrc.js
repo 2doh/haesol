@@ -27,5 +27,10 @@ module.exports = {
   plugins: ["@typescript-eslint", "react"],
   rules: {
     "react/react-in-jsx-scope": "warn",
+    "@typescript-eslint/no-unused-vars": "warn",
+    "import/no-unresolved": "error",
+    "react/jsx-no-undef": "error",
+    "react-hooks/rules-of-hooks": "error", // Hooks 규칙
+    "react-hooks/exhaustive-deps": "warn", // Dependencies 규칙
   },
 };
