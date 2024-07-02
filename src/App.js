@@ -36,13 +36,12 @@ function App() {
   return (
     <BrowserRouter>
       <Header />
-
-      <Routes>
-        <Route index element={<Home />}></Route>
-        <Route path="/login" element={<Login />}></Route>
-        <Route path="/students" element={<Students />}></Route>
-        <Route path="/signup" element={<SignUp />}></Route>
-
+      <Main>
+        <Routes>
+          <Route index element={<Home />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/students" element={<Students />}></Route>
+          <Route path="/signup" element={<SignUp />}></Route>
 
           <Route path="/admin" element={<Navigate to="/admin/login" />}>
             <Route path="login" element={<AdminLogin />}></Route>
