@@ -4,3 +4,41 @@ $notebook-screen: 1020px;
 $tablet-screen: 960px;
 $mobile-screen: 760px;
 $min-mobile-screen: 480px;
+
+// Primary Color
+$pc-font: #2a1b07;
+$pc-line-p: #886348;
+$pc-base-p: #fbfaf9;
+// Bule scale
+$b-color: #f3f9fa;
+$b100: #dee8e9;
+$b200: #add2d8;
+$b300: #5f909f;
+$b400: #1b4957;
+$b500: #1b4957;
+$bp: #c6dbda;
+$skyb: #d1ecff;
+// Pink scale
+$p100: #e7d9d9;
+$p200: #ffdfe4;
+$p300: #feccd5;
+$p400: #f4878d;
+$p500: #dd838f;
+// TimeTable Week Color
+$monday-c: #c6dbda;
+$tuesday-c: #ffc5bf;
+$wednesday-c: #ecd5e3;
+$thursday-c: #fae39d;
+$friday-c: #99aa8c;
+// TimeTable Period Color
+$period-1: #f9957f;
+$period-2: #abcfd1;
+$period-3: #d4e6c4;
+$period-4: #ffcfcb;
+$period-5: #f4c464;
+$period-6: #abbeec;
+$period-7: #8cc1d3;
+// Sementic Color
+$sementic-color-error: #f6532b;
+$sementic-color-warning: #fee902;
+$sementic-color-success: #b5f400;
