@@ -19,48 +19,58 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "../src/scss/common.scss";
 import "./App.css";
 import "./css/reset.css";
+// import Main from "components/layout/Main";
+import styled from "@emotion/styled";
+
+const Main = styled.div`
+  background-color: #f3f9fa;
+  width: 1180px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 40px;
+  padding-bottom: 80px;
+  min-height: 687px;
+`;
 
 function App() {
   return (
     <BrowserRouter>
       <Header />
+
       <Routes>
         <Route index element={<Home />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/students" element={<Students />}></Route>
         <Route path="/signup" element={<SignUp />}></Route>
 
-        {/* <Route path="/signup" element={<Navigate to="/signup/parent" />}>
-          <Route path="parent" element={<SignUpParent />}></Route>
-          <Route path="staff" element={<SignUpStaff />}></Route>
-        </Route> */}
 
-        <Route path="/admin" element={<Navigate to="/admin/login" />}>
-          <Route path="login" element={<AdminLogin />}></Route>
-          <Route path="home" element={<AdminHome />}></Route>
-        </Route>
+          <Route path="/admin" element={<Navigate to="/admin/login" />}>
+            <Route path="login" element={<AdminLogin />}></Route>
+            <Route path="home" element={<AdminHome />}></Route>
+          </Route>
 
-        <Route path="/grade" element={<Navigate to="*" />}>
-          <Route
-            path="statistics/:userid"
-            element={<GradeStatistics />}
-          ></Route>
-          <Route path=":userid" element={<Grade />}></Route>
-        </Route>
+          <Route path="/grade" element={<Navigate to="*" />}>
+            <Route
+              path="statistics/:userid"
+              element={<GradeStatistics />}
+            ></Route>
+            <Route path=":userid" element={<Grade />}></Route>
+          </Route>
 
-        <Route path="/student" element={<Navigate to="*" />}>
-          <Route path="edit/:userid" element={<StudentEdit />}></Route>
-          <Route path="grade/:studentid" element={<StudentGrade />}></Route>
-        </Route>
+          <Route path="/student" element={<Navigate to="*" />}>
+            <Route path="edit/:userid" element={<StudentEdit />}></Route>
+            <Route path="grade/:studentid" element={<StudentGrade />}></Route>
+          </Route>
 
-        <Route path="/notice" element={<Notice />}>
-          <Route path=":classid" element={<NoticeClass />}></Route>
-          <Route path="edit" element={<NoticeEdit />}></Route>
-          <Route path="modify/:noticeid" element={<NoticeModify />}></Route>
-        </Route>
+          <Route path="/notice" element={<Notice />}>
+            <Route path=":classid" element={<NoticeClass />}></Route>
+            <Route path="edit" element={<NoticeEdit />}></Route>
+            <Route path="modify/:noticeid" element={<NoticeModify />}></Route>
+          </Route>
 
-        <Route path="*" element={<NotFound />}></Route>
-      </Routes>
+          <Route path="*" element={<NotFound />}></Route>
+        </Routes>
+      </Main>
       <Footer />
     </BrowserRouter>
   );
