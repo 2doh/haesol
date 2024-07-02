@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "../scss/signup/signup.scss";
-import SignupParent from "./signup/SignupParent";
-import SignupTeacher from "./signup/SignupTeacher";
+import SignupParent from "../components/signup/SignupParent";
+import SignupTeacher from "../components/signup/SignupTeacher";
 
 const Signup = () => {
   const [userType, setUserType] = useState("parent");

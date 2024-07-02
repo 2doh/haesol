@@ -3,7 +3,6 @@ import Header from "components/layout/Header";
 import Home from "pages/Home";
 import Login from "pages/Login";
 import NotFound from "pages/NotFound";
-import SignUp from "pages/Signup";
 import Students from "pages/Students";
 import AdminHome from "pages/admin/AdminHome";
 import AdminLogin from "pages/admin/AdminLogin";
@@ -21,6 +20,7 @@ import "./App.css";
 import "./css/reset.css";
 // import Main from "components/layout/Main";
 import styled from "@emotion/styled";
+import Signup from "pages/Signup";
 
 const Main = styled.div`
   background-color: #f3f9fa;
@@ -41,7 +41,7 @@ function App() {
           <Route index element={<Home />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/students" element={<Students />}></Route>
-          <Route path="/signup" element={<SignUp />}></Route>
+          <Route path="/signup" element={<Signup />}></Route>
 
           <Route path="/admin" element={<Navigate to="/admin/login" />}>
             <Route path="login" element={<AdminLogin />}></Route>
