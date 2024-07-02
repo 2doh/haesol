@@ -1,0 +1,143 @@
+@import "../valiables";
+
+.main-inner {
+  //   margin: 40px;
+  display: flex;
+  gap: 60px;
+}
+
+.main-inner-class {
+  width: 700px;
+  height: 100%;
+}
+.main-schedule {
+  width: 100%;
+  height: 506px;
+}
+
+// .main-inner-class .main-contents-title {
+//   border-left: #5f909f solid 5px;
+//   font-size: 24px;
+//   height: 30px;
+//   width: 100%;
+//   display: flex;
+//   align-items: center;
+// }
+
+// (공통) 메인 구분 타이틀
+.main-contents-title {
+  border-left: #5f909f solid 5px;
+  font-size: 24px;
+  height: 30px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+// 공통
+.main-schedule-title {
+}
+
+// 공통
+.main-schedule-title-text {
+  margin-left: 10px;
+}
+
+.main-title-dwon-contents {
+  margin-top: 20px;
+}
+
+.main-schedule-calendar {
+  margin-top: 20px;
+  background-color: navy;
+  width: 100%;
+  height: 458px;
+}
+.main-activity {
+  margin-top: 60px;
+
+  height: 315px;
+  width: 100%;
+}
+.main-activity-title {
+  /* height: 30px;
+      width: 100%; */
+  /* background-color: maroon; */
+}
+.main-activity-slide {
+  margin-top: 20px;
+  width: 100%;
+  height: 265px;
+  background-color: palegreen;
+}
+
+// 메인 오른쪽 영역
+.main-inner-info {
+  width: 340px;
+  height: 100%;
+
+  .main-login-user-info {
+    height: 160px;
+    max-height: 160px;
+
+    .main-inner-info-login {
+      margin-top: 50px;
+      border-radius: 5px;
+      border: 1px solid $navy-blue;
+      width: 100%;
+      background-color: #ffffff;
+
+      .login-inner {
+        width: 100%;
+        padding: 20px 25px;
+
+        .main-info-loginbt {
+          border-radius: 5px;
+          border: 1px solid $navy-blue;
+
+          width: 290px;
+          height: 80px;
+          background-color: #add2d8;
+
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          font-size: 24px;
+          font-weight: bold;
+          color: #ffffff;
+        }
+
+        .main-info-loginmenu {
+          display: flex;
+          justify-content: center;
+          //   background-color: green;
+          margin-top: 20px;
+
+          width: 100%;
+          justify-content: space-around;
+          //   height: 14px;
+          font-size: 13px;
+          color: $pc-font;
+        }
+      }
+    }
+  }
+
+  .main-info-lunch {
+    margin-top: 110px;
+    width: 100%;
+    height: 350px;
+  }
+  .main-info-lunch-title {
+    height: 30px;
+    width: 100%;
+    background-color: slateblue;
+  }
+  .main-info-lunch-menu {
+    margin-top: 20px;
+    width: 100%;
+    height: 300px;
+    background-color: violet;
+  }
+}
