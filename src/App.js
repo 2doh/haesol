@@ -3,6 +3,7 @@ import Header from "components/layout/Header";
 import Home from "pages/Home";
 import Login from "pages/Login";
 import NotFound from "pages/NotFound";
+import SignUp from "pages/SignUp";
 import Students from "pages/Students";
 import AdminHome from "pages/admin/AdminHome";
 import AdminLogin from "pages/admin/AdminLogin";
@@ -12,8 +13,6 @@ import Notice from "pages/notice/Notice";
 import NoticeClass from "pages/notice/NoticeClass";
 import NoticeEdit from "pages/notice/NoticeEdit";
 import NoticeModify from "pages/notice/NoticeModify";
-import SignUpParent from "pages/signup/SignUpParent";
-import SignUpStaff from "pages/signup/SignUpStaff";
 import StudentEdit from "pages/student/StudentEdit";
 import StudentGrade from "pages/student/StudentGrade";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
@@ -37,16 +36,13 @@ function App() {
   return (
     <BrowserRouter>
       <Header />
-      <Main>
-        <Routes>
-          <Route index element={<Home />}></Route>
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/students" element={<Students />}></Route>
 
-          <Route path="/signup" element={<Navigate to="/signup/parent" />}>
-            <Route path="parent" element={<SignUpParent />}></Route>
-            <Route path="staff" element={<SignUpStaff />}></Route>
-          </Route>
+      <Routes>
+        <Route index element={<Home />}></Route>
+        <Route path="/login" element={<Login />}></Route>
+        <Route path="/students" element={<Students />}></Route>
+        <Route path="/signup" element={<SignUp />}></Route>
+
 
           <Route path="/admin" element={<Navigate to="/admin/login" />}>
             <Route path="login" element={<AdminLogin />}></Route>
