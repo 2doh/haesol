@@ -21,16 +21,17 @@
         </div>
         <!-- 신상정보 전체 레이아웃 -->
         <div class="user-info-wrap">
+          <!-- 탭 선택 부분 -->
           <div class="user-info-tap">
             <div class="property">
               <div class="frame">
                 <div class="text-wrapper">신상 정보</div>
               </div>
               <div class="div-wrapper">
-                <div class="div">성적 입력</div>
+                <div class="info-subtitle">성적 입력</div>
               </div>
               <div class="div-wrapper">
-                <div class="div">차트</div>
+                <div class="info-subtitle">차트</div>
               </div>
             </div>
 
@@ -39,7 +40,8 @@
               <button>취소</button>
             </div>
           </div>
-          <div class="info-contain">
+          <!-- 입력 부분 -->
+          <div class="info-contain-top">
             <div class="info-item-top">
               <div class="info-title">
                 <span>학생명</span>
@@ -48,6 +50,20 @@
                   name="text"
                   placeholder="이름을 입력해주세요"
                 />
+                <div class="form-check">
+                  <input
+                    class="form-check-gender"
+                    type="radio"
+                    name="chk_info"
+                    value="남자"
+                  />남자
+                  <input
+                    class="form-check-gender"
+                    type="radio"
+                    name="chk_info"
+                    value="여자"
+                  />여자
+                </div>
               </div>
               <div class="info-title">
                 <span>생년월일</span>
@@ -58,10 +74,44 @@
                 <input
                   type="number"
                   name="tel"
-                  placeholder="학생의 전화번호를 입력해주세요"
+                  placeholder="전화번호를 입력해주세요"
                 />
               </div>
             </div>
+            <div class="info-item-right">
+              <div class="info-title">
+                <span>학부모명</span>
+                <input type="text" name="text" placeholder="" />
+                </div>
+                <div class="info-title">
+                  <span>관계</span>
+                  <input type="text" name="text" placeholder="" />
+                </div>
+                <div class="info-title">
+                  <span>학부모 전화번호</span>
+                  <input
+                    type="number"
+                    name="tel"
+                    placeholder="전화번호를 입력해주세요"
+                  />
+                </div>
+            </div>
+            <div class="info-img">사진</div>
+          </div>
+          <div class="info-contain-mid">
+            <div class="info-item-mid">
+              <div class="info-title">
+                <span>우편번호</span>
+                <input type="text" name="text" placeholder="" />
+                <button>우편번호 검색</button>
+                </div>
+              <div class="info-title">
+                <span>주소</span>
+                <input type="text" name="text" placeholder="" />
+                <input type="text" name="text" placeholder="" />
+              </div>
+            </div>
+          </div>
           </div>
         </div>
       </div>
