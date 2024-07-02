@@ -11,6 +11,8 @@
   color: #fff;
   font-size: 14px;
   line-height: 16px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 @mixin input() {
   border-radius: 5px;
@@ -20,7 +22,6 @@
   padding-left: 5px;
 }
 .signup {
-  width: 1920px;
   height: 100%;
   @include flex-center();
   .signup-wrap {
@@ -50,10 +51,10 @@
           .siginup-top-userselect {
             gap: 15px;
             display: flex;
-            .siginup-user-normal {
+            .siginup-user-parent {
               @include btStyle();
             }
-            .siginup-user-staff {
+            .siginup-user-teacher {
               @include btStyle();
             }
           }

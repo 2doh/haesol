@@ -3,6 +3,7 @@
   width: 80px;
   height: 30px;
   flex-shrink: 0;
+  border-radius: 4px;
   @include flex-center();
 }
 @mixin input() {
@@ -10,14 +11,13 @@
   border: 1px solid #886348;
 }
 .login {
-  width: 1180px;
   height: 960px;
   background-color: #f3f9fa;
   margin: 0 auto;
 }
 .login-inner {
   width: 688px;
-  height: 100%;
+
   margin: 0 auto;
   padding-top: 50px;
 }
@@ -78,6 +78,7 @@
     height: 45px;
     font-size: 20px;
     background-color: #e7d9d9;
+    cursor: pointer;
     @include input();
   }
   .login-wrap-panel-social {
@@ -95,13 +96,16 @@
   .login-panel-social-naver {
     @include social();
     background: #22d61e;
+    cursor: pointer;
   }
   .login-panel-social-kakao {
     @include social();
     background-color: #ffeb38;
+    cursor: pointer;
   }
   .login-panel-social-google {
     @include social();
     background-color: black;
+    cursor: pointer;
   }
 }
