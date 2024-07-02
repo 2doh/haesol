@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../css/common.css" />
     <link rel="stylesheet" href="../css/main/main.css" />
     <link rel="stylesheet" href="../css/student/studentlist.css" />
+    <link rel="stylesheet" href="../css/student/studentinfo.css" />
     <title>student list</title>
   </head>
   <body>
@@ -16,6 +17,52 @@
         <div class="student-list-title">
           <!-- 제목 위치 -->
           <span>5학년 7반</span>
+          <p>학생 정보 관리</p>
+        </div>
+        <!-- 신상정보 전체 레이아웃 -->
+        <div class="user-info-wrap">
+          <div class="user-info-tap">
+            <div class="property">
+              <div class="frame">
+                <div class="text-wrapper">신상 정보</div>
+              </div>
+              <div class="div-wrapper">
+                <div class="div">성적 입력</div>
+              </div>
+              <div class="div-wrapper">
+                <div class="div">차트</div>
+              </div>
+            </div>
+
+            <div class="info-button">
+              <button>저장</button>
+              <button>취소</button>
+            </div>
+          </div>
+          <div class="info-contain">
+            <div class="info-item-top">
+              <div class="info-title">
+                <span>학생명</span>
+                <input
+                  type="text"
+                  name="text"
+                  placeholder="이름을 입력해주세요"
+                />
+              </div>
+              <div class="info-title">
+                <span>생년월일</span>
+                <input type="date" name="date" placeholder="" />
+              </div>
+              <div class="info-title">
+                <span>전화번호</span>
+                <input
+                  type="number"
+                  name="tel"
+                  placeholder="학생의 전화번호를 입력해주세요"
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </main>
