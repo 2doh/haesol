@@ -31,13 +31,13 @@ const Login = () => {
             <div className="login-wrap-panel-social">
               <div className="login-panel-social-title">간편 로그인</div>
               <div className="login-panel-social-list">
-                <div className="login-panel-social-naver br5">
+                <div className="login-panel-social-naver">
                   <img src={naver} />
                 </div>
-                <div className="login-panel-social-kakao br5">
+                <div className="login-panel-social-kakao">
                   <img src={kakao} />
                 </div>
-                <div className="login-panel-social-google br5">
+                <div className="login-panel-social-google">
                   <img src={google} />
                 </div>
               </div>

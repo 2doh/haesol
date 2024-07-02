@@ -3,7 +3,7 @@ import Header from "components/layout/Header";
 import Home from "pages/Home";
 import Login from "pages/Login";
 import NotFound from "pages/NotFound";
-import SignUp from "pages/SignUp";
+import SignUp from "pages/Signup";
 import Students from "pages/Students";
 import AdminHome from "pages/admin/AdminHome";
 import AdminLogin from "pages/admin/AdminLogin";
