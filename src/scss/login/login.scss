@@ -5,7 +5,10 @@
   flex-shrink: 0;
   @include flex-center();
 }
-
+@mixin input() {
+  border-radius: 5px;
+  border: 1px solid #886348;
+}
 .login {
   width: 1180px;
   height: 960px;
