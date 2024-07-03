@@ -15,6 +15,20 @@ a {
   text-decoration: none;
 }
 
+button {
+  font-family: "NexonMaplestory";
+  font-weight: 300;
+  font-style: normal;
+  font-optical-sizing: auto;
+  background: inherit;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0;
+  overflow: visible;
+  cursor: pointer;
+}
+
 html {
   overflow-x: hidden;
 }
@@ -32,4 +46,16 @@ footer {
   background-color: #dee8e9;
   height: 180px;
   width: 100%;
+}
+
+.br10 {
+  border-radius: 10px;
+}
+
+.br5 {
+  border-radius: 10px;
+}
+
+.br20 {
+  border-radius: 10px;
 }/*# sourceMappingURL=common.css.map */

@@ -139,7 +139,6 @@
   border: solid 2px #886348;
   margin-left: 10px;
 }
-
 .info-contain-top .info-item-top .info-title input[type=number]::-webkit-outer-spin-button,
 .info-contain-top .info-item-top .info-title input[type=number]::-webkit-inner-spin-button,
 .info-contain-top .info-item-right .info-title input[type=number]::-webkit-outer-spin-button,
@@ -227,5 +226,4 @@
   height: 240px;
   background: #fbfaf9;
   border: solid 2px #886348;
-
 }/*# sourceMappingURL=studentinfo.css.map */

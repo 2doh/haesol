@@ -1,0 +1,14 @@
+@mixin bt-style {
+  border: 5px solid #ffffff;
+}
+
+@mixin mini-bt-style($bk-color, $br-color, $font-color) {
+  font-size: 16px;
+  width: 70px;
+  height: 35px;
+  border: 1px solid $br-color;
+  background-color: $bk-color;
+  border-radius: 5px;
+  color: $font-color;
+  //   border: 5px solid #ffffff;
+}
