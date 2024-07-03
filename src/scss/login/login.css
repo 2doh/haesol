@@ -1,5 +1,4 @@
 .login {
-  width: 1180px;
   height: 960px;
   background-color: #f3f9fa;
   margin: 0 auto;
@@ -7,7 +6,6 @@
 
 .login-inner {
   width: 688px;
-  height: 100%;
   margin: 0 auto;
   padding-top: 50px;
 }
@@ -75,6 +73,7 @@
   height: 45px;
   font-size: 20px;
   background-color: #e7d9d9;
+  cursor: pointer;
   border-radius: 5px;
   border: 1px solid #886348;
 }
@@ -94,26 +93,32 @@
   width: 80px;
   height: 30px;
   flex-shrink: 0;
+  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: #22d61e;
+  cursor: pointer;
 }
 .login-wrap-panel .login-panel-social-kakao {
   width: 80px;
   height: 30px;
   flex-shrink: 0;
+  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: #ffeb38;
+  cursor: pointer;
 }
 .login-wrap-panel .login-panel-social-google {
   width: 80px;
   height: 30px;
   flex-shrink: 0;
+  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: black;
+  cursor: pointer;
 }/*# sourceMappingURL=login.css.map */

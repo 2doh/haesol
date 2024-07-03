@@ -20,7 +20,9 @@ html {
   overflow-x: hidden;
 }
 
-body {
+body,
+button,
+::placeholder {
   font-family: "NexonMaplestory";
   font-weight: 300;
   font-style: normal;
