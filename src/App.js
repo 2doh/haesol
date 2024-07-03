@@ -16,9 +16,9 @@ import NoticeModify from "pages/notice/NoticeModify";
 import StudentEdit from "pages/student/StudentEdit";
 import StudentGrade from "pages/student/StudentGrade";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import "./css/reset.css";
 import "../src/scss/common.scss";
 import "./App.css";
-import "./css/reset.css";
 // import Main from "components/layout/Main";
 import styled from "@emotion/styled";
 

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;200;300;400;600;700;800;900&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;200;300;400;600;700;800;900&display=swap"); */
 
 * {
   margin: 0;
@@ -24,7 +24,8 @@ li {
 html {
   font-size: 62.5%;
 }
-body {
+
+/* body {
   font-family: "Noto Sans KR", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-size: 1rem;
   font-weight: 400;
@@ -32,4 +33,4 @@ body {
   color: #000;
   letter-spacing: -0.24px;
   word-break: keep-all;
-}
+} */
