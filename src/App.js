@@ -3,7 +3,7 @@ import Header from "components/layout/Header";
 import Home from "pages/Home";
 import Login from "pages/Login";
 import NotFound from "pages/NotFound";
-import Students from "pages/Students";
+import Students from "pages/student/StudentsList";
 import AdminHome from "pages/admin/AdminHome";
 import AdminLogin from "pages/admin/AdminLogin";
 import Grade from "pages/grade/Grade";
@@ -20,7 +20,7 @@ import "../src/scss/common.scss";
 import "./App.css";
 // import Main from "components/layout/Main";
 import styled from "@emotion/styled";
-import Signup from "pages/Signup";
+import Signup from "pages/SignUp";
 
 const Main = styled.div`
   background-color: #f3f9fa;
@@ -56,8 +56,11 @@ function App() {
             <Route path=":userid" element={<Grade />}></Route>
           </Route>
 
-          <Route path="/student" element={<Navigate to="*" />}>
-            <Route path="edit/:userid" element={<StudentEdit />}></Route>
+          {/* 임시 경로 */}
+          <Route path="/students/edit" element={<StudentEdit />}></Route>
+          <Route path="/students" element={<Navigate to="*" />}>
+            {/* 경로 수정 후 아래로 변경 */}
+            {/* <Route path="edit/:userid" element={<StudentEdit />}></Route> */}
             <Route path="grade/:studentid" element={<StudentGrade />}></Route>
           </Route>
 
