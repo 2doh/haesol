@@ -1,0 +1,59 @@
+.main-core {
+  .student-list-title {
+    margin: 45px;
+    span {
+      font-size: 36px;
+      font-weight: 700;
+      color: #1b4957;
+    }
+  }
+
+  .list-wrap {
+    width: 100%;
+    margin: 20px;
+    margin-top: 70px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    background: #c6dbda;
+    border: solid 1px #886348;
+
+    font-size: 18px;
+
+    .list-title {
+      width: 100%;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      border-bottom: solid 1px #886348;
+      ul {
+        display: flex;
+        text-align: center;
+        li {
+          width: 150px;
+          white-space: nowrap;
+        }
+      }
+    }
+    .list-content {
+      width: 100%;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      background: #fbfaf9;
+      ul {
+        display: flex;
+        text-align: center;
+        li {
+          width: 150px;
+          white-space: nowrap;
+        }
+      }
+      &:hover {
+        background: #c6dbda;
+      }
+    }
+  }
+}

@@ -1,0 +1,286 @@
+.student-list-title {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.student-list-title p {
+  font-size: 24px;
+}
+
+.user-info-wrap {
+  position: relative;
+  width: 1100px;
+  margin: 0 auto;
+  margin-top: 100px;
+  font-size: 16px;
+}
+.user-info-wrap .user-info-tap {
+  display: flex;
+  justify-content: space-between;
+}
+.user-info-wrap .user-info-tap .property {
+  display: inline-flex;
+  align-items: flex-start;
+  position: relative;
+  cursor: pointer;
+}
+.user-info-wrap .user-info-tap .property .frame {
+  background-color: #e7d9d9;
+  display: inline-flex;
+  width: 161px;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 19px 25px;
+  position: relative;
+  flex: 0 0 auto;
+  border-radius: 10px 10px 0px 0px;
+  overflow: hidden;
+  border: solid 2px #886348;
+  border-bottom: none;
+}
+.user-info-wrap .user-info-tap .property .frame .text-wrapper {
+  position: relative;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin-top: -4px;
+  margin-bottom: -2px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: normal;
+  white-space: nowrap;
+}
+.user-info-wrap .user-info-tap .property .div-wrapper {
+  margin-left: -1px;
+  background: #fbfaf9;
+  display: inline-flex;
+  width: 160px;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 19px 25px;
+  position: relative;
+  flex: 0 0 auto;
+  border-radius: 10px 10px 0px 0px;
+  overflow: hidden;
+  border: solid 2px #886348;
+  border-bottom: none;
+}
+.user-info-wrap .user-info-tap .property .div-wrapper:hover {
+  background: #e4e4e4;
+}
+.user-info-wrap .user-info-tap .property .div-wrapper .info-subtitle {
+  position: relative;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin-top: -4px;
+  margin-bottom: -2px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: normal;
+  white-space: nowrap;
+}
+.user-info-wrap .info-button {
+  display: flex;
+  gap: 15px;
+}
+.user-info-wrap .info-button button {
+  all: unset;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 25px;
+  background: #e7d9d9;
+  border-radius: 5px;
+  border: solid 2px #886348;
+  cursor: pointer;
+}
+.user-info-wrap .info-button button:hover {
+  background: #dd838f;
+  border: solid 2px #a8172a;
+  color: #efece8;
+}
+
+.info-contain-top,
+.info-contain-mid {
+  width: 100%;
+  display: flex;
+}
+.info-contain-top .info-item-top,
+.info-contain-top .info-item-right,
+.info-contain-mid .info-item-top,
+.info-contain-mid .info-item-right {
+  width: 100%;
+  border: solid 2px #886348;
+  border-right: none;
+  border-bottom: none;
+}
+.info-contain-top .info-item-top .info-title,
+.info-contain-top .info-item-right .info-title,
+.info-contain-mid .info-item-top .info-title,
+.info-contain-mid .info-item-right .info-title {
+  display: flex;
+  align-items: center;
+  background: #fbfaf9;
+}
+.info-contain-top .info-item-top .info-title span,
+.info-contain-top .info-item-right .info-title span,
+.info-contain-mid .info-item-top .info-title span,
+.info-contain-mid .info-item-right .info-title span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 160px;
+  height: 40px;
+  background: #e7d9d9;
+  border-right: solid 3px #886348;
+}
+.info-contain-top .info-item-top .info-title input,
+.info-contain-top .info-item-right .info-title input,
+.info-contain-mid .info-item-top .info-title input,
+.info-contain-mid .info-item-right .info-title input {
+  width: 180px;
+  height: 30px;
+  padding-left: 5px;
+  background: #fbfaf9;
+  border-width: 0;
+  border: solid 2px #886348;
+  margin-left: 10px;
+}
+.info-contain-top .info-item-top .info-title input[type=number]::-webkit-outer-spin-button,
+.info-contain-top .info-item-top .info-title input[type=number]::-webkit-inner-spin-button,
+.info-contain-top .info-item-right .info-title input[type=number]::-webkit-outer-spin-button,
+.info-contain-top .info-item-right .info-title input[type=number]::-webkit-inner-spin-button,
+.info-contain-mid .info-item-top .info-title input[type=number]::-webkit-outer-spin-button,
+.info-contain-mid .info-item-top .info-title input[type=number]::-webkit-inner-spin-button,
+.info-contain-mid .info-item-right .info-title input[type=number]::-webkit-outer-spin-button,
+.info-contain-mid .info-item-right .info-title input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.info-contain-top .info-item-top .info-title .form-check,
+.info-contain-top .info-item-right .info-title .form-check,
+.info-contain-mid .info-item-top .info-title .form-check,
+.info-contain-mid .info-item-right .info-title .form-check {
+  margin-left: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+.info-contain-top .info-item-top .info-title .form-check .form-check-gender,
+.info-contain-top .info-item-right .info-title .form-check .form-check-gender,
+.info-contain-mid .info-item-top .info-title .form-check .form-check-gender,
+.info-contain-mid .info-item-right .info-title .form-check .form-check-gender {
+  width: 15px;
+  height: 15px;
+}
+.info-contain-top .info-item-mid,
+.info-contain-mid .info-item-mid {
+  width: 100%;
+  border: solid 2px #886348;
+  border-bottom: none;
+  border-right: none;
+}
+.info-contain-top .info-item-mid .info-title,
+.info-contain-mid .info-item-mid .info-title {
+  display: flex;
+  align-items: center;
+  background: #fbfaf9;
+}
+.info-contain-top .info-item-mid .info-title span,
+.info-contain-mid .info-item-mid .info-title span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 160px;
+  height: 120px;
+  background: #e7d9d9;
+  border-right: solid 3px #886348;
+}
+.info-contain-top .info-item-mid .info-title input,
+.info-contain-mid .info-item-mid .info-title input {
+  width: 180px;
+  height: 30px;
+  padding-left: 5px;
+  background: #fbfaf9;
+  border-width: 0;
+  border: solid 2px #886348;
+  margin-left: 10px;
+}
+.info-contain-top .info-item-mid .info-title input[type=number]::-webkit-outer-spin-button,
+.info-contain-top .info-item-mid .info-title input[type=number]::-webkit-inner-spin-button,
+.info-contain-mid .info-item-mid .info-title input[type=number]::-webkit-outer-spin-button,
+.info-contain-mid .info-item-mid .info-title input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.info-contain-top .info-item-mid .info-title button,
+.info-contain-mid .info-item-mid .info-title button {
+  all: unset;
+  width: 100px;
+  height: 20px;
+  background: #e7d9d9;
+  border: solid 2px #886348;
+  border-radius: 5px;
+  margin-left: 10px;
+  text-align: center;
+  cursor: pointer;
+}
+.info-contain-top .info-item-mid .info-title button:hover,
+.info-contain-mid .info-item-mid .info-title button:hover {
+  background: #dd838f;
+  border: solid 2px #a8172a;
+  color: #efece8;
+}
+.info-contain-top .info-item-mid .info-title .add-form,
+.info-contain-mid .info-item-mid .info-title .add-form {
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.info-contain-top .info-item-mid .info-title .add-form .info-add,
+.info-contain-mid .info-item-mid .info-title .add-form .info-add {
+  width: 150%;
+}
+.info-contain-top .info-img,
+.info-contain-mid .info-img {
+  position: absolute;
+  right: 0;
+  width: 190px;
+  height: 246px;
+  background: #fbfaf9;
+  border: solid 2px #886348;
+}
+.info-contain-top .info-item-bottom,
+.info-contain-mid .info-item-bottom {
+  width: 100%;
+  border: solid 2px #886348;
+}
+.info-contain-top .info-item-bottom .info-title,
+.info-contain-mid .info-item-bottom .info-title {
+  display: flex;
+  align-items: center;
+  background: #fbfaf9;
+}
+.info-contain-top .info-item-bottom .info-title span,
+.info-contain-mid .info-item-bottom .info-title span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 160px;
+  height: 120px;
+  background: #e7d9d9;
+  border-right: solid 3px #886348;
+}
+.info-contain-top .info-item-bottom .info-title textarea,
+.info-contain-mid .info-item-bottom .info-title textarea {
+  all: unset;
+  border: solid 2px #886348;
+  width: 80%;
+  height: 100px;
+  margin-left: 10px;
+}/*# sourceMappingURL=studentEdit.css.map */
