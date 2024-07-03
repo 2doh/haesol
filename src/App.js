@@ -1,6 +1,6 @@
 import Footer from "components/layout/Footer";
 import Header from "components/layout/Header";
-import Home from "pages/Home";
+import Home from "pages/Home/Home";
 import Login from "pages/Login";
 import NotFound from "pages/NotFound";
 import Students from "pages/Students";
@@ -42,6 +42,9 @@ function App() {
           <Route path="/login" element={<Login />}></Route>
           <Route path="/students" element={<Students />}></Route>
           <Route path="/signup" element={<Signup />}></Route>
+
+          {/* 임의 추가 */}
+          <Route path="/admin/home" element={<AdminHome to="/admin/login" />} />
 
           <Route path="/admin" element={<Navigate to="/admin/login" />}>
             <Route path="home" element={<AdminHome />}></Route>

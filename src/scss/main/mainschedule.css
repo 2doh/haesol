@@ -1,0 +1,72 @@
+@charset "UTF-8";
+.react-calendar {
+  width: 100%;
+  height: 100%;
+  border: 4px solid #f4878d;
+  border-radius: 19px;
+}
+
+.react-calendar__navigation {
+  background: #ffdfe4;
+  border-bottom: 4px solid #f4878d;
+  height: 90px;
+}
+.react-calendar__navigation span {
+  font-size: 24px;
+  font-weight: 600;
+  color: #886348;
+}
+
+.react-calendar__navigation button:disabled {
+  background-color: #ffdfe4;
+  border-radius: 20px 20px 0 0;
+}
+
+.react-calendar__navigation button:enabled:hover,
+.react-calendar__navigation button:enabled:focus {
+  background-color: #ffdfe4;
+  border-radius: 20px 20px 0 0;
+}
+
+.react-calendar__month-view {
+  padding: 12px 32px;
+}
+.react-calendar__month-view abbr {
+  color: #886348;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.react-calendar__month-view__weekdays abbr {
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.react-calendar__tile {
+  text-align: center;
+  height: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+/*hover, focus, 선택됐을 시 */
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus,
+.react-calendar__tile--active {
+  background: #dee8e9;
+  border-radius: 14px;
+}
+
+.react-calendar__tile--now {
+  background: #e7d9d9;
+  border-radius: 14px;
+}
+
+/*hover, focus 시 */
+.react-calendar__tile--now:enabled:hover,
+.react-calendar__tile--now:enabled:focus {
+  background: #dee8e9;
+  border-radius: 14px;
+}/*# sourceMappingURL=mainschedule.css.map */

@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
-import "../scss/main/home.scss";
+import "../../scss/main/home.scss";
+import MainSchedule from "./MainSchedule";
 
 const HomeStyle = styled.div``;
 
@@ -13,7 +14,9 @@ const Home = () => {
               <div className="main-schedule-title main-contents-title">
                 <div className="main-schedule-title-text ">학교 일정</div>
               </div>
-              <div className="main-title-dwon-contents main-schedule-calendar"></div>
+              <div className="main-title-dwon-contents main-schedule-calendar">
+                <MainSchedule />
+              </div>
             </div>
             <div className="main-activity">
               <div className="main-activity-title main-contents-title">
