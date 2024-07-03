@@ -1,0 +1,55 @@
+@import "../valiables";
+@import "../button";
+
+.grid-frame {
+  width: 100%;
+  display: grid;
+  //   grid-template-rows: 1fr 1fr 1fr;
+  font-size: 20px;
+  background-color: $grid-color-w;
+  border: 1px solid $pc-line-p;
+
+  & .item {
+    height: 60px;
+  }
+
+  & .item:nth-child(1) {
+    background-color: $bp;
+    border-bottom: 1px solid $pc-line-p;
+  }
+
+  .grid-inner {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 130px 22ll0px 130px 80px 80px 1fr 1fr;
+
+    & > div {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .grid-inner-item {
+      border-right: 1px solid $pc-line-p;
+    }
+
+    .grid-inner-item:last-child {
+      border-right: none;
+    }
+
+    .sign-off-on-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+    }
+  }
+}
+
+.rejected-button {
+  @include mini-bt-style($b100, $b300, $font-bc-1);
+}
+
+.accept-button {
+  @include mini-bt-style($b200, $b400, $font-bc-2);
+}
