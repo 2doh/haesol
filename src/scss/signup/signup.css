@@ -1,5 +1,4 @@
 .signup {
-  width: 1920px;
   height: 100%;
   display: flex;
   align-items: center;
@@ -15,7 +14,8 @@
 }
 .signup .signup-wrap .signup-wrap-inner {
   width: 700px;
-  height: 935px;
+  height: 100%;
+  padding: 45px 0 45px;
   background-color: #fbfaf9;
   border: 1px solid #886348;
   display: flex;
@@ -24,7 +24,7 @@
 }
 .signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content {
   width: 600px;
-  height: 845px;
+  height: 100%;
 }
 .signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-top {
   width: 100%;
@@ -36,12 +36,13 @@
 .signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-top .siginup-logo {
   width: 200px;
   height: 80px;
+  cursor: pointer;
 }
 .signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-top .siginup-top-userselect {
   gap: 15px;
   display: flex;
 }
-.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-top .siginup-top-userselect .siginup-user-normal {
+.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-top .siginup-top-userselect .siginup-user-parent {
   width: 100px;
   height: 28px;
   display: flex;
@@ -52,8 +53,10 @@
   color: #fff;
   font-size: 14px;
   line-height: 16px;
+  border-radius: 5px;
+  cursor: pointer;
 }
-.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-top .siginup-top-userselect .siginup-user-staff {
+.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-top .siginup-top-userselect .siginup-user-teacher {
   width: 100px;
   height: 28px;
   display: flex;
@@ -64,6 +67,8 @@
   color: #fff;
   font-size: 14px;
   line-height: 16px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 .signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main {
   width: 100%;
@@ -73,7 +78,7 @@
 .signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main .signup-main-fields {
   margin-top: 20px;
   width: 100%;
-  height: 72px;
+  height: 100%;
 }
 .signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-section-top {
   display: flex;
@@ -112,6 +117,8 @@
   color: #fff;
   font-size: 14px;
   line-height: 16px;
+  border-radius: 5px;
+  cursor: pointer;
   position: absolute;
   right: 5px;
 }
@@ -128,9 +135,22 @@
   height: 40px;
   padding-left: 5px;
 }
-.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-section-bottom-pass .showpasslogo {
+.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-section-bottom-pass .showpass {
   position: absolute;
   right: 10px;
+  cursor: pointer;
+  background: url("../../images/showpass.svg") no-repeat center;
+  width: 20px;
+  height: 20px;
+}
+.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-section-bottom-pass .hidepass {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  background: url("../../images//ri_eye-close-line.svg") no-repeat center;
+  background-size: contain;
+  width: 20px;
+  height: 20px;
 }
 .signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-section-bottom {
   width: 100%;
@@ -144,13 +164,58 @@
   height: 40px;
   padding-left: 5px;
 }
-.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-section-bottom-drop {
+.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-homeadress {
   width: 100%;
+  height: 100%;
+}
+.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-homeadress .fieleds-homeadress-postcodewrap {
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
+  justify-content: space-between;
 }
-.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-section-bottom-drop .fieleds-section-input {
+.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-homeadress .homeadress-postcode-bt {
+  width: 100px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #dd838f;
+  border: 1px solid #a8172a;
+  color: #fff;
+  font-size: 14px;
+  line-height: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  height: 40px;
+  margin-bottom: 10px;
+}
+.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-homeadress .fieleds-homeadress-postcode {
+  border-radius: 5px;
+  border: 1px solid #886348;
+  width: 100%;
+  height: 40px;
+  padding-left: 5px;
+  width: 50%;
+  margin-bottom: 10px;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+}
+.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-homeadress .fieleds-homeadress-adress {
+  border-radius: 5px;
+  border: 1px solid #886348;
+  width: 100%;
+  height: 40px;
+  padding-left: 5px;
+  margin-bottom: 10px;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+}
+.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-homeadress .fieleds-homearess-input {
   border-radius: 5px;
   border: 1px solid #886348;
   width: 100%;
@@ -161,7 +226,7 @@
   display: flex;
   gap: 10px;
 }
-.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main .signupbt {
+.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main .btwrap .signupbt {
   margin: 50px auto 0;
   width: 100px;
   height: 28px;
@@ -173,9 +238,11 @@
   color: #fff;
   font-size: 14px;
   line-height: 16px;
+  border-radius: 5px;
+  cursor: pointer;
   width: 50%;
 }
-.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main .cancelbt {
+.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main .btwrap .cancelbt {
   margin: 50px auto 0;
   width: 100px;
   height: 28px;
@@ -187,6 +254,8 @@
   color: #fff;
   font-size: 14px;
   line-height: 16px;
+  border-radius: 5px;
+  cursor: pointer;
   width: 50%;
   background-color: #fff;
   color: #dd838f;
