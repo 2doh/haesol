@@ -116,7 +116,9 @@ const AdminHome = () => {
             </div>
             <div className="grid-inner-item">
               <div className="grid-inner-item-text sign-off-on-buttons">
-                <button className="rejected-button">반려</button>
+                <button className="rejected-button btn-two rounded">
+                  반려
+                </button>
                 <button className="accept-button">승인</button>
               </div>
             </div>

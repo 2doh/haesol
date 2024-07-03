@@ -1,12 +1,17 @@
 @import "../valiables";
 @import "../button";
+@import "../mixin";
 
 .grid-frame {
+  @include text-n-box-shadow;
+
   width: 100%;
   display: grid;
+  border-radius: 5px;
   //   grid-template-rows: 1fr 1fr 1fr;
   font-size: 20px;
   background-color: $grid-color-w;
+  overflow: hidden;
   border: 1px solid $pc-line-p;
 
   & .item {
@@ -18,10 +23,14 @@
     border-bottom: 1px solid $pc-line-p;
   }
 
+  & button {
+    @include bt-animation-01;
+  }
+
   .grid-inner {
     height: 100%;
     display: grid;
-    grid-template-columns: 130px 22ll0px 130px 80px 80px 1fr 1fr;
+    grid-template-columns: 130px 220px 130px 80px 80px 1fr 1fr;
 
     & > div {
       height: 100%;

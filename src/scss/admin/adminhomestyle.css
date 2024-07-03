@@ -1,8 +1,12 @@
 .grid-frame {
+  text-shadow: 0 1.5px 0 rgba(0, 0, 0, 0.15);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.34) inset, 0 2px 0 -1px rgba(0, 0, 0, 0.13), 0 3px 0 -1px rgba(0, 0, 0, 0.08), 0 3px 13px -1px rgba(0, 0, 0, 0.21);
   width: 100%;
   display: grid;
+  border-radius: 5px;
   font-size: 20px;
   background-color: #fbfaf9;
+  overflow: hidden;
   border: 1px solid #886348;
 }
 .grid-frame .item {
@@ -12,10 +16,21 @@
   background-color: #c6dbda;
   border-bottom: 1px solid #886348;
 }
+.grid-frame button {
+  display: inline-block;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.34) inset, 0 2px 0 -1px rgba(0, 0, 0, 0.13), 0 3px 0 -1px rgba(0, 0, 0, 0.08), 0 3px 13px -1px rgba(0, 0, 0, 0.21);
+}
+.grid-frame button:active {
+  top: 1px;
+  border-color: rgba(0, 0, 0, 0.34) rgba(0, 0, 0, 0.21) rgba(0, 0, 0, 0.21);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.89), 0 1px rgba(0, 0, 0, 0.05) inset;
+  position: relative;
+}
 .grid-frame .grid-inner {
   height: 100%;
   display: grid;
-  grid-template-columns: 130px 22ll0px 130px 80px 80px 1fr 1fr;
+  grid-template-columns: 130px 220px 130px 80px 80px 1fr 1fr;
 }
 .grid-frame .grid-inner > div {
   height: 100%;

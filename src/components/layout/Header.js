@@ -1,7 +1,16 @@
 import React from "react";
-import "../../scss/header/header.scss";
+import "../../scss/header/header.css";
+import { useNavigate } from "react-router";
+import Timer from "./Timer";
 
 const Header = () => {
+  const navigate = useNavigate();
+
+  /** 메인 페이지로 이동 */
+  const moveHomePage = () => {
+    navigate("/");
+  };
+
   return (
     <div className="header">
       <div className="header-left-div"></div>
@@ -28,7 +37,12 @@ const Header = () => {
               </ul>
             </ul>
             <ul>
-              <div className="logo"></div>
+              <div
+                className="logo"
+                onClick={() => {
+                  moveHomePage();
+                }}
+              ></div>
             </ul>
             <ul>
               <a href="" className="menu-main-title">
@@ -55,8 +69,8 @@ const Header = () => {
 
       <div className="header-right-div">
         <div className="inner-div">
-          <div>O</div>
-          <div>58분 00초</div>
+          <Timer></Timer>
+          {/* <div>58분 00초</div> */}
           <div>
             <input type="button" value="연장" />
           </div>
