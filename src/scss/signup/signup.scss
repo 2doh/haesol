@@ -31,13 +31,14 @@
     @include flex-center();
     .signup-wrap-inner {
       width: 700px;
-      height: 935px;
+      height: 100%;
+      padding: 45px 0 45px;
       background-color: #fbfaf9;
       border: 1px solid #886348;
       @include flex-center();
       .signip-wrap-inner-content {
         width: 600px;
-        height: 845px;
+        height: 100%;
         .signup-top {
           width: 100%;
           height: 100px;
@@ -47,6 +48,7 @@
           .siginup-logo {
             width: 200px;
             height: 80px;
+            cursor: pointer;
           }
           .siginup-top-userselect {
             gap: 15px;
@@ -66,7 +68,7 @@
           .signup-main-fields {
             margin-top: 20px;
             width: 100%;
-            height: 72px;
+            height: 100%;
             .signup-main-fields-section-top {
               display: flex;
               align-items: center;
@@ -102,9 +104,23 @@
               .fieleds-section-input {
                 @include input();
               }
-              .showpasslogo {
+              .showpass {
                 position: absolute;
                 right: 10px;
+                cursor: pointer;
+                background: url("../../images/showpass.svg") no-repeat center;
+                width: 20px;
+                height: 20px;
+              }
+              .hidepass {
+                position: absolute;
+                right: 10px;
+                cursor: pointer;
+                background: url("../../images//ri_eye-close-line.svg") no-repeat
+                  center;
+                background-size: contain;
+                width: 20px;
+                height: 20px;
               }
             }
             .signup-main-fields-section-bottom {
@@ -115,12 +131,36 @@
                 @include input();
               }
             }
-            .signup-main-fields-section-bottom-drop {
+            .signup-main-fields-homeadress {
               width: 100%;
-              display: flex;
-              align-items: center;
-              gap: 10px;
-              .fieleds-section-input {
+              height: 100%;
+              .fieleds-homeadress-postcodewrap {
+                @include flex-center();
+                justify-content: space-between;
+              }
+              .homeadress-postcode-bt {
+                @include btStyle();
+                height: 40px;
+                margin-bottom: 10px;
+              }
+              .fieleds-homeadress-postcode {
+                @include input();
+                width: 50%;
+                margin-bottom: 10px;
+                background-color: #fff;
+                display: flex;
+                align-items: center;
+                font-size: 13px;
+              }
+              .fieleds-homeadress-adress {
+                @include input();
+                margin-bottom: 10px;
+                background-color: #fff;
+                display: flex;
+                align-items: center;
+                font-size: 13px;
+              }
+              .fieleds-homearess-input {
                 @include input();
               }
             }
@@ -128,18 +168,18 @@
           .btwrap {
             display: flex;
             gap: 10px;
-          }
-          .signupbt {
-            margin: 50px auto 0;
-            @include btStyle();
-            width: 50%;
-          }
-          .cancelbt {
-            margin: 50px auto 0;
-            @include btStyle();
-            width: 50%;
-            background-color: #fff;
-            color: #dd838f;
+            .signupbt {
+              margin: 50px auto 0;
+              @include btStyle();
+              width: 50%;
+            }
+            .cancelbt {
+              margin: 50px auto 0;
+              @include btStyle();
+              width: 50%;
+              background-color: #fff;
+              color: #dd838f;
+            }
           }
         }
       }

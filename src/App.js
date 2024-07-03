@@ -47,8 +47,8 @@ function App() {
           <Route path="/admin/home" element={<AdminHome to="/admin/login" />} />
 
           <Route path="/admin" element={<Navigate to="/admin/login" />}>
-            <Route path="login" element={<AdminLogin />}></Route>
             <Route path="home" element={<AdminHome />}></Route>
+            <Route path="login" element={<AdminLogin />}></Route>
           </Route>
 
           <Route path="/grade" element={<Navigate to="*" />}>

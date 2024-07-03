@@ -33,7 +33,17 @@ html {
   overflow-x: hidden;
 }
 
-body {
+::-moz-placeholder {
+  font-family: "NexonMaplestory";
+  font-weight: 300;
+  font-style: normal;
+  font-optical-sizing: auto;
+  color: #2a1b07;
+}
+
+body,
+button,
+::placeholder {
   font-family: "NexonMaplestory";
   font-weight: 300;
   font-style: normal;
