@@ -1,35 +1,30 @@
 import styled from "@emotion/styled";
 import "../../scss/main/home.css";
-import MainSchedule from "./MainSchedule";
-import LoginUser from "./LoginUser";
+import "../../scss/main/mainlogin.css";
 
-const HomeStyle = styled.div``;
+import React from "react";
+import ClassSchedule from "./ClassSchedule";
 
-const Home = () => {
+const LoginUserStyle = styled.div``;
+
+const LoginUser = () => {
   return (
-    <HomeStyle>
-      <LoginUser />
+    <LoginUserStyle>
       <div className="main">
+        <h1>5학년 7반</h1>
         <div className="main-inner">
-          <div className="main-inner-class">
+          <div className="main-inner-class login-user-view">
             <div className="main-schedule">
               <div className="main-schedule-title main-contents-title">
-                <div className="main-schedule-title-text ">학교 일정</div>
+                <div className="main-schedule-title-text ">우리반 시간표</div>
               </div>
               <div className="main-title-dwon-contents main-schedule-calendar">
-                <MainSchedule />
+                <ClassSchedule />
               </div>
-            </div>
-            <div className="main-activity">
-              <div className="main-activity-title main-contents-title">
-                <div className="main-schedule-title-text">우리들 활동</div>
-              </div>
-              <div className="main-title-dwon-contents main-activity-slide"></div>
             </div>
           </div>
 
-          {/* 메인 오른쪽 영역 - start */}
-          <div className="main-inner-info">
+          <div className="main-inner-info login-user-info">
             {/* 내 정보 - start */}
             <div className="main-login-user-info">
               {/* <div className="main-schedule-title main-contents-title">
@@ -69,11 +64,10 @@ const Home = () => {
               </div>
             </div>
           </div>
-          {/* 메인 오른쪽 영역 - end */}
         </div>
       </div>
-    </HomeStyle>
+    </LoginUserStyle>
   );
 };
 
-export default Home;
+export default LoginUser;

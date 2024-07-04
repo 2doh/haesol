@@ -12,3 +12,12 @@
     0 3px 0 -1px rgba(0, 0, 0, 0.08),
     0 3px 13px -1px rgba(0, 0, 0, 0.21);
 }
+
+@mixin text-shadow {
+  text-shadow: 0 1.5px 0 rgba(0, 0, 0, 0.15);
+}
+
+@mixin br-5-h {
+  border-radius: 5px;
+  overflow: hidden;
+}
