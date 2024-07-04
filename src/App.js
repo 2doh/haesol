@@ -20,7 +20,7 @@ import "../src/scss/common.scss";
 import "./App.css";
 // import Main from "components/layout/Main";
 import styled from "@emotion/styled";
-import Signup from "pages/SignUp";
+import Signup from "pages/Signup";
 
 const Main = styled.div`
   background-color: #f3f9fa;
