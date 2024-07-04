@@ -1,10 +1,14 @@
 @import "../valiables";
+@import "../mixin";
 
 .react-calendar {
+  @include text-n-box-shadow;
+
   width: 100%;
   height: 100%;
   border: 4px solid $p400;
   border-radius: 19px;
+  overflow: hidden;
 }
 
 // 상단 내비게이션 (년, 월)

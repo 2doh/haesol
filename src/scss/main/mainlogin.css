@@ -1,0 +1,67 @@
+.class-schedule-inner h1 {
+  padding-bottom: 40px;
+  font-weight: bold;
+  font-size: 36px;
+  color: #1b4957;
+}
+.class-schedule-inner .grid-frame {
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+}
+.class-schedule-inner .grid-frame .item {
+  max-height: 45px;
+  height: 45px;
+}
+.class-schedule-inner .grid-frame .item:nth-child(1) {
+  background-color: #fbfaf9;
+}
+.class-schedule-inner .grid-frame .item:nth-child(2) .grid-inner-item:nth-child(1) {
+  background-color: #f9957f;
+}
+.class-schedule-inner .grid-frame .item:nth-child(3) .grid-inner-item:nth-child(1) {
+  background-color: #abcfd1;
+}
+.class-schedule-inner .grid-frame .item:nth-child(4) .grid-inner-item:nth-child(1) {
+  background-color: #d4e6c4;
+}
+.class-schedule-inner .grid-frame .item:nth-child(5) .grid-inner-item:nth-child(1) {
+  background-color: #ffcfcb;
+}
+.class-schedule-inner .grid-frame .item:nth-child(6) .grid-inner-item:nth-child(1) {
+  background-color: #f4c464;
+}
+.class-schedule-inner .grid-frame .item:nth-child(7) .grid-inner-item:nth-child(1) {
+  background-color: #abbeec;
+}
+.class-schedule-inner .grid-frame .item:nth-child(8) .grid-inner-item:nth-child(1) {
+  background-color: #8cc1d3;
+}
+.class-schedule-inner .grid-frame .grid-inner {
+  grid-template-columns: 55px 1fr 1fr 1fr 1fr 1fr;
+}
+.class-schedule-inner .grid-frame .grid-inner .grid-inner-item {
+  padding: 2px;
+  background-clip: content-box;
+}
+.class-schedule-inner .grid-frame .grid-inner .grid-inner-item .grid-inner-item-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #886348;
+}
+.class-schedule-inner .grid-frame .class-schedule-week .grid-inner-item:nth-child(2) {
+  background-color: #c6dbda;
+}
+.class-schedule-inner .grid-frame .class-schedule-week .grid-inner-item:nth-child(3) {
+  background-color: #ffc5bf;
+}
+.class-schedule-inner .grid-frame .class-schedule-week .grid-inner-item:nth-child(4) {
+  background-color: #ecd5e3;
+}
+.class-schedule-inner .grid-frame .class-schedule-week .grid-inner-item:nth-child(5) {
+  background-color: #fae39d;
+}
+.class-schedule-inner .grid-frame .class-schedule-week .grid-inner-item:nth-child(6) {
+  background-color: #99aa8c;
+}/*# sourceMappingURL=mainlogin.css.map */

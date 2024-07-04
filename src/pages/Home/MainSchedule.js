@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
-import "../../scss/main/mainschedule.scss";
+import "../../scss/main/mainschedule.css";
 import moment from "moment";
 
 const ScWrap = styled.div`
