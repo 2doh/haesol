@@ -1,7 +1,5 @@
-import React from "react";
-
 const StudentGrade = () => {
-  return <div>StudentGrade</div>;
+  return;
 };
 
 export default StudentGrade;

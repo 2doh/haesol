@@ -1,14 +1,17 @@
-import React, { useState } from "react";
-import "../../scss/student/studentEdit.css";
 import styled from "@emotion/styled";
-import { useNavigate } from "react-router";
-const StudentEdit = () => {
-  // 네비게이트
-  const navigate = useNavigate();
-  const handleClick = () => {
-    navigate(`/grade/1`);
-  };
+import "../../scss/student/studentEdit.css";
+import React from "react";
 
+const StudentsInfoStyle = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 120px;
+  width: 100%;
+  height: 100%;
+`;
+
+const StudentInfoView = () => {
   // 반 정보 > 추후 데이터 받아와서 처리
   const gradeClass = "5학년 7반";
 
@@ -41,16 +44,6 @@ const StudentEdit = () => {
       studentInfoContent: "기록 내용 없음",
     },
   ];
-
-  const StudentsInfoStyle = styled.div`
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    margin-top: 120px;
-    width: 100%;
-    height: 100%;
-  `;
-
   return (
     <div className="main-core">
       <div className="student-list-title">
@@ -67,14 +60,7 @@ const StudentEdit = () => {
               <div className="text-wrapper">신상 정보</div>
             </div>
             <div className="div-wrapper">
-              <div
-                className="info-subtitle"
-                onClick={() => {
-                  handleClick();
-                }}
-              >
-                성적 입력
-              </div>
+              <div className="info-subtitle">성적 입력</div>
             </div>
             <div className="div-wrapper">
               <div className="info-subtitle">차트</div>
@@ -206,44 +192,8 @@ const StudentEdit = () => {
           </div>
         </div>
       </div>
-      <StudentsInfoStyle>
-        <div className="student-info">
-          <div className="main-schedule-title main-contents-title">
-            <div className="main-schedule-title-text">학생 기록 정보</div>
-          </div>
-          <div className="grid-frame">
-            {prvInfo.map((item, index) => (
-              <>
-                <div className="item" key={index}>
-                  <div className="grid-inner">
-                    <div className="grid-inner-item">
-                      <div className="grid-inner-item-text">학급</div>
-                    </div>
-                    <div className="grid-inner-item1">
-                      <div className="grid-inner-item-text">
-                        {item.prvClass}
-                      </div>
-                    </div>
-                    <div className="grid-inner-item">
-                      <div className="grid-inner-item-text">담당 교직원</div>
-                    </div>
-                    <div className="grid-inner-item1">
-                      <div className="grid-inner-item-text">
-                        {item.prvTeacher}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="student-info-readonly">
-                  {item.studentInfoContent}
-                </div>
-              </>
-            ))}
-          </div>
-        </div>
-      </StudentsInfoStyle>
     </div>
   );
 };
 
-export default StudentEdit;
+export default StudentInfoView;
