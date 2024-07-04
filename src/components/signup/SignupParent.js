@@ -1,13 +1,25 @@
 import styled from "@emotion/styled";
 import logo from "../../images/logo_b.png";
 import "../../scss/signup/signup.scss";
+import ChildInputFields from "./ChildInputFields";
+import DropFields from "./DropFields";
+import EmailInputField from "./EmailInputField";
 import HomeAdressFields from "./HomeAdressFields";
 import IdInputField from "./IdInputField";
 import InputFields from "./InputFields";
+import ParentInputFields from "./ParentInputFields";
 import PassInputField from "./PassInputField";
 import UserSelect from "./UserSelect";
+import PhoneInputFields from "./PhoneInputFields";
+import SubPhoneInputFields from "./SubPhoneInputFields";
 
-const SignupParent = ({ handleSelect, handleSelectTeacher, userType }) => {
+const SignupParent = ({
+  handleSelect,
+  handleSelectTeacher,
+  userType,
+  handleCancel,
+  handleSignup,
+}) => {
   return (
     <div className="signup-wrap">
       <div className="signup-wrap-inner br20">
@@ -25,17 +37,28 @@ const SignupParent = ({ handleSelect, handleSelectTeacher, userType }) => {
               <IdInputField></IdInputField>
               <PassInputField></PassInputField>
               <UserNameStyle>
-                <InputFields>보호자</InputFields>
-                <InputFields>자녀이름</InputFields>
+                <ParentInputFields>보호자</ParentInputFields>
+                <ChildInputFields>자녀이름</ChildInputFields>
               </UserNameStyle>
-              <InputFields>전화번호</InputFields>
-              <InputFields>가족관계</InputFields>
-              <InputFields>이메일</InputFields>
-              <InputFields>추가연락처</InputFields>
+              <PhoneInputFields>전화번호</PhoneInputFields>
+              <UserNameStyle>
+                <DropFields>가족관계</DropFields>
+              </UserNameStyle>
+              <EmailInputField>이메일(선택)</EmailInputField>
+              <SubPhoneInputFields>추가연락처(선택)</SubPhoneInputFields>
               <HomeAdressFields>상세주소</HomeAdressFields>
               <div className="btwrap">
-                <button className="signupbt">회원가입</button>
-                <button className="cancelbt">취소</button>
+                <button
+                  className="signupbt"
+                  onClick={e => {
+                    handleSignup(e);
+                  }}
+                >
+                  회원가입
+                </button>
+                <button className="cancelbt" onClick={handleCancel}>
+                  취소
+                </button>
               </div>
             </div>
           </form>

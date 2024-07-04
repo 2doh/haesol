@@ -1,19 +1,47 @@
-import React from "react";
+import { useEffect, useState } from "react";
 
 const IdInputField = () => {
+  const [userId, setUserId] = useState("");
+  const [validationMsg, setValidationMsg] = useState("");
+  const handleCheckUserId = e => {
+    e.preventDefault();
+  };
+  const handleOnChange = e => {
+    const regex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z0-9]{6,16}$/;
+    if (regex.test(e.target.value)) {
+      setValidationMsg("");
+    } else {
+      setValidationMsg("아이디 형식에 맞지 않습니다");
+    }
+  };
+
+  useEffect(() => {}, []);
+
   return (
     <div className="signup-main-fields">
       <div className="signup-main-fields-section-top">
         <div className="fields-section-title">아이디</div>
-        <div className="fields-section-errmsg">사용할 수 없는 아이디입니다</div>
+        <div className="fields-section-errmsg">{validationMsg}</div>
       </div>
       <div className="signup-main-fields-section-bottom-id">
         <input
           className="fieleds-section-input"
           type="text"
-          placeholder="아이디 입력 (6~12자)"
+          placeholder="아이디 입력 (영어,숫자가 포함된 6~16자)"
+          value={userId}
+          onChange={e => {
+            setUserId(e.target.value);
+            handleOnChange(e);
+          }}
         ></input>
-        <button className="check-duplicate-id-bt">중복확인</button>
+        <button
+          className="check-duplicate-id-bt"
+          onClick={e => {
+            handleCheckUserId(e);
+          }}
+        >
+          중복확인
+        </button>
       </div>
     </div>
   );
