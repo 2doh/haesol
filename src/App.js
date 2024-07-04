@@ -21,6 +21,7 @@ import "./App.css";
 // import Main from "components/layout/Main";
 import styled from "@emotion/styled";
 import Signup from "pages/Signup";
+import StudentInfoView from "pages/student/StudentInfoView";
 
 const Main = styled.div`
   background-color: #f3f9fa;
@@ -58,9 +59,17 @@ function App() {
             ></Route>
             <Route path=":userid" element={<Grade />}></Route>
           </Route>
+          {/* 성적 입력 페이지 임시 경로 */}
+          <Route path="/grade/1" element={<Grade />}></Route>
 
           {/* 임시 경로 */}
           <Route path="/students/edit" element={<StudentEdit />}></Route>
+          {/* 학생 본인 정보 수정 페이지 임시 경로 */}
+          <Route
+            path="/students/studntinfo"
+            element={<StudentInfoView />}
+          ></Route>
+
           <Route path="/students" element={<Navigate to="*" />}>
             {/* 경로 수정 후 아래로 변경 */}
             {/* <Route path="edit/:userid" element={<StudentEdit />}></Route> */}
