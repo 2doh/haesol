@@ -6,7 +6,6 @@
   padding: 0px;
   outline-style: none;
   box-sizing: border-box;
-
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-use-select: none;
@@ -37,8 +36,7 @@ html {
 }
 
 body,
-button,
-::placeholder {
+* {
   font-family: "NexonMaplestory";
   font-weight: 300;
   font-style: normal;
