@@ -280,7 +280,8 @@
 .info-contain-mid .info-item-bottom .info-title textarea {
   all: unset;
   border: solid 2px #886348;
-  width: 80%;
-  height: 100px;
+  padding: 10px;
+  width: 81%;
+  height: 80px;
   margin-left: 10px;
 }/*# sourceMappingURL=studentEdit.css.map */
