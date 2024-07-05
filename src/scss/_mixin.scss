@@ -21,3 +21,8 @@
   border-radius: 5px;
   overflow: hidden;
 }
+
+@mixin br-10-h {
+  border-radius: 10px;
+  overflow: hidden;
+}

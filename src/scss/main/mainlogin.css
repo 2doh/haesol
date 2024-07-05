@@ -1,9 +1,66 @@
-.class-schedule-inner h1 {
+.main h1 {
   padding-bottom: 40px;
   font-weight: bold;
   font-size: 36px;
   color: #1b4957;
 }
+.main .main-inner-info .login-user-info {
+  font-size: 13px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #dee8e9;
+  position: relative;
+}
+.main .main-inner-info .login-user-info .login-user-pic {
+  width: 90px;
+  height: 90px;
+  border-radius: 50px;
+  background-color: #dee8e9;
+}
+.main .main-inner-info .login-user-info .login-user-info-div {
+  width: 48%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.main .main-inner-info .login-user-info .login-user-info-div .login-user-info-label-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.main .main-inner-info .login-user-info .login-user-info-div .login-user-info-label-box:first-child {
+  text-align: center;
+}
+.main .main-inner-info .login-user-info .logout-icon {
+  background-color: black;
+  width: 18px;
+  height: 18px;
+}
+.main .main-inner-info .login-user-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  gap: 13px;
+  height: 150px;
+}
+.main .main-inner-info .login-user-btn > button {
+  width: 190px;
+  height: 40px;
+  border-radius: 5px;
+  font-size: 20px;
+}
+.main .main-inner-info .login-user-btn > button:first-child {
+  background-color: #ffdfe4;
+}
+.main .main-inner-info .login-user-btn > button:last-child {
+  background-color: #dee8e9;
+}
+
 .class-schedule-inner .grid-frame {
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 }
