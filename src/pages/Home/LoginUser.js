@@ -4,6 +4,7 @@ import "../../scss/main/mainlogin.css";
 
 import React from "react";
 import ClassSchedule from "./ClassSchedule";
+import ClassNotice from "./ClassNotice";
 
 const LoginUserStyle = styled.div``;
 
@@ -14,7 +15,7 @@ const LoginUser = () => {
         <h1>5학년 7반</h1>
         <div className="main-inner">
           <div className="main-inner-class login-user-view">
-            <div className="main-schedule">
+            <div className="main-schedule main-class-schedule">
               <div className="main-schedule-title main-contents-title">
                 <div className="main-schedule-title-text ">우리반 시간표</div>
               </div>
@@ -23,12 +24,14 @@ const LoginUser = () => {
               </div>
             </div>
 
-            <div className="main-schedule">
+            <div className="main-notice">
               <div className="main-schedule-title main-contents-title">
                 <div className="main-schedule-title-text ">알림장</div>
+                {/* 알림장 날짜 받아오는 것으로 추후 수정 */}
+                <div className="main-notice-day">2024.06.25</div>
               </div>
-              <div className="main-title-dwon-contents main-schedule-calendar">
-                <ClassSchedule />
+              <div className="main-title-dwon-contents">
+                <ClassNotice />
               </div>
             </div>
           </div>

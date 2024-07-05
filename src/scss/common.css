@@ -40,12 +40,10 @@ body,
   font-style: normal;
   font-optical-sizing: auto;
   color: #2a1b07;
-
 }
 
 #root {
   position: relative;
-
 }
 
 .br10 {
@@ -58,4 +56,8 @@ body,
 
 .br20 {
   border-radius: 20px;
+}
+
+.no-display {
+  display: none;
 }/*# sourceMappingURL=common.css.map */

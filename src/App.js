@@ -18,11 +18,9 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "./css/reset.css";
 import "../src/scss/common.scss";
 import "./App.css";
-// import Main from "components/layout/Main";
 import styled from "@emotion/styled";
 import Signup from "pages/Signup";
 import StudentInfoView from "pages/student/StudentInfoView";
-import NotBgClickModal from "components/modal/NotBgClickModal";
 import Modal from "components/layout/Modal";
 
 const Main = styled.div`
