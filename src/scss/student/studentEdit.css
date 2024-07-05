@@ -28,6 +28,7 @@
   display: inline-flex;
   align-items: flex-start;
   position: relative;
+  margin-left: 160px;
   cursor: pointer;
 }
 .main-core .user-info-wrap .user-info-tap .property .frame {
@@ -58,16 +59,13 @@
   white-space: nowrap;
 }
 .main-core .user-info-wrap .user-info-tap .property .div-wrapper {
-  margin-left: -1px;
   background: #fbfaf9;
-  display: inline-flex;
-  width: 160px;
+  display: flex;
+  width: 161px;
   height: 42px;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding: 19px 25px;
-  position: relative;
   flex: 0 0 auto;
   border-radius: 10px 10px 0px 0px;
   overflow: hidden;
@@ -78,11 +76,6 @@
   background: #e4e4e4;
 }
 .main-core .user-info-wrap .user-info-tap .property .div-wrapper .info-subtitle {
-  position: relative;
-  width: -moz-fit-content;
-  width: fit-content;
-  margin-top: -4px;
-  margin-bottom: -2px;
   text-align: center;
   letter-spacing: 0;
   line-height: normal;
@@ -130,6 +123,18 @@
   display: flex;
   align-items: center;
   background: #fbfaf9;
+}
+.main-core .info-contain-top .info-item-top .info-title select,
+.main-core .info-contain-top .info-item-right .info-title select,
+.main-core .info-contain-mid .info-item-top .info-title select,
+.main-core .info-contain-mid .info-item-right .info-title select {
+  width: 180px;
+  height: 30px;
+  padding-left: 5px;
+  background: #fbfaf9;
+  border-width: 0;
+  border: solid 2px #886348;
+  margin-left: 10px;
 }
 .main-core .info-contain-top .info-item-top .info-title span,
 .main-core .info-contain-top .info-item-right .info-title span,
@@ -256,6 +261,13 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+.main-core .info-contain-top .info-item-mid .info-title .add-form div input::-moz-placeholder, .main-core .info-contain-mid .info-item-mid .info-title .add-form div input::-moz-placeholder {
+  color: #2a1b07;
+}
+.main-core .info-contain-top .info-item-mid .info-title .add-form div input::placeholder,
+.main-core .info-contain-mid .info-item-mid .info-title .add-form div input::placeholder {
+  color: #2a1b07;
 }
 .main-core .info-contain-top .info-item-mid .info-title .add-form .info-add,
 .main-core .info-contain-mid .info-item-mid .info-title .add-form .info-add {

@@ -27,6 +27,7 @@
         display: inline-flex;
         align-items: flex-start;
         position: relative;
+        margin-left: 160px;
         cursor: pointer;
         .frame {
           background-color: #e7d9d9;
@@ -55,16 +56,16 @@
           }
         }
         .div-wrapper {
-          margin-left: -1px;
+          // margin-left: -1px;
           background: #fbfaf9;
-          display: inline-flex;
-          width: 160px;
+          display: flex;
+          width: 161px;
           height: 42px;
           align-items: center;
           justify-content: center;
           gap: 10px;
-          padding: 19px 25px;
-          position: relative;
+          // padding: 19px 25px;
+          // position: relative;
           flex: 0 0 auto;
           border-radius: 10px 10px 0px 0px;
           overflow: hidden;
@@ -74,10 +75,10 @@
             background: #e4e4e4;
           }
           .info-subtitle {
-            position: relative;
-            width: fit-content;
-            margin-top: -4px;
-            margin-bottom: -2px;
+            // position: relative;
+            // width: fit-content;
+            // margin-top: -4px;
+            // margin-bottom: -2px;
             text-align: center;
             letter-spacing: 0;
             line-height: normal;
@@ -101,9 +102,9 @@
         border: solid 2px #886348;
         cursor: pointer;
         &:hover {
-          background: #dd838f;
+          background: $p500;
           border: solid 2px #a8172a;
-          color: #efece8;
+          color: $bgP;
         }
       }
     }
@@ -124,6 +125,16 @@
         // border: solid 2px #886348;
         background: #fbfaf9;
         // border-bottom: none;
+        select {
+          width: 180px;
+          height: 30px;
+          padding-left: 5px;
+          background: $pc-base-p;
+          border-width: 0;
+          border: solid 2px #886348;
+          margin-left: 10px;
+        }
+
         span {
           display: flex;
           align-items: center;
@@ -223,6 +234,14 @@
           display: flex;
           flex-direction: column;
           gap: 8px;
+          div {
+            input {
+              &::placeholder {
+                color: $pc-font;
+              }
+            }
+          }
+
           .info-add {
             width: 150%;
           }
