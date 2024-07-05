@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import "../../scss/modal/notbgclickmodal.css";
-
-import React from "react";
+import { useContext, useState } from "react";
+import { NotClickBgModalContext } from "context/NotClickBgModalProvider";
 
 const NotBgClickModalStyle = styled.div`
   position: absolute;
@@ -18,12 +18,17 @@ const NotBgClickModalStyle = styled.div`
 `;
 
 const NotBgClickModal = () => {
+  const { state, dispatch } = useContext(NotClickBgModalContext);
+  const [modalNum, setModalNum] = useState(state.modalNum);
+  console.log("NotClickBgModalContext : ", state);
+  console.log("modalNum : ", modalNum);
+
   return (
     <NotBgClickModalStyle>
       <div className="not-bg-click-modal">
         <div className="modal-inner">
           <div className="modal-header">
-            <div className="modal-text">신청 승인</div>
+            <div className="modal-text">{state.modalHeader[1]}</div>
           </div>
           <div className="modal-body">
             {/* <div className="modal-body-text-div">

@@ -56,19 +56,6 @@ const Timer = () => {
   return (
     <>
       <ClockStyle>
-        {/* <div className="clock">
-          <div className="outer-clock-face">
-            <div className="marking marking-one"></div>
-            <div className="marking marking-two"></div>
-            <div className="marking marking-three"></div>
-            <div className="marking marking-four"></div>
-            <div className="inner-clock-face">
-              <div className="hand hour-hand"></div>
-              <div className="hand min-hand"></div>
-              <div className="hand second-hand"></div>
-            </div>
-          </div>
-        </div> */}
         <FiClock />
       </ClockStyle>
       <TimerStyle>
