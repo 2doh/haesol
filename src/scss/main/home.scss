@@ -83,12 +83,13 @@
   .main-login-user-info {
     height: 160px;
     max-height: 160px;
+    margin-bottom: 110px;
 
     .main-inner-info-login {
       @include text-n-box-shadow;
 
       margin-top: 50px;
-      border-radius: 5px;
+      border-radius: 10px;
       border: 2px solid $navy-blue;
       width: 100%;
       background-color: #ffffff;
@@ -101,7 +102,7 @@
           @include text-n-box-shadow;
           @include bt-animation-01;
 
-          border-radius: 5px;
+          border-radius: 10px;
           border: 2px solid $navy-blue;
 
           width: 290px;
@@ -117,7 +118,7 @@
           color: #ffffff;
         }
 
-        .main-info-loginmenu {
+        .main-info-login-menu {
           display: flex;
           justify-content: center;
           //   background-color: green;
@@ -134,13 +135,13 @@
   }
 
   .main-info-lunch {
-    margin-top: 110px;
+    // margin-top: 110px;
     width: 100%;
     height: 350px;
 
     .main-info-lunch-menu {
       @include text-n-box-shadow;
-      @include br-5-h;
+      @include br-10-h;
 
       border: 3px solid $pc-line-p;
 
