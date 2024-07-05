@@ -1,6 +1,8 @@
 import logo from "../../images/logo_b.png";
 import "../../scss/signup/signup.scss";
+import DropDate from "./DropDate";
 import EmailInputField from "./EmailInputField";
+import GenderSelect from "./GenderSelect";
 import HomeAdressFields from "./HomeAdressFields";
 import IdInputField from "./IdInputField";
 import InputFields from "./InputFields";
@@ -34,6 +36,8 @@ const SignupTeacher = ({
               <InputFields>이름</InputFields>
               <PhoneInputFields>전화번호</PhoneInputFields>
               <EmailInputField>이메일</EmailInputField>
+              <GenderSelect>성별</GenderSelect>
+              <DropDate>생년월일</DropDate>
               <HomeAdressFields>상세주소</HomeAdressFields>
               <div className="btwrap">
                 <button
