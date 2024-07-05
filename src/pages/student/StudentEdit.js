@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../../scss/student/studentEdit.css";
 import styled from "@emotion/styled";
 import { useNavigate } from "react-router";
+import StudentImg from "./StudentImg";
 const StudentEdit = () => {
   // 네비게이트
   const navigate = useNavigate();
@@ -41,6 +42,31 @@ const StudentEdit = () => {
       studentInfoContent: "기록 내용 없음",
     },
   ];
+  const [postCode, setPostCode] = useState("우편번호");
+  const [address, setAddress] = useState("주소");
+  const handleAddClick = e => {
+    e.preventDefault();
+    // 주소찾기 팝업
+    new daum.Postcode({
+      oncomplete: function (data) {
+        var roadAddr = data.roadAddress;
+        var extraRoadAddr = "";
+        if (data.bname !== "" && /[동|로|가]$/g.test(data.bname)) {
+          extraRoadAddr += data.bname;
+        }
+        if (data.buildingName !== "" && data.apartment === "Y") {
+          extraRoadAddr +=
+            extraRoadAddr !== "" ? ", " + data.buildingName : data.buildingName;
+        }
+        if (extraRoadAddr !== "") {
+          extraRoadAddr = " (" + extraRoadAddr + ")";
+        }
+        // 우편번호와 주소 정보를 해당 필드에 넣는다.
+        setPostCode(data.zonecode);
+        setAddress(roadAddr);
+      },
+    }).open();
+  };
 
   const StudentsInfoStyle = styled.div`
     display: flex;
@@ -66,15 +92,13 @@ const StudentEdit = () => {
             <div className="frame">
               <div className="text-wrapper">신상 정보</div>
             </div>
-            <div className="div-wrapper">
-              <div
-                className="info-subtitle"
-                onClick={() => {
-                  handleClick();
-                }}
-              >
-                성적 입력
-              </div>
+            <div
+              className="div-wrapper"
+              onClick={() => {
+                handleClick();
+              }}
+            >
+              <div className="info-subtitle">성적 입력</div>
             </div>
             <div className="div-wrapper">
               <div className="info-subtitle">차트</div>
@@ -133,7 +157,13 @@ const StudentEdit = () => {
             </div>
             <div className="info-title">
               <span>관계</span>
-              <input type="text" name="text" placeholder="" />
+              <select name="family-info">
+                <option value="부">부</option>
+                <option value="모">모</option>
+                <option value="조부">조부</option>
+                <option value="조모">조모</option>
+                <option value="기타">기타</option>
+              </select>
             </div>
             <div className="info-title">
               <span>학부모 전화번호</span>
@@ -144,7 +174,9 @@ const StudentEdit = () => {
               />
             </div>
           </div>
-          <div className="info-img">사진</div>
+          <div className="info-img">
+            <StudentImg />
+          </div>
         </div>
         <div className="info-contain-mid">
           <div className="info-item-mid">
@@ -152,14 +184,27 @@ const StudentEdit = () => {
               <span>주소</span>
               <div className="add-form">
                 <div>
-                  <input type="text" name="text" placeholder="" />
-                  <button type="button">우편번호 찾기</button>
+                  <input
+                    type="text"
+                    name="text"
+                    placeholder={postCode}
+                    readOnly
+                  ></input>
+                  <button
+                    type="button"
+                    onClick={e => {
+                      handleAddClick(e);
+                    }}
+                  >
+                    우편번호 찾기
+                  </button>
                 </div>
                 <input
                   type="text"
                   name="text"
-                  placeholder=""
+                  placeholder={address}
                   className="info-add"
+                  readOnly
                 />
                 <input
                   type="text"
