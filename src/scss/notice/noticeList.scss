@@ -1,0 +1,127 @@
+@import "../valiables";
+@import "../button";
+@import "../mixin";
+
+.main-core {
+  .student-list-title {
+    margin: 35px;
+    span {
+      font-size: 36px;
+      font-weight: 700;
+      color: #1b4957;
+    }
+  }
+  .user-info-wrap {
+    .user-info-tap {
+      .property {
+        margin: 0;
+        .notice-frame {
+          background: $b100;
+          display: inline-flex;
+          width: 161px;
+          height: 42px;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          padding: 19px 25px;
+          position: relative;
+          flex: 0 0 auto;
+          border-radius: 10px 10px 0px 0px;
+          overflow: hidden;
+          border: solid 2px #886348;
+          border-bottom: none;
+          .text-wrapper {
+            position: relative;
+            width: fit-content;
+            margin-top: -4px;
+            margin-bottom: -2px;
+            text-align: center;
+            letter-spacing: 0;
+            line-height: normal;
+            white-space: nowrap;
+          }
+        }
+        .div-wrapper {
+          font-size: 18px;
+        }
+      }
+      .alart-button {
+        button {
+          font-size: 18px;
+          background: $pc-base-p;
+          border: solid 1px $navy-blue;
+          width: 130px;
+          height: 35px;
+          &:hover {
+            background: $b100;
+            color: $pc-font;
+            border: solid 1px $navy-blue;
+          }
+        }
+      }
+    }
+  }
+  .notice-select {
+    width: 100%;
+    height: 60px;
+    background-color: $pc-base-p;
+    border: solid 2px $pc-line-p;
+    border-bottom: none;
+    font-size: 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    text-align: center;
+    .notice-select-inner {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .notice-select-inner:first-child {
+      border-right: solid 2px $pc-line-p;
+    }
+  }
+  .notice-frame {
+    width: 100%;
+    display: grid;
+    font-size: 18px;
+    background-color: $grid-color-w;
+    overflow: hidden;
+    border: 2px solid $pc-line-p;
+
+    & .item {
+      height: 60px;
+    }
+
+    & .item:nth-child(odd) {
+      background-color: $b100;
+    }
+
+    & button {
+      @include bt-animation-01;
+    }
+
+    .grid-inner {
+      height: 100%;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      display: grid;
+      grid-template-columns: 1fr 5fr;
+      text-align: center;
+
+      .grid-inner-item {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .grid-inner-item:first-child {
+        border-right: solid 2px $pc-line-p;
+      }
+    }
+  }
+}

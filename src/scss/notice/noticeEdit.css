@@ -1,0 +1,50 @@
+.main-core {
+  width: 100%;
+}
+.main-core .write-notice-wrap {
+  width: 100%;
+}
+.main-core .write-notice-wrap .select-notice-inner {
+  width: 100%;
+  display: flex;
+  gap: 25px;
+  margin-bottom: 20px;
+}
+.main-core .write-notice-wrap .select-notice-inner select {
+  border: solid 2px #886348;
+  width: 215px;
+  height: 40px;
+  text-align: center;
+  font-size: 15px;
+}
+.main-core .write-notice-wrap .select-notice-inner input {
+  border: solid 2px #886348;
+  width: 215px;
+  height: 40px;
+  text-align: center;
+  font-size: 15px;
+}
+.main-core .write-notice-wrap .write-notice-section {
+  width: 100%;
+}
+.main-core .write-notice-wrap .write-notice-section textarea {
+  width: 100%;
+  height: 100%;
+  font-size: 20px;
+  padding: 10px;
+  border-width: 0;
+  outline: 0;
+  resize: none;
+  overflow: auto;
+  -ms-overflow-style: none;
+  border: solid 2px #886348;
+}
+.main-core .write-notice-wrap .write-notice-section textarea::-moz-placeholder {
+  color: #757575;
+}
+.main-core .write-notice-wrap .write-notice-section textarea::placeholder {
+  color: #757575;
+}
+.main-core .write-notice-wrap .write-notice-section textarea::-webkit-scrollbar {
+  display: none;
+}/*# sourceMappingURL=noticeEdit.css.map */
