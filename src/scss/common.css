@@ -40,6 +40,12 @@ body,
   font-style: normal;
   font-optical-sizing: auto;
   color: #2a1b07;
+
+}
+
+#root {
+  position: relative;
+
 }
 
 .br10 {

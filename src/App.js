@@ -22,6 +22,8 @@ import "./App.css";
 import styled from "@emotion/styled";
 import Signup from "pages/Signup";
 import StudentInfoView from "pages/student/StudentInfoView";
+import NotBgClickModal from "components/modal/NotBgClickModal";
+import Modal from "components/layout/Modal";
 
 const Main = styled.div`
   background-color: #f3f9fa;
@@ -36,6 +38,8 @@ const Main = styled.div`
 function App() {
   return (
     <BrowserRouter>
+      <Modal></Modal>
+
       <Header />
       <Main>
         <Routes>
@@ -45,10 +49,13 @@ function App() {
           <Route path="/signup" element={<Signup />}></Route>
 
           {/* 임의 추가 */}
-          <Route path="/admin/home" element={<AdminHome to="/admin/login" />} />
+          {/* <Route path="/admin/home" element={<AdminHome to="/admin/login" />} /> */}
 
-          <Route path="/admin" element={<Navigate to="/admin/login" />}>
-            <Route path="home" element={<AdminHome />}></Route>
+          {/* <Route path="/admin" element={<Navigate to="/admin/login" />}> */}
+          <Route path="/admin">
+            {/* 추가됨 */}
+            <Route index element={<AdminLogin />}></Route>
+            <Route path="home" index element={<AdminHome />}></Route>
             <Route path="login" element={<AdminLogin />}></Route>
           </Route>
 

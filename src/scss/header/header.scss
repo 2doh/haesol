@@ -16,7 +16,7 @@
 .header {
   @include text-n-box-shadow;
   position: relative;
-  z-index: 999999;
+  z-index: 999;
 
   background-color: #5f909f;
   height: 80px;
