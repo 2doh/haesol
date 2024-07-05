@@ -6,12 +6,11 @@ import DropFields from "./DropFields";
 import EmailInputField from "./EmailInputField";
 import HomeAdressFields from "./HomeAdressFields";
 import IdInputField from "./IdInputField";
-import InputFields from "./InputFields";
 import ParentInputFields from "./ParentInputFields";
 import PassInputField from "./PassInputField";
-import UserSelect from "./UserSelect";
 import PhoneInputFields from "./PhoneInputFields";
 import SubPhoneInputFields from "./SubPhoneInputFields";
+import UserSelect from "./UserSelect";
 
 const SignupParent = ({
   handleSelect,
@@ -41,9 +40,7 @@ const SignupParent = ({
                 <ChildInputFields>자녀이름</ChildInputFields>
               </UserNameStyle>
               <PhoneInputFields>전화번호</PhoneInputFields>
-              <UserNameStyle>
-                <DropFields>가족관계</DropFields>
-              </UserNameStyle>
+              <DropFields>가족관계</DropFields>
               <EmailInputField>이메일(선택)</EmailInputField>
               <SubPhoneInputFields>추가연락처(선택)</SubPhoneInputFields>
               <HomeAdressFields>상세주소</HomeAdressFields>
