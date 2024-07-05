@@ -1,0 +1,115 @@
+.main-core .user-info-wrap .info-contain-top .info-item-top .info-title .select-grade select {
+  width: 180px;
+  height: 30px;
+  padding-left: 5px;
+  background: #fbfaf9;
+  border-width: 0;
+  border: solid 2px #886348;
+  margin-left: 10px;
+}
+.main-core .user-info-wrap .info-contain-top .info-item-top .info-title .total-student {
+  margin-left: 140px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.main-core .user-info-wrap .info-contain-top .info-item-top .info-title .total-student input {
+  width: 100px;
+  height: 30px;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+}
+.main-core .user-info-wrap .info-contain-top .info-item-top #info-grade-select {
+  border-bottom: solid 2px #886348;
+  border-right: solid 2px #886348;
+}
+.main-core .user-info-wrap .info-contain-top .info-item-top .info-title .grade-info-section {
+  margin-left: 35px;
+  display: flex;
+  gap: 50px;
+}
+.main-core .user-info-wrap .info-contain-top .info-item-top .info-title .grade-info-section .grade-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.main-core .user-info-wrap .info-contain-top .info-item-top .info-title .grade-info-section .grade-info input {
+  width: 100px;
+  height: 30px;
+  text-align: center;
+}
+.main-core .user-info-wrap .all-grade {
+  display: flex;
+  justify-content: flex-end;
+  gap: 55px;
+  margin-top: 20px;
+  margin-bottom: 45px;
+}
+.main-core .user-info-wrap .all-grade .grade-rank {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+.main-core .user-info-wrap .all-grade .grade-rank input {
+  width: 100px;
+  height: 30px;
+  text-align: center;
+  background: #fbfaf9;
+  border: solid 2px #886348;
+}
+.main-core .user-info-wrap .parent-check {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 100px;
+}
+.main-core .user-info-wrap .parent-check button {
+  width: 120px;
+  height: 30px;
+  background: #fbfaf9;
+  border: solid 2px #886348;
+  font-size: 18px;
+}
+.main-core .user-info-wrap .parent-check button:hover {
+  background: #dd838f;
+  border: solid 2px #a8172a;
+  color: #efece8;
+}
+.main-core .exam-table {
+  margin-top: 50px;
+  display: flex;
+  justify-content: space-between;
+}
+.main-core .exam-table .property {
+  display: inline-flex;
+  align-items: flex-start;
+  position: relative;
+  cursor: pointer;
+}
+.main-core .exam-table .property .frame {
+  background-color: #fbfaf9;
+  display: inline-flex;
+  width: 161px;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 19px 25px;
+  position: relative;
+  flex: 0 0 auto;
+  border-radius: 10px 10px 0px 0px;
+  overflow: hidden;
+  border: solid 2px #886348;
+  border-bottom: none;
+}
+.main-core .exam-table .property .frame .text-wrapper {
+  position: relative;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin-top: -4px;
+  margin-bottom: -2px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: normal;
+  white-space: nowrap;
+}/*# sourceMappingURL=grade.css.map */

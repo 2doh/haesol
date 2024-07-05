@@ -11,11 +11,11 @@ const DropFields = ({ children }) => {
           <option value="none" hidden>
             가족관계
           </option>
-          <option value="father">부</option>
-          <option value="mother">모</option>
-          <option value="grandfather">조부</option>
-          <option value="grandfather">조모</option>
-          <option value="grandfather">기타</option>
+          <option value="부">부</option>
+          <option value="모">모</option>
+          <option value="조부">조부</option>
+          <option value="조모">조모</option>
+          <option value="기타">기타</option>
         </select>
       </OptionStyle>
     </div>

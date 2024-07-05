@@ -21,7 +21,9 @@ import "./App.css";
 import styled from "@emotion/styled";
 import Signup from "pages/Signup";
 import StudentInfoView from "pages/student/StudentInfoView";
+
 import Modal from "components/layout/Modal";
+
 
 const Main = styled.div`
   background-color: #f3f9fa;
@@ -36,7 +38,7 @@ const Main = styled.div`
 function App() {
   return (
     <BrowserRouter>
-      <Modal></Modal>
+      {/* <Modal></Modal> */}
 
       <Header />
       <Main>
