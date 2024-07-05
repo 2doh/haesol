@@ -23,6 +23,7 @@ import styled from "@emotion/styled";
 import Signup from "pages/Signup";
 import StudentInfoView from "pages/student/StudentInfoView";
 import NotBgClickModal from "components/modal/NotBgClickModal";
+
 // import Modal from "components/layout/Modal";
 
 const Main = styled.div`
