@@ -72,7 +72,7 @@ const Header = () => {
           <Timer></Timer>
           {/* <div>58분 00초</div> */}
           <div>
-            <input type="button" value="연장" />
+            <button>연장</button>
           </div>
         </div>
       </div>
