@@ -31,14 +31,14 @@ const Home = () => {
           {/* 메인 오른쪽 영역 - start */}
           <div className="main-inner-info">
             {/* 내 정보 - start */}
-            <div className="main-login-user-info">
+            <div className="main-login-user-info no-display ">
               {/* <div className="main-schedule-title main-contents-title">
                 <div className="main-schedule-title-text">학교 일정</div>
               </div> */}
               <div className="main-inner-info-login">
                 <div className="login-inner">
                   <button className="main-info-loginbt">로그인 해주세요</button>
-                  <div className="main-info-loginmenu">
+                  <div className="main-info-login-menu">
                     <div className="id-inquiry-page-move">아이디 찾기</div>
                     <div className="pw-inquiry-page-move">비밀번호 찾기</div>
                     <div className="signup-page-move">회원가입</div>
@@ -48,8 +48,8 @@ const Home = () => {
             </div>
 
             {/* 추후 수정 */}
-            <div className="main-info-lunch">
-              <div className="main-activity-title main-contents-title main-info-lunch-title">
+            <div className="main-info-lunch ">
+              <div className="main-activity-title main-contents-title main-info-lunch-title ">
                 <div className="main-schedule-title-text">오늘의 급식</div>
               </div>
               <div className="main-title-dwon-contents main-info-lunch-menu">
