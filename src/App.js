@@ -1,30 +1,28 @@
+import styled from "@emotion/styled";
 import Footer from "components/layout/Footer";
+import Login from "pages/Login";
 import Header from "components/layout/Header";
 import Home from "pages/Home/Home";
-import Login from "pages/Login";
 import NotFound from "pages/NotFound";
-import Students from "pages/student/StudentsList";
+import Signup from "pages/Signup";
 import AdminHome from "pages/admin/AdminHome";
 import AdminLogin from "pages/admin/AdminLogin";
 import Grade from "pages/grade/Grade";
 import GradeStatistics from "pages/grade/GradeStatistics";
 import Notice from "pages/notice/Notice";
-import NoticeClass from "pages/notice/NoticeClass";
 import NoticeEdit from "pages/notice/NoticeEdit";
 import NoticeModify from "pages/notice/NoticeModify";
 import StudentEdit from "pages/student/StudentEdit";
 import StudentGrade from "pages/student/StudentGrade";
+import StudentInfoView from "pages/student/StudentInfoView";
+import Students from "pages/student/StudentsList";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import "./css/reset.css";
 import "../src/scss/common.scss";
 import "./App.css";
-import styled from "@emotion/styled";
-import Signup from "pages/Signup";
-import StudentInfoView from "pages/student/StudentInfoView";
+import "./css/reset.css";
 
-import Modal from "components/layout/Modal";
-import NoticeList from "pages/notice/NoticeList";
 import NoticeItem from "pages/notice/NoticeItem";
+import NoticeList from "pages/notice/NoticeList";
 
 const Main = styled.div`
   background-color: #f3f9fa;

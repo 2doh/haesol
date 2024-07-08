@@ -27,9 +27,10 @@
 }
 .signup {
   height: 100%;
+  width: 100%;
   @include flex-center();
   .signup-wrap {
-    width: 1180px;
+    max-width: 1180px;
     height: 100%;
     background-color: #f3f9fa;
     @include flex-center();
@@ -109,23 +110,23 @@
                 @include input();
               }
               .showpass {
-                position: absolute;
-                right: 10px;
-                cursor: pointer;
-                background: url("../../images/showpass.svg") no-repeat center;
-                width: 20px;
-                height: 20px;
+                @include showpass();
               }
               .hidepass {
-                position: absolute;
-                right: 10px;
-                cursor: pointer;
-                background: url("../../images//ri_eye-close-line.svg") no-repeat
-                  center;
-                background-size: contain;
-                width: 20px;
-                height: 20px;
+                @include hidepass();
               }
+            }
+            .signup-main-fields-label {
+              width: 100%;
+              height: 100%;
+              display: flex;
+              align-items: center;
+              font-size: 18px;
+              gap: 10px;
+            }
+            .signup-main-fields-gender {
+              width: 20px;
+              height: 20px;
             }
             .signup-main-fields-section-bottom {
               width: 100%;

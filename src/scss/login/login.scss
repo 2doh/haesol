@@ -5,10 +5,23 @@
   flex-shrink: 0;
   border-radius: 4px;
   @include flex-center();
+  cursor: pointer;
 }
 @mixin input() {
   border-radius: 5px;
   border: 1px solid #886348;
+  margin-top: 10px;
+  width: 100%;
+  height: 30px;
+  padding-left: 5px;
+}
+@mixin cleanup() {
+  width: 20px;
+  height: 30px;
+  position: absolute;
+  right: 5px;
+  bottom: 0;
+  cursor: pointer;
 }
 .login {
   height: 960px;
@@ -44,42 +57,58 @@
   .login-wrap-panel-userid {
     width: 100%;
     height: 62px;
+    position: relative;
+    .login-panel-userid-title {
+      width: 100%;
+      height: 22px;
+      font-size: 20px;
+    }
+    .login-panel-userid-input {
+      @include input();
+    }
+    .idcleanupbt {
+      @include cleanup();
+    }
   }
-  .login-panel-userid-title {
-    width: 100%;
-    height: 22px;
-    font-size: 20px;
-  }
-  .login-panel-userid-input {
-    margin-top: 10px;
-    width: 100%;
-    height: 30px;
-    @include input();
-  }
+
   .login-wrap-panel-userpass {
     width: 100%;
     height: 62px;
     font-size: 20px;
+    position: relative;
+    .login-panel-userpass-title {
+      margin-top: 25px;
+      width: 100%;
+      height: 22px;
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .login-panel-userpass-input {
+      @include input();
+    }
+    .showpass {
+      @include showpass();
+      @include cleanup();
+      right: 30px;
+    }
+    .hidepass {
+      @include hidepass();
+      @include cleanup();
+      right: 30px;
+    }
+    .cleanupbt {
+      @include cleanup();
+    }
   }
-  .login-panel-userpass-title {
-    margin-top: 25px;
-    width: 100%;
-    height: 22px;
-  }
-  .login-panel-userpass-input {
-    margin-top: 10px;
-    width: 100%;
-    height: 30px;
-    @include input();
-  }
+
   .login-wrap-panel-loginbt {
+    @include input();
     margin-top: 40px;
-    width: 100%;
     height: 45px;
     font-size: 20px;
     background-color: #e7d9d9;
     cursor: pointer;
-    @include input();
   }
   .login-wrap-panel-social {
     margin-top: 50px;
@@ -96,16 +125,13 @@
   .login-panel-social-naver {
     @include social();
     background: #22d61e;
-    cursor: pointer;
   }
   .login-panel-social-kakao {
     @include social();
     background-color: #ffeb38;
-    cursor: pointer;
   }
   .login-panel-social-google {
     @include social();
     background-color: black;
-    cursor: pointer;
   }
 }
