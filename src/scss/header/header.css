@@ -37,6 +37,30 @@
   justify-content: space-around;
   align-items: center;
 }
+.header .header-right-div .inner-div button {
+  font-size: 16px;
+  width: 70px;
+  height: 35px;
+  border: 1px solid #033d46;
+  background-color: #add2d8;
+  border-radius: 5px;
+  color: #033d46;
+  display: inline-block;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.34) inset, 0 2px 0 -1px rgba(0, 0, 0, 0.13), 0 3px 0 -1px rgba(0, 0, 0, 0.08), 0 3px 13px -1px rgba(0, 0, 0, 0.21);
+  font-size: 14px;
+  width: 40px;
+  height: 25px;
+}
+.header .header-right-div .inner-div button:active {
+  top: 1px;
+  border-color: rgba(0, 0, 0, 0.34) rgba(0, 0, 0, 0.21) rgba(0, 0, 0, 0.21);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.89), 0 1px rgba(0, 0, 0, 0.05) inset;
+  position: relative;
+}
+.header .header-right-div .inner-div button:active {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05), 0 1px rgba(0, 0, 0, 0.05) inset;
+}
 .header .header-inner {
   /* background-color: red; */
   min-width: 1180px;
