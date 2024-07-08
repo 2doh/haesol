@@ -1,27 +1,25 @@
 .login-wrap-navi {
   display: flex;
   justify-content: space-around;
+  background-color: #efeeed;
 }
-.login-wrap-navi .login-navi-login {
+.login-wrap-navi .selectednavi {
+  background-color: #fbfaf9;
   width: 100%;
   height: 50px;
   font-size: 20px;
+  border-right: 1px solid #886348;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.login-wrap-navi .login-navi-find-id {
+.login-wrap-navi .unselectednavi {
   width: 100%;
   height: 50px;
   font-size: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.login-wrap-navi .login-navi-find-pass {
-  width: 100%;
-  height: 50px;
-  font-size: 20px;
+  border-bottom: 1px solid #886348;
   display: flex;
   align-items: center;
   justify-content: center;
