@@ -49,12 +49,7 @@ function App() {
           <Route path="/students" element={<Students />}></Route>
           <Route path="/signup" element={<Signup />}></Route>
 
-          {/* 임의 추가 */}
-          {/* <Route path="/admin/home" element={<AdminHome to="/admin/login" />} /> */}
-
-          {/* <Route path="/admin" element={<Navigate to="/admin/login" />}> */}
           <Route path="/admin">
-            {/* 추가됨 */}
             <Route index element={<AdminLogin />}></Route>
             <Route path="home" index element={<AdminHome />}></Route>
             <Route path="login" element={<AdminLogin />}></Route>
@@ -73,6 +68,9 @@ function App() {
           {/* 임시 경로 */}
           <Route path="/students/edit" element={<StudentEdit />}></Route>
           {/* 학생 본인 정보 수정 페이지 임시 경로 */}
+
+          {/* 선생님 본인 정보 수정 페이지 */}
+          {/* <Route path="/teacher/edit" element={<TeacherEdit />}></Route> */}
           <Route
             path="/students/studntinfo"
             element={<StudentInfoView />}

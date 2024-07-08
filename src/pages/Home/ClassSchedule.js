@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import React from "react";
+import { useRef } from "react";
 
 const ClassScheduleStyle = styled.div`
   width: 100%;
@@ -7,6 +7,8 @@ const ClassScheduleStyle = styled.div`
 `;
 
 const ClassSchedule = () => {
+  const colorRef = useRef();
+
   return (
     <ClassScheduleStyle>
       <div className="class-schedule-inner">
@@ -58,10 +60,23 @@ const ClassSchedule = () => {
           <div className="item">
             <div className="grid-inner">
               <div className="grid-inner-item">
-                <div className="grid-inner-item-text">2</div>
+                <div className="grid-inner-item-text" ref={colorRef}>
+                  2
+                </div>
               </div>
               <div className="grid-inner-item">
-                <div className="grid-inner-item-text"></div>
+                <div
+                  className="grid-inner-item-text"
+                  style={
+                    {
+                      // backgroundColor: extChartHexToRGB(colorRef.current.style),
+                      // backgroundColor: colorRef.current.style.background - color,
+                    }
+                  }
+                  onClick={() => {
+                    console.log();
+                  }}
+                ></div>
               </div>
               <div className="grid-inner-item">
                 <div className="grid-inner-item-text"></div>

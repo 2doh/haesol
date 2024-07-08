@@ -26,7 +26,6 @@
 
       padding-bottom: 20px;
       border-bottom: 1px solid $b100;
-
       position: relative;
 
       .login-user-pic {
@@ -38,23 +37,33 @@
 
       .login-user-info-div {
         width: 48%;
+        // height: 100%;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        // align-items: center;
+        line-height: 1.4em;
+        gap: 10px;
 
         .login-user-info-label-box {
           display: flex;
           flex-direction: column;
           justify-content: space-around;
+          white-space: nowrap;
+          width: 100%;
+          height: 100%;
         }
 
         .login-user-info-label-box:first-child {
           text-align: center;
         }
+
+        .login-user-info-text {
+        }
       }
 
       .logout-icon {
-        background-color: black;
+        cursor: pointer;
         width: 18px;
         height: 18px;
       }
@@ -80,9 +89,11 @@
       & > button:first-child {
         background-color: $p200;
         // border: 2px solid $p200;
+        border: 2px solid darken($p200, 3%);
       }
       & > button:last-child {
         background-color: $b100;
+        border: 2px solid darken($b100, 5%);
 
         // border: 2px solid $p200;
       }
@@ -93,7 +104,7 @@
     .main-notice-day {
       padding-left: 30px;
       padding-bottom: 5px;
-      font-size: 25px;
+      font-size: 20px;
       height: 100%;
 
       display: flex;
@@ -121,6 +132,13 @@
           display: flex;
           justify-content: center;
           align-items: center;
+          cursor: pointer;
+        }
+
+        // 비활성화된 알림장 메뉴
+        .no-select-menu {
+          background-color: $no-select-c-1;
+          color: #ffffff;
         }
       }
 
@@ -230,18 +248,38 @@
     .class-schedule-week {
       .grid-inner-item:nth-child(2) {
         background-color: $monday-c;
+
+        .grid-inner-item-text {
+          border-color: darken($monday-c, 50%);
+        }
       }
       .grid-inner-item:nth-child(3) {
         background-color: $tuesday-c;
+
+        .grid-inner-item-text {
+          border-color: darken($tuesday-c, 50%);
+        }
       }
       .grid-inner-item:nth-child(4) {
         background-color: $wednesday-c;
+
+        .grid-inner-item-text {
+          border-color: darken($wednesday-c, 50%);
+        }
       }
       .grid-inner-item:nth-child(5) {
         background-color: $thursday-c;
+
+        .grid-inner-item-text {
+          border-color: darken($thursday-c, 50%);
+        }
       }
       .grid-inner-item:nth-child(6) {
         background-color: $friday-c;
+
+        .grid-inner-item-text {
+          border-color: darken($friday-c, 50%);
+        }
       }
     }
   }

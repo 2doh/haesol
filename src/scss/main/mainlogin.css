@@ -4,7 +4,8 @@
   font-size: 36px;
   color: #1b4957;
 }
-.main .main-class-schedule, .main .main-schedule-calendar {
+.main .main-class-schedule,
+.main .main-schedule-calendar {
   height: auto;
 }
 .main .main-class-schedule {
@@ -30,17 +31,30 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  line-height: 1.4em;
+  gap: 10px;
 }
-.main .main-inner-info .login-user-info .login-user-info-div .login-user-info-label-box {
+.main
+  .main-inner-info
+  .login-user-info
+  .login-user-info-div
+  .login-user-info-label-box {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  white-space: nowrap;
+  width: 100%;
+  height: 100%;
 }
-.main .main-inner-info .login-user-info .login-user-info-div .login-user-info-label-box:first-child {
+.main
+  .main-inner-info
+  .login-user-info
+  .login-user-info-div
+  .login-user-info-label-box:first-child {
   text-align: center;
 }
 .main .main-inner-info .login-user-info .logout-icon {
-  background-color: black;
+  cursor: pointer;
   width: 18px;
   height: 18px;
 }
@@ -62,14 +76,16 @@
 }
 .main .main-inner-info .login-user-btn > button:first-child {
   background-color: #ffdfe4;
+  border: 2px solid #ffd0d7;
 }
 .main .main-inner-info .login-user-btn > button:last-child {
   background-color: #dee8e9;
+  border: 2px solid #cfdddf;
 }
 .main .main-notice .main-notice-day {
   padding-left: 30px;
   padding-bottom: 5px;
-  font-size: 25px;
+  font-size: 20px;
   height: 100%;
   display: flex;
   flex-direction: column-reverse;
@@ -91,6 +107,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
+}
+.main .main-notice .class-notice-inner .notice-menu .no-select-menu {
+  background-color: #92adb6;
+  color: #ffffff;
 }
 .main .main-notice .class-notice-inner .notice-inner {
   border-radius: 0 0 5px 5px;
@@ -119,25 +140,46 @@
 .class-schedule-inner .grid-frame .item:nth-child(1) {
   background-color: #fbfaf9;
 }
-.class-schedule-inner .grid-frame .item:nth-child(2) .grid-inner-item:nth-child(1) {
+.class-schedule-inner
+  .grid-frame
+  .item:nth-child(2)
+  .grid-inner-item:nth-child(1) {
   background-color: #f9957f;
 }
-.class-schedule-inner .grid-frame .item:nth-child(3) .grid-inner-item:nth-child(1) {
+.class-schedule-inner
+  .grid-frame
+  .item:nth-child(3)
+  .grid-inner-item:nth-child(1) {
   background-color: #abcfd1;
 }
-.class-schedule-inner .grid-frame .item:nth-child(4) .grid-inner-item:nth-child(1) {
+.class-schedule-inner
+  .grid-frame
+  .item:nth-child(4)
+  .grid-inner-item:nth-child(1) {
   background-color: #d4e6c4;
 }
-.class-schedule-inner .grid-frame .item:nth-child(5) .grid-inner-item:nth-child(1) {
+.class-schedule-inner
+  .grid-frame
+  .item:nth-child(5)
+  .grid-inner-item:nth-child(1) {
   background-color: #ffcfcb;
 }
-.class-schedule-inner .grid-frame .item:nth-child(6) .grid-inner-item:nth-child(1) {
+.class-schedule-inner
+  .grid-frame
+  .item:nth-child(6)
+  .grid-inner-item:nth-child(1) {
   background-color: #f4c464;
 }
-.class-schedule-inner .grid-frame .item:nth-child(7) .grid-inner-item:nth-child(1) {
+.class-schedule-inner
+  .grid-frame
+  .item:nth-child(7)
+  .grid-inner-item:nth-child(1) {
   background-color: #abbeec;
 }
-.class-schedule-inner .grid-frame .item:nth-child(8) .grid-inner-item:nth-child(1) {
+.class-schedule-inner
+  .grid-frame
+  .item:nth-child(8)
+  .grid-inner-item:nth-child(1) {
   background-color: #8cc1d3;
 }
 .class-schedule-inner .grid-frame .grid-inner {
@@ -147,7 +189,11 @@
   padding: 2px;
   background-clip: content-box;
 }
-.class-schedule-inner .grid-frame .grid-inner .grid-inner-item .grid-inner-item-text {
+.class-schedule-inner
+  .grid-frame
+  .grid-inner
+  .grid-inner-item
+  .grid-inner-item-text {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -155,18 +201,68 @@
   height: 100%;
   border: 1px solid #886348;
 }
-.class-schedule-inner .grid-frame .class-schedule-week .grid-inner-item:nth-child(2) {
+.class-schedule-inner
+  .grid-frame
+  .class-schedule-week
+  .grid-inner-item:nth-child(2) {
   background-color: #c6dbda;
 }
-.class-schedule-inner .grid-frame .class-schedule-week .grid-inner-item:nth-child(3) {
+.class-schedule-inner
+  .grid-frame
+  .class-schedule-week
+  .grid-inner-item:nth-child(2)
+  .grid-inner-item-text {
+  border-color: #3f6362;
+}
+.class-schedule-inner
+  .grid-frame
+  .class-schedule-week
+  .grid-inner-item:nth-child(3) {
   background-color: #ffc5bf;
 }
-.class-schedule-inner .grid-frame .class-schedule-week .grid-inner-item:nth-child(4) {
+.class-schedule-inner
+  .grid-frame
+  .class-schedule-week
+  .grid-inner-item:nth-child(3)
+  .grid-inner-item-text {
+  border-color: #bf1200;
+}
+.class-schedule-inner
+  .grid-frame
+  .class-schedule-week
+  .grid-inner-item:nth-child(4) {
   background-color: #ecd5e3;
 }
-.class-schedule-inner .grid-frame .class-schedule-week .grid-inner-item:nth-child(5) {
+.class-schedule-inner
+  .grid-frame
+  .class-schedule-week
+  .grid-inner-item:nth-child(4)
+  .grid-inner-item-text {
+  border-color: #863c69;
+}
+.class-schedule-inner
+  .grid-frame
+  .class-schedule-week
+  .grid-inner-item:nth-child(5) {
   background-color: #fae39d;
 }
-.class-schedule-inner .grid-frame .class-schedule-week .grid-inner-item:nth-child(6) {
+.class-schedule-inner
+  .grid-frame
+  .class-schedule-week
+  .grid-inner-item:nth-child(5)
+  .grid-inner-item-text {
+  border-color: #916f07;
+}
+.class-schedule-inner
+  .grid-frame
+  .class-schedule-week
+  .grid-inner-item:nth-child(6) {
   background-color: #99aa8c;
-}/*# sourceMappingURL=mainlogin.css.map */
+}
+.class-schedule-inner
+  .grid-frame
+  .class-schedule-week
+  .grid-inner-item:nth-child(6)
+  .grid-inner-item-text {
+  border-color: #1b2017;
+} /*# sourceMappingURL=mainlogin.css.map */
