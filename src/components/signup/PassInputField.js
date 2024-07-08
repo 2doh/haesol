@@ -11,7 +11,6 @@ const PassInputField = () => {
   const handleShowPass = e => {
     e.preventDefault();
     setShowPass(!showPass);
-    console.log(showPass);
   };
 
   const handleOnChange = e => {

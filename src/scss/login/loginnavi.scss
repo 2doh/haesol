@@ -1,25 +1,31 @@
 @import "../mixin";
 
+@mixin naviStyleUnselected {
+  width: 100%;
+  height: 50px;
+  font-size: 20px;
+  border-bottom: 1px solid #886348;
+  @include flex-center();
+}
+@mixin naviStyleSelected {
+  background-color: #fbfaf9;
+  width: 100%;
+  height: 50px;
+  font-size: 20px;
+  border-right: 1px solid #886348;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  @include flex-center();
+}
+
 .login-wrap-navi {
   display: flex;
   justify-content: space-around;
-
-  .login-navi-login {
-    width: 100%;
-    height: 50px;
-    font-size: 20px;
-    @include flex-center();
+  background-color: #efeeed;
+  .selectednavi {
+    @include naviStyleSelected();
   }
-  .login-navi-find-id {
-    width: 100%;
-    height: 50px;
-    font-size: 20px;
-    @include flex-center();
-  }
-  .login-navi-find-pass {
-    width: 100%;
-    height: 50px;
-    font-size: 20px;
-    @include flex-center();
+  .unselectednavi {
+    @include naviStyleUnselected();
   }
 }
