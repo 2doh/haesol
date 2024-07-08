@@ -1,7 +1,8 @@
-import React from "react";
-import "../../scss/student/studentEdit.css";
-import "../../scss/student/grade.css";
+import Signature from "pages/grade/Signature";
+import { useState } from "react";
 import { useNavigate } from "react-router";
+import "../../scss/student/grade.css";
+import "../../scss/student/studentEdit.css";
 
 const Grade = () => {
   // 네비게이트
@@ -259,9 +260,7 @@ const Grade = () => {
             반 등수 <input readOnly placeholder="-" /> /312등
           </div>
         </div>
-        <div className="parent-check">
-          <button>학부모 확인</button>
-        </div>
+        <Signature />
 
         <div className="exam-table">
           <div className="property">
@@ -452,9 +451,7 @@ const Grade = () => {
             반 등수 <input readOnly placeholder="-" /> /312등
           </div>
         </div>
-        <div className="parent-check">
-          <button>학부모 확인</button>
-        </div>
+        <Signature />
       </div>
     </div>
   );
