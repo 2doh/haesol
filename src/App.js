@@ -23,6 +23,8 @@ import Signup from "pages/Signup";
 import StudentInfoView from "pages/student/StudentInfoView";
 
 import Modal from "components/layout/Modal";
+import NoticeList from "pages/notice/NoticeList";
+import NoticeItem from "pages/notice/NoticeItem";
 
 const Main = styled.div`
   background-color: #f3f9fa;
@@ -80,9 +82,14 @@ function App() {
             <Route path="grade/:studentid" element={<StudentGrade />}></Route>
           </Route>
 
+          {/* 임시 경로 */}
+          <Route path="/notice/list/classid" element={<NoticeList />}></Route>
+          <Route path="/notice/item/classid" element={<NoticeItem />}></Route>
+          <Route path="/notice/edit" element={<NoticeEdit />}></Route>
           <Route path="/notice" element={<Notice />}>
-            <Route path=":classid" element={<NoticeClass />}></Route>
-            <Route path="edit" element={<NoticeEdit />}></Route>
+            {/* <Route path="list/classid" element={<NoticeList />}></Route>
+            <Route path="item/classid" element={<NoticeItem />}></Route> */}
+            {/* <Route path="edit" element={<NoticeEdit />}></Route> */}
             <Route path="modify/:noticeid" element={<NoticeModify />}></Route>
           </Route>
 
