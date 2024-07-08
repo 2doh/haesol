@@ -14,14 +14,20 @@ const NoticeEdit = () => {
       </div>
       <div className="write-notice-wrap">
         <div className="select-notice-inner">
-          <select name="select-notice">
-            <option value="none" disabled selected>
-              == 항목을 선택하세요 ==
-            </option>
-            <option value="준비물">준비물</option>
-            <option value="알림">알림</option>
-          </select>
-          <input type="date" />
+          <div className="select-notice-inner-left">
+            <select name="select-notice">
+              <option value="none" disabled selected>
+                == 항목을 선택하세요 ==
+              </option>
+              <option value="준비물">준비물</option>
+              <option value="알림">알림</option>
+            </select>
+            <input type="date" />
+          </div>
+          <div className="info-button">
+            <button>저장</button>
+            <button>취소</button>
+          </div>
         </div>
         <div className="write-notice-section">
           <textarea type="text" placeholder="내용을 입력하세요." />

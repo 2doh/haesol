@@ -79,23 +79,23 @@
         }
       }
     }
-    .parent-check {
-      display: flex;
-      justify-content: flex-end;
-      margin-bottom: 100px;
-      button {
-        width: 120px;
-        height: 30px;
-        background: $pc-base-p;
-        border: solid 2px #886348;
-        font-size: 18px;
-        &:hover {
-          background: $p500;
-          border: solid 2px #a8172a;
-          color: $bgP;
-        }
-      }
-    }
+    // .parent-check {
+    //   display: flex;
+    //   justify-content: flex-end;
+    //   margin-bottom: 100px;
+    //   button {
+    //     width: 120px;
+    //     height: 30px;
+    //     background: $pc-base-p;
+    //     border: solid 2px $pc-line-p;
+    //     font-size: 18px;
+    //     &:hover {
+    //       background: $p500;
+    //       border: solid 2px #a8172a;
+    //       color: $bgP;
+    //     }
+    //   }
+    // }
   }
   .exam-table {
     margin-top: 50px;

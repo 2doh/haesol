@@ -158,6 +158,9 @@ const StudentEdit = () => {
             <div className="info-title">
               <span>관계</span>
               <select name="family-info">
+                <option value="none" disabled selected>
+                  == 항목을 선택하세요 ==
+                </option>
                 <option value="부">부</option>
                 <option value="모">모</option>
                 <option value="조부">조부</option>

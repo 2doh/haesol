@@ -1,27 +1,34 @@
-import React, { useState } from "react";
+import styled from "@emotion/styled";
+import React, { useRef, useState } from "react";
 
 const StudentImg = () => {
   const [sendFile, setSendFile] = useState(null);
-  const handleFileChange = e => {
-    const file = e.target.files[0];
-    // 파일 보관
-    setSendFile(file);
-  };
+  const [previewFile, setPreviewFile] = useState("");
+  const fileBt = useRef(null);
 
   // 강제로 input type="file" 을 클릭한 것처럼 js 에서 실행
   const handleFileClick = () => {
     fileBt.current.click();
   };
 
-  const [previewFile, setPreviewFile] = useState("");
-  const handleFile = e => {
+  // 파일 목록 및 이미지 미리보기
+  const handleFileChange = e => {
     const file = e.target.files[0];
     const url = URL.createObjectURL(file);
+    // 파일 보관
+    setSendFile(file);
     // 웹 브라우저 임시 파일 주소
     setPreviewFile(url);
   };
 
-  <img src={previewFile} />;
+  // // 이미지 미리보기
+  // const handleFile = e => {
+  //   const file = e.target.files[0];
+  //   const url = URL.createObjectURL(file);
+  //   // 웹 브라우저 임시 파일 주소
+  //   setPreviewFile(url);
+  // };
+  // <img src={previewFile} />;
 
   //   // 1. 전송데이터 포맷 만들기
   //   const formData = new FormData();
@@ -55,19 +62,38 @@ const StudentImg = () => {
   //     }
   //   };
 
+  const StudentsImeStyle = styled.div`
+    width: 100%;
+    height: 100%;
+    .img-contain {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  `;
+
   return (
-    // 이미지 보여지는 곳
-    <>
-      <div className="student-img">이미지</div>
+    // 이미지 전체 영역
+    <StudentsImeStyle onClick={() => handleFileClick()}>
+      {/* 이미지 보여지는 곳 */}
+      <div className="img-contain">
+        <img src={previewFile} />
+      </div>
       <input
-        // style={{ display: "none" }}
+        style={{ display: "none" }}
         id="filebt_id"
-        // ref={fileBt}
+        ref={fileBt}
         type="file"
         accept="image/*"
-        // onChange={e => handleFileChange(e)}
+        onChange={e => handleFileChange(e)}
       />
-    </>
+    </StudentsImeStyle>
   );
 };
 

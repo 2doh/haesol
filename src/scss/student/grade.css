@@ -58,23 +58,6 @@
   background: #fbfaf9;
   border: solid 2px #886348;
 }
-.main-core .user-info-wrap .parent-check {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 100px;
-}
-.main-core .user-info-wrap .parent-check button {
-  width: 120px;
-  height: 30px;
-  background: #fbfaf9;
-  border: solid 2px #886348;
-  font-size: 18px;
-}
-.main-core .user-info-wrap .parent-check button:hover {
-  background: #dd838f;
-  border: solid 2px #a8172a;
-  color: #efece8;
-}
 .main-core .exam-table {
   margin-top: 50px;
   display: flex;
