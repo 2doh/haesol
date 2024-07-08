@@ -28,7 +28,6 @@ const Header = () => {
             </ul>
             <ul>
               <a href="" className="menu-main-title">
-                {" "}
                 알림마당
               </a>
 
@@ -46,8 +45,7 @@ const Header = () => {
             </ul>
             <ul>
               <a href="" className="menu-main-title">
-                {" "}
-                선생님 마당{" "}
+                선생님 마당
               </a>
 
               <ul>
@@ -70,10 +68,6 @@ const Header = () => {
       <div className="header-right-div">
         <div className="inner-div">
           <Timer></Timer>
-          {/* <div>58분 00초</div> */}
-          <div>
-            <button>연장</button>
-          </div>
         </div>
       </div>
     </div>

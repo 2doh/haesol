@@ -78,13 +78,14 @@ const MainSchedule = () => {
     <ScWrap>
       <Calendar
         locale="ko"
+        // locale="en"
         onChange={onChange}
         value={value}
-        // next2Label={null}
-        // prev2Label={null}
-        // formatDay={(locale, date) => moment(date).format("D")}
+        next2Label={null}
+        prev2Label={null}
+        formatDay={(locale, date) => moment(date).format("D")}
         // tileContent={addContent}
-        // showNeighboringMonth={false}
+        showNeighboringMonth={false}
         // onActiveStartDateChange={({ activeStartDate }) =>
         //   getActiveMonth(activeStartDate)
         // }

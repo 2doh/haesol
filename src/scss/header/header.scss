@@ -1,4 +1,6 @@
 @import "../mixin";
+@import "../button";
+@import "../valiables";
 
 .logo {
   background-image: url("../../images/logo_w.png");
@@ -40,6 +42,21 @@
       display: flex;
       justify-content: space-around;
       align-items: center;
+
+      & button {
+        @include mini-bt-style($b200, $font-bc-2, $font-bc-2);
+        @include bt-animation-01;
+
+        font-size: 14px;
+        width: 40px;
+        height: 25px;
+
+        &:active {
+          box-shadow:
+            0 1px 0 rgba(0, 0, 0, 0.05),
+            0 1px rgba(0, 0, 0, 0.05) inset;
+        }
+      }
     }
   }
 
