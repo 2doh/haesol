@@ -24,6 +24,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import NoticeItem from "pages/notice/NoticeItem";
 import NoticeList from "pages/notice/NoticeList";
+import TeacherEdit from "pages/teacher/TeacherEdit";
 
 const Main = styled.div`
   background-color: #f3f9fa;
@@ -69,7 +70,7 @@ function App() {
           {/* 학생 본인 정보 수정 페이지 임시 경로 */}
 
           {/* 선생님 본인 정보 수정 페이지 */}
-          {/* <Route path="/teacher/edit" element={<TeacherEdit />}></Route> */}
+          <Route path="/teacher/edit" element={<TeacherEdit />}></Route>
           <Route
             path="/students/studntinfo"
             element={<StudentInfoView />}
