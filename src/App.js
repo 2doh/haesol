@@ -1,7 +1,3 @@
-import "./css/reset.css";
-import "../src/scss/common.css";
-import "./App.css";
-
 import styled from "@emotion/styled";
 import Footer from "components/layout/Footer";
 import Login from "pages/Login";
@@ -21,12 +17,17 @@ import StudentGrade from "pages/student/StudentGrade";
 import StudentInfoView from "pages/student/StudentInfoView";
 import Students from "pages/student/StudentsList";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import "../src/scss/common.scss";
+import "./App.css";
+import "./css/reset.css";
 
 import NoticeItem from "pages/notice/NoticeItem";
 import NoticeList from "pages/notice/NoticeList";
+import { useEffect, useState } from "react";
 import TeacherEdit from "pages/teacher/TeacherEdit";
 
 const Main = styled.div`
+  /* & > .name { */
   background-color: #f3f9fa;
   width: 1180px;
   height: 100%;
@@ -34,9 +35,14 @@ const Main = styled.div`
   padding: 40px;
   padding-bottom: 80px;
   min-height: 687px;
+
+  /* } */
 `;
 
 function App() {
+  const [notFoundPage, setNotFoundPage] = useState(false);
+  useEffect(() => {}, [notFoundPage]);
+
   return (
     <BrowserRouter>
       {/* <Modal></Modal> */}
@@ -93,7 +99,11 @@ function App() {
             <Route path="modify/:noticeid" element={<NoticeModify />}></Route>
           </Route>
 
-          <Route path="*" element={<NotFound />}></Route>
+          <Route
+            path="*"
+            element={<NotFound />}
+            setNotFoundPage={setNotFoundPage}
+          ></Route>
         </Routes>
       </Main>
       <Footer />

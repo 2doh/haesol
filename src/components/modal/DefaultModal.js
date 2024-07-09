@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
+import ViewPw from "components/common/ViewPw";
+import React, { useEffect, useState } from "react";
 import "../../scss/modal/notbgclickmodal.css";
-import { useContext, useState } from "react";
-import { NotClickBgModalContext } from "context/NotClickBgModalProvider";
 
-const NotBgClickModalStyle = styled.div`
+const DefaultModalStyle = styled.div`
   position: absolute;
   left: 0px;
   top: 0px;
@@ -21,19 +21,52 @@ const NotBgClickModalStyle = styled.div`
   }
 `;
 
-const NotBgClickModal = ({ cancel }) => {
-  // const { state, dispatch } = useContext(NotClickBgModalContext);
-  // const [modalNum, setModalNum] = useState(state.modalNum);
-  // console.log("NotClickBgModalContext : ", state);
-  // console.log("modalNum : ", modalNum);
+const DefaultModal = ({ cancel, headerText, bodyText }) => {
+  // (공용) 비밀번호 받아올 변수
+  //   const [nowPw, setNowPw] = useState();
+  const [newPw, setNewPw] = useState();
+  const [newPwRe, setNewPwRe] = useState();
+
+  //   useEffect(() => {
+  //     console.log("nowPw 확인 : ", nowPw);
+  //     console.log("newPw 확인 : ", newPw);
+  //     console.log("newPwRe 확인 : ", newPwRe);
+  //   }, [nowPw, newPw, newPwRe]);
 
   /** 모달 닫기 */
   const modalCancel = () => {
     cancel();
   };
 
+  const preventScroll = () => {
+    const currentScrollY = window.scrollY;
+    document.body.style.position = "fixed";
+    document.body.style.width = "100%";
+    document.body.style.top = `-${currentScrollY}px`; // 현재 스크롤 위치
+    document.body.style.overflowY = "scroll";
+    return currentScrollY;
+  };
+
+  /**
+   * 스크롤을 허용하고, 스크롤 방지 함수에서 반환된 위치로 이동한다.
+   */
+  const allowScroll = prevScrollY => {
+    document.body.style.position = "";
+    document.body.style.width = "";
+    document.body.style.top = "";
+    document.body.style.overflowY = "";
+    window.scrollTo(0, prevScrollY);
+  };
+
+  useEffect(() => {
+    const prevScrollY = preventScroll();
+    return () => {
+      allowScroll(prevScrollY);
+    };
+  }, []);
+
   return (
-    <NotBgClickModalStyle>
+    <DefaultModalStyle>
       <div className="not-bg-click-modal">
         <div className="modal-inner">
           <div className="modal-header">
@@ -80,8 +113,8 @@ const NotBgClickModal = ({ cancel }) => {
           </div>
         </div>
       </div>
-    </NotBgClickModalStyle>
+    </DefaultModalStyle>
   );
 };
 
-export default NotBgClickModal;
+export default DefaultModal;
