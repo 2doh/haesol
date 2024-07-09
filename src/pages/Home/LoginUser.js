@@ -2,8 +2,14 @@ import styled from "@emotion/styled";
 import { MdOutlineLogout } from "react-icons/md";
 import "../../scss/main/mainlogin.css";
 
+import {
+  getStudentInfo,
+  getStudentInfo2,
+  getTeacherInfo,
+} from "api/teacher/teacherapi";
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { removeCookie } from "utils/cookie";
 import ClassNotice from "./ClassNotice";
 import ClassSchedule from "./ClassSchedule";
 
@@ -11,6 +17,9 @@ const LoginUserStyle = styled.div``;
 
 const LoginUser = () => {
   const navigate = useNavigate();
+
+  getTeacherInfo();
+  getStudentInfo2(2);
 
   // 학부모 : 1, 교직원 : 2
   const [loginUserType, setLoginUserType] = useState(2);
@@ -52,7 +61,9 @@ const LoginUser = () => {
   /** 로그아웃 기능 */
   const logout = () => {
     // navigate("/login");
-    console.log("로그아웃 되었다.");
+    // console.log("로그아웃 되었다.");
+    removeCookie("accessToken");
+    navigate("/");
   };
 
   return (
