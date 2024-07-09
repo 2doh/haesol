@@ -1,4 +1,4 @@
-const InputFields = ({ children }) => {
+const InputFields = ({ children, userName, setUserName }) => {
   return (
     <div className="signup-main-fields">
       <div className="signup-main-fields-section-top">
@@ -9,6 +9,10 @@ const InputFields = ({ children }) => {
           className="fieleds-section-input"
           type="text"
           placeholder={children}
+          value={userName}
+          onChange={e => {
+            setUserName(e.target.value);
+          }}
         ></input>
       </div>
     </div>

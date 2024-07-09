@@ -11,7 +11,6 @@ import { useEffect, useState } from "react";
 import "../../scss/main/home.css";
 import LoginUser from "./LoginUser";
 import MainSchedule from "./MainSchedule";
-import { kMaxLength } from "buffer";
 
 const HomeStyle = styled.div``;
 

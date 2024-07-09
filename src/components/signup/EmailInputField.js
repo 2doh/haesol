@@ -1,7 +1,6 @@
 import { useState } from "react";
 
-const EmailInputField = ({ children }) => {
-  const [userEmail, setUserEmail] = useState("");
+const EmailInputField = ({ children, userEmail, setUserEmail }) => {
   const [errMsg, setErrMsg] = useState("");
 
   const handleOnChange = e => {

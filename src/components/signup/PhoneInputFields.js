@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
-const PhoneInputFields = ({ children }) => {
-  const [userPhoneNum, setUserPhoneNum] = useState("");
+const PhoneInputFields = ({ children, userPhoneNum, setUserPhoneNum }) => {
   const handleOnChange = e => {
     let formattedNumber = e.target.value.replace(/[^0-9]/g, "");
     if (formattedNumber.length > 3 && formattedNumber.length <= 7) {

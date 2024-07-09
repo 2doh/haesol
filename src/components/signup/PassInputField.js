@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 
-const PassInputField = () => {
+const PassInputField = ({ userPass, setUserPass }) => {
   const [showPass, setShowPass] = useState(false);
   const [changeInputType, setChangeInputType] = useState("password");
-  const [userPass, setUserPass] = useState("");
   const [userPassConfirm, setUserPassConfirm] = useState("");
   const [validationMsg, setValidationMsg] = useState("");
   const [validationConfirmMsg, setValidationConfirmMsg] = useState("");
@@ -15,7 +14,7 @@ const PassInputField = () => {
 
   const handleOnChange = e => {
     const regex =
-      /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$/;
+      /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*]{8,20}$/;
     if (regex.test(e.target.value)) {
       setValidationMsg("");
     } else {
@@ -55,7 +54,7 @@ const PassInputField = () => {
               setUserPass(e.target.value);
               handleOnChange(e);
             }}
-            placeholder="비밀번호 입력 (영어, 숫자, 특수문자 포함 8~20자)"
+            placeholder="비밀번호 입력 (영어 소문자, 대문자, 숫자, 특수문자를 포함한 8~20자)"
           ></input>
           <div
             className={!showPass ? "showpass" : "hidepass"}

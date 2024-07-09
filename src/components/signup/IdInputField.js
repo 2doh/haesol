@@ -1,11 +1,15 @@
+import { duplicateId } from "api/signup/apiteacherapi";
 import { useEffect, useState } from "react";
 
-const IdInputField = () => {
-  const [userId, setUserId] = useState("");
+const IdInputField = ({ userId, setUserId }) => {
   const [validationMsg, setValidationMsg] = useState("");
-  const handleCheckUserId = e => {
+
+  const handleCheckUserId = async e => {
     e.preventDefault();
+    const result = await duplicateId(userId);
+    console.log(result);
   };
+
   const handleOnChange = e => {
     const regex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z0-9]{6,16}$/;
     if (regex.test(e.target.value)) {

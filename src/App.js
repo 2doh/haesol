@@ -1,3 +1,4 @@
+import "./css/reset.css";
 import styled from "@emotion/styled";
 import Footer from "components/layout/Footer";
 import Login from "pages/Login";
@@ -19,8 +20,6 @@ import Students from "pages/student/StudentsList";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "../src/scss/common.scss";
 import "./App.css";
-import "./css/reset.css";
-
 import NoticeItem from "pages/notice/NoticeItem";
 import NoticeList from "pages/notice/NoticeList";
 

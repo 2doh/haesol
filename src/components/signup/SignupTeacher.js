@@ -1,3 +1,4 @@
+import { useState } from "react";
 import logo from "../../images/logo_b.png";
 import "../../scss/signup/signup.scss";
 import DropDate from "./DropDate";
@@ -17,10 +18,23 @@ const SignupTeacher = ({
   handleCancel,
   handleSignup,
 }) => {
+  const [userId, setUserId] = useState("");
+  const [userPass, setUserPass] = useState("");
+  const [userName, setUserName] = useState("");
+  const [userPhoneNum, setUserPhoneNum] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const [userGender, setUserGender] = useState("");
+  const [userBirth, setUserBirth] = useState("");
+  const [zoneCode, setZoneCode] = useState("");
+  const [addr, setAddr] = useState("");
+
+  const signupTeacher = e => {
+    e.preventDefault();
+  };
   return (
     <div className="signup-wrap">
       <div className="signup-wrap-inner br20">
-        <div className="signip-wrap-inner-content">
+        <div className="signup-wrap-inner-content">
           <div className="signup-top">
             <img className="siginup-logo" src={logo}></img>
             <UserSelect
@@ -29,16 +43,41 @@ const SignupTeacher = ({
               userType={userType}
             />
           </div>
-          <form>
+          <form
+            onSubmit={e => {
+              signupTeacher(e);
+            }}
+          >
             <div className="signup-main">
-              <IdInputField></IdInputField>
-              <PassInputField></PassInputField>
-              <InputFields>이름</InputFields>
-              <PhoneInputFields>전화번호</PhoneInputFields>
-              <EmailInputField>이메일</EmailInputField>
-              <GenderSelect>성별</GenderSelect>
-              <DropDate>생년월일</DropDate>
-              <HomeAdressFields>상세주소</HomeAdressFields>
+              <IdInputField userId={userId} setUserId={setUserId} />
+              <PassInputField userPass={userPass} setUserPass={setUserPass} />
+              <InputFields userName={userName} setUserName={setUserName}>
+                이름
+              </InputFields>
+              <PhoneInputFields
+                userNumber={userPhoneNum}
+                setUserNumber={setUserPhoneNum}
+              >
+                전화번호
+              </PhoneInputFields>
+              <EmailInputField
+                userEmail={userEmail}
+                setUserEmail={setUserEmail}
+              >
+                이메일
+              </EmailInputField>
+              <GenderSelect setUserGender={setUserGender}>성별</GenderSelect>
+              <DropDate userBirth={userBirth} setUserBirth={setUserBirth}>
+                생년월일
+              </DropDate>
+              <HomeAdressFields
+                zoneCode={zoneCode}
+                setZoneCode={setZoneCode}
+                addr={addr}
+                setAddr={setAddr}
+              >
+                상세주소
+              </HomeAdressFields>
               <div className="btwrap">
                 <button
                   className="signupbt"
