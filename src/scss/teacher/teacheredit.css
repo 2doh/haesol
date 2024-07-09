@@ -1,0 +1,9 @@
+.teacher-edit-wrap .re-pw-btn {
+  position: relative !important;
+  margin-left: 10px !important;
+  min-width: 110px !important;
+  top: 7px !important;
+}
+.teacher-edit-wrap .re-pw-btn button {
+  position: absolute !important;
+}/*# sourceMappingURL=teacheredit.css.map */
