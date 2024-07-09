@@ -5,6 +5,7 @@
   height: 50px;
   font-size: 20px;
   border-bottom: 1px solid #886348;
+  cursor: pointer;
   @include flex-center();
 }
 @mixin naviStyleSelected {
@@ -15,6 +16,7 @@
   border-right: 1px solid #886348;
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
+  cursor: pointer;
   @include flex-center();
 }
 

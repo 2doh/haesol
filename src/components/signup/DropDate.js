@@ -3,14 +3,13 @@
 import styled from "@emotion/styled";
 import { useState } from "react";
 
-const DropDate = ({ children }) => {
+const DropDate = ({ children, userBirth, setUserBirth }) => {
   const currentYear = new Date().getFullYear();
   const [selectedMonth, setSelectedMonth] = useState("");
   let year = [];
   for (let i = currentYear; i >= currentYear - 80; i--) {
     year = [...year, i];
   }
-
   let month = [];
   for (let i = 1; i <= 12; i++) {
     month = [...month, i];

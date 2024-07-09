@@ -22,7 +22,7 @@ const SignupParent = ({
   return (
     <div className="signup-wrap">
       <div className="signup-wrap-inner br20">
-        <div className="signip-wrap-inner-content">
+        <div className="signup-wrap-inner-content">
           <div className="signup-top">
             <img className="siginup-logo" src={logo}></img>
             <UserSelect

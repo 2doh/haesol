@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 
-const LoginIdField = ({ cleanupBt, cleanupId, userId, setUserId }) => {
+const LoginIdField = ({ children, cleanupBt, userId, setUserId }) => {
   const [idPlacholder, setIdPlacholder] = useState("아이디를 입력해 주세요");
+  const cleanupId = e => {
+    e.preventDefault();
+    setUserId("");
+  };
 
   return (
     <div className="login-wrap-panel-userid">
-      <div className="login-panel-userid-title">아이디</div>
+      <div className="login-panel-userid-title">{children}</div>
       <input
         className="login-panel-userid-input"
         type="text"
@@ -17,7 +21,9 @@ const LoginIdField = ({ cleanupBt, cleanupId, userId, setUserId }) => {
           setUserId(e.target.value);
         }}
       ></input>
-      <img className="idcleanupbt" src={cleanupBt} onClick={cleanupId} />
+      {userId ? (
+        <img className="idcleanupbt" src={cleanupBt} onClick={cleanupId} />
+      ) : null}
     </div>
   );
 };

@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 
-const LoginPassField = ({ cleanupBt, cleanupPass, userPass, setUserPass }) => {
+const LoginPassField = ({ cleanupBt, children, userPass, setUserPass }) => {
   const [passPlacholder, setPassPlacholder] =
     useState("비밀번호를 입력해 주세요");
   const [changeInputType, setChangeInputType] = useState("password");
   const [showPass, setShowPass] = useState(false);
 
+  const cleanupPass = e => {
+    e.preventDefault();
+    setUserPass("");
+  };
   const handleShowPass = () => {
     setShowPass(!showPass);
   };
@@ -19,7 +23,7 @@ const LoginPassField = ({ cleanupBt, cleanupPass, userPass, setUserPass }) => {
   }, [showPass]);
   return (
     <div className="login-wrap-panel-userpass">
-      <div className="login-panel-userpass-title">비밀번호</div>
+      <div className="login-panel-userpass-title">{children}</div>
       <input
         className="login-panel-userpass-input"
         type={changeInputType}
@@ -29,13 +33,17 @@ const LoginPassField = ({ cleanupBt, cleanupPass, userPass, setUserPass }) => {
         value={userPass}
         onChange={e => setUserPass(e.target.value)}
       ></input>
-      <div
-        className={!showPass ? "showpass" : "hidepass"}
-        onClick={e => {
-          handleShowPass(e);
-        }}
-      />
-      <img className="cleanupbt" src={cleanupBt} onClick={cleanupPass} />
+      {userPass ? (
+        <>
+          <div
+            className={!showPass ? "showpass" : "hidepass"}
+            onClick={e => {
+              handleShowPass(e);
+            }}
+          />
+          <img className="cleanupbt" src={cleanupBt} onClick={cleanupPass} />
+        </>
+      ) : null}
     </div>
   );
 };

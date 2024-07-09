@@ -1,3 +1,4 @@
+import "./css/reset.css";
 import styled from "@emotion/styled";
 import Footer from "components/layout/Footer";
 import Login from "pages/Login";

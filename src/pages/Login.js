@@ -5,6 +5,7 @@ import logo from "../images/logo_b.png";
 import Signin from "components/login/Signin";
 import "../scss/login/login.scss";
 import "../scss/login/loginnavi.scss";
+import FindId from "components/login/FindId";
 
 const Login = () => {
   const navi = useNavigate();
@@ -29,7 +30,9 @@ const Login = () => {
         </div>
         <div className="login-wrap br10">
           <LoginNavi setNaviState={setNaviState} naviState={naviState} />
-          {naviState === "signin" ? <Signin></Signin> : null}
+          <Signin naviState={naviState} setNaviState={setNaviState}>
+            {naviState}
+          </Signin>
         </div>
       </div>
     </main>
