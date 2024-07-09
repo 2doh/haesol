@@ -11,26 +11,25 @@ import { useEffect, useState } from "react";
 import "../../scss/main/home.css";
 import LoginUser from "./LoginUser";
 import MainSchedule from "./MainSchedule";
-
+import { getCookie } from "utils/cookie";
+import { useNavigate } from "react-router";
 const HomeStyle = styled.div``;
-
 const Home = () => {
+  const navigate = useNavigate();
   const [menuArr, setMenuArr] = useState([""]);
   const today = moment().format("YYYYMMDD");
   const mlsvDay = moment().format("YY년 M월 D일");
   const week = ["일", "월", "화", "수", "목", "금", "토"];
   const dayOfWeek = week[moment().day()].concat("요일");
-
+  const cookie = getCookie("accessToken");
   useEffect(() => {
     const url = `${MLSV_SERVER_URL}?ATPT_OFCDC_SC_CODE=${ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${SD_SCHUL_CODE}&KEY=${KEY}&MLSV_YMD=${today}&TYPE=JSON`;
     // const url = `${MLSV_SERVER_URL}?ATPT_OFCDC_SC_CODE=${ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${SD_SCHUL_CODE}&KEY=${KEY}&MLSV_YMD=20240707&TYPE=JSON`;
-
     axios.get(url).then(res => {
       // 급식 데이터가 있는 없는지 확인
       if (res.data.mealServiceDietInfo) {
         // INFO-000
         const menu = res.data.mealServiceDietInfo[1].row[0].DDISH_NM;
-
         /** <br/>와  (숫자.숫자) 제거 정규 표현식 */
         setMenuArr(
           menu
@@ -44,14 +43,18 @@ const Home = () => {
       }
     });
   }, []);
-
   useEffect(() => {
     // console.log("오늘의 메뉴 확인 : ", menuArr);
   }, [menuArr]);
-
+  const moveLoginPage = () => {
+    navigate("/login");
+  };
+  const moveSingupPage = () => {
+    navigate("/signup");
+  };
   return (
     <HomeStyle>
-      <LoginUser />
+      {getCookie("accessToken") ? <LoginUser /> : null}
       <div className="main">
         <div className="main-inner">
           <div className="main-inner-class">
@@ -70,26 +73,46 @@ const Home = () => {
               <div className="main-title-dwon-contents main-activity-slide"></div>
             </div>
           </div>
-
           {/* 메인 오른쪽 영역 - start */}
           <div className="main-inner-info">
             {/* 내 정보 - start */}
-            <div className="main-login-user-info no-display ">
-              {/* <div className="main-schedule-title main-contents-title">
+            {!getCookie("accessToken") ? (
+              <div className="main-login-user-info">
+                {/* <div className="main-schedule-title main-contents-title">
                 <div className="main-schedule-title-text">학교 일정</div>
               </div> */}
-              <div className="main-inner-info-login">
-                <div className="login-inner">
-                  <button className="main-info-loginbt">로그인 해주세요</button>
-                  <div className="main-info-login-menu">
-                    <div className="id-inquiry-page-move">아이디 찾기</div>
-                    <div className="pw-inquiry-page-move">비밀번호 찾기</div>
-                    <div className="signup-page-move">회원가입</div>
+                <div className="main-inner-info-login">
+                  <div className="login-inner">
+                    <button
+                      className="main-info-loginbt"
+                      onClick={() => {
+                        moveLoginPage();
+                      }}
+                    >
+                      로그인 해주세요
+                    </button>
+                    <div className="main-info-login-menu">
+                      <div
+                        className="id-inquiry-page-move
+                      "
+                      >
+                        아이디 찾기
+                      </div>
+                      <div className="pw-inquiry-page-move">비밀번호 찾기</div>
+                      <div
+                        className="signup-page-move"
+                        onClick={() => {
+                          moveSingupPage();
+                        }}
+                      >
+                        회원가입
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-
+            ) : null}
+            {/* <div className="main-login-user-info no-display "> */}
             {/* 추후 수정 */}
             <div className="main-info-lunch ">
               <div className="main-activity-title main-contents-title main-info-lunch-title ">
@@ -122,5 +145,4 @@ const Home = () => {
     </HomeStyle>
   );
 };
-
 export default Home;
