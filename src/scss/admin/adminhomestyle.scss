@@ -20,7 +20,7 @@
 
   & .item:nth-child(1) {
     background-color: $bp;
-    border-bottom: 1px solid $pc-line-p;
+    // border-bottom: 1px solid $pc-line-p;
   }
 
   & button {
@@ -40,7 +40,7 @@
     }
 
     .grid-inner-item {
-      border-right: 1px solid $pc-line-p;
+      // border-right: 1px solid $pc-line-p;
     }
 
     .grid-inner-item:last-child {

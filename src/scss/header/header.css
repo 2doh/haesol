@@ -32,7 +32,7 @@
 .header .header-right-div .inner-div {
   height: 100%;
   margin-left: 10px;
-  width: 55%;
+  max-width: 140px;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -60,6 +60,10 @@
 }
 .header .header-right-div .inner-div button:active {
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05), 0 1px rgba(0, 0, 0, 0.05) inset;
+}
+.header .header-right-div .inner-div svg > circle,
+.header .header-right-div .inner-div polyline {
+  color: #ffffff;
 }
 .header .header-inner {
   /* background-color: red; */
