@@ -36,7 +36,7 @@ console.log(error)
 }
 ```
 
-## 8. 스타일링
+## 8. 스타일링.
 
 - scss + styled(emotion) 권장, 필요에 따라 inline, 객체css 방식 적용
   - ex) 특정 상황에 따라 스타일이 변경될 때
