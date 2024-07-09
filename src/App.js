@@ -20,11 +20,12 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "../src/scss/common.scss";
 import "./App.css";
 import "./css/reset.css";
-
+import { useEffect, useState } from "react";
+import GradeView from "pages/grade/GradeView";
+import TeacherEdit from "pages/teacher/TeacherEdit";
 import NoticeItem from "pages/notice/NoticeItem";
 import NoticeList from "pages/notice/NoticeList";
-import { useEffect, useState } from "react";
-import TeacherEdit from "pages/teacher/TeacherEdit";
+
 
 const Main = styled.div`
   /* & > .name { */
@@ -70,6 +71,8 @@ function App() {
           </Route>
           {/* 성적 입력 페이지 임시 경로 */}
           <Route path="/grade/1" element={<Grade />}></Route>
+          {/* 성적 확인 페이지 임시 경로 */}
+          <Route path="/grade/2" element={<GradeView />}></Route>
 
           {/* 임시 경로 */}
           <Route path="/students/edit" element={<StudentEdit />}></Route>
