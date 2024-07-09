@@ -38,7 +38,7 @@
     .inner-div {
       height: 100%;
       margin-left: 10px;
-      width: 55%;
+      max-width: 140px;
       display: flex;
       justify-content: space-around;
       align-items: center;
@@ -56,6 +56,11 @@
             0 1px 0 rgba(0, 0, 0, 0.05),
             0 1px rgba(0, 0, 0, 0.05) inset;
         }
+      }
+
+      & svg > circle,
+      polyline {
+        color: #ffffff;
       }
     }
   }

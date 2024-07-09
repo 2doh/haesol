@@ -1,37 +1,45 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../../scss/student/studentList.css";
 import { useNavigate } from "react-router";
 import styled from "@emotion/styled";
+import { getStudentList } from "api/student/studentapi";
 const StudentsList = () => {
   // 반 정보
   const gradeClass = "5학년 7반";
-
-  // 학생 더미 데이터
-  const studentsList = [
-    {
-      studentNumber: "1",
-      studentName: "김누구",
-      studentGender: "여자",
-      studentBirth: "010102",
-      studentPhone: "123-456-7890",
-      parentsName: "김구누",
-      parentsPhone: "987-654-3210",
-    },
-    {
-      studentNumber: "2",
-      studentName: "니누구",
-      studentGender: "남자",
-      studentBirth: "010101",
-      studentPhone: "234-567-8901",
-      parentsName: "니구누",
-      parentsPhone: "876-543-2109",
-    },
-  ];
 
   const navigate = useNavigate();
   const handleClick = () => {
     navigate(`/students/edit`);
   };
+
+  // 전체 학생 리스트
+  const [studentList, setStudentList] = useState([]);
+
+  // 선생님 아이디 받아오는 값
+  // const tea_id = 1;
+  // 실제 토큰 정보 불러와야 함
+  // const accessToken = accessToken;
+
+  const studentListData = async () => {
+    try {
+      const response = await getStudentList();
+      const result = response.data;
+
+      if (Array.isArray(result)) {
+        setStudentList(result);
+      } else {
+        setStudentList([result]);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    // 학생 리스트 데이터 불러오기
+    console.log("setStudentList 확인중 : ", studentList);
+    studentListData();
+  }, [studentList]);
 
   const StudentsListStyle = styled.div`
     display: flex;
@@ -73,7 +81,7 @@ const StudentsList = () => {
               </div>
             </div>
           </div>
-          {studentsList.map((item, index) => (
+          {studentList.map((item, index) => (
             <div className="item" key={index}>
               <div
                 className="grid-inner"
@@ -83,35 +91,25 @@ const StudentsList = () => {
                 id="grid-content"
               >
                 <div className="grid-inner-item">
-                  <div className="grid-inner-item-text">
-                    {item.studentNumber}
-                  </div>
+                  <div className="grid-inner-item-text">{item.num}</div>
                 </div>
                 <div className="grid-inner-item">
-                  <div className="grid-inner-item-text">{item.studentName}</div>
+                  <div className="grid-inner-item-text">{item.name}</div>
                 </div>
                 <div className="grid-inner-item">
-                  <div className="grid-inner-item-text">
-                    {item.studentGender}
-                  </div>
+                  <div className="grid-inner-item-text">{item.gender}</div>
                 </div>
                 <div className="grid-inner-item">
-                  <div className="grid-inner-item-text">
-                    {item.studentBirth}
-                  </div>
+                  <div className="grid-inner-item-text">{item.birth}</div>
                 </div>
                 <div className="grid-inner-item">
-                  <div className="grid-inner-item-text">
-                    {item.studentPhone}
-                  </div>
+                  <div className="grid-inner-item-text">{item.phone}</div>
                 </div>
                 <div className="grid-inner-item">
-                  <div className="grid-inner-item-text">{item.parentsName}</div>
+                  <div className="grid-inner-item-text">{item.parentName}</div>
                 </div>
                 <div className="grid-inner-item">
-                  <div className="grid-inner-item-text">
-                    {item.parentsPhone}
-                  </div>
+                  <div className="grid-inner-item-text">{item.parentPhone}</div>
                 </div>
               </div>
             </div>

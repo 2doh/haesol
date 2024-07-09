@@ -13,7 +13,6 @@
 }
 .grid-frame .item:nth-child(1) {
   background-color: #c6dbda;
-  border-bottom: 1px solid #886348;
 }
 .grid-frame button {
   display: inline-block;
@@ -36,9 +35,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
-.grid-frame .grid-inner .grid-inner-item {
-  border-right: 1px solid #886348;
 }
 .grid-frame .grid-inner .grid-inner-item:last-child {
   border-right: none;

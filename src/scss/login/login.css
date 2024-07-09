@@ -37,45 +37,102 @@
 .login-wrap-panel .login-wrap-panel-userid {
   width: 100%;
   height: 62px;
+  position: relative;
 }
-.login-wrap-panel .login-panel-userid-title {
+.login-wrap-panel .login-wrap-panel-userid .login-panel-userid-title {
   width: 100%;
   height: 22px;
   font-size: 20px;
 }
-.login-wrap-panel .login-panel-userid-input {
+.login-wrap-panel .login-wrap-panel-userid .login-panel-userid-input {
+  border-radius: 5px;
+  border: 1px solid #886348;
   margin-top: 10px;
   width: 100%;
   height: 30px;
-  border-radius: 5px;
-  border: 1px solid #886348;
+  padding-left: 5px;
+}
+.login-wrap-panel .login-wrap-panel-userid .idcleanupbt {
+  width: 20px;
+  height: 30px;
+  position: absolute;
+  right: 5px;
+  bottom: 0;
+  cursor: pointer;
 }
 .login-wrap-panel .login-wrap-panel-userpass {
   width: 100%;
   height: 62px;
   font-size: 20px;
+  position: relative;
 }
-.login-wrap-panel .login-panel-userpass-title {
+.login-wrap-panel .login-wrap-panel-userpass .login-panel-userpass-title {
   margin-top: 25px;
   width: 100%;
   height: 22px;
+  position: relative;
+  display: flex;
+  align-items: center;
 }
-.login-wrap-panel .login-panel-userpass-input {
+.login-wrap-panel .login-wrap-panel-userpass .login-panel-userpass-input {
+  border-radius: 5px;
+  border: 1px solid #886348;
   margin-top: 10px;
   width: 100%;
   height: 30px;
-  border-radius: 5px;
-  border: 1px solid #886348;
+  padding-left: 5px;
+}
+.login-wrap-panel .login-wrap-panel-userpass .showpass {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  background: url("../../images/showpass.svg") no-repeat center;
+  width: 20px;
+  height: 20px;
+  width: 20px;
+  height: 30px;
+  position: absolute;
+  right: 5px;
+  bottom: 0;
+  cursor: pointer;
+  right: 30px;
+}
+.login-wrap-panel .login-wrap-panel-userpass .hidepass {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  background: url("../../images//ri_eye-close-line.svg") no-repeat center;
+  background-size: contain;
+  width: 20px;
+  height: 20px;
+  width: 20px;
+  height: 30px;
+  position: absolute;
+  right: 5px;
+  bottom: 0;
+  cursor: pointer;
+  right: 30px;
+}
+.login-wrap-panel .login-wrap-panel-userpass .cleanupbt {
+  width: 20px;
+  height: 30px;
+  position: absolute;
+  right: 5px;
+  bottom: 0;
+  cursor: pointer;
 }
 .login-wrap-panel .login-wrap-panel-loginbt {
-  margin-top: 40px;
+  border-radius: 5px;
+  border: 1px solid #886348;
+  margin-top: 10px;
   width: 100%;
+  height: 30px;
+  padding-left: 5px;
+  margin-top: 40px;
   height: 45px;
   font-size: 20px;
   background-color: #e7d9d9;
   cursor: pointer;
-  border-radius: 5px;
-  border: 1px solid #886348;
 }
 .login-wrap-panel .login-wrap-panel-social {
   margin-top: 50px;
@@ -97,8 +154,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #22d61e;
   cursor: pointer;
+  background: #22d61e;
 }
 .login-wrap-panel .login-panel-social-kakao {
   width: 80px;
@@ -108,8 +165,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #ffeb38;
   cursor: pointer;
+  background-color: #ffeb38;
 }
 .login-wrap-panel .login-panel-social-google {
   width: 80px;
@@ -119,6 +176,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: black;
   cursor: pointer;
+  background-color: black;
 }/*# sourceMappingURL=login.css.map */

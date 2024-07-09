@@ -20,10 +20,16 @@ import Students from "pages/student/StudentsList";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "../src/scss/common.scss";
 import "./App.css";
+import "./css/reset.css";
+import { useEffect, useState } from "react";
+import GradeView from "pages/grade/GradeView";
+import TeacherEdit from "pages/teacher/TeacherEdit";
 import NoticeItem from "pages/notice/NoticeItem";
 import NoticeList from "pages/notice/NoticeList";
 
+
 const Main = styled.div`
+  /* & > .name { */
   background-color: #f3f9fa;
   width: 1180px;
   height: 100%;
@@ -31,9 +37,14 @@ const Main = styled.div`
   padding: 40px;
   padding-bottom: 80px;
   min-height: 687px;
+
+  /* } */
 `;
 
 function App() {
+  const [notFoundPage, setNotFoundPage] = useState(false);
+  useEffect(() => {}, [notFoundPage]);
+
   return (
     <BrowserRouter>
       {/* <Modal></Modal> */}
@@ -61,13 +72,15 @@ function App() {
           </Route>
           {/* 성적 입력 페이지 임시 경로 */}
           <Route path="/grade/1" element={<Grade />}></Route>
+          {/* 성적 확인 페이지 임시 경로 */}
+          <Route path="/grade/2" element={<GradeView />}></Route>
 
           {/* 임시 경로 */}
           <Route path="/students/edit" element={<StudentEdit />}></Route>
           {/* 학생 본인 정보 수정 페이지 임시 경로 */}
 
           {/* 선생님 본인 정보 수정 페이지 */}
-          {/* <Route path="/teacher/edit" element={<TeacherEdit />}></Route> */}
+          <Route path="/teacher/edit" element={<TeacherEdit />}></Route>
           <Route
             path="/students/studntinfo"
             element={<StudentInfoView />}
@@ -90,7 +103,11 @@ function App() {
             <Route path="modify/:noticeid" element={<NoticeModify />}></Route>
           </Route>
 
-          <Route path="*" element={<NotFound />}></Route>
+          <Route
+            path="*"
+            element={<NotFound />}
+            setNotFoundPage={setNotFoundPage}
+          ></Route>
         </Routes>
       </Main>
       <Footer />

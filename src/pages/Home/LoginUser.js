@@ -1,11 +1,11 @@
 import styled from "@emotion/styled";
-import "../../scss/main/mainlogin.css";
 import { MdOutlineLogout } from "react-icons/md";
+import "../../scss/main/mainlogin.css";
 
-import React, { useState } from "react";
-import ClassSchedule from "./ClassSchedule";
-import ClassNotice from "./ClassNotice";
+import { useState } from "react";
 import { useNavigate } from "react-router";
+import ClassNotice from "./ClassNotice";
+import ClassSchedule from "./ClassSchedule";
 
 const LoginUserStyle = styled.div``;
 
@@ -13,7 +13,7 @@ const LoginUser = () => {
   const navigate = useNavigate();
 
   // 학부모 : 1, 교직원 : 2
-  const [loginUserType, setLoginUserType] = useState(1);
+  const [loginUserType, setLoginUserType] = useState(2);
 
   // 아래 데이터 추후 데이터베이스 정보로 변경
   /** 로그인한 유저 정보 출력 */
@@ -41,7 +41,7 @@ const LoginUser = () => {
 
   /** 성적 확인 페이지 이동 */
   const moveMyGradePage = () => {
-    navigate("/grade");
+    navigate("/grade/1");
   };
 
   /** 우리 학급 페이지 이동 */
@@ -63,7 +63,9 @@ const LoginUser = () => {
           <div className="main-inner-class login-user-view">
             <div className="main-schedule main-class-schedule">
               <div className="main-schedule-title main-contents-title">
-                <div className="main-schedule-title-text ">우리반 시간표</div>
+                <div className="main-schedule-title-text ">
+                  우리반 시간표 (수정중)
+                </div>
               </div>
               <div className="main-title-dwon-contents main-schedule-calendar">
                 <ClassSchedule />
