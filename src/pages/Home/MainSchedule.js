@@ -15,7 +15,7 @@ const MainSchedule = ({ aaArr }) => {
   // 클릭한 날짜 (초기값 : 현재 날짜)
   const [value, onChange] = useState(curDate);
 
-  console.log("일정 목록 배열 : ", aaArr);
+  // console.log("일정 목록 배열 : ", aaArr);
 
   // 일정 목록
   const dayList = [

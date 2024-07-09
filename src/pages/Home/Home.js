@@ -28,7 +28,7 @@ const Home = () => {
   // const aaArr = [];
 
   var last = new Date(2024, 7, 0).getDate();
-  console.log("말일 : ", last);
+  // console.log("말일 : ", last);
 
   /** 급식 */
   useEffect(() => {
@@ -74,7 +74,7 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    console.log("학사 일정 item : ", aaArr);
+    // console.log("학사 일정 item : ", aaArr);
   }, [aaArr]);
 
   useEffect(() => {
