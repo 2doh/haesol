@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import "../../scss/student/studentEdit.css";
 import styled from "@emotion/styled";
+import { useState } from "react";
 import { useNavigate } from "react-router";
+import "../../scss/student/studentEdit.css";
 import StudentImg from "./StudentImg";
+import PhoneInputFields from "./PhoneInputFields";
 const StudentEdit = () => {
   // 네비게이트
   const navigate = useNavigate();
@@ -143,11 +144,7 @@ const StudentEdit = () => {
             </div>
             <div className="info-title">
               <span>전화번호</span>
-              <input
-                type="number"
-                name="tel"
-                placeholder="전화번호를 입력해주세요"
-              />
+              <PhoneInputFields placeholder="전화번호를 입력하세요" />
             </div>
           </div>
           <div className="info-item-right">
@@ -169,12 +166,10 @@ const StudentEdit = () => {
               </select>
             </div>
             <div className="info-title">
-              <span>학부모 전화번호</span>
-              <input
-                type="number"
-                name="tel"
-                placeholder="전화번호를 입력해주세요"
-              />
+              <div className="info-title">
+                <span>학부모 전화번호</span>
+                <PhoneInputFields placeholder="전화번호를 입력하세요" />
+              </div>
             </div>
           </div>
           <div className="info-img">

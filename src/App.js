@@ -24,6 +24,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import NoticeItem from "pages/notice/NoticeItem";
 import NoticeList from "pages/notice/NoticeList";
+import GradeView from "pages/grade/GradeView";
 
 const Main = styled.div`
   background-color: #f3f9fa;
@@ -63,6 +64,8 @@ function App() {
           </Route>
           {/* 성적 입력 페이지 임시 경로 */}
           <Route path="/grade/1" element={<Grade />}></Route>
+          {/* 성적 확인 페이지 임시 경로 */}
+          <Route path="/grade/2" element={<GradeView />}></Route>
 
           {/* 임시 경로 */}
           <Route path="/students/edit" element={<StudentEdit />}></Route>

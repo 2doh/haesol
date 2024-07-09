@@ -58,8 +58,11 @@ const Signature = () => {
     const image = canvasRef.current.getTrimmedCanvas().toDataURL("image/png");
     const link = document.createElement("a");
     link.href = image;
-    // 기본 저장 이름 변경 필요!!!!!!
-    link.download = "sign_image.png";
+    // 현재 날짜와 시간을 이용하여 파일 이름 생성
+    const currentDate = new Date();
+    const fileName = `sign_image_${currentDate.getFullYear()}${(currentDate.getMonth() + 1).toString().padStart(2, "0")}${currentDate.getDate().toString().padStart(2, "0")}_${currentDate.getHours().toString().padStart(2, "0")}${currentDate.getMinutes().toString().padStart(2, "0")}${currentDate.getSeconds().toString().padStart(2, "0")}.png`;
+
+    link.download = fileName;
     link.click();
   };
 

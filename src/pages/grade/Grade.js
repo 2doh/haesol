@@ -12,6 +12,7 @@ const Grade = () => {
   };
   // 반 정보 > 추후 데이터 받아와서 처리
   const gradeClass = "5학년 7반";
+  const studentName = "김누구";
   const totalStudent = "21 / 321";
 
   return (
@@ -19,7 +20,7 @@ const Grade = () => {
       <div className="student-list-title">
         {/* <!-- 제목 위치 --> */}
         <span>{gradeClass}</span>
-        <p>성적 관리</p>
+        <p>{studentName} 성적 관리</p>
       </div>
       <div className="user-info-wrap">
         {/* <!-- 탭 선택 부분 --> */}
