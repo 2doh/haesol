@@ -10,18 +10,20 @@ const ScWrap = styled.div`
   height: 100%;
 `;
 
-const MainSchedule = () => {
+const MainSchedule = ({ aaArr }) => {
   const curDate = new Date(); // 현재 날짜
   // 클릭한 날짜 (초기값 : 현재 날짜)
   const [value, onChange] = useState(curDate);
 
+  console.log("일정 목록 배열 : ", aaArr);
+
   // 일정 목록
   const dayList = [
-    "2023-03-10",
-    "2023-03-21",
-    "2023-04-02",
-    "2023-04-14",
-    "2023-04-27",
+    "2023-07-10",
+    "2023-07-21",
+    "2023-07-02",
+    "2023-07-14",
+    "2023-07-27",
   ];
 
   // 각 날짜 타일에 컨텐츠 추가
@@ -83,6 +85,7 @@ const MainSchedule = () => {
         value={value}
         next2Label={null}
         prev2Label={null}
+        event={dayList}
         formatDay={(locale, date) => moment(date).format("D")}
         // tileContent={addContent}
         showNeighboringMonth={false}

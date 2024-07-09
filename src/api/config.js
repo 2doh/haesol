@@ -2,6 +2,8 @@
 /** 급식 api 주소 */
 export const MLSV_SERVER_URL =
   "https://open.neis.go.kr/hub/mealServiceDietInfo";
+/** 학사일정 */
+export const AA_SERVER_URL = "https://open.neis.go.kr/hub/SchoolSchedule";
 /** 시도교육청코드 */
 export const ATPT_OFCDC_SC_CODE = "D10";
 /** 행정표준 코드 : 칠성초등학교 */
