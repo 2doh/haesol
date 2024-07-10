@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import {
+  AA_SERVER_URL,
   ATPT_OFCDC_SC_CODE,
   KEY,
   MLSV_SERVER_URL,
@@ -21,10 +22,19 @@ const Home = () => {
   const navigate = useNavigate();
   const [menuArr, setMenuArr] = useState([""]);
   const today = moment().format("YYYYMMDD");
+  const fromMmd = moment().format("YYYYMM01");
+  const toYmd = moment().format("YYYYMM" + { last });
   const mlsvDay = moment().format("YY년 M월 D일");
   const week = ["일", "월", "화", "수", "목", "금", "토"];
   const dayOfWeek = week[moment().day()].concat("요일");
-  const cookie = getCookie("accessToken");
+  const [aaArr, setAaArr] = useState([]);
+  // const aaArr = [];
+
+  var last = new Date(2024, 7, 0).getDate();
+  // console.log("말일 : ", last);
+
+  /** 급식 */
+
   useEffect(() => {
     const url = `${MLSV_SERVER_URL}?ATPT_OFCDC_SC_CODE=${ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${SD_SCHUL_CODE}&KEY=${KEY}&MLSV_YMD=${today}&TYPE=JSON`;
     // const url = `${MLSV_SERVER_URL}?ATPT_OFCDC_SC_CODE=${ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${SD_SCHUL_CODE}&KEY=${KEY}&MLSV_YMD=20240707&TYPE=JSON`;
@@ -46,6 +56,29 @@ const Home = () => {
       }
     });
   }, []);
+
+  /** 학사 일정 */
+  useEffect(() => {
+    const url = `${AA_SERVER_URL}?ATPT_OFCDC_SC_CODE=${ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${SD_SCHUL_CODE}&KEY=${KEY}&AA_FROM_YMD=${fromMmd}&AA_TO_YMD=${toYmd}&TYPE=JSON`;
+    // const url = `${AA_SERVER_URL}?ATPT_OFCDC_SC_CODE=${ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${SD_SCHUL_CODE}&KEY=${KEY}&TYPE=JSON`;
+
+    axios.get(url).then(async res => {
+      // 급식 데이터가 있는 없는지 확인
+      const resArr = res.data.SchoolSchedule[1].row;
+      resArr.map((item, index) => {
+        // aaArr.push(item.AA_YMD);
+        setAaArr([...aaArr, item.AA_YMD]);
+        // console.log("학사 일정 : ", resArr[index].AA_YMD);
+        // console.log("학사 일정 item : ", item.AA_YMD);
+        // console.log("학사 일정 item : ", aaArr);
+      });
+    });
+  }, []);
+
+  useEffect(() => {
+    // console.log("학사 일정 item : ", aaArr);
+  }, [aaArr]);
+
   useEffect(() => {
     // console.log("오늘의 메뉴 확인 : ", menuArr);
   }, [menuArr]);
@@ -68,7 +101,7 @@ const Home = () => {
                 <div className="main-schedule-title-text ">학교 일정</div>
               </div>
               <div className="main-title-dwon-contents main-schedule-calendar">
-                <MainSchedule />
+                <MainSchedule aaArr={aaArr} />
               </div>
             </div>
             <div className="main-activity">
