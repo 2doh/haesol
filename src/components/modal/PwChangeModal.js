@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import ViewPw from "components/common/ViewPw";
 import React, { useEffect, useState } from "react";
 import "../../scss/modal/pwchangemodal.css";
+import { allowScroll, preventScroll } from "components/common/ScrollManagement";
 
 const PwChangeModalStyle = styled.div`
   position: absolute;
@@ -41,32 +42,20 @@ const PwChangeModal = ({ cancel }) => {
   //     console.log("newPwRe 확인 : ", newPwRe);
   //   }, [nowPw, newPw, newPwRe]);
 
+  /** 승인 : 확인 버튼 클릭 */
+  const modalApproval = () => {
+    // setModalResult(true);
+    // 동작
+    cancel();
+  };
+
   /** 모달 닫기 */
   const modalCancel = () => {
     cancel();
   };
 
-  const preventScroll = () => {
-    const currentScrollY = window.scrollY;
-    document.body.style.position = "fixed";
-    document.body.style.width = "100%";
-    document.body.style.top = `-${currentScrollY}px`; // 현재 스크롤 위치
-    document.body.style.overflowY = "scroll";
-    return currentScrollY;
-  };
-
-  /**
-   * 스크롤을 허용하고, 스크롤 방지 함수에서 반환된 위치로 이동한다.
-   */
-  const allowScroll = prevScrollY => {
-    document.body.style.position = "";
-    document.body.style.width = "";
-    document.body.style.top = "";
-    document.body.style.overflowY = "";
-    window.scrollTo(0, prevScrollY);
-  };
-
   useEffect(() => {
+    // 모달 생성시 스크롤 금지
     const prevScrollY = preventScroll();
     return () => {
       allowScroll(prevScrollY);

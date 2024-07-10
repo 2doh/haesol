@@ -13,6 +13,9 @@ import LoginUser from "./LoginUser";
 import MainSchedule from "./MainSchedule";
 import { getCookie } from "utils/cookie";
 import { useNavigate } from "react-router";
+
+import { getStudentInfo } from "api/teacher/teacherapi";
+
 const HomeStyle = styled.div``;
 const Home = () => {
   const navigate = useNavigate();
@@ -52,9 +55,11 @@ const Home = () => {
   const moveSingupPage = () => {
     navigate("/signup");
   };
+
   return (
     <HomeStyle>
       {getCookie("accessToken") ? <LoginUser /> : null}
+
       <div className="main">
         <div className="main-inner">
           <div className="main-inner-class">
@@ -113,6 +118,7 @@ const Home = () => {
               </div>
             ) : null}
             {/* <div className="main-login-user-info no-display "> */}
+
             {/* 추후 수정 */}
             <div className="main-info-lunch ">
               <div className="main-activity-title main-contents-title main-info-lunch-title ">

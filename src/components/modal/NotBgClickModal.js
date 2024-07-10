@@ -21,16 +21,30 @@ const NotBgClickModalStyle = styled.div`
   }
 `;
 
-const NotBgClickModal = ({ cancel }) => {
+const NotBgClickModal = ({
+  cancel,
+  setModalResult,
+  headerText,
+  bodyTextLabel,
+  bodyText,
+  buttonText,
+}) => {
   // const { state, dispatch } = useContext(NotClickBgModalContext);
   // const [modalNum, setModalNum] = useState(state.modalNum);
   // console.log("NotClickBgModalContext : ", state);
   // console.log("modalNum : ", modalNum);
 
+  const modalApproval = () => {
+    setModalResult(true);
+    cancel();
+  };
+
   /** 모달 닫기 */
   const modalCancel = () => {
     cancel();
   };
+
+  // console.log();
 
   return (
     <NotBgClickModalStyle>
@@ -38,7 +52,7 @@ const NotBgClickModal = ({ cancel }) => {
         <div className="modal-inner">
           <div className="modal-header">
             {/* <div className="modal-text">{state.modalHeader[1]}</div> */}
-            <div className="modal-text">1</div>
+            <div className="modal-text">{headerText}</div>
           </div>
           <div className="modal-body">
             {/* <div className="modal-body-text-div">
@@ -52,28 +66,45 @@ const NotBgClickModal = ({ cancel }) => {
               <div className="modal-text">acahe1d3</div>
             </div> */}
             <div className="modal-body-text-div">
-              <div className="modal-text">구분</div>
-              <div className="modal-text">아이디</div>
+              {bodyTextLabel.map((item, index) => (
+                <div className="modal-text" key={item}>
+                  {bodyTextLabel[index] ? bodyTextLabel[index] : "\u00a0"}
+                </div>
+              ))}
             </div>
             <div className="modal-body-text-div">
-              <div className="modal-text">:</div>
-              <div className="modal-text">:</div>
+              {bodyTextLabel.map((item, index) => (
+                <div className="modal-text" key={item}>
+                  :
+                </div>
+              ))}
             </div>
 
             <div className="modal-body-text-div">
-              <div className="modal-text">학부모</div>
-              <div className="modal-text">acahe1d3</div>
+              {bodyTextLabel.map((item, index) => (
+                <div className="modal-text" key={item}>
+                  {bodyText[index] ? bodyText[index] : "\u00a0"}
+                </div>
+              ))}
             </div>
           </div>
           <div className="modal-footer">
             <div className="modal-btn">
-              <button>확인</button>
+              <button
+                onClick={() => {
+                  modalApproval();
+                }}
+              >
+                {/* 확인 */}
+                {buttonText[0]}
+              </button>
               <button
                 onClick={() => {
                   modalCancel();
                 }}
               >
-                취소
+                {/* 취소 */}
+                {buttonText[1]}
               </button>
             </div>
             {/* <div className="modal-text">3</div> */}
