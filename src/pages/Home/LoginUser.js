@@ -6,7 +6,6 @@ import { useNavigate } from "react-router";
 import { removeCookie } from "utils/cookie";
 import ClassNotice from "./ClassNotice";
 import ClassSchedule from "./ClassSchedule";
-import { removeCookie } from "utils/cookie";
 const LoginUserStyle = styled.div``;
 const LoginUser = () => {
   const navigate = useNavigate();

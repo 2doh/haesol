@@ -11,14 +11,43 @@ import PassInputField from "./PassInputField";
 import PhoneInputFields from "./PhoneInputFields";
 import SubPhoneInputFields from "./SubPhoneInputFields";
 import UserSelect from "./UserSelect";
+import { useState } from "react";
+import { parentSignup } from "api/signup/parentapi";
 
 const SignupParent = ({
   handleSelect,
   handleSelectTeacher,
   userType,
   handleCancel,
-  handleSignup,
 }) => {
+  const [userId, setUserId] = useState("");
+  const [userPass, setUserPass] = useState("");
+  const [userName, setUserName] = useState("");
+  // const [userChildrenName, setUserChildrenName] = useState("");
+  const [userPhoneNum, setUserPhoneNum] = useState("");
+  const [userSubPhoneNum, setUserSubPhoneNum] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const [userConnet, setUserConnet] = useState("");
+  const [zoneCode, setZoneCode] = useState("");
+  const [addr, setAddr] = useState("");
+  const tempObj = {
+    uid: "idtest1",
+    upw: "passtesT1!",
+    nm: userName,
+    phone: userPhoneNum,
+    subPhone: userSubPhoneNum,
+    email: userEmail,
+    connet: userConnet,
+    zoneCode: zoneCode,
+    addr: addr,
+  };
+  console.log(tempObj);
+  const handleOnSubmit = async e => {
+    e.preventDefault();
+    const result = await parentSignup(tempObj);
+    console.log(result);
+  };
+
   return (
     <div className="signup-wrap">
       <div className="signup-wrap-inner br20">
@@ -31,28 +60,45 @@ const SignupParent = ({
               userType={userType}
             />
           </div>
-          <form>
+          <form onSubmit={e => handleOnSubmit(e)}>
             <div className="signup-main">
-              <IdInputField></IdInputField>
-              <PassInputField></PassInputField>
+              <IdInputField
+                userId={userId}
+                setUserId={setUserId}
+              ></IdInputField>
+              <PassInputField
+                userPass={userPass}
+                setUserPass={setUserPass}
+              ></PassInputField>
               <UserNameStyle>
-                <ParentInputFields>보호자</ParentInputFields>
-                <ChildInputFields>자녀이름</ChildInputFields>
-              </UserNameStyle>
-              <PhoneInputFields>전화번호</PhoneInputFields>
-              <DropFields>가족관계</DropFields>
-              <EmailInputField>이메일(선택)</EmailInputField>
-              <SubPhoneInputFields>추가연락처(선택)</SubPhoneInputFields>
-              <HomeAdressFields>상세주소</HomeAdressFields>
-              <div className="btwrap">
-                <button
-                  className="signupbt"
-                  onClick={e => {
-                    handleSignup(e);
-                  }}
+                <ParentInputFields
+                  setUserName={setUserName}
+                  userName={userName}
                 >
-                  회원가입
-                </button>
+                  보호자
+                </ParentInputFields>
+                {/* <ChildInputFields setUserChildrenName={setUserChildrenName}>
+                  자녀이름
+                </ChildInputFields> */}
+              </UserNameStyle>
+              <PhoneInputFields
+                userPhoneNum={userPhoneNum}
+                setUserPhoneNum={setUserPhoneNum}
+              >
+                전화번호
+              </PhoneInputFields>
+              <DropFields setUserConnet={setUserConnet}>가족관계</DropFields>
+              <EmailInputField setUserEmail={setUserEmail}>
+                이메일(선택)
+              </EmailInputField>
+              <SubPhoneInputFields setUserSubPhoneNum={setUserSubPhoneNum}>
+                추가연락처(선택)
+              </SubPhoneInputFields>
+              <HomeAdressFields setZoneCode={setZoneCode} setAddr={setAddr}>
+                상세주소
+              </HomeAdressFields>
+              <div className="btwrap">
+                <button className="signupbt">회원가입</button>
                 <button className="cancelbt" onClick={handleCancel}>
                   취소
                 </button>

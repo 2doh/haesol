@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import cleanupBt from "../../images/tabler_circle-x-filled.svg";
+import IdPwFind from "./IdPwFind";
 import LoginIdField from "./LoginIdField";
 import LoginPassField from "./LoginPassField";
 import SocialSignin from "./SocialSignin";
-import FindId from "./FindId";
 import { postTeacherSignin } from "api/login/teacherloginapi";
+import cleanupBt from "../../images/tabler_circle-x-filled.svg";
 
 const Signin = ({ children, naviState, setNaviState }) => {
   const [userId, setUserId] = useState("test1234");
@@ -52,9 +52,9 @@ const Signin = ({ children, naviState, setNaviState }) => {
           <SocialSignin />
         </form>
       ) : naviState === "find-id" ? (
-        <FindId naviState={"find-id"}></FindId>
+        <IdPwFind naviState="find-id"></IdPwFind>
       ) : naviState === "find-pass" ? (
-        <FindId naviState={"find-pass"}></FindId>
+        <IdPwFind naviState="find-pass"></IdPwFind>
       ) : null}
     </>
   );

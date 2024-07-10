@@ -9,13 +9,11 @@ import {
 import axios from "axios";
 import moment from "moment";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import { getCookie } from "utils/cookie";
 import "../../scss/main/home.css";
 import LoginUser from "./LoginUser";
 import MainSchedule from "./MainSchedule";
-import { getCookie } from "utils/cookie";
-import { useNavigate } from "react-router";
-
-import { getStudentInfo } from "api/teacher/teacherapi";
 
 const HomeStyle = styled.div``;
 const Home = () => {

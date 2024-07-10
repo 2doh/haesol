@@ -1,19 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { PhoneNumber } from "utils/helpers";
 
-const SubPhoneInputFields = ({ children }) => {
-  const [userPhoneNum, setUserPhoneNum] = useState("");
+const SubPhoneInputFields = ({ children, setUserSubPhoneNum }) => {
+  const [isUserSubPhoneNum, setIsUserSubPhoneNum] = useState("");
   const handleOnChange = e => {
-    let formattedNumber = e.target.value.replace(/[^0-9]/g, "");
-    if (formattedNumber.length > 3 && formattedNumber.length <= 7) {
-      formattedNumber = formattedNumber.replace(/^(\d{3})(\d{1,4})/, "$1-$2");
-    } else if (formattedNumber.length > 7) {
-      formattedNumber = formattedNumber.replace(
-        /^(\d{3})(\d{4})(\d{1,4})/,
-        "$1-$2-$3",
-      );
-    }
-    setUserPhoneNum(formattedNumber);
+    setIsUserSubPhoneNum(PhoneNumber(e));
   };
+  useEffect(() => {
+    setUserSubPhoneNum(isUserSubPhoneNum);
+  }, [isUserSubPhoneNum]);
   return (
     <div className="signup-main-fields">
       <div className="signup-main-fields-section-top">
@@ -24,9 +19,9 @@ const SubPhoneInputFields = ({ children }) => {
           className="fieleds-section-input"
           type="text"
           placeholder={children}
-          value={userPhoneNum}
+          value={isUserSubPhoneNum}
           onChange={e => {
-            setUserPhoneNum(e.target.value);
+            setIsUserSubPhoneNum(e.target.value);
             handleOnChange(e);
           }}
           maxLength={13}
