@@ -31,8 +31,9 @@ const PwChangeModalStyle = styled.div`
 `;
 
 const PwChangeModal = ({ cancel }) => {
-  // (공용) 비밀번호 받아올 변수
+  // (공용)
   //   const [nowPw, setNowPw] = useState();
+  // 비밀번호 받아올 변수
   const [newPw, setNewPw] = useState();
   const [newPwRe, setNewPwRe] = useState();
 

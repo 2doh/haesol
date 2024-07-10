@@ -8,14 +8,22 @@ import moment from "moment";
 const ScWrap = styled.div`
   width: 100%;
   height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 `;
+
+const nowMonthScheduleStyle = styled.div``;
 
 const MainSchedule = ({ aaArr }) => {
   const curDate = new Date(); // 현재 날짜
+  const today = moment(curDate).format("YYYY-MM-DD"); // 출력용
   // 클릭한 날짜 (초기값 : 현재 날짜)
   const [value, onChange] = useState(curDate);
+  const [activeStartDate, setActiveStartDate] = useState(curDate);
 
-  // console.log("일정 목록 배열 : ", aaArr);
+  // console.log("일정 목록 배열 : ", curDate);
 
   // 일정 목록
   const dayList = [
@@ -75,6 +83,16 @@ const MainSchedule = ({ aaArr }) => {
   //   };
 
   //   const [value, onChange] = useState(new Date());
+  /** 오늘로 돌아오는 버튼 기능 */
+  // const handleTodayClick = () => {
+  //   setActiveStartDate(curDate);
+  //   onChange(curDate);
+  // };
+
+  /** 현재 캘린더에 보이는 월이 변경되었을 때 */
+  const changeCalendarMonth = e => {
+    // console.log("값 확인 : ", e);
+  };
 
   return (
     <ScWrap>
@@ -89,10 +107,29 @@ const MainSchedule = ({ aaArr }) => {
         formatDay={(locale, date) => moment(date).format("D")}
         // tileContent={addContent}
         showNeighboringMonth={false}
+        // 오늘 날짜로 돌아오는 기능을 위해 필요한 옵션 설정
+        // activeStartDate={activeStartDate === null ? undefined : activeStartDate}
+        // onViewChange={e => {
+        //   console.log(e);
+        // }}
+
+        // 활성화된(현재 보여지는) 년, 월, 일이 변경될 때마다 실행
+        onActiveStartDateChange={e => {
+          changeCalendarMonth(e);
+        }}
+
         // onActiveStartDateChange={({ activeStartDate }) =>
         //   getActiveMonth(activeStartDate)
         // }
       />
+      <div>디자인 수정중</div>
+        <div className="aaa"></div>
+        <div className="calendar-now-month-list-wrap">
+          <div className="now-schedule-day">{today}</div>
+          <div className="">
+            일정 리스트 영역(오늘 일정에는 하이라이트 주기)
+          </div>
+        </div>
     </ScWrap>
   );
 };
