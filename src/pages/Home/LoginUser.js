@@ -3,7 +3,6 @@ import { MdOutlineLogout } from "react-icons/md";
 import "../../scss/main/mainlogin.css";
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { removeCookie } from "utils/cookie";
 import ClassNotice from "./ClassNotice";
 import ClassSchedule from "./ClassSchedule";
 import { removeCookie } from "utils/cookie";

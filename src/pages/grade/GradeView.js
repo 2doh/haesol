@@ -8,7 +8,7 @@ const GradeView = () => {
   // 네비게이트
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate(`/students/edit`);
+    navigate(`/students/edit/2`);
   };
   // 반 정보 > 추후 데이터 받아와서 처리
   const gradeClass = "5학년 7반";
