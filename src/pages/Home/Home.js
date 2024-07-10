@@ -13,30 +13,26 @@ import LoginUser from "./LoginUser";
 import MainSchedule from "./MainSchedule";
 import { getCookie } from "utils/cookie";
 import { useNavigate } from "react-router";
+
 import { getStudentInfo } from "api/teacher/teacherapi";
 
 const HomeStyle = styled.div``;
-
 const Home = () => {
   const navigate = useNavigate();
-
   const [menuArr, setMenuArr] = useState([""]);
   const today = moment().format("YYYYMMDD");
   const mlsvDay = moment().format("YY년 M월 D일");
   const week = ["일", "월", "화", "수", "목", "금", "토"];
   const dayOfWeek = week[moment().day()].concat("요일");
-
   const cookie = getCookie("accessToken");
   useEffect(() => {
     const url = `${MLSV_SERVER_URL}?ATPT_OFCDC_SC_CODE=${ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${SD_SCHUL_CODE}&KEY=${KEY}&MLSV_YMD=${today}&TYPE=JSON`;
     // const url = `${MLSV_SERVER_URL}?ATPT_OFCDC_SC_CODE=${ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${SD_SCHUL_CODE}&KEY=${KEY}&MLSV_YMD=20240707&TYPE=JSON`;
-
     axios.get(url).then(res => {
       // 급식 데이터가 있는 없는지 확인
       if (res.data.mealServiceDietInfo) {
         // INFO-000
         const menu = res.data.mealServiceDietInfo[1].row[0].DDISH_NM;
-
         /** <br/>와  (숫자.숫자) 제거 정규 표현식 */
         setMenuArr(
           menu
@@ -50,11 +46,9 @@ const Home = () => {
       }
     });
   }, []);
-
   useEffect(() => {
     // console.log("오늘의 메뉴 확인 : ", menuArr);
   }, [menuArr]);
-
   const moveLoginPage = () => {
     navigate("/login");
   };
@@ -84,7 +78,6 @@ const Home = () => {
               <div className="main-title-dwon-contents main-activity-slide"></div>
             </div>
           </div>
-
           {/* 메인 오른쪽 영역 - start */}
           <div className="main-inner-info">
             {/* 내 정보 - start */}
@@ -158,5 +151,4 @@ const Home = () => {
     </HomeStyle>
   );
 };
-
 export default Home;

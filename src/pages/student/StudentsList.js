@@ -15,11 +15,6 @@ const StudentsList = () => {
   // 전체 학생 리스트
   const [studentList, setStudentList] = useState([]);
 
-  // 선생님 아이디 받아오는 값
-  // const tea_id = 1;
-  // 실제 토큰 정보 불러와야 함
-  // const accessToken = accessToken;
-
   const studentListData = async () => {
     try {
       const response = await getStudentList();
@@ -39,7 +34,7 @@ const StudentsList = () => {
     // 학생 리스트 데이터 불러오기
     console.log("setStudentList 확인중 : ", studentList);
     studentListData();
-  }, [studentList]);
+  }, []);
 
   const StudentsListStyle = styled.div`
     display: flex;
