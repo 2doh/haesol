@@ -1,11 +1,12 @@
 import styled from "@emotion/styled";
-import ViewPw from "components/common/ViewPw";
 import { useEffect, useState } from "react";
 import "../../scss/teacher/teacheredit.css";
 
-import PwChangeModal from "components/modal/PwChangeModal";
-import NotBgClickModal from "components/modal/NotBgClickModal";
 import DefaultModal from "components/modal/DefaultModal";
+import { useDispatch, useSelector } from "react-redux";
+import { closeModal, openModal } from "slices/modalSlice";
+import { MODAL_TYPES, modalInfo } from "utils/usemodals";
+import Modal from "components/common/Modal";
 
 const StudentsInfoStyle = styled.div`
   /* display: flex;
@@ -29,24 +30,33 @@ const StudentsInfoStyle = styled.div`
 `;
 
 const TeacherEdit = () => {
-  const [isPwChangeModal, setIsPwChangeModal] = useState(false);
+  // const [isPwChangeModal, setIsPwChangeModal] = useState(false);
   const [pwChangeModalResult, setPwChangeModalResult] = useState(false);
-  const showPwChangeModal = () => {
-    setIsPwChangeModal(!isPwChangeModal);
-  };
-  const pwChangeModalCancel = e => {
-    setIsPwChangeModal(false);
+  // const modalRes = null;
+  // const showPwChangeModal = () => {
+  //   setIsPwChangeModal(!isPwChangeModal);
+  // };
+  // const pwChangeModalCancel = e => {
+  //   setIsPwChangeModal(false);
+  // };
+
+  // const modalState = useSelector(state => state.modalSlice);
+  const dispatch = useDispatch();
+  /** 모달 호출 */
+  const showModal = selectModalType => {
+    const modalRes = dispatch(openModal(selectModalType));
+    // console.log("모달 결과 출력 : ", modalRes);
   };
 
-  const modalInfo = {
-    headerText: "확인",
-    bodyTextLabel: ["구분", "아이디"],
-    // bodyText: ["완료하시겠습니까?"],
-    bodyText: ["학부모", "acahe1d3"],
-    // buttonText: ["완료"],
-    buttonText: ["완료", "취소"],
-    buttonNum: 2,
-  };
+  // const modalInfo = {
+  //   headerText: "확인",
+  //   bodyTextLabel: ["구분", "아이디"],
+  //   // bodyText: ["완료하시겠습니까?"],
+  //   bodyText: ["학부모", "acahe1d3"],
+  //   // buttonText: ["완료"],
+  //   buttonText: ["완료", "취소"],
+  //   buttonNum: 2,
+  // };
 
   useEffect(() => {
     if (pwChangeModalResult) {
@@ -59,11 +69,13 @@ const TeacherEdit = () => {
   // 반 정보 > 추후 데이터 받아와서 처리
   const gradeClass = "5학년 7반";
 
-  // 학생 더미 데이터
+  // 선생님 더미 데이터
   const readOnlyInfo = {
-    firstSignup: "2024년 06월 24일 오후 4시 45분",
-    userId: "kimgreen010101",
-    currentClass: "5학년 7반 | 담임 : 황준하",
+    name: "홍길동",
+    phone: "010-0000-0000",
+    email: "test1234@naver.com",
+    zoneCode: "12345",
+    addr: "서울 판교 1234",
   };
 
   return (
@@ -79,7 +91,7 @@ const TeacherEdit = () => {
         />
       ) : null} */}
       {/* {isPwChangeModal ? <PwChangeModal cancel={pwChangeModalCancel} /> : null} */}
-      {isPwChangeModal ? (
+      {/* {isPwChangeModal ? (
         <DefaultModal
           cancel={pwChangeModalCancel}
           setModalResult={setPwChangeModalResult}
@@ -88,7 +100,9 @@ const TeacherEdit = () => {
           buttonText={modalInfo.buttonText}
           buttonNum={modalInfo.buttonNum}
         />
-      ) : null}
+      ) : null} */}
+      {/* 테스트 중 */}
+      {/* {modalState.isOpen ? <Modal /> : null} */}
       <div className="main-core teacher-edit-wrap">
         <div className="student-list-title">
           <span>개인 정보 관리</span>
@@ -104,8 +118,10 @@ const TeacherEdit = () => {
               <div className="info-button .re-pw-btn">
                 <button
                   onClick={() => {
-                    showPwChangeModal();
-                    // pwChangeModal();
+                    // showModal("BasicModal");
+                    // showModal("PasswordChangeModal");
+                    // showModal("ArrValueModal");
+                    showModal("TelAcceptModal");
                   }}
                   className="re-pw-btn"
                 >

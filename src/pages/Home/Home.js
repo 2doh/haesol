@@ -9,13 +9,11 @@ import {
 import axios from "axios";
 import moment from "moment";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import { getCookie } from "utils/cookie";
 import "../../scss/main/home.css";
 import LoginUser from "./LoginUser";
 import MainSchedule from "./MainSchedule";
-import { getCookie } from "utils/cookie";
-import { useNavigate } from "react-router";
-
-import { getStudentInfo } from "api/teacher/teacherapi";
 
 const HomeStyle = styled.div``;
 const Home = () => {
@@ -32,8 +30,6 @@ const Home = () => {
 
   var last = new Date(2024, 7, 0).getDate();
   // console.log("말일 : ", last);
-
-  /** 급식 */
 
   useEffect(() => {
     const url = `${MLSV_SERVER_URL}?ATPT_OFCDC_SC_CODE=${ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${SD_SCHUL_CODE}&KEY=${KEY}&MLSV_YMD=${today}&TYPE=JSON`;

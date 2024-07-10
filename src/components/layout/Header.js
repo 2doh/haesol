@@ -1,7 +1,9 @@
-import React from "react";
-import "../../scss/header/header.css";
 import { useNavigate } from "react-router";
+import { showModal } from "utils/usemodals";
+import "../../scss/header/header.css";
 import Timer from "./Timer";
+import { useDispatch } from "react-redux";
+import { openModal } from "slices/modalSlice";
 
 const Header = () => {
   const navigate = useNavigate();

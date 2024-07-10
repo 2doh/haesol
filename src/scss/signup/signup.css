@@ -31,27 +31,27 @@
   align-items: center;
   justify-content: center;
 }
-.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content {
+.signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content {
   width: 600px;
   height: 100%;
 }
-.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-top {
+.signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-top {
   width: 100%;
   height: 100px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-top .siginup-logo {
+.signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-top .siginup-logo {
   width: 200px;
   height: 80px;
   cursor: pointer;
 }
-.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-top .siginup-top-userselect {
+.signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-top .siginup-top-userselect {
   gap: 15px;
   display: flex;
 }
-.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-top .siginup-top-userselect .siginup-user-parent {
+.signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-top .siginup-top-userselect .siginup-user-parent {
   width: 100px;
   height: 28px;
   display: flex;
@@ -65,7 +65,7 @@
   border-radius: 5px;
   cursor: pointer;
 }
-.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-top .siginup-top-userselect .siginup-user-teacher {
+.signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-top .siginup-top-userselect .siginup-user-teacher {
   width: 100px;
   height: 28px;
   display: flex;
@@ -79,36 +79,36 @@
   border-radius: 5px;
   cursor: pointer;
 }
-.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main {
+.signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main {
   width: 100%;
   height: 100%;
   margin-top: 30px;
 }
-.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main .signup-main-fields {
+.signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-main-fields {
   margin-top: 20px;
   width: 100%;
   height: 100%;
 }
-.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-section-top {
+.signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-section-top {
   display: flex;
   align-items: center;
   gap: 10px;
   margin-bottom: 8px;
 }
-.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-section-top .fields-section-title {
+.signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-section-top .fields-section-title {
   font-size: 20px;
 }
-.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-section-top .fields-section-errmsg {
+.signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-section-top .fields-section-errmsg {
   font-size: 12px;
   color: #dd838f;
 }
-.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-section-bottom-id {
+.signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-section-bottom-id {
   width: 100%;
   display: flex;
   align-items: center;
   position: relative;
 }
-.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-section-bottom-id .fieleds-section-input {
+.signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-section-bottom-id .fieleds-section-input {
   border-radius: 5px;
   border: 1px solid #886348;
   width: 100%;
@@ -116,7 +116,7 @@
   padding-left: 5px;
   color: #2a1b07;
 }
-.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-section-bottom-id .check-duplicate-id-bt {
+.signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-section-bottom-id .check-duplicate-id-bt {
   width: 100px;
   height: 28px;
   display: flex;
@@ -132,13 +132,13 @@
   position: absolute;
   right: 5px;
 }
-.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-section-bottom-pass {
+.signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-section-bottom-pass {
   width: 100%;
   display: flex;
   align-items: center;
   position: relative;
 }
-.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-section-bottom-pass .fieleds-section-input {
+.signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-section-bottom-pass .fieleds-section-input {
   border-radius: 5px;
   border: 1px solid #886348;
   width: 100%;
@@ -146,7 +146,7 @@
   padding-left: 5px;
   color: #2a1b07;
 }
-.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-section-bottom-pass .showpass {
+.signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-section-bottom-pass .showpass {
   position: absolute;
   right: 10px;
   cursor: pointer;
@@ -154,7 +154,7 @@
   width: 20px;
   height: 20px;
 }
-.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-section-bottom-pass .hidepass {
+.signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-section-bottom-pass .hidepass {
   position: absolute;
   right: 10px;
   cursor: pointer;
@@ -163,7 +163,7 @@
   width: 20px;
   height: 20px;
 }
-.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-label {
+.signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-label {
   width: 100%;
   height: 100%;
   display: flex;
@@ -171,16 +171,16 @@
   font-size: 18px;
   gap: 10px;
 }
-.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-gender {
+.signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-gender {
   width: 20px;
   height: 20px;
 }
-.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-section-bottom {
+.signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-section-bottom {
   width: 100%;
   display: flex;
   align-items: center;
 }
-.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-section-bottom .fieleds-section-input {
+.signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-section-bottom .fieleds-section-input {
   border-radius: 5px;
   border: 1px solid #886348;
   width: 100%;
@@ -188,17 +188,17 @@
   padding-left: 5px;
   color: #2a1b07;
 }
-.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-homeadress {
+.signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-homeadress {
   width: 100%;
   height: 100%;
 }
-.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-homeadress .fieleds-homeadress-postcodewrap {
+.signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-homeadress .fieleds-homeadress-postcodewrap {
   display: flex;
   align-items: center;
   justify-content: center;
   justify-content: space-between;
 }
-.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-homeadress .homeadress-postcode-bt {
+.signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-homeadress .homeadress-postcode-bt {
   width: 100px;
   height: 28px;
   display: flex;
@@ -214,7 +214,7 @@
   height: 40px;
   margin-bottom: 10px;
 }
-.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-homeadress .fieleds-homeadress-postcode {
+.signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-homeadress .fieleds-homeadress-postcode {
   border-radius: 5px;
   border: 1px solid #886348;
   width: 100%;
@@ -228,7 +228,7 @@
   align-items: center;
   font-size: 13px;
 }
-.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-homeadress .fieleds-homeadress-adress {
+.signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-homeadress .fieleds-homeadress-adress {
   border-radius: 5px;
   border: 1px solid #886348;
   width: 100%;
@@ -241,7 +241,7 @@
   align-items: center;
   font-size: 13px;
 }
-.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-homeadress .fieleds-homearess-input {
+.signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-homeadress .fieleds-homearess-input {
   border-radius: 5px;
   border: 1px solid #886348;
   width: 100%;
@@ -249,8 +249,8 @@
   padding-left: 5px;
   color: #2a1b07;
 }
-.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main .fields-section-drop,
-.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main option {
+.signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .fields-section-drop,
+.signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main option {
   border-radius: 5px;
   border: 1px solid #886348;
   width: 100%;
@@ -259,11 +259,11 @@
   color: #2a1b07;
   width: 100%;
 }
-.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main .btwrap {
+.signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .btwrap {
   display: flex;
   gap: 10px;
 }
-.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main .btwrap .signupbt {
+.signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .btwrap .signupbt {
   margin: 50px auto 0;
   width: 100px;
   height: 28px;
@@ -279,7 +279,7 @@
   cursor: pointer;
   width: 50%;
 }
-.signup .signup-wrap .signup-wrap-inner .signip-wrap-inner-content .signup-main .btwrap .cancelbt {
+.signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .btwrap .cancelbt {
   margin: 50px auto 0;
   width: 100px;
   height: 28px;

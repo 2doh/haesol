@@ -39,7 +39,8 @@
       border-bottom: 1px solid #cccccc;
     }
     .modal-body {
-      margin-top: 20px;
+      // margin-top: 20px;
+      margin: 30px 0px 10px;
       text-align: center;
       flex-direction: row;
       justify-content: center;
@@ -59,7 +60,7 @@
     .modal-footer {
       position: relative;
       width: 100%;
-      min-height: 60px;
+      min-height: 70px;
 
       .modal-btn {
         position: absolute;
