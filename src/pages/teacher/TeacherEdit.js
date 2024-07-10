@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "../../scss/teacher/teacheredit.css";
 
 import DefaultModal from "components/modal/DefaultModal";
@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { closeModal, openModal } from "slices/modalSlice";
 import { MODAL_TYPES, modalInfo } from "utils/usemodals";
 import Modal from "components/common/Modal";
+import { useLocation } from "react-router";
+import { getTeacherInfo } from "api/teacher/teacherapi";
 
 const StudentsInfoStyle = styled.div`
   /* display: flex;
@@ -32,6 +34,55 @@ const StudentsInfoStyle = styled.div`
 const TeacherEdit = () => {
   // const [isPwChangeModal, setIsPwChangeModal] = useState(false);
   const [pwChangeModalResult, setPwChangeModalResult] = useState(false);
+  const [userInfo, setUserInfo] = useState(null);
+  // const [userName, setUserName] = useState("");
+  const userName = useRef("");
+  const genM = useRef("");
+  const genW = useRef("");
+  const birth = useRef("");
+  const phone = useRef("");
+  const addrNum = useRef("");
+  const addrText = useRef("");
+  const addrDetailText = useRef("");
+
+  /** 선생님 정보 추출 */
+  const nowUserInfo = async () => {
+    try {
+      const res = await getTeacherInfo();
+      // setUserInfo(res.data);
+      console.log("받은 데이터 확인 : ", res.data);
+      // setUserName(res.data.name);
+      if (res.data.gender === "여") {
+        genW.current.checked = true;
+      }
+      if (res.data.gender === "남") {
+        genM.current.checked = true;
+      }
+      userName.current.value = res.data.name;
+      birth.current.value = res.data.birth;
+      phone.current.value = res.data.phone.replace(/-/g, "");
+      addrNum.current.value = res.data.addr.split("#")[0];
+      addrText.current.value = res.data.addr.split("#")[1];
+      if (res.data.addr.split("#")[2]) {
+        addrDetailText.current.value = res.data.addr.split("#")[2];
+      } else {
+        addrDetailText.current.value = "";
+      }
+      // phone.current.value = Number(res.data.phone);
+    } catch (error) {
+      console.log(error);
+    }
+    // = await getTeacherInfo();
+
+    // return res;
+  };
+
+  useEffect(() => {
+    // const res = nowUserInfo();
+    nowUserInfo();
+    // console.log("결과값 : ", res);
+  }, []);
+
   // const modalRes = null;
   // const showPwChangeModal = () => {
   //   setIsPwChangeModal(!isPwChangeModal);
@@ -66,6 +117,13 @@ const TeacherEdit = () => {
     }
   }, [pwChangeModalResult]);
 
+  /** 이름 변경 감지 */
+  const handleChange = e => {
+    // setUserName(e.target.value);
+    const val = (userName.current.value = e.target.value);
+    console.log("이름 : ", val);
+  };
+
   // 반 정보 > 추후 데이터 받아와서 처리
   const gradeClass = "5학년 7반";
 
@@ -80,29 +138,6 @@ const TeacherEdit = () => {
 
   return (
     <StudentsInfoStyle>
-      {/* {isPwChangeModal ? (
-        <NotBgClickModal
-          cancel={pwChangeModalCancel}
-          setModalResult={setPwChangeModalResult}
-          headerText={modalInfo.headerText}
-          bodyTextLabel={modalInfo.bodyTextLabel}
-          bodyText={modalInfo.bodyText}
-          buttonText={modalInfo.buttonText}
-        />
-      ) : null} */}
-      {/* {isPwChangeModal ? <PwChangeModal cancel={pwChangeModalCancel} /> : null} */}
-      {/* {isPwChangeModal ? (
-        <DefaultModal
-          cancel={pwChangeModalCancel}
-          setModalResult={setPwChangeModalResult}
-          headerText={modalInfo.headerText}
-          bodyText={modalInfo.bodyText}
-          buttonText={modalInfo.buttonText}
-          buttonNum={modalInfo.buttonNum}
-        />
-      ) : null} */}
-      {/* 테스트 중 */}
-      {/* {modalState.isOpen ? <Modal /> : null} */}
       <div className="main-core teacher-edit-wrap">
         <div className="student-list-title">
           <span>개인 정보 관리</span>
@@ -140,12 +175,16 @@ const TeacherEdit = () => {
               <div className="info-title">
                 <span>교사명</span>
                 <input
+                  ref={userName}
                   type="text"
                   name="text"
                   placeholder="이름을 입력해주세요"
+                  // value={userName}
+                  // onChange={handleChange}
                 />
                 <div className="form-check">
                   <input
+                    ref={genM}
                     className="form-check-gender"
                     type="radio"
                     name="chk_info"
@@ -153,6 +192,7 @@ const TeacherEdit = () => {
                   />
                   남자
                   <input
+                    ref={genW}
                     className="form-check-gender"
                     type="radio"
                     name="chk_info"
@@ -163,7 +203,7 @@ const TeacherEdit = () => {
               </div>
               <div className="info-title">
                 <span>생년월일</span>
-                <input type="date" name="date" />
+                <input type="date" name="date" ref={birth} />
               </div>
               <div className="info-title">
                 <span>전화번호</span>
@@ -171,6 +211,7 @@ const TeacherEdit = () => {
                   type="number"
                   name="tel"
                   placeholder="전화번호를 입력해주세요"
+                  ref={phone}
                 />
               </div>
             </div>
@@ -196,7 +237,12 @@ const TeacherEdit = () => {
                 <span>주소</span>
                 <div className="add-form">
                   <div>
-                    <input type="text" name="text" placeholder="" />
+                    <input
+                      type="text"
+                      name="text"
+                      placeholder=""
+                      ref={addrNum}
+                    />
                     <button type="button">우편번호 찾기</button>
                   </div>
                   <input
@@ -204,12 +250,14 @@ const TeacherEdit = () => {
                     name="text"
                     placeholder=""
                     className="info-add"
+                    ref={addrText}
                   />
                   <input
                     type="text"
                     name="text"
                     placeholder="상세주소를 입력해주세요."
                     className="info-add"
+                    ref={addrDetailText}
                   />
                 </div>
               </div>
