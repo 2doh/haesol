@@ -76,7 +76,7 @@ function App() {
           <Route path="/grade/2" element={<GradeView />}></Route>
 
           {/* 임시 경로 */}
-          <Route path="/students/edit" element={<StudentEdit />}></Route>
+          {/* <Route path="/students/edit" element={<StudentEdit />}></Route> */}
           {/* 학생 본인 정보 수정 페이지 임시 경로 */}
           <Route path="/students/edit/2" element={<StudentInfoView />}></Route>
 
