@@ -1,9 +1,9 @@
 import axios from "axios";
 
-export const teacherSignup = async () => {
+export const teacherSignup = async data => {
   try {
-    const response = await axios.post(`/api/teacher/sign-up`);
-    console.log(response);
+    const response = await axios.post(`/api/teacher/sign-up`, data);
+    return response;
   } catch (error) {
     console.log(error);
   }

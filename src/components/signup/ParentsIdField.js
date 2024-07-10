@@ -1,26 +1,6 @@
-import { duplicateId } from "api/signup/teacherapi";
-import { useEffect, useState } from "react";
+import React from "react";
 
-const IdInputField = ({ userId, setUserId }) => {
-  const [validationMsg, setValidationMsg] = useState("");
-
-  const handleCheckUserId = async e => {
-    e.preventDefault();
-    const result = await duplicateId(userId);
-    console.log(result);
-  };
-
-  const handleOnChange = e => {
-    const regex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z0-9]{6,16}$/;
-    if (regex.test(e.target.value)) {
-      setValidationMsg("");
-    } else {
-      setValidationMsg("아이디 형식에 맞지 않습니다");
-    }
-  };
-
-  useEffect(() => {}, []);
-
+const ParentsIdField = ({ userId, setUserId }) => {
   return (
     <div className="signup-main-fields">
       <div className="signup-main-fields-section-top">
@@ -51,4 +31,4 @@ const IdInputField = ({ userId, setUserId }) => {
   );
 };
 
-export default IdInputField;
+export default ParentsIdField;

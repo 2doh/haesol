@@ -1,13 +1,16 @@
 import styled from "@emotion/styled";
 
-const DropFields = ({ children }) => {
+const DropFields = ({ children, setUserConnet }) => {
   return (
     <div className="signup-main-fields">
       <div className="signup-main-fields-section-top">
         <div className="fields-section-title">{children}</div>
       </div>
       <OptionStyle>
-        <select className="fields-section-drop">
+        <select
+          className="fields-section-drop"
+          onChange={e => setUserConnet(e.target.value)}
+        >
           <option value="none" hidden>
             가족관계
           </option>

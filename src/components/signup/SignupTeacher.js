@@ -1,3 +1,4 @@
+import { teacherSignup } from "api/signup/teacherapi";
 import { useState } from "react";
 import logo from "../../images/logo_b.png";
 import "../../scss/signup/signup.scss";
@@ -16,7 +17,6 @@ const SignupTeacher = ({
   handleSelectTeacher,
   userType,
   handleCancel,
-  handleSignup,
 }) => {
   const [userId, setUserId] = useState("");
   const [userPass, setUserPass] = useState("");
@@ -28,8 +28,34 @@ const SignupTeacher = ({
   const [zoneCode, setZoneCode] = useState("");
   const [addr, setAddr] = useState("");
 
-  const signupTeacher = e => {
+  const testObj = {
+    teacherId: "rlacjf1",
+    password: "Rlacjf12!",
+    name: "김철",
+    phone: "053-1111-1111",
+    email: "asdsad@naver.net",
+    gender: "남",
+    birth: "2024-1-1",
+    zoneCode: 38800,
+    addr: "경북 연청신 신녕면 대학길 5-13 안녕",
+  };
+
+  const tempObj = {
+    teacherId: userId,
+    password: userPass,
+    name: userName,
+    phone: userPhoneNum,
+    email: userEmail,
+    gender: userGender,
+    birth: userBirth,
+    zoneCode: zoneCode,
+    addr: addr,
+  };
+  const signupTeacher = async e => {
     e.preventDefault();
+    console.log("회원가이 ㅂ확인용");
+    const result = await teacherSignup(tempObj);
+    console.log(result);
   };
   return (
     <div className="signup-wrap">
@@ -55,8 +81,8 @@ const SignupTeacher = ({
                 이름
               </InputFields>
               <PhoneInputFields
-                userNumber={userPhoneNum}
-                setUserNumber={setUserPhoneNum}
+                userPhoneNum={userPhoneNum}
+                setUserPhoneNum={setUserPhoneNum}
               >
                 전화번호
               </PhoneInputFields>
@@ -67,22 +93,15 @@ const SignupTeacher = ({
                 이메일
               </EmailInputField>
               <GenderSelect setUserGender={setUserGender}>성별</GenderSelect>
-              <DropDate userBirth={userBirth} setUserBirth={setUserBirth}>
-                생년월일
-              </DropDate>
-              <HomeAdressFields
-                zoneCode={zoneCode}
-                setZoneCode={setZoneCode}
-                addr={addr}
-                setAddr={setAddr}
-              >
+              <DropDate setUserBirth={setUserBirth}>생년월일</DropDate>
+              <HomeAdressFields setZoneCode={setZoneCode} setAddr={setAddr}>
                 상세주소
               </HomeAdressFields>
               <div className="btwrap">
                 <button
                   className="signupbt"
                   onClick={e => {
-                    handleSignup(e);
+                    signupTeacher(e);
                   }}
                 >
                   회원가입

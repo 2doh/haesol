@@ -1,6 +1,6 @@
 import React from "react";
 
-const ParentInputFields = ({ children }) => {
+const ParentInputFields = ({ children, setUserName, userName }) => {
   return (
     <div className="signup-main-fields">
       <div className="signup-main-fields-section-top">
@@ -11,6 +11,10 @@ const ParentInputFields = ({ children }) => {
           className="fieleds-section-input"
           type="text"
           placeholder={children}
+          value={userName}
+          onChange={e => {
+            setUserName(e.target.value);
+          }}
         ></input>
       </div>
     </div>

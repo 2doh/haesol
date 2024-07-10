@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const HomeAdressFields = ({ children }) => {
+const HomeAdressFields = ({ children, setZoneCode, setAddr }) => {
   const [postCode, setPostCode] = useState("우편번호");
   const [address, setAddress] = useState("주소");
-  const handleClick = e => {
+  const [detailedAddress, setDetailedAddress] = useState("");
+  const handleClick = async e => {
     e.preventDefault();
     // 주소찾기 팝업
     new daum.Postcode({
@@ -22,10 +23,17 @@ const HomeAdressFields = ({ children }) => {
         }
         // 우편번호와 주소 정보를 해당 필드에 넣는다.
         setPostCode(data.zonecode);
+        setZoneCode(data.zonecode);
         setAddress(roadAddr);
       },
     }).open();
   };
+  const addrSet = () => {
+    setAddr(`${address} ${detailedAddress}`);
+  };
+  useEffect(() => {
+    addrSet();
+  }, [detailedAddress]);
   return (
     <div className="signup-main-fields">
       <div className="signup-main-fields-section-top">
@@ -48,6 +56,10 @@ const HomeAdressFields = ({ children }) => {
           className="fieleds-homearess-input"
           type="text"
           placeholder={children}
+          value={detailedAddress}
+          onChange={e => {
+            setDetailedAddress(e.target.value);
+          }}
         ></input>
       </div>
     </div>

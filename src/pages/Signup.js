@@ -18,9 +18,6 @@ const Signup = () => {
     e.preventDefault();
     setUserType("teacher");
   };
-  const handleSignup = e => {
-    e.preventDefault();
-  };
   return (
     <div className="signup">
       {userType === "parent" ? (
@@ -29,7 +26,6 @@ const Signup = () => {
           handleSelectTeacher={handleSelectTeacher}
           userType={userType}
           handleCancel={handleCancel}
-          handleSignup={handleSignup}
         />
       ) : (
         <>
@@ -38,7 +34,6 @@ const Signup = () => {
             handleSelectTeacher={handleSelectTeacher}
             userType={userType}
             handleCancel={handleCancel}
-            handleSignup={handleSignup}
           />
         </>
       )}
