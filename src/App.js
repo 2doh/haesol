@@ -27,6 +27,37 @@ import TeacherEdit from "pages/teacher/TeacherEdit";
 import NoticeItem from "pages/notice/NoticeItem";
 import NoticeList from "pages/notice/NoticeList";
 import { getStudentInfo, getStudentInfo2 } from "api/student/studentapi";
+import Modal from "components/common/Modal";
+import { useDispatch, useSelector } from "react-redux";
+import { openModal } from "slices/modalSlice";
+
+const ModalStyle = styled.div`
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  /* height: 100vh; */
+  height: 100%;
+  width: 100vw;
+  z-index: 999999;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & * {
+    text-shadow: none;
+  }
+
+  .not-bg-click-modal {
+    position: absolute;
+    top: 35%;
+    height: 250px;
+  }
+
+  .modal-inner {
+    height: auto;
+  }
+`;
 
 const Main = styled.div`
   /* & > .name { */
@@ -44,10 +75,17 @@ const Main = styled.div`
 function App() {
   const [notFoundPage, setNotFoundPage] = useState(false);
   useEffect(() => {}, [notFoundPage]);
-  // getStudentInfo(2);
+
+  /** 모달 상태 관리 */
+  const modalState = useSelector(state => state.modalSlice);
+
   return (
     <BrowserRouter>
-      {/* <Modal></Modal> */}
+      {modalState.isOpen ? (
+        <ModalStyle>
+          <Modal />
+        </ModalStyle>
+      ) : null}
 
       <Header />
       <Main>
@@ -76,7 +114,7 @@ function App() {
           <Route path="/grade/2" element={<GradeView />}></Route>
 
           {/* 임시 경로 */}
-          <Route path="/students/edit" element={<StudentEdit />}></Route>
+          {/* <Route path="/students/edit" element={<StudentEdit />}></Route> */}
           {/* 학생 본인 정보 수정 페이지 임시 경로 */}
           <Route path="/students/edit/2" element={<StudentInfoView />}></Route>
 

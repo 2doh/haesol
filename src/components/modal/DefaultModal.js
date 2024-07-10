@@ -3,6 +3,8 @@ import ViewPw from "components/common/ViewPw";
 import React, { useEffect, useState } from "react";
 import "../../scss/modal/notbgclickmodal.css";
 import { allowScroll, preventScroll } from "components/common/ScrollManagement";
+import { useDispatch } from "react-redux";
+import { closeModal, openModal } from "slices/modalSlice";
 
 const DefaultModalStyle = styled.div`
   position: absolute;
@@ -30,6 +32,12 @@ const DefaultModal = ({
   buttonText,
   buttonNum,
 }) => {
+  const dispatch = useDispatch();
+  const showPwChangeModal = () => {
+    dispatch(closeModal());
+    // console.log("State 출력 : ", modalState);
+  };
+
   // 버튼 갯수
   // const btnNum = 2;
 
@@ -49,6 +57,11 @@ const DefaultModal = ({
     cancel();
   };
 
+
+
+
+
+  
   /** 승인 : 확인 버튼 클릭 */
   const modalApproval = () => {
     setModalResult(true);
@@ -92,7 +105,8 @@ const DefaultModal = ({
                   </button>
                   <button
                     onClick={() => {
-                      modalCancel();
+                      showPwChangeModal();
+                      // modalCancel();
                     }}
                   >
                     {/* 취소 */}
