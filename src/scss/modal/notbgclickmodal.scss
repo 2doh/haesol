@@ -76,10 +76,14 @@
           border: 1px solid $btn-c-1;
           border-radius: 6px;
         }
-        & > button:nth-child(2) {
+        & > .white-button {
           color: #ffffff;
           background-color: $btn-c-1;
         }
+        // & > button:nth-child(2) {
+        //   color: #ffffff;
+        //   background-color: $btn-c-1;
+        // }
       }
     }
   }

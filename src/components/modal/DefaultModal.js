@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import ViewPw from "components/common/ViewPw";
 import React, { useEffect, useState } from "react";
 import "../../scss/modal/notbgclickmodal.css";
+import { allowScroll, preventScroll } from "components/common/ScrollManagement";
 
 const DefaultModalStyle = styled.div`
   position: absolute;
@@ -21,7 +22,17 @@ const DefaultModalStyle = styled.div`
   }
 `;
 
-const DefaultModal = ({ cancel, headerText, bodyText }) => {
+const DefaultModal = ({
+  cancel,
+  setModalResult,
+  headerText,
+  bodyText,
+  buttonText,
+  buttonNum,
+}) => {
+  // 버튼 갯수
+  // const btnNum = 2;
+
   // (공용) 비밀번호 받아올 변수
   //   const [nowPw, setNowPw] = useState();
   const [newPw, setNewPw] = useState();
@@ -38,28 +49,16 @@ const DefaultModal = ({ cancel, headerText, bodyText }) => {
     cancel();
   };
 
-  const preventScroll = () => {
-    const currentScrollY = window.scrollY;
-    document.body.style.position = "fixed";
-    document.body.style.width = "100%";
-    document.body.style.top = `-${currentScrollY}px`; // 현재 스크롤 위치
-    document.body.style.overflowY = "scroll";
-    return currentScrollY;
-  };
-
-  /**
-   * 스크롤을 허용하고, 스크롤 방지 함수에서 반환된 위치로 이동한다.
-   */
-  const allowScroll = prevScrollY => {
-    document.body.style.position = "";
-    document.body.style.width = "";
-    document.body.style.top = "";
-    document.body.style.overflowY = "";
-    window.scrollTo(0, prevScrollY);
+  /** 승인 : 확인 버튼 클릭 */
+  const modalApproval = () => {
+    setModalResult(true);
+    cancel();
   };
 
   useEffect(() => {
+    // 모달 생성시 스크롤 금지
     const prevScrollY = preventScroll();
+
     return () => {
       allowScroll(prevScrollY);
     };
@@ -71,43 +70,45 @@ const DefaultModal = ({ cancel, headerText, bodyText }) => {
         <div className="modal-inner">
           <div className="modal-header">
             {/* <div className="modal-text">{state.modalHeader[1]}</div> */}
-            <div className="modal-text">1</div>
+            <div className="modal-text">{headerText}</div>
           </div>
           <div className="modal-body">
-            {/* <div className="modal-body-text-div">
-              <div className="modal-text">구분</div>
-              <div className="modal-text">:</div>
-              <div className="modal-text">학부모</div>
-            </div>
             <div className="modal-body-text-div">
-              <div className="modal-text">아이디</div>
-              <div className="modal-text">:</div>
-              <div className="modal-text">acahe1d3</div>
-            </div> */}
-            <div className="modal-body-text-div">
-              <div className="modal-text">구분</div>
-              <div className="modal-text">아이디</div>
-            </div>
-            <div className="modal-body-text-div">
-              <div className="modal-text">:</div>
-              <div className="modal-text">:</div>
-            </div>
-
-            <div className="modal-body-text-div">
-              <div className="modal-text">학부모</div>
-              <div className="modal-text">acahe1d3</div>
+              <div className="modal-text">{bodyText[0]}</div>
             </div>
           </div>
           <div className="modal-footer">
             <div className="modal-btn">
-              <button>확인</button>
-              <button
-                onClick={() => {
-                  modalCancel();
-                }}
-              >
-                취소
-              </button>
+              {buttonNum === 2 ? (
+                <>
+                  <button
+                    onClick={() => {
+                      modalApproval();
+                    }}
+                    className="white-button"
+                  >
+                    {buttonText[0]}
+                    {/* 완료 */}
+                  </button>
+                  <button
+                    onClick={() => {
+                      modalCancel();
+                    }}
+                  >
+                    {/* 취소 */}
+                    {buttonText[1]}
+                  </button>
+                </>
+              ) : (
+                <button
+                  onClick={() => {
+                    modalApproval();
+                  }}
+                >
+                  {buttonText[0]}
+                  {/* 완료 */}
+                </button>
+              )}
             </div>
             {/* <div className="modal-text">3</div> */}
           </div>
