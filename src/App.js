@@ -1,4 +1,6 @@
 import "./css/reset.css";
+import "../src/scss/common.scss";
+import "./App.css";
 import styled from "@emotion/styled";
 import Footer from "components/layout/Footer";
 import Login from "pages/Login";
@@ -18,15 +20,13 @@ import StudentGrade from "pages/student/StudentGrade";
 import StudentInfoView from "pages/student/StudentInfoView";
 import Students from "pages/student/StudentsList";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import "../src/scss/common.scss";
-import "./App.css";
-import "./css/reset.css";
+
 import { useEffect, useState } from "react";
 import GradeView from "pages/grade/GradeView";
 import TeacherEdit from "pages/teacher/TeacherEdit";
 import NoticeItem from "pages/notice/NoticeItem";
 import NoticeList from "pages/notice/NoticeList";
-
+import { getStudentInfo, getStudentInfo2 } from "api/student/studentapi";
 
 const Main = styled.div`
   /* & > .name { */
@@ -44,7 +44,7 @@ const Main = styled.div`
 function App() {
   const [notFoundPage, setNotFoundPage] = useState(false);
   useEffect(() => {}, [notFoundPage]);
-
+  // getStudentInfo(2);
   return (
     <BrowserRouter>
       {/* <Modal></Modal> */}
@@ -78,6 +78,7 @@ function App() {
           {/* 임시 경로 */}
           <Route path="/students/edit" element={<StudentEdit />}></Route>
           {/* 학생 본인 정보 수정 페이지 임시 경로 */}
+          <Route path="/students/edit/2" element={<StudentInfoView />}></Route>
 
           {/* 선생님 본인 정보 수정 페이지 */}
           <Route path="/teacher/edit" element={<TeacherEdit />}></Route>

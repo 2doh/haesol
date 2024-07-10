@@ -1,20 +1,17 @@
 import styled from "@emotion/styled";
 import { MdOutlineLogout } from "react-icons/md";
 import "../../scss/main/mainlogin.css";
-
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { removeCookie } from "utils/cookie";
 import ClassNotice from "./ClassNotice";
 import ClassSchedule from "./ClassSchedule";
-
+import { removeCookie } from "utils/cookie";
 const LoginUserStyle = styled.div``;
-
 const LoginUser = () => {
   const navigate = useNavigate();
-
   // 학부모 : 1, 교직원 : 2
   const [loginUserType, setLoginUserType] = useState(2);
-
   // 아래 데이터 추후 데이터베이스 정보로 변경
   /** 로그인한 유저 정보 출력 */
   const loginUserInfo = {
@@ -26,35 +23,30 @@ const LoginUser = () => {
     teacherName: "김그린",
     teacherEmail: "green@naver.com",
   };
-
   // const teacherEmail = "green@naver.com";
   const splitEmail = loginUserInfo.teacherEmail.split("@");
-
   /** 반 시간표 */
   // const lgoinUserSchedule
-
   /** 마이페이지 이동 */
   const moveMyPage = () => {
     if (loginUserType === 1) navigate("/students/edit");
     if (loginUserType === 2) navigate("/teacher/edit");
   };
-
   /** 성적 확인 페이지 이동 */
   const moveMyGradePage = () => {
     navigate("/grade/1");
   };
-
   /** 우리 학급 페이지 이동 */
   const moveMyStudentsPage = () => {
     navigate("/students");
   };
-
   /** 로그아웃 기능 */
   const logout = () => {
     // navigate("/login");
-    console.log("로그아웃 되었다.");
+    // console.log("로그아웃 되었다.");
+    removeCookie("accessToken");
+    navigate("/");
   };
-
   return (
     <LoginUserStyle>
       <div className="main">
@@ -71,7 +63,6 @@ const LoginUser = () => {
                 <ClassSchedule />
               </div>
             </div>
-
             <div className="main-notice">
               <div className="main-schedule-title main-contents-title">
                 <div className="main-schedule-title-text ">알림장</div>
@@ -83,7 +74,6 @@ const LoginUser = () => {
               </div>
             </div>
           </div>
-
           <div className="main-inner-info">
             <div className="main-login-user-info">
               {/* <div className="main-schedule-title main-contents-title">
@@ -162,7 +152,6 @@ const LoginUser = () => {
                       <MdOutlineLogout size="100%" title="로그아웃" />
                     </div>
                   </div>
-
                   <div className="login-user-btn">
                     {loginUserType === 1 ? (
                       <>
@@ -213,5 +202,4 @@ const LoginUser = () => {
     </LoginUserStyle>
   );
 };
-
 export default LoginUser;

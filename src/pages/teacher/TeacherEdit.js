@@ -30,12 +30,31 @@ const StudentsInfoStyle = styled.div`
 
 const TeacherEdit = () => {
   const [isPwChangeModal, setIsPwChangeModal] = useState(false);
+  const [pwChangeModalResult, setPwChangeModalResult] = useState(false);
   const showPwChangeModal = () => {
     setIsPwChangeModal(!isPwChangeModal);
   };
   const pwChangeModalCancel = e => {
     setIsPwChangeModal(false);
   };
+
+  const modalInfo = {
+    headerText: "확인",
+    bodyTextLabel: ["구분", "아이디"],
+    // bodyText: ["완료하시겠습니까?"],
+    bodyText: ["학부모", "acahe1d3"],
+    // buttonText: ["완료"],
+    buttonText: ["완료", "취소"],
+    buttonNum: 2,
+  };
+
+  useEffect(() => {
+    if (pwChangeModalResult) {
+      // 동작
+      console.log("pwChangeModalResult : ", pwChangeModalResult);
+      setPwChangeModalResult(false);
+    }
+  }, [pwChangeModalResult]);
 
   // 반 정보 > 추후 데이터 받아와서 처리
   const gradeClass = "5학년 7반";
@@ -47,16 +66,29 @@ const TeacherEdit = () => {
     currentClass: "5학년 7반 | 담임 : 황준하",
   };
 
-  /** 비밀번호 변경 모달 생성 */
-  const pwChangeModal = () => {};
-
   return (
     <StudentsInfoStyle>
       {/* {isPwChangeModal ? (
-        <NotBgClickModal cancel={pwChangeModalCancel} />
+        <NotBgClickModal
+          cancel={pwChangeModalCancel}
+          setModalResult={setPwChangeModalResult}
+          headerText={modalInfo.headerText}
+          bodyTextLabel={modalInfo.bodyTextLabel}
+          bodyText={modalInfo.bodyText}
+          buttonText={modalInfo.buttonText}
+        />
       ) : null} */}
       {/* {isPwChangeModal ? <PwChangeModal cancel={pwChangeModalCancel} /> : null} */}
-      {isPwChangeModal ? <DefaultModal cancel={pwChangeModalCancel} /> : null}
+      {isPwChangeModal ? (
+        <DefaultModal
+          cancel={pwChangeModalCancel}
+          setModalResult={setPwChangeModalResult}
+          headerText={modalInfo.headerText}
+          bodyText={modalInfo.bodyText}
+          buttonText={modalInfo.buttonText}
+          buttonNum={modalInfo.buttonNum}
+        />
+      ) : null}
       <div className="main-core teacher-edit-wrap">
         <div className="student-list-title">
           <span>개인 정보 관리</span>
@@ -169,34 +201,10 @@ const TeacherEdit = () => {
             </div>
           </div>
           <div className="info-contain-top">
-            <div className="info-item-bottom">
-              <div className="info-title">
-                <span>아이디</span>
-              </div>
-              <div className="info-title"></div>
-            </div>
-          </div>
-          <div className="info-contain-top">
-            <div className="info-none-modify">
-              <div className="info-title">
-                <span></span>
-                <div></div>
-              </div>
-            </div>
-          </div>
-          <div className="info-contain-top">
-            <div className="info-none-modify">
+            <div className="info-none-modify" id="info-none-modify-last">
               <div className="info-title">
                 <span>아이디</span>
                 <div>{readOnlyInfo.userId}</div>
-              </div>
-            </div>
-          </div>
-          <div className="info-contain-top">
-            <div className="info-none-modify" id="info-none-modify-last">
-              <div className="info-title">
-                <span></span>
-                <div></div>
               </div>
             </div>
           </div>
