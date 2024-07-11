@@ -29,6 +29,27 @@ export const getStudentInfo = async stu_id => {
         },
       },
     );
+    // console.log("response : ", response);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// 학생 한 명 정보 수정
+export const modifyStudentInfo = async stu_id => {
+  const accessToken = getCookie("accessToken");
+  try {
+    const header = { headers: { "Content-Type": "multipart/form-data" } };
+    const response = await axios.get(
+      `/api/student/detail?pk=${stu_id}`,
+      header,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
     console.log("response : ", response);
     return response;
   } catch (error) {
@@ -36,16 +57,18 @@ export const getStudentInfo = async stu_id => {
   }
 };
 
-// export const getStudentInfo2 = async stu_id => {
-//   try {
-//     const response = await axios.get(`/api/student/detail?pk=${stu_id}`, {
-//       headers: {
-//         Authorization: `Bearer ${accessToken}`,
-//       },
-//     });
-//     console.log("response : ", response);
-//     return response;
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
+// 학생 성적 조회
+export const getStudentGrade = async stuId => {
+  const accessToken = getCookie("accessToken");
+  try {
+    const response = await axios.get(`/api/Score/getScore?stuId=${stuId}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    console.log("response : ", response);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};

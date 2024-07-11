@@ -1,13 +1,11 @@
 import styled from "@emotion/styled";
 import React from "react";
 import "../../scss/main/footer.css";
-
 const FooterStyle = styled.div`
   background-color: #dee8e9;
   height: 180px;
   width: 100%;
 `;
-
 const Footer = () => {
   return (
     <FooterStyle>
@@ -38,5 +36,4 @@ const Footer = () => {
     </FooterStyle>
   );
 };
-
 export default Footer;

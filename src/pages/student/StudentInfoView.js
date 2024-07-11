@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { getStudentInfo } from "api/student/studentapi";
+import { getStudentInfo, modifyStudentInfo } from "api/student/studentapi";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import "../../scss/student/studentEdit.css";
@@ -25,7 +25,7 @@ const StudentInfoView = () => {
   const [parentPhone, setParentPhone] = useState("");
 
   // 이미지
-  const [studentPic, setStudentPic] = useState(null);
+  const [studentPic, setStudentPic] = useState();
 
   const [studentZoneCode, setStudentZoneCode] = useState("");
   const [studentAddr, setStudentAddr] = useState("");
@@ -38,6 +38,7 @@ const StudentInfoView = () => {
 
   const stu_id = 1;
 
+  // 정보 불러오기
   const studentInfoData = async () => {
     try {
       const response = await getStudentInfo(stu_id);
@@ -51,6 +52,7 @@ const StudentInfoView = () => {
       setParentName(result.parentName);
       setConnet(result.connet);
       setParentPhone(result.parentPhone);
+      setStudentPic(result.files);
       setStudentZoneCode(result.studentZoneCode);
       setStudentAddr(result.studentAddr);
       setStudentEtc(result.studentEtc);
@@ -67,6 +69,25 @@ const StudentInfoView = () => {
     console.log("studentInfoData 확인중 : ", studentInfo);
     studentInfoData();
   }, []);
+
+  // 정보 수정하기
+  const handleModifyInfo = async e => {
+    e.preventDefault();
+    const formData = new FormData();
+
+    const infoData = JSON.stringify({
+      stu_id: stu_id,
+    });
+
+    const dto = new Blob([infoData], { type: "application/json" });
+    formData.append("studentPic", dto);
+    formData.append("files", studentPic);
+    try {
+      await modifyStudentInfo(formData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const prvInfo = [
     {
@@ -154,7 +175,13 @@ const StudentInfoView = () => {
           </div>
 
           <div className="info-button">
-            <button>저장</button>
+            <button
+              onSubmit={e => {
+                handleModifyInfo(e);
+              }}
+            >
+              저장
+            </button>
             <button>취소</button>
           </div>
         </div>

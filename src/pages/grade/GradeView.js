@@ -1,8 +1,9 @@
 import Signature from "pages/grade/Signature";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import "../../scss/student/grade.css";
 import "../../scss/student/studentEdit.css";
+import { getStudentGrade, getStudentInfo } from "api/student/studentapi";
 
 const GradeView = () => {
   // 네비게이트
@@ -10,16 +11,55 @@ const GradeView = () => {
   const handleClick = () => {
     navigate(`/students/edit/2`);
   };
+
   // 반 정보 > 추후 데이터 받아와서 처리
-  const gradeClass = "5학년 7반";
-  const studentName = "김누구";
   const totalStudent = "21 / 321";
+
+  const stu_id = 1;
+
+  const [studentInfo, setStudentInfo] = useState({});
+  const [studentName, setStudentName] = useState("");
+  const [studentClass, setStudentClass] = useState("");
+
+  // 학생 정보 불러오기
+  const studentInfoData = async () => {
+    try {
+      const response = await getStudentInfo(stu_id);
+      const result = response.data;
+
+      setStudentInfo(result);
+      setStudentName(result.studentName);
+      setStudentClass(result.studentClass);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    // 학생 데이터 불러오기
+    // console.log("studentInfoData 확인중 : ", studentInfo);
+    studentInfoData();
+  }, []);
+
+  // 성적 불러오기
+  const studentGrade = async () => {
+    try {
+      const response = await getStudentGrade(stu_id);
+      const result = response.data;
+      console.log(result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    console.log("studentGrade 확인중 : ", studentGrade);
+    studentGrade();
+  }, []);
 
   return (
     <div className="main-core">
       <div className="student-list-title">
         {/* <!-- 제목 위치 --> */}
-        <span>{gradeClass}</span>
+        <span>{studentClass}</span>
         <p>{studentName} 성적 확인</p>
       </div>
       <div className="user-info-wrap">
