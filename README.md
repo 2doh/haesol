@@ -68,3 +68,8 @@ handle 이벤트 작업 처리
 - remove : 파일을 삭제하는 작업만 수행한 경우
 - !BREAKING CHANGE : 커다란 API 변경의 경우
 - !HOTFIX : 급하게 치명적인 버그를 고쳐야 하는 경우
+
+## 11. 공용 함수
+
+- PhoneNumber : 휴대폰 번호 자동 하이픈 삽입, input의 maxLength={13} 반드시 삽입
+- navi : useNavigate

@@ -1,4 +1,3 @@
-import NotBgClickModal from "components/modal/NotBgClickModal";
 import NotClickBgModalProvider, {
   NotClickBgModalContext,
 } from "context/NotClickBgModalProvider";
