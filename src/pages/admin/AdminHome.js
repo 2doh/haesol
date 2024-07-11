@@ -96,14 +96,19 @@ const AdminHome = () => {
 
   const dispatch = useDispatch();
   /** 모달 호출 */
-  const showModal = selectModalType => {
+  const showModal = (selectBtn, selectUserId, selectUserName, selectUserPk) => {
     /** (선택) 들어갈 내용 수정 */
-    const data = { headerText: ["반려"] };
+    const data = {
+      headerText: [selectBtn],
+      bodyTextLabel: ["ID", "이름"],
+      bodyText: [selectUserId, selectUserName, selectUserPk, userListType],
+      buttonText: [selectBtn, "취소"],
+    };
     /** (선택) 위와 아래는 세트 */
     dispatch(updateModalDate(data));
 
     /**(고정) 모달 활성화 */
-    const modalRes = dispatch(openModal(selectModalType));
+    const modalRes = dispatch(openModal("ArrValueModal"));
     // console.log("모달 결과 출력 내용 확인 : ", modalRes);
   };
 
@@ -193,13 +198,19 @@ const AdminHome = () => {
                         <button
                           className="rejected-button"
                           onClick={() => {
-                            showModal("ArrValueModal", item.id, item.name);
-                            console.log();
+                            showModal("반려", item.id, item.name, item.pk);
                           }}
                         >
                           반려
                         </button>
-                        <button className="accept-button">승인</button>
+                        <button
+                          className="accept-button"
+                          onClick={() => {
+                            showModal("승인", item.id, item.name, item.pk);
+                          }}
+                        >
+                          승인
+                        </button>
                       </div>
                     </div>
                   </div>

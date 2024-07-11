@@ -1,5 +1,6 @@
 .not-bg-click-modal {
   width: 400px;
+  min-width: 400px;
   height: 210px;
   font-size: 18px;
   position: relative;

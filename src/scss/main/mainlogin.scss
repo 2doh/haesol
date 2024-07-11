@@ -145,6 +145,7 @@
 
       .notice-inner {
         border-radius: 0 0 5px 5px;
+        position: relative;
 
         width: 100%;
         background-color: $b100;
@@ -167,6 +168,12 @@
         }
 
         .notice-text {
+        }
+
+        .notice-write-icon {
+          position: absolute;
+          bottom: 20px;
+          right: 25px;
         }
       }
     }
