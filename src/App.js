@@ -3,9 +3,9 @@ import "../src/scss/common.scss";
 import "./App.css";
 import styled from "@emotion/styled";
 import Footer from "components/layout/Footer";
-import Login from "pages/Login";
 import Header from "components/layout/Header";
 import Home from "pages/Home/Home";
+import Login from "pages/Login";
 import NotFound from "pages/NotFound";
 import Signup from "pages/Signup";
 import AdminHome from "pages/admin/AdminHome";
@@ -15,21 +15,17 @@ import GradeStatistics from "pages/grade/GradeStatistics";
 import Notice from "pages/notice/Notice";
 import NoticeEdit from "pages/notice/NoticeEdit";
 import NoticeModify from "pages/notice/NoticeModify";
-import StudentEdit from "pages/student/StudentEdit";
-import StudentGrade from "pages/student/StudentGrade";
 import StudentInfoView from "pages/student/StudentInfoView";
 import Students from "pages/student/StudentsList";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
-import { useEffect, useState } from "react";
+import Modal from "components/common/Modal";
 import GradeView from "pages/grade/GradeView";
-import TeacherEdit from "pages/teacher/TeacherEdit";
 import NoticeItem from "pages/notice/NoticeItem";
 import NoticeList from "pages/notice/NoticeList";
-import { getStudentInfo, getStudentInfo2 } from "api/student/studentapi";
-import Modal from "components/common/Modal";
-import { useDispatch, useSelector } from "react-redux";
-import { openModal } from "slices/modalSlice";
+import TeacherEdit from "pages/teacher/TeacherEdit";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 const ModalStyle = styled.div`
   position: absolute;
@@ -128,7 +124,7 @@ function App() {
           <Route path="/students" element={<Navigate to="*" />}>
             {/* 경로 수정 후 아래로 변경 */}
             {/* <Route path="edit/:userid" element={<StudentEdit />}></Route> */}
-            <Route path="grade/:studentid" element={<StudentGrade />}></Route>
+            {/* <Route path="grade/:studentid" element={<StudentGrade />}></Route> */}
           </Route>
 
           {/* 임시 경로 */}

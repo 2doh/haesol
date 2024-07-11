@@ -2,9 +2,10 @@ import styled from "@emotion/styled";
 import React, { useEffect, useRef, useState } from "react";
 
 const StudentImg = ({ studentPic, setStudentPic }) => {
-  const [sendFile, setSendFile] = useState(null);
+  // const [sendFile, setSendFile] = useState(null);
   const [previewFile, setPreviewFile] = useState("");
   const fileBt = useRef(null);
+  const stu_id = 1;
 
   // 강제로 input type="file" 을 클릭한 것처럼 js 에서 실행
   const handleFileClick = () => {
@@ -16,14 +17,14 @@ const StudentImg = ({ studentPic, setStudentPic }) => {
     const file = e.target.files[0];
     const url = URL.createObjectURL(file);
     // 파일 보관
-    setSendFile(file);
+    setStudentPic(file);
     // 웹 브라우저 임시 파일 주소
     setPreviewFile(url);
   };
 
   useEffect(() => {
-    console.log(sendFile);
-  }, [sendFile]);
+    console.log(studentPic);
+  }, []);
 
   const StudentsImeStyle = styled.div`
     width: 100%;
@@ -46,7 +47,9 @@ const StudentImg = ({ studentPic, setStudentPic }) => {
     <StudentsImeStyle onClick={() => handleFileClick()}>
       {/* 이미지 보여지는 곳 */}
       <div className="img-contain">
-        <img src={previewFile} />
+        <img
+          src={`http://192.168.0.164:8080/pic/2nd/student/${stu_id}/47872175-b41f-4080-bcf9-dc72604c46d5.png`}
+        />
       </div>
       <input
         style={{ display: "none" }}
