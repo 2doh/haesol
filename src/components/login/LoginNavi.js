@@ -3,6 +3,7 @@ const LoginNavi = ({ setNaviState, naviState }) => {
     width: "100%",
     borderLeft: "1px solid #886348",
     borderTopLeftRadius: "10px",
+    borderRight: "0",
   };
   const findPassStyle = {
     width: "100%",
@@ -18,27 +19,18 @@ const LoginNavi = ({ setNaviState, naviState }) => {
           setNaviState("signin");
         }}
       >
-        로그인
-      </div>
-      <div
-        className={naviState === "find-id" ? "selectednavi" : "unselectednavi"}
-        onClick={() => {
-          setNaviState("find-id");
-        }}
-        style={naviState === "find-id" ? findIdStyle : null}
-      >
-        아이디 찾기
+        학부모 로그인
       </div>
       <div
         className={
-          naviState === "find-pass" ? "selectednavi" : "unselectednavi"
+          naviState === "teacherlogin" ? "selectednavi" : "unselectednavi"
         }
         onClick={() => {
-          setNaviState("find-pass");
+          setNaviState("teacherlogin");
         }}
-        style={naviState === "find-pass" ? findPassStyle : null}
+        style={naviState === "teacherlogin" ? findIdStyle : null}
       >
-        비밀번호 찾기
+        교직원
       </div>
     </div>
   );

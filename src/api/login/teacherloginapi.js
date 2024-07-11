@@ -5,7 +5,6 @@ import base64 from "base-64";
 export const postTeacherSignin = async data => {
   try {
     const res = await axios.post(`/api/teacher/sign-in`, data);
-    console.log(res);
     setCookie("accessToken", res.data.accessToken);
 
     // ROLE_ADMIN = 어드민;
