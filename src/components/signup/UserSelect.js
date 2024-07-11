@@ -1,4 +1,6 @@
-const UserSelect = ({ handleSelect, handleSelectTeacher, userType }) => {
+import { useState } from "react";
+
+const UserSelect = ({ handleSelectTeacher, handleSelect, userType }) => {
   const btStyleParent = {
     backgroundColor: userType === "parent" ? "#dd838f" : "#fff",
     color: userType === "parent" ? "#fff" : "#dd838f",
@@ -7,6 +9,7 @@ const UserSelect = ({ handleSelect, handleSelectTeacher, userType }) => {
     backgroundColor: userType === "teacher" ? "#dd838f" : "#fff",
     color: userType === "teacher" ? "#fff" : "#dd838f",
   };
+
   return (
     <div className="siginup-top-userselect">
       <div

@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { MdOutlineLogout } from "react-icons/md";
 import "../../scss/main/mainlogin.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import ClassNotice from "./ClassNotice";
 import ClassSchedule from "./ClassSchedule";
@@ -13,6 +13,8 @@ const LoginUser = () => {
   const [loginUserType, setLoginUserType] = useState(2);
   // 아래 데이터 추후 데이터베이스 정보로 변경
   /** 로그인한 유저 정보 출력 */
+
+  // 더미 데이터
   const loginUserInfo = {
     pic: "",
     classNum: "5학년 8반",
@@ -22,6 +24,13 @@ const LoginUser = () => {
     teacherName: "김그린",
     teacherEmail: "green@naver.com",
   };
+
+  useEffect(() => {
+    // console.log(userInfo);
+  }, []);
+
+  // console.log("로그인한 유저의 정보 : ", loginUserInfo);
+
   // const teacherEmail = "green@naver.com";
   const splitEmail = loginUserInfo.teacherEmail.split("@");
   /** 반 시간표 */
@@ -29,7 +38,9 @@ const LoginUser = () => {
   /** 마이페이지 이동 */
   const moveMyPage = () => {
     if (loginUserType === 1) navigate("/students/edit");
-    if (loginUserType === 2) navigate("/teacher/edit");
+    if (loginUserType === 2) {
+      navigate("/teacher/edit");
+    }
   };
   /** 성적 확인 페이지 이동 */
   const moveMyGradePage = () => {
@@ -44,8 +55,10 @@ const LoginUser = () => {
     // navigate("/login");
     // console.log("로그아웃 되었다.");
     removeCookie("accessToken");
+    removeCookie("userIdPk");
     navigate("/");
   };
+
   return (
     <LoginUserStyle>
       <div className="main">
@@ -113,7 +126,7 @@ const LoginUser = () => {
                         {loginUserType === 1 ? (
                           <>
                             <div className="login-user-info-text">
-                              {loginUserInfo.name}
+                              {/* {userInfo.data} */}
                             </div>
                             <div className="login-user-info-text">
                               {loginUserInfo.age}
@@ -128,7 +141,7 @@ const LoginUser = () => {
                         ) : (
                           <>
                             <div className="login-user-info-text">
-                              {loginUserInfo.teacherName}
+                              {/* {userInfo.name} */}
                             </div>
                             {/* <div className="login-user-info-text">
                               {loginUserInfo.classNum}

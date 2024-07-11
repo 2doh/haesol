@@ -29,7 +29,7 @@ const Login = () => {
         </div>
         <div className="login-wrap br10">
           <LoginNavi setNaviState={setNaviState} naviState={naviState} />
-          <Signin naviState={naviState} setNaviState={setNaviState}>
+          <Signin naviState={naviState} setNaviState={setNaviState} navi={navi}>
             {naviState}
           </Signin>
         </div>
