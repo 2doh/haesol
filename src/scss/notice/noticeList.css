@@ -62,7 +62,7 @@
   justify-content: flex-start;
   align-items: center;
   display: grid;
-  grid-template-columns: 1fr 5fr;
+  grid-template-columns: 1.5fr 5fr;
   text-align: center;
 }
 .main-core .notice-select .notice-select-inner {
@@ -105,7 +105,7 @@
   justify-content: flex-start;
   align-items: center;
   display: grid;
-  grid-template-columns: 1fr 5fr;
+  grid-template-columns: 1.5fr 5fr;
   text-align: center;
 }
 .main-core .notice-frame .grid-inner .grid-inner-item {

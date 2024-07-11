@@ -29,7 +29,6 @@ export const getStudentInfo = async stu_id => {
         },
       },
     );
-    // console.log("response : ", response);
     return response;
   } catch (error) {
     console.log(error);
@@ -50,7 +49,6 @@ export const modifyStudentInfo = async stu_id => {
         },
       },
     );
-    console.log("response : ", response);
     return response;
   } catch (error) {
     console.log(error);
@@ -62,6 +60,39 @@ export const getStudentGrade = async stuId => {
   const accessToken = getCookie("accessToken");
   try {
     const response = await axios.get(`/api/Score/getScore?stuId=${stuId}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// 알림장 데이터 불러오기
+export const getNoticeList = async (class_id, state) => {
+  const accessToken = getCookie("accessToken");
+  try {
+    const response = await axios.get(
+      `/api/notice?class_id=${class_id}&state=${state}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// 알림장 작성하기
+export const createNotice = async () => {
+  const accessToken = getCookie("accessToken");
+  try {
+    const response = await axios.post("/api/notice", {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },

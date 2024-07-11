@@ -32,7 +32,7 @@ const StudentsList = () => {
 
   useEffect(() => {
     // 학생 리스트 데이터 불러오기
-    console.log("setStudentList 확인중 : ", studentList);
+    // console.log("setStudentList 확인중 : ", studentList);
     studentListData();
   }, []);
 
