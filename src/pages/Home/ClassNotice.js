@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { useEffect, useRef, useState } from "react";
+import { BsPencilFill } from "react-icons/bs";
 
 const ClassNoticeStyle = styled.div`
   /* 추후 삭제 */
@@ -78,6 +79,9 @@ const ClassNotice = () => {
               <li>1. 수학 익힘책 15p 숙제가 있습니다.</li>
               <li>2. 내일 받아쓰기 시험이 있습니다.</li>
             </ul>
+          </div>
+          <div className="notice-write-icon">
+            <BsPencilFill />
           </div>
         </div>
       </div>

@@ -2,13 +2,11 @@ import styled from "@emotion/styled";
 import { useEffect, useRef, useState } from "react";
 import "../../scss/teacher/teacheredit.css";
 
-import DefaultModal from "components/modal/DefaultModal";
-import { useDispatch, useSelector } from "react-redux";
-import { closeModal, openModal, updateModalDate } from "slices/modalSlice";
-import { MODAL_TYPES, modalInfo } from "utils/usemodals";
-import Modal from "components/common/Modal";
-import { useLocation } from "react-router";
 import { getTeacherInfo } from "api/teacher/teacherapi";
+import StudentImg from "pages/student/StudentImg";
+import { useDispatch } from "react-redux";
+import { openModal } from "slices/modalSlice";
+import PhoneInputFields from "pages/student/PhoneInputFields";
 
 const StudentsInfoStyle = styled.div`
   /* display: flex;
@@ -35,15 +33,16 @@ const TeacherEdit = () => {
   // const [isPwChangeModal, setIsPwChangeModal] = useState(false);
   const [pwChangeModalResult, setPwChangeModalResult] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
-  // const [userName, setUserName] = useState("");
+  const [phoneNum, setPhoneNum] = useState();
   const userName = useRef("");
   const genM = useRef("");
   const genW = useRef("");
   const birth = useRef("");
-  const phone = useRef("");
   const addrNum = useRef("");
   const addrText = useRef("");
   const addrDetailText = useRef("");
+  const classNum = useRef("");
+  const classGrade = useRef("");
 
   /** 선생님 정보 추출 */
   const nowUserInfo = async () => {
@@ -60,7 +59,7 @@ const TeacherEdit = () => {
       }
       userName.current.value = res.data.name;
       birth.current.value = res.data.birth;
-      phone.current.value = res.data.phone.replace(/-/g, "");
+      setPhoneNum(res.data.phone.replace(/-/g, ""));
       addrNum.current.value = res.data.addr.split("#")[0];
       addrText.current.value = res.data.addr.split("#")[1];
       if (res.data.addr.split("#")[2]) {
@@ -68,6 +67,10 @@ const TeacherEdit = () => {
       } else {
         addrDetailText.current.value = "";
       }
+      classGrade.current.value = res.data.class.split(" ")[0];
+      classNum.current.value = res.data.class.split(" ")[1];
+      userId.current.value = res.data.id;
+      console.log(userId.current.value);
       // phone.current.value = Number(res.data.phone);
     } catch (error) {
       console.log(error);
@@ -75,6 +78,18 @@ const TeacherEdit = () => {
     // = await getTeacherInfo();
 
     // return res;
+  };
+
+  const aaa = () => {
+    let formattedNumber = e.target.value.replace(/[^0-9]/g, "");
+    if (formattedNumber.length > 3 && formattedNumber.length <= 7) {
+      formattedNumber = formattedNumber.replace(/^(\d{3})(\d{1,4})/, "$1-$2");
+    } else if (formattedNumber.length > 7) {
+      formattedNumber = formattedNumber.replace(
+        /^(\d{3})(\d{4})(\d{1,4})/,
+        "$1-$2-$3",
+      );
+    }
   };
 
   useEffect(() => {
@@ -214,29 +229,42 @@ const TeacherEdit = () => {
               </div>
               <div className="info-title">
                 <span>전화번호</span>
-                <input
+
+                {/* <input
                   type="number"
                   name="tel"
                   placeholder="전화번호를 입력해주세요"
                   ref={phone}
+                /> */}
+                <PhoneInputFields
+                  placeholder="전화번호를 입력하세요"
+                  phoneNum={phoneNum}
+                  // ref={phone.current.val}
                 />
               </div>
             </div>
             <div className="info-item-right">
               <div className="info-title">
                 <span>담당 학년</span>
-                <input type="text" name="text" placeholder="" />
+                <input
+                  type="text"
+                  name="text"
+                  placeholder=""
+                  ref={classGrade}
+                />
               </div>
               <div className="info-title">
                 <span>담당 학급</span>
-                <input type="text" name="text" placeholder="" />
+                <input type="text" name="text" placeholder="" ref={classNum} />
               </div>
               <div className="info-title">
                 <span></span>
                 {/* <input type="number" name="tel" placeholder="" /> */}
               </div>
             </div>
-            <div className="info-img">사진</div>
+            <div className="info-img">
+              <StudentImg />
+            </div>
           </div>
           <div className="info-contain-mid">
             <div className="info-item-mid">
@@ -275,7 +303,7 @@ const TeacherEdit = () => {
             <div className="info-none-modify" id="info-none-modify-last">
               <div className="info-title">
                 <span>아이디</span>
-                <div>{readOnlyInfo.userId}</div>
+                <div>(나중에 리덕스에서 추가하기)</div>
               </div>
             </div>
           </div>
