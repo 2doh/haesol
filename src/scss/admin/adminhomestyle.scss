@@ -2,8 +2,21 @@
 @import "../button";
 @import "../mixin";
 
+.admin-home-core {
+  .property > div {
+    @include box-shadow;
+  }
+  .grid-inner {
+    grid-template-columns: 80px 200px 130px 80px 80px 1fr 1fr;
+
+    &:hover {
+      background-color: $b100;
+    }
+  }
+}
+
 .grid-frame {
-  @include text-n-box-shadow;
+  @include box-shadow;
 
   width: 100%;
   display: grid;

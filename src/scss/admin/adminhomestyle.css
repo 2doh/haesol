@@ -1,5 +1,14 @@
+.admin-home-core .property > div {
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.34) inset, 0 2px 0 -1px rgba(0, 0, 0, 0.13), 0 3px 0 -1px rgba(0, 0, 0, 0.08), 0 3px 13px -1px rgba(0, 0, 0, 0.21);
+}
+.admin-home-core .grid-inner {
+  grid-template-columns: 80px 200px 130px 80px 80px 1fr 1fr;
+}
+.admin-home-core .grid-inner:hover {
+  background-color: #dee8e9;
+}
+
 .grid-frame {
-  text-shadow: 0 1.5px 0 rgba(0, 0, 0, 0.15);
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.34) inset, 0 2px 0 -1px rgba(0, 0, 0, 0.13), 0 3px 0 -1px rgba(0, 0, 0, 0.08), 0 3px 13px -1px rgba(0, 0, 0, 0.21);
   width: 100%;
   display: grid;
