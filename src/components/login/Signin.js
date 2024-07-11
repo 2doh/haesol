@@ -17,11 +17,10 @@ const Signin = ({ children, naviState, setNaviState, navi }) => {
       password: `${userPass}`,
     };
     const result = await postTeacherSignin(reqData);
-    navi("/");
-    console.log(result);
+    if (result.status === 200) {
+      // navi("/");
+    }
   };
-
-  const handleOnClick = () => {};
 
   useEffect(() => {
     setNaviState(children);
@@ -54,11 +53,30 @@ const Signin = ({ children, naviState, setNaviState, navi }) => {
           <button className="login-wrap-panel-loginbt">로그인</button>
           <SocialSignin />
         </form>
-      ) : naviState === "find-id" ? (
-        <IdPwFind naviState="find-id"></IdPwFind>
-      ) : naviState === "find-pass" ? (
-        <IdPwFind naviState="find-pass"></IdPwFind>
-      ) : null}
+      ) : (
+        <form
+          className="login-wrap-panel"
+          onSubmit={e => {
+            login(e);
+          }}
+        >
+          <LoginIdField
+            cleanupBt={cleanupBt}
+            userId={userId}
+            setUserId={setUserId}
+          >
+            아이디
+          </LoginIdField>
+          <LoginPassField
+            cleanupBt={cleanupBt}
+            userPass={userPass}
+            setUserPass={setUserPass}
+          >
+            비밀번호
+          </LoginPassField>
+          <button className="login-wrap-panel-loginbt">로그인</button>
+        </form>
+      )}
     </>
   );
 };
