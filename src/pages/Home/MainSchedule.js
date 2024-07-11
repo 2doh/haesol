@@ -1,9 +1,16 @@
 import styled from "@emotion/styled";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "../../scss/main/mainschedule.css";
 import moment from "moment";
+import {
+  AA_SERVER_URL,
+  ATPT_OFCDC_SC_CODE,
+  KEY,
+  SD_SCHUL_CODE,
+} from "api/config";
+import axios from "axios";
 
 const ScWrap = styled.div`
   width: 100%;
@@ -16,14 +23,38 @@ const ScWrap = styled.div`
 
 const nowMonthScheduleStyle = styled.div``;
 
-const MainSchedule = ({ aaArr }) => {
+const MainSchedule = () => {
   const curDate = new Date(); // 현재 날짜
   const today = moment(curDate).format("YYYY-MM-DD"); // 출력용
   // 클릭한 날짜 (초기값 : 현재 날짜)
   const [value, onChange] = useState(curDate);
   const [activeStartDate, setActiveStartDate] = useState(curDate);
+  const fromMmd = moment().format("YYYYMM01");
+  const toYmd = moment().format("YYYYMM" + { last });
+  var last = new Date(2024, 7, 0).getDate();
+  const [aaArr, setAaArr] = useState([]);
+
+  // console.log("말일 : ", last);
 
   // console.log("일정 목록 배열 : ", curDate);
+
+  /** 학사 일정 */
+  useEffect(() => {
+    const url = `${AA_SERVER_URL}?ATPT_OFCDC_SC_CODE=${ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${SD_SCHUL_CODE}&KEY=${KEY}&AA_FROM_YMD=${fromMmd}&AA_TO_YMD=${toYmd}&TYPE=JSON`;
+    // const url = `${AA_SERVER_URL}?ATPT_OFCDC_SC_CODE=${ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${SD_SCHUL_CODE}&KEY=${KEY}&TYPE=JSON`;
+
+    axios.get(url).then(async res => {
+      // 급식 데이터가 있는 없는지 확인
+      const resArr = res.data.SchoolSchedule[1].row;
+      resArr.map((item, index) => {
+        // aaArr.push(item.AA_YMD);
+        setAaArr([...aaArr, item.AA_YMD]);
+        // console.log("학사 일정 : ", resArr[index].AA_YMD);
+        // console.log("학사 일정 item : ", item.AA_YMD);
+        // console.log("학사 일정 item : ", aaArr);
+      });
+    });
+  }, []);
 
   // 일정 목록
   const dayList = [
@@ -123,13 +154,11 @@ const MainSchedule = ({ aaArr }) => {
         // }
       />
       <div>디자인 수정중</div>
-        <div className="aaa"></div>
-        <div className="calendar-now-month-list-wrap">
-          <div className="now-schedule-day">{today}</div>
-          <div className="">
-            일정 리스트 영역(오늘 일정에는 하이라이트 주기)
-          </div>
-        </div>
+      <div className="aaa"></div>
+      <div className="calendar-now-month-list-wrap">
+        <div className="now-schedule-day">{today}</div>
+        <div className="">일정 리스트 영역(오늘 일정에는 하이라이트 주기)</div>
+      </div>
     </ScWrap>
   );
 };

@@ -4,7 +4,7 @@ import "../../scss/teacher/teacheredit.css";
 
 import DefaultModal from "components/modal/DefaultModal";
 import { useDispatch, useSelector } from "react-redux";
-import { closeModal, openModal } from "slices/modalSlice";
+import { closeModal, openModal, updateModalDate } from "slices/modalSlice";
 import { MODAL_TYPES, modalInfo } from "utils/usemodals";
 import Modal from "components/common/Modal";
 import { useLocation } from "react-router";
@@ -92,11 +92,18 @@ const TeacherEdit = () => {
   // };
 
   // const modalState = useSelector(state => state.modalSlice);
+
   const dispatch = useDispatch();
   /** 모달 호출 */
   const showModal = selectModalType => {
-    const modalRes = dispatch(openModal(selectModalType));
-    // console.log("모달 결과 출력 : ", modalRes);
+    /** (선택) 들어갈 내용 수정 */
+    // const data = { bodyTextLabel: ["변경값"] };
+    /** (선택) 위와 아래는 세트 */
+    // dispatch(updateModalDate(data));
+
+    /**(고정) 모달 활성화 */
+    const modalRes = dispatch(openModal("BasicModal"));
+    console.log("모달 결과 출력 내용 확인 : ", modalRes);
   };
 
   // const modalInfo = {

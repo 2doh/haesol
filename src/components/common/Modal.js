@@ -113,6 +113,15 @@ const Modal = () => {
   /** 확인 처리 */
   const modalAccept = () => {
     // 비밀번호 변경 모달의 경우
+
+    if (modalState.modalType === "BasicModal") {
+      console.log("BasicModal 타입 확인 버튼 클릭");
+      // axios 처리
+    }
+    if (modalState.modalType === "PasswordChangeModal") {
+      console.log("1번");
+      // axios 처리
+    }
     if (modalState.modalType === "PasswordChangeModal") {
       console.log("1번");
       // axios 처리
