@@ -3,6 +3,7 @@ import { PhoneNumber } from "utils/helpers";
 
 const PhoneInputFields = ({ placeholder }) => {
   const [userPhoneNum, setUserPhoneNum] = useState("");
+
   const handleOnChange = e => {
     setUserPhoneNum(PhoneNumber(e));
   };
@@ -27,5 +28,4 @@ const PhoneInputFields = ({ placeholder }) => {
     </div>
   );
 };
-
 export default PhoneInputFields;

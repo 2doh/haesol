@@ -9,7 +9,6 @@ const FindId = () => {
   };
   return (
     <form className="login-wrap-panel">
-
       <div className="login-wrap-panel-userid">
         <div className="login-panel-userid-title">이름</div>
         <input

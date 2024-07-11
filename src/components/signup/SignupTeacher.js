@@ -1,5 +1,5 @@
 import { teacherSignup } from "api/signup/teacherapi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../../scss/signup/signup.scss";
 import DropDate from "./DropDate";
 import EmailInputField from "./EmailInputField";
@@ -9,17 +9,23 @@ import IdInputField from "./IdInputField";
 import InputFields from "./InputFields";
 import PassInputField from "./PassInputField";
 import PhoneInputFields from "./PhoneInputFields";
+import { useDispatch } from "react-redux";
+import { openModal, updateModalDate } from "slices/modalSlice";
 
 const SignupTeacher = ({ handleCancel, userType, setUserType }) => {
-  const [userId, setUserId] = useState("rlacjf111");
-  const [userPass, setUserPass] = useState("Rlacjf112!!");
-  const [userName, setUserName] = useState("김철숙");
-  const [userPhoneNum, setUserPhoneNum] = useState("010-1111-1111");
-  const [userEmail, setUserEmail] = useState("asdsad12@naver.com");
+  const [userId, setUserId] = useState("");
+  const [userPass, setUserPass] = useState("");
+  const [userPassConfirm, setUserPassConfirm] = useState("");
+  const [userName, setUserName] = useState("");
+  const [userPhoneNum, setUserPhoneNum] = useState("");
+  const [userEmail, setUserEmail] = useState("");
   const [userGender, setUserGender] = useState("");
   const [userBirth, setUserBirth] = useState("");
-  const [zoneCode, setZoneCode] = useState(38811);
-  const [addr, setAddr] = useState("경북 연청신 신녕면 대학길 5-13 안녕하세요");
+  const [zoneCode, setZoneCode] = useState(0);
+  const [addr, setAddr] = useState("");
+  const [modalText, setModalText] = useState("");
+  const dispatch = useDispatch();
+  const [errObj, setErrObj] = useState(null);
 
   const tempObj = {
     teacherId: userId,
@@ -35,30 +41,40 @@ const SignupTeacher = ({ handleCancel, userType, setUserType }) => {
 
   const signupTeacher = async e => {
     e.preventDefault();
+    const result = await teacherSignup(tempObj);
+    setErrObj(result);
+  };
+
+  const showModal = selectModalType => {
+    const data = { bodyText: [modalText] };
+    dispatch(updateModalDate(data));
+    const modalRes = dispatch(openModal(selectModalType));
+  };
+
+  useEffect(() => {
     if (
       !(
         userId &&
         userPass &&
+        userPassConfirm &&
         userName &&
         userEmail &&
         userGender &&
         userPhoneNum
       )
     ) {
-      alert("필수입력항목을 작성해주세요");
+      setModalText("필수입력항목을 작성해주세요");
       return;
     }
-    const result = await teacherSignup(tempObj);
-    if (result.status === 200) {
-      console.log("교사회원가입 성공");
+    if (errObj?.result.status === 200) {
+      setModalText("회원가입 성공");
+      navi("/login");
+      return;
     }
-    // if (result.status === 404) {
-    //   alert(result.response.data);
-    // }
-    if (result === undefined) {
-      alert("회원가입 실패");
+    if (errObj?.result === "err") {
+      setModalText("비밀번호 중복입니다");
     }
-  };
+  }, [signupTeacher]);
 
   return (
     <form
@@ -73,7 +89,12 @@ const SignupTeacher = ({ handleCancel, userType, setUserType }) => {
           userType={userType}
           setUserType={setUserType}
         />
-        <PassInputField userPass={userPass} setUserPass={setUserPass} />
+        <PassInputField
+          userPass={userPass}
+          setUserPass={setUserPass}
+          userPassConfirm={userPassConfirm}
+          setUserPassConfirm={setUserPassConfirm}
+        ></PassInputField>
         <InputFields userName={userName} setUserName={setUserName}>
           이름
         </InputFields>
@@ -95,7 +116,7 @@ const SignupTeacher = ({ handleCancel, userType, setUserType }) => {
           <button
             className="signupbt"
             onClick={e => {
-              signupTeacher(e);
+              showModal("BasicModal");
             }}
           >
             회원가입

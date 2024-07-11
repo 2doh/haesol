@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
 
-const PassInputField = ({ userPass, setUserPass }) => {
+const PassInputField = ({
+  userPass,
+  setUserPass,
+  userPassConfirm,
+  setUserPassConfirm,
+}) => {
   const [showPass, setShowPass] = useState(false);
   const [changeInputType, setChangeInputType] = useState("password");
-  const [userPassConfirm, setUserPassConfirm] = useState("");
+
   const [validationMsg, setValidationMsg] = useState("");
   const [validationConfirmMsg, setValidationConfirmMsg] = useState("");
 

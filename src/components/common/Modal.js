@@ -1,10 +1,10 @@
 import styled from "@emotion/styled";
-import React, { useEffect, useState } from "react";
+import { delectAwaitAccept, singupAccept } from "api/admin/adminapi";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { MODAL_TYPES, modalInfo } from "utils/usemodals";
-import { allowScroll, preventScroll } from "./ScrollManagement";
-import { closeModal, openModal, selectModal } from "slices/modalSlice";
+import { closeModal } from "slices/modalSlice";
 import "../../scss/modal/pwchangemodal.css";
+import { allowScroll, preventScroll } from "./ScrollManagement";
 import ViewPw from "./ViewPw";
 
 const ModalStyle = styled.div`
@@ -116,10 +116,16 @@ const Modal = () => {
 
     if (modalState.modalType === "BasicModal") {
       console.log("BasicModal 타입 확인 버튼 클릭");
-      // axios 처리
+
+      // 처리
     }
-    if (modalState.modalType === "PasswordChangeModal") {
-      console.log("1번");
+    if (modalState.modalType === "ArrValueModal") {
+      if (modalState.headerText.includes("반려")) {
+        delectAwaitAccept(modalState.bodyText[2], modalState.bodyText[3]);
+      }
+      if (modalState.headerText.includes("승인")) {
+        singupAccept(modalState.bodyText[2], modalState.bodyText[3]);
+      }
       // axios 처리
     }
     if (modalState.modalType === "PasswordChangeModal") {
