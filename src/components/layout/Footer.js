@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import React from "react";
 import "../../scss/main/footer.css";
 
 const FooterStyle = styled.div`

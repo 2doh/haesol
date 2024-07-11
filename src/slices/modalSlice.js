@@ -10,7 +10,7 @@ const initialState = {
   //   bodyTextLabel: ["구분", "아이디"],
   bodyTextLabel: ["-"],
   //   bodyText: ["학부모", "acahe1d3"],
-  bodyText: ["내용이 없습니다."],
+  bodyText: [""],
   // buttonText[0] : true, buttonText[2] : false 리턴함.
   buttonText: ["완료", "취소"],
 };
@@ -34,7 +34,7 @@ export const modalSlice = createSlice({
   },
 });
 
-export const { openModal, closeModal } = modalSlice.actions;
+export const { openModal, closeModal, updateModalDate } = modalSlice.actions;
 export const selectModal = state => state.modal;
 
 export default modalSlice.reducer;

@@ -6,7 +6,7 @@ import SocialSignin from "./SocialSignin";
 import { postTeacherSignin } from "api/login/teacherloginapi";
 import cleanupBt from "../../images/tabler_circle-x-filled.svg";
 
-const Signin = ({ children, naviState, setNaviState }) => {
+const Signin = ({ children, naviState, setNaviState, navi }) => {
   const [userId, setUserId] = useState("test1234");
   const [userPass, setUserPass] = useState("Test1234!@#$");
 
@@ -17,8 +17,11 @@ const Signin = ({ children, naviState, setNaviState }) => {
       password: `${userPass}`,
     };
     const result = await postTeacherSignin(reqData);
+    navi("/");
     console.log(result);
   };
+
+  const handleOnClick = () => {};
 
   useEffect(() => {
     setNaviState(children);
