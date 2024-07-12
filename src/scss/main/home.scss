@@ -130,6 +130,10 @@
           //   height: 14px;
           font-size: 13px;
           color: $pc-font;
+
+          & > div {
+            cursor: pointer;
+          }
         }
       }
     }

@@ -117,7 +117,7 @@ const TeacherEdit = () => {
     // dispatch(updateModalDate(data));
 
     /**(고정) 모달 활성화 */
-    const modalRes = dispatch(openModal("BasicModal"));
+    const modalRes = dispatch(openModal(selectModalType));
     console.log("모달 결과 출력 내용 확인 : ", modalRes);
   };
 
@@ -176,9 +176,9 @@ const TeacherEdit = () => {
                 <button
                   onClick={() => {
                     // showModal("BasicModal");
-                    // showModal("PasswordChangeModal");
+                    showModal("PasswordChangeModal");
                     // showModal("ArrValueModal");
-                    showModal("TelAcceptModal");
+                    // showModal("TelAcceptModal");
                   }}
                   className="re-pw-btn"
                 >

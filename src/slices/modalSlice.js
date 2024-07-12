@@ -13,6 +13,11 @@ const initialState = {
   bodyText: [""],
   // buttonText[0] : true, buttonText[2] : false 리턴함.
   buttonText: ["완료", "취소"],
+
+  // 버튼 갯수
+  buttonCnt: 2,
+  // 모달 결과 값을 담는 경우
+  modalRes: [false],
 };
 
 export const modalSlice = createSlice({
