@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { getStudentInfo, modifyStudentInfo } from "api/student/studentapi";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import "../../scss/student/studentEdit.css";
 import PhoneInputFields from "./PhoneInputFields";
 import StudentImg from "./StudentImg";
@@ -9,8 +9,11 @@ import StudentImg from "./StudentImg";
 const StudentInfoView = () => {
   // 네비게이트
   const navigate = useNavigate();
+  const location = useLocation();
+  const studentPk = location.pathname.split("/")[3];
+
   const handleClick = () => {
-    navigate(`/grade/2`);
+    navigate(`/grade/${studentPk}`);
   };
 
   // 학생 한 명 데이터
@@ -36,12 +39,10 @@ const StudentInfoView = () => {
   const [parentId, setParentId] = useState("");
   const [studentClass, setStudentClass] = useState("");
 
-  const stu_id = 1;
-
   // 정보 불러오기
   const studentInfoData = async () => {
     try {
-      const response = await getStudentInfo(stu_id);
+      const response = await getStudentInfo(studentPk);
       const result = response.data;
 
       setStudentInfo(result);
@@ -68,7 +69,7 @@ const StudentInfoView = () => {
     // 학생 데이터 불러오기
     console.log("studentInfoData 확인중 : ", studentInfo);
     studentInfoData();
-  }, []);
+  }, [studentPk]);
 
   // 정보 수정하기
   const handleModifyInfo = async e => {
@@ -76,7 +77,17 @@ const StudentInfoView = () => {
     const formData = new FormData();
 
     const infoData = JSON.stringify({
-      stu_id: stu_id,
+      studentPk,
+      studentName,
+      studentGender,
+      studentBirth,
+      studentPhone,
+      parentName,
+      connet,
+      parentPhone,
+      studentZoneCode,
+      studentAddr,
+      studentEtc,
     });
 
     const dto = new Blob([infoData], { type: "application/json" });
