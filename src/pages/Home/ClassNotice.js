@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { useEffect, useRef, useState } from "react";
 import { BsPencilFill } from "react-icons/bs";
+import { useNavigate } from "react-router";
 
 const ClassNoticeStyle = styled.div`
   /* 추후 삭제 */
@@ -9,6 +10,13 @@ const ClassNoticeStyle = styled.div`
   margin-bottom: 50px;
 `;
 const ClassNotice = () => {
+  const navigate = useNavigate();
+
+  /** (교직원) 우리 학급 알림장 리스트 페이지로 이동 */
+  const moveMyPage = () => {
+    navigate("/notice/list/classid");
+  };
+
   // const [selelctNoticeMenu, setSelelctNoticeMenu] = useState(1);
   // const [suppliesMenu, setSuppliesMenu] = useState("");
 
@@ -80,7 +88,12 @@ const ClassNotice = () => {
               <li>2. 내일 받아쓰기 시험이 있습니다.</li>
             </ul>
           </div>
-          <div className="notice-write-icon">
+          <div
+            className="notice-write-icon"
+            onClick={() => {
+              moveMyPage();
+            }}
+          >
             <BsPencilFill />
           </div>
         </div>

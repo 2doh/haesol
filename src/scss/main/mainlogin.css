@@ -121,10 +121,12 @@
   color: #031929;
   gap: 8px;
 }
-.main .main-notice .class-notice-inner .notice-inner .notice-write-icon {
+.main .main-notice .class-notice-inner .notice-inner .notice-write-icon * {
   position: absolute;
   bottom: 20px;
   right: 25px;
+  color: #1b4957;
+  cursor: pointer;
 }
 
 .class-schedule-inner .grid-frame {

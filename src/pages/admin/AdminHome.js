@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { getAwaitAcceptList } from "api/admin/adminapi";
 import { useEffect, useRef, useState } from "react";
 import "../../scss/admin/adminhomestyle.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { openModal, updateModalDate } from "slices/modalSlice";
 
 const AdminHomeStyle = styled.div`
@@ -94,7 +94,9 @@ const AdminHome = () => {
     setUserListType(menuNum);
   };
 
+  const modalState = useSelector(state => state.modalSlice);
   const dispatch = useDispatch();
+
   /** 모달 호출 */
   const showModal = (selectBtn, selectUserId, selectUserName, selectUserPk) => {
     /** (선택) 들어갈 내용 수정 */
@@ -111,6 +113,14 @@ const AdminHome = () => {
     const modalRes = dispatch(openModal("ArrValueModal"));
     // console.log("모달 결과 출력 내용 확인 : ", modalRes);
   };
+
+  // useEffect(() => {
+  //   first;
+
+  //   return () => {
+  //     second;
+  //   };
+  // }, [third]);
 
   return (
     <>

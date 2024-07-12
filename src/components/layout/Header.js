@@ -10,6 +10,11 @@ const Header = () => {
     navigate("/");
   };
 
+  /** 회원가입 승인 리스트 페이지로 이동 */
+  const moveAdminHomePage = () => {
+    navigate("/admin");
+  };
+
   return (
     <div className="header">
       <div className="header-left-div"></div>
@@ -43,7 +48,13 @@ const Header = () => {
               ></div>
             </ul>
             <ul>
-              <a href="" className="menu-main-title">
+              <a
+                href=""
+                className="menu-main-title"
+                onClick={() => {
+                  moveAdminHomePage();
+                }}
+              >
                 선생님 마당
               </a>
 
@@ -53,7 +64,7 @@ const Header = () => {
             </ul>
             <ul>
               <a href="" className="menu-main-title">
-                온라인 학습{" "}
+                온라인 학습
               </a>
 
               <ul>

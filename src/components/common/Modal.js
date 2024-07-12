@@ -3,6 +3,7 @@ import { delectAwaitAccept, singupAccept } from "api/admin/adminapi";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal } from "slices/modalSlice";
+import "../../scss/modal/notbgclickmodal.css";
 import "../../scss/modal/pwchangemodal.css";
 import { allowScroll, preventScroll } from "./ScrollManagement";
 import ViewPw from "./ViewPw";
@@ -116,7 +117,6 @@ const Modal = () => {
 
     if (modalState.modalType === "BasicModal") {
       console.log("BasicModal 타입 확인 버튼 클릭");
-
       // 처리
     }
     if (modalState.modalType === "ArrValueModal") {
@@ -125,11 +125,13 @@ const Modal = () => {
       }
       if (modalState.headerText.includes("승인")) {
         singupAccept(modalState.bodyText[2], modalState.bodyText[3]);
+        modalState.bodyText[2], modalState.bodyText[3]
       }
       // axios 처리
     }
     if (modalState.modalType === "PasswordChangeModal") {
-      console.log("1번");
+      console.log(`신규 비밀번호 : ${newPw}, 재입력 : ${newPwRe}`);
+
       // axios 처리
     }
 
@@ -177,9 +179,7 @@ const Modal = () => {
                 </div>
                 <div className="pw-modal-body-text-div">
                   <div className="pw-modal-text">신규 비밀번호 재입력</div>
-                  {/* <div className="pw-input-div"> */}
                   <ViewPw setNewPw={setNewPwRe}></ViewPw>
-                  {/* </div> */}
                 </div>
               </>
             ) : null}
@@ -258,23 +258,37 @@ const Modal = () => {
           </div>
           <div className="modal-footer">
             <div className="modal-btn">
-              <button
-                onClick={() => {
-                  modalAccept();
-                }}
-                className="white-button"
-              >
-                {modalState.buttonText[0]}
-                {/* 완료 */}
-              </button>
-              <button
-                onClick={() => {
-                  modalClose();
-                }}
-              >
-                {/* 취소 */}
-                {modalState.buttonText[1]}
-              </button>
+              {modalState.buttonCnt === 1 ? (
+                <button
+                  onClick={() => {
+                    modalAccept();
+                  }}
+                  className="white-button"
+                >
+                  {/* 취소 */}
+                  {modalState.buttonText[0]}
+                </button>
+              ) : (
+                <>
+                  <button
+                    onClick={() => {
+                      modalAccept();
+                    }}
+                    className="white-button"
+                  >
+                    {modalState.buttonText[0]}
+                    {/* 완료 */}
+                  </button>
+                  <button
+                    onClick={() => {
+                      modalClose();
+                    }}
+                  >
+                    {/* 취소 */}
+                    {modalState.buttonText[1]}
+                  </button>
+                </>
+              )}
             </div>
             {/* <div className="modal-text">3</div> */}
           </div>

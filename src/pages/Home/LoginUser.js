@@ -10,7 +10,11 @@ const LoginUserStyle = styled.div``;
 const LoginUser = () => {
   const navigate = useNavigate();
   // 학부모 : 1, 교직원 : 2
-  const [loginUserType, setLoginUserType] = useState(2);
+  // ROLE_ADMIN = 어드민;
+  // ROLE_TEAHCER = 교직원;
+  // ROLE_PARENTS = 학부모;
+
+  const [loginUserType, setLoginUserType] = useState(1);
   // 아래 데이터 추후 데이터베이스 정보로 변경
   /** 로그인한 유저 정보 출력 */
 
@@ -25,22 +29,14 @@ const LoginUser = () => {
     teacherEmail: "green@naver.com",
   };
 
-  useEffect(() => {
-    // console.log(userInfo);
-  }, []);
-
-  // console.log("로그인한 유저의 정보 : ", loginUserInfo);
-
-  // const teacherEmail = "green@naver.com";
   const splitEmail = loginUserInfo.teacherEmail.split("@");
   /** 반 시간표 */
-  // const lgoinUserSchedule
+
   /** 마이페이지 이동 */
   const moveMyPage = () => {
-    if (loginUserType === 1) navigate("/students/edit");
-    if (loginUserType === 2) {
-      navigate("/teacher/edit");
-    }
+    // if (loginUserType === 1) navigate("/students/edit");
+    // if (loginUserType === 2) navigate("/teacher/edit");
+    if (loginUserType === 1) navigate("/teacher/edit");
   };
   /** 성적 확인 페이지 이동 */
   const moveMyGradePage = () => {
@@ -98,7 +94,8 @@ const LoginUser = () => {
                     <div className="login-user-pic">{loginUserInfo.pi}</div>
                     <div className="login-user-info-div">
                       <div className="login-user-info-label-box">
-                        {loginUserType === 1 ? (
+                        {/* 학부모의 경우 */}
+                        {loginUserType === "ROLE_PARENTS" ? (
                           <>
                             <div className="login-user-info-label">
                               학생 이름
@@ -124,6 +121,7 @@ const LoginUser = () => {
                         )}
                       </div>
                       <div className="login-user-info-label-box">
+                        {/* 교직원의 경우 */}
                         {loginUserType === 1 ? (
                           <>
                             <div className="login-user-info-text">

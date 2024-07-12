@@ -24,6 +24,13 @@ const Home = () => {
   const dayOfWeek = week[moment().day()].concat("요일");
   // const aaArr = [];
 
+  /**  */
+  useEffect(() => {
+    console.log("현재 권한은 ? ", getCookie("userRole"));
+    // const [loginUserType, setLoginUserType] = useState("ROLE_ADMIN");
+    // if (getCookie("userRole") === "ROLE_ADMIN") navigate("/admin/home");
+  }, []);
+
   useEffect(() => {
     const url = `${MLSV_SERVER_URL}?ATPT_OFCDC_SC_CODE=${ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${SD_SCHUL_CODE}&KEY=${KEY}&MLSV_YMD=${today}&TYPE=JSON`;
     // const url = `${MLSV_SERVER_URL}?ATPT_OFCDC_SC_CODE=${ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${SD_SCHUL_CODE}&KEY=${KEY}&MLSV_YMD=20240707&TYPE=JSON`;
