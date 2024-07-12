@@ -92,9 +92,10 @@ function App() {
           <Route path="/signup" element={<Signup />}></Route>
 
           <Route path="/admin">
-            <Route index element={<AdminLogin />}></Route>
-            <Route path="home" index element={<AdminHome />}></Route>
-            <Route path="login" element={<AdminLogin />}></Route>
+            {/* <Route index element={index<AdminLogin />}></Route> */}
+            {/* <Route path="login" element={<AdminLogin />}></Route> */}
+            <Route index element={<AdminHome />}></Route>
+            <Route path="home" element={<AdminHome />}></Route>
           </Route>
 
           <Route path="/grade" element={<Navigate to="*" />}>

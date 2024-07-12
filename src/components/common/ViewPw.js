@@ -1,6 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { TiDelete } from "react-icons/ti";
+import { VscEye } from "react-icons/vsc";
+import { TbEyeClosed } from "react-icons/tb";
+import { PiEyeClosedLight } from "react-icons/pi";
+import { PiEyeClosed } from "react-icons/pi";
+import { IoCloseCircle } from "react-icons/io5";
 
 const ViewPw = ({ setNewPw }) => {
   const hidePw = useRef("");
@@ -66,7 +71,7 @@ const ViewPw = ({ setNewPw }) => {
         <div className="pw-icon-div">
           <div className="hide-pw-div hide-pw-icon">
             {hidePassword ? (
-              <AiFillEyeInvisible
+              <VscEye
                 size={20}
                 onClick={() => {
                   hidePasswordHandler({
@@ -77,9 +82,9 @@ const ViewPw = ({ setNewPw }) => {
                 }}
               >
                 눈모양 아이콘
-              </AiFillEyeInvisible>
+              </VscEye>
             ) : (
-              <AiFillEye
+              <PiEyeClosed
                 size={20}
                 onClick={() => {
                   hidePasswordHandler({
@@ -90,7 +95,7 @@ const ViewPw = ({ setNewPw }) => {
                 }}
               >
                 눈모양 아이콘
-              </AiFillEye>
+              </PiEyeClosed>
             )}
           </div>
           <div
@@ -99,7 +104,7 @@ const ViewPw = ({ setNewPw }) => {
               inputTextReset();
             }}
           >
-            <TiDelete size={20}>입력 리셋 아이콘</TiDelete>
+            <IoCloseCircle size={18}>입력 리셋 아이콘</IoCloseCircle>
           </div>
         </div>
       ) : null}

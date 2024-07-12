@@ -65,11 +65,12 @@
 
       .modal-btn {
         position: absolute;
-        right: 20px;
         display: flex;
         flex-direction: row;
         align-items: center;
-        gap: 10px;
+        gap: 15px;
+        width: 100%;
+        justify-content: center;
 
         & > button {
           font-size: 15px;
