@@ -98,13 +98,13 @@ function App() {
             <Route path="home" element={<AdminHome />}></Route>
           </Route>
 
-          <Route path="/grade" element={<Navigate to="*" />}>
+          {/* <Route path="/grade" element={<Navigate to="*" />}>
             <Route
               path="statistics/:userid"
               element={<GradeStatistics />}
             ></Route>
             <Route path=":userid" element={<Grade />}></Route>
-          </Route>
+          </Route> */}
           {/* 성적 입력 페이지 임시 경로 */}
           {/* <Route path="/grade/:studentPk" element={<Grade />}></Route> */}
           {/* 성적 확인 페이지 임시 경로 */}

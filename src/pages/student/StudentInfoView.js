@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { getStudentInfo, modifyStudentInfo } from "api/student/studentapi";
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import "../../scss/student/studentEdit.css";
 import PhoneInputFields from "./PhoneInputFields";
 import StudentImg from "./StudentImg";
@@ -9,8 +9,7 @@ import StudentImg from "./StudentImg";
 const StudentInfoView = () => {
   // 네비게이트
   const navigate = useNavigate();
-  const location = useLocation();
-  const studentPk = location.pathname.split("/")[3];
+  const { studentPk } = useParams();
 
   const handleClick = () => {
     navigate(`/grade/${studentPk}`);
