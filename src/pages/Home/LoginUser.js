@@ -52,6 +52,7 @@ const LoginUser = () => {
     // console.log("로그아웃 되었다.");
     removeCookie("accessToken");
     removeCookie("userIdPk");
+    removeCookie("userRole");
     window.location.reload();
     // navigate("/");
   };

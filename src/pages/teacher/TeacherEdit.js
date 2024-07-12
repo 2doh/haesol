@@ -43,6 +43,7 @@ const TeacherEdit = () => {
   const addrDetailText = useRef("");
   const classNum = useRef("");
   const classGrade = useRef("");
+  const [userId, setUserId] = useState("");
 
   /** 선생님 정보 추출 */
   const nowUserInfo = async () => {
@@ -69,9 +70,7 @@ const TeacherEdit = () => {
       }
       classGrade.current.value = res.data.class.split(" ")[0];
       classNum.current.value = res.data.class.split(" ")[1];
-      userId.current.value = res.data.id;
-      console.log(userId.current.value);
-      // phone.current.value = Number(res.data.phone);
+      setUserId(res.data.id);
     } catch (error) {
       console.log(error);
     }
@@ -303,7 +302,7 @@ const TeacherEdit = () => {
             <div className="info-none-modify" id="info-none-modify-last">
               <div className="info-title">
                 <span>아이디</span>
-                <div>(나중에 리덕스에서 추가하기)</div>
+                <div>{userId}</div>
               </div>
             </div>
           </div>
