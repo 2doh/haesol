@@ -5,20 +5,40 @@ import LoginPassField from "./LoginPassField";
 import SocialSignin from "./SocialSignin";
 import { postTeacherSignin } from "api/login/teacherloginapi";
 import cleanupBt from "../../images/tabler_circle-x-filled.svg";
+import { postParentSignin } from "api/login/parentloginapi";
 
 const Signin = ({ children, naviState, setNaviState, navi }) => {
-  const [userId, setUserId] = useState("test1234");
-  const [userPass, setUserPass] = useState("Test1234!@#$");
+  const [userId, setUserId] = useState("");
+  const [userPass, setUserPass] = useState("");
 
   const login = async e => {
+    console.log(naviState);
     e.preventDefault();
     const reqData = {
-      teacherId: `${userId}`,
-      password: `${userPass}`,
+      teacherId: userId,
+      password: userPass,
     };
-    const result = await postTeacherSignin(reqData);
-    if (result.status === 200) {
-      // navi("/");
+    const request = {
+      uid: userId,
+      upw: userPass,
+    };
+    if (naviState === "signin") {
+      const result = await postParentSignin(request);
+      console.log(result);
+      if (result.status === 200) {
+        console.log("학부모회원가입성공");
+        navi("/");
+      } else {
+        console.log("에러시 처리코드 필요");
+      }
+    } else if (naviState === "teacherlogin") {
+      const result = await postTeacherSignin(reqData);
+      if (result.status === 200) {
+        navi("/");
+        console.log("교사회원가입성공");
+      } else {
+        console.log("에러시 처리코드 필요");
+      }
     }
   };
 
@@ -29,54 +49,29 @@ const Signin = ({ children, naviState, setNaviState, navi }) => {
 
   return (
     <>
-      {naviState === "signin" ? (
-        <form
-          className="login-wrap-panel"
-          onSubmit={e => {
-            login(e);
-          }}
+      <form
+        className="login-wrap-panel"
+        onSubmit={e => {
+          login(e);
+        }}
+      >
+        <LoginIdField
+          cleanupBt={cleanupBt}
+          userId={userId}
+          setUserId={setUserId}
         >
-          <LoginIdField
-            cleanupBt={cleanupBt}
-            userId={userId}
-            setUserId={setUserId}
-          >
-            아이디
-          </LoginIdField>
-          <LoginPassField
-            cleanupBt={cleanupBt}
-            userPass={userPass}
-            setUserPass={setUserPass}
-          >
-            비밀번호
-          </LoginPassField>
-          <button className="login-wrap-panel-loginbt">로그인</button>
-          <SocialSignin />
-        </form>
-      ) : (
-        <form
-          className="login-wrap-panel"
-          onSubmit={e => {
-            login(e);
-          }}
+          아이디
+        </LoginIdField>
+        <LoginPassField
+          cleanupBt={cleanupBt}
+          userPass={userPass}
+          setUserPass={setUserPass}
         >
-          <LoginIdField
-            cleanupBt={cleanupBt}
-            userId={userId}
-            setUserId={setUserId}
-          >
-            아이디
-          </LoginIdField>
-          <LoginPassField
-            cleanupBt={cleanupBt}
-            userPass={userPass}
-            setUserPass={setUserPass}
-          >
-            비밀번호
-          </LoginPassField>
-          <button className="login-wrap-panel-loginbt">로그인</button>
-        </form>
-      )}
+          비밀번호
+        </LoginPassField>
+        <button className="login-wrap-panel-loginbt">로그인</button>
+        {naviState === "signin" ? <SocialSignin /> : null}
+      </form>
     </>
   );
 };

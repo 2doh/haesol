@@ -7,9 +7,10 @@ import "../../scss/modal/notbgclickmodal.css";
 import "../../scss/modal/pwchangemodal.css";
 import { allowScroll, preventScroll } from "./ScrollManagement";
 import ViewPw from "./ViewPw";
+import { putTeacherPwChange } from "api/teacher/teacherapi";
 
 const ModalStyle = styled.div`
-  position: absolute;
+  position: fixed;
   left: 0px;
   top: 0px;
   /* height: 100vh; */
@@ -125,14 +126,13 @@ const Modal = () => {
       }
       if (modalState.headerText.includes("승인")) {
         singupAccept(modalState.bodyText[2], modalState.bodyText[3]);
-        modalState.bodyText[2], modalState.bodyText[3]
+        modalState.bodyText[2], modalState.bodyText[3];
       }
       // axios 처리
     }
     if (modalState.modalType === "PasswordChangeModal") {
-      console.log(`신규 비밀번호 : ${newPw}, 재입력 : ${newPwRe}`);
-
-      // axios 처리
+      // console.log(`신규 비밀번호 : ${newPw}, 재입력 : ${newPwRe}`);
+      putTeacherPwChange(newPw, newPwRe);
     }
 
     // 전화번호 인증 코드를 받는 경우

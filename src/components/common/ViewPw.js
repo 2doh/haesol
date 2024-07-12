@@ -12,6 +12,28 @@ const ViewPw = ({ setNewPw }) => {
   const [hidePassword, setHidePassword] = useState(true);
   const [inputTextChlick, setInputTextChlick] = useState(false);
 
+  /** 비밀번호 형식 체크 */
+  // const handleOnChange = e => {
+  //   const regex =
+  //     /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*]{8,20}$/;
+  //   if (regex.test(e.target.value)) {
+  //     setValidationMsg("");
+  //   } else {
+  //     setValidationMsg("비밀번호 형식에 맞지 않습니다");
+  //   }
+  // };
+  // const handleOnChangeConfirm = e => {};
+
+  // /** 비밀번호 일치 여부 체크 */
+  // useEffect(() => {
+  //   if (userPass !== userPassConfirm) {
+  //     setValidationConfirmMsg("비밀번호가 일치하지 않습니다");
+  //   }
+  //   if (userPass === userPassConfirm) {
+  //     setValidationConfirmMsg("");
+  //   }
+  // }, [userPassConfirm, userPass]);
+
   const hidePasswordHandler = ({ hidePassword, setHidePassword, hidePw }) => {
     setHidePassword(!hidePassword);
     //   console.log(hidePw.current.type);
@@ -57,11 +79,6 @@ const ViewPw = ({ setNewPw }) => {
         <input
           ref={hidePw}
           type="password"
-          // placeholder="Password를 입력해주세요"
-          // placeholder={setNewPw}
-          // value={userPassword}
-          // secureTextEntry={hidePassword}
-          // onChangeText={text => setUserPassword(text)}
           onChange={e => {
             inputPw(e);
           }}
