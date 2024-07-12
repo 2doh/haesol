@@ -49,11 +49,11 @@ export const modifyStudentInfo = async () => {
 };
 
 // 학생 성적 조회
-export const getStudentGrade1 = async studentPk => {
+export const getStudentGrade1 = async (studentPk, exam) => {
   const accessToken = getCookie("accessToken");
   try {
     const response = await axios.get(
-      `/api/Score/getScore?studentPk=${studentPk}&exam=1`,
+      `/api/Score/getScore?studentPk=${studentPk}&exam=${exam}`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
