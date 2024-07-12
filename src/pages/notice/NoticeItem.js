@@ -18,7 +18,7 @@ const NoticeItem = () => {
 
   // 임시 데이터
   const class_id = 101;
-  const stu_id = 1;
+  const stu_id = 2;
 
   const [studentClass, setStudentClass] = useState("");
   const [noticeList, setNoticeList] = useState([]);

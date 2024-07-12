@@ -105,14 +105,17 @@ function App() {
             <Route path=":userid" element={<Grade />}></Route>
           </Route>
           {/* 성적 입력 페이지 임시 경로 */}
-          <Route path="/grade/1" element={<Grade />}></Route>
+          {/* <Route path="/grade/:studentPk" element={<Grade />}></Route> */}
           {/* 성적 확인 페이지 임시 경로 */}
-          <Route path="/grade/2" element={<GradeView />}></Route>
+          <Route path="/grade/:studentPk" element={<GradeView />}></Route>
 
           {/* 임시 경로 */}
           {/* <Route path="/students/edit" element={<StudentEdit />}></Route> */}
           {/* 학생 본인 정보 수정 페이지 임시 경로 */}
-          <Route path="/students/edit/2" element={<StudentInfoView />}></Route>
+          <Route
+            path="/students/edit/:studentPk"
+            element={<StudentInfoView />}
+          ></Route>
 
           {/* 선생님 본인 정보 수정 페이지 */}
           <Route path="/teacher/edit" element={<TeacherEdit />}></Route>

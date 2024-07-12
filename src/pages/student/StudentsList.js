@@ -8,8 +8,8 @@ const StudentsList = () => {
   const gradeClass = "5학년 7반";
 
   const navigate = useNavigate();
-  const handleClick = () => {
-    navigate(`/students/edit`);
+  const handleClick = studentPk => {
+    navigate(`/students/edit/${studentPk}`);
   };
 
   // 전체 학생 리스트
@@ -81,7 +81,7 @@ const StudentsList = () => {
               <div
                 className="grid-inner"
                 onClick={() => {
-                  handleClick();
+                  handleClick(item.studentPk);
                 }}
                 id="grid-content"
               >

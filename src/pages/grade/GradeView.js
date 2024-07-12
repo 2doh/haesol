@@ -1,21 +1,23 @@
 import Signature from "pages/grade/Signature";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import "../../scss/student/grade.css";
 import "../../scss/student/studentEdit.css";
-import { getStudentGrade, getStudentInfo } from "api/student/studentapi";
+import { getStudentGrade1, getStudentInfo } from "api/student/studentapi";
 
 const GradeView = () => {
   // 네비게이트
   const navigate = useNavigate();
+  const location = useLocation();
+  const studentPk = location.pathname.split("/")[2];
   const handleClick = () => {
-    navigate(`/students/edit/2`);
+    navigate(`/students/edit/${studentPk}`);
   };
 
   // 반 정보 > 추후 데이터 받아와서 처리
   const totalStudent = "21 / 321";
 
-  const stu_id = 1;
+  // const stu_id = 3;
 
   const [studentInfo, setStudentInfo] = useState({});
   const [studentName, setStudentName] = useState("");
@@ -24,7 +26,7 @@ const GradeView = () => {
   // 학생 정보 불러오기
   const studentInfoData = async () => {
     try {
-      const response = await getStudentInfo(stu_id);
+      const response = await getStudentInfo(studentPk);
       const result = response.data;
 
       setStudentInfo(result);
@@ -38,12 +40,12 @@ const GradeView = () => {
     // 학생 데이터 불러오기
     // console.log("studentInfoData 확인중 : ", studentInfo);
     studentInfoData();
-  }, []);
+  }, [studentPk]);
 
   // 성적 불러오기
   const studentGrade = async () => {
     try {
-      const response = await getStudentGrade(stu_id);
+      const response = await getStudentGrade1(studentPk);
       const result = response.data;
       console.log(result);
     } catch (error) {
@@ -53,7 +55,7 @@ const GradeView = () => {
   useEffect(() => {
     console.log("studentGrade 확인중 : ", studentGrade);
     studentGrade();
-  }, []);
+  }, [studentPk]);
 
   return (
     <div className="main-core">

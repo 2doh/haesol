@@ -1,11 +1,11 @@
 import styled from "@emotion/styled";
 import React, { useEffect, useRef, useState } from "react";
 
-const StudentImg = ({ studentPic, setStudentPic }) => {
+const StudentImg = ({ studentPic, setStudentPic, studentPk }) => {
   // const [sendFile, setSendFile] = useState(null);
   const [previewFile, setPreviewFile] = useState("");
   const fileBt = useRef(null);
-  const stu_id = 1;
+  //  const stu_id = 2;
 
   // 강제로 input type="file" 을 클릭한 것처럼 js 에서 실행
   const handleFileClick = () => {
@@ -48,7 +48,7 @@ const StudentImg = ({ studentPic, setStudentPic }) => {
       {/* 이미지 보여지는 곳 */}
       <div className="img-contain">
         <img
-          src={`http://192.168.0.164:8080/pic/2nd/student/${stu_id}/47872175-b41f-4080-bcf9-dc72604c46d5.png`}
+          src={`http://192.168.0.164:8080/pic/2nd/student/${studentPk}/47872175-b41f-4080-bcf9-dc72604c46d5.png`}
         />
       </div>
       <input

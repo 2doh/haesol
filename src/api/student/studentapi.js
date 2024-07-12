@@ -16,39 +16,32 @@ export const getStudentList = async () => {
   }
 };
 // 학생 한 명 정보 불러오기
-export const getStudentInfo = async stu_id => {
+export const getStudentInfo = async studentPk => {
   const accessToken = getCookie("accessToken");
   try {
-    const header = { headers: { "Content-Type": "multipart/form-data" } };
-    const response = await axios.get(
-      `/api/student/detail?pk=${stu_id}`,
-      header,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
+    const response = await axios.get(`/api/student/detail?pk=${studentPk}`, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${accessToken}`,
       },
-    );
+    });
     return response;
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    throw error;
   }
 };
 
 // 학생 한 명 정보 수정
-export const modifyStudentInfo = async stu_id => {
+export const modifyStudentInfo = async () => {
   const accessToken = getCookie("accessToken");
   try {
-    const header = { headers: { "Content-Type": "multipart/form-data" } };
-    const response = await axios.get(
-      `/api/student/detail?pk=${stu_id}`,
-      header,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
+    const response = await axios.put("/api/student", {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${accessToken}`,
       },
-    );
+    });
     return response;
   } catch (error) {
     console.log(error);
@@ -56,14 +49,33 @@ export const modifyStudentInfo = async stu_id => {
 };
 
 // 학생 성적 조회
-export const getStudentGrade = async stuId => {
+export const getStudentGrade1 = async studentPk => {
   const accessToken = getCookie("accessToken");
   try {
-    const response = await axios.get(`/api/Score/getScore?stuId=${stuId}`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
+    const response = await axios.get(
+      `/api/Score/getScore?studentPk=${studentPk}&exam=1`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
       },
-    });
+    );
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const getStudentGrade2 = async studentPk => {
+  const accessToken = getCookie("accessToken");
+  try {
+    const response = await axios.get(
+      `/api/Score/getScore?studentPk=${studentPk}&exam=2`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
     return response;
   } catch (error) {
     console.log(error);
