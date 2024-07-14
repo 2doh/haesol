@@ -38,46 +38,26 @@ const AdminHomeStyle = styled.div`
 `;
 
 const AdminHome = () => {
-  const [selectUserId, setSelectUserId] = useState(1);
-  // const [modalNum, setModalNum] = useState(null);
-  const [isSignupAcceptModal, setIsSignupAcceptModal] = useState(false);
-
   const [acceptUserList, setAcceptUserList] = useState([]);
   const [userListType, setUserListType] = useState(1);
 
   const parentsRef = useRef();
   const teacherRef = useRef();
 
-  const showSignupAcceptModal = ({ selectUserId }, btNum) => {
-    // console.log("선택한 유저Id : ", { selectUserId });
-    // console.log("버튼 번호 : ", { btNum });
-    setSelectUserId({ selectUserId });
-    // setModalNum({ btNum });
-    setIsSignupAcceptModal(true);
-  };
+  const modalState = useSelector(state => state.modalSlice);
+  const dispatch = useDispatch();
 
-  const signupAcceptModalCancel = e => {
-    setIsSignupAcceptModal(false);
-  };
-
+  /** 리스트 출력 함수 */
   const getAwaitList = async ({ userListType }) => {
     const res = await getAwaitAcceptList(userListType);
     // console.log("axios 결과값 : ", res);
     setAcceptUserList(res);
   };
 
-  /** 최초 랜더링 시 */
+  /** 최초 랜더링 시, 리스트 출력 */
   useEffect(() => {
     getAwaitList({ userListType });
-  }, []);
-
-  useEffect(() => {
-    // console.log("acceptUserList : ", acceptUserList);
-  }, [acceptUserList]);
-
-  useEffect(() => {
-    getAwaitList({ userListType });
-  }, [userListType]);
+  }, [userListType, modalState.modalRes]);
 
   /** 메뉴 변경 */
   const changeAccerptMenu = menuNum => {
@@ -94,9 +74,6 @@ const AdminHome = () => {
     setUserListType(menuNum);
   };
 
-  const modalState = useSelector(state => state.modalSlice);
-  const dispatch = useDispatch();
-
   /** 모달 호출 */
   const showModal = (selectBtn, selectUserId, selectUserName, selectUserPk) => {
     /** (선택) 들어갈 내용 수정 */
@@ -106,25 +83,16 @@ const AdminHome = () => {
       bodyText: [selectUserId, selectUserName, selectUserPk, userListType],
       buttonText: [selectBtn, "취소"],
     };
+
     /** (선택) 위와 아래는 세트 */
     dispatch(updateModalDate(data));
-
     /**(고정) 모달 활성화 */
     const modalRes = dispatch(openModal("ArrValueModal"));
-    // console.log("모달 결과 출력 내용 확인 : ", modalRes);
+    console.log("모달 결과 출력 내용 확인 : ", modalRes);
   };
-
-  // useEffect(() => {
-  //   first;
-
-  //   return () => {
-  //     second;
-  //   };
-  // }, [third]);
 
   return (
     <>
-      {/* <NotBgClickModal /> */}
       <AdminHomeStyle>
         <div className="main-core admin-home-core">
           <div className="user-info-wrap">
@@ -193,10 +161,22 @@ const AdminHome = () => {
                       <div className="grid-inner-item-text">{item.name}</div>
                     </div>
                     <div className="grid-inner-item">
-                      <div className="grid-inner-item-text">{item.grade}</div>
+                      <div className="grid-inner-item-text">
+                        {item.grade === null ? (
+                          <div className="admin-no-list-style">미입력</div>
+                        ) : (
+                          item.grade
+                        )}
+                      </div>
                     </div>
                     <div className="grid-inner-item">
-                      <div className="grid-inner-item-text">{item.class}</div>
+                      <div className="grid-inner-item-text">
+                        {item.class === null ? (
+                          <div className="admin-no-list-style">미입력</div>
+                        ) : (
+                          item.class
+                        )}
+                      </div>
                     </div>
                     <div className="grid-inner-item">
                       <div className="grid-inner-item-text">

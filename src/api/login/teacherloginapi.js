@@ -15,6 +15,9 @@ export const postTeacherSignin = async data => {
     const signedUser = JSON.parse(payload);
     setCookie("userIdPk", signedUser.userId);
     setCookie("userRole", signedUser.role);
+    setCookie("userClass", res.data.class);
+    setCookie("userName", res.data.name);
+    setCookie("userEmail", res.data.email);
     // console.log("권한 :", signedUser.role);
     // console.log("유저 PK :", signedUser.userId);
     return res;

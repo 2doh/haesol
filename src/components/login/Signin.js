@@ -27,15 +27,15 @@ const Signin = ({ children, naviState, setNaviState, navi }) => {
       console.log(result);
       if (result.status === 200) {
         console.log("학부모회원가입성공");
-        navi("/");
+        window.location.replace("/");
       } else {
         console.log("에러시 처리코드 필요");
       }
     } else if (naviState === "teacherlogin") {
       const result = await postTeacherSignin(reqData);
       if (result.status === 200) {
-        navi("/");
         console.log("교사회원가입성공");
+        window.location.replace("/");
       } else {
         console.log("에러시 처리코드 필요");
       }

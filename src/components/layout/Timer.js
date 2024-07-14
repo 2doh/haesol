@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { getReAccessToken } from "api/user";
 import { useEffect, useRef, useState } from "react";
 import { FiClock } from "react-icons/fi";
 
@@ -80,10 +81,10 @@ const Timer = () => {
     timerTime();
   }, []);
 
-  // 아래는 삭제
-  // const timerReset = () => {
-  //   // timerTime();
-  // };
+  const reAccessToken = async () => {
+    // await getReAccessToken();
+    timerTime();
+  };
 
   return (
     <>
@@ -98,7 +99,7 @@ const Timer = () => {
       <div>
         <button
           onClick={() => {
-            timerTime();
+            reAccessToken();
           }}
         >
           연장

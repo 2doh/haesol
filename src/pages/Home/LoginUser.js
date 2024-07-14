@@ -5,18 +5,21 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import ClassNotice from "./ClassNotice";
 import ClassSchedule from "./ClassSchedule";
-import { removeCookie } from "utils/cookie";
+import { getCookie, removeCookie } from "utils/cookie";
 const LoginUserStyle = styled.div``;
 const LoginUser = () => {
   const navigate = useNavigate();
-  // 학부모 : 1, 교직원 : 2
+
+  const [loginUserType, setLoginUserType] = useState(getCookie("userRole"));
   // ROLE_ADMIN = 어드민;
   // ROLE_TEAHCER = 교직원;
   // ROLE_PARENTS = 학부모;
+  useEffect(() => {
+    console.log("권한 저장 확인 : ", loginUserType);
 
-  const [loginUserType, setLoginUserType] = useState(1);
-  // 아래 데이터 추후 데이터베이스 정보로 변경
-  /** 로그인한 유저 정보 출력 */
+    // const [loginUserType, setLoginUserType] = useState("ROLE_ADMIN");
+    if (loginUserType === "ROLE_ADMIN") navigate("/admin/home");
+  }, []);
 
   // 더미 데이터
   const loginUserInfo = {
@@ -28,39 +31,42 @@ const LoginUser = () => {
     teacherName: "김그린",
     teacherEmail: "green@naver.com",
   };
-
   const splitEmail = loginUserInfo.teacherEmail.split("@");
+
   /** 반 시간표 */
 
   /** 마이페이지 이동 */
   const moveMyPage = () => {
-    // if (loginUserType === 1) navigate("/students/edit");
-    // if (loginUserType === 2) navigate("/teacher/edit");
-    if (loginUserType === 1) navigate("/teacher/edit");
+    if (loginUserType === "ROLE_TEAHCER") navigate("/teacherinfo");
+    if (loginUserType === "ROLE_PARENTS") navigate("/studentinfo");
   };
+
   /** 성적 확인 페이지 이동 */
   const moveMyGradePage = () => {
-    navigate("/grade/1");
+    // 아래의 부분에 학생 PK 등록 예정
+    const stPk = 3;
+    // navigate("/grade/1");
+    navigate(`/grade/${stPk}`);
   };
+
   /** 우리 학급 페이지 이동 */
   const moveMyStudentsPage = () => {
     navigate("/students");
   };
+
   /** 로그아웃 기능 */
   const logout = () => {
-    // navigate("/login");
-    // console.log("로그아웃 되었다.");
     removeCookie("accessToken");
     removeCookie("userIdPk");
     removeCookie("userRole");
-    window.location.reload();
-    // navigate("/");
+
+    window.location.reload("/");
   };
 
   return (
     <LoginUserStyle>
       <div className="main">
-        <h1>{loginUserInfo.classNum}</h1>
+        <h1>{getCookie("userClass")}</h1>
         <div className="main-inner">
           <div className="main-inner-class login-user-view">
             <div className="main-schedule main-class-schedule">
@@ -95,8 +101,9 @@ const LoginUser = () => {
                     <div className="login-user-pic">{loginUserInfo.pi}</div>
                     <div className="login-user-info-div">
                       <div className="login-user-info-label-box">
-                        {/* 학부모의 경우 */}
+                        {/* 프로필 라벨 영역 start */}
                         {loginUserType === "ROLE_PARENTS" ? (
+                          // 학부모의 경우
                           <>
                             <div className="login-user-info-label">
                               학생 이름
@@ -108,6 +115,7 @@ const LoginUser = () => {
                             </div>
                           </>
                         ) : (
+                          // 교직원의 경우
                           <>
                             <div className="login-user-info-label">이름</div>
                             {/* <div className="login-user-info-label">
@@ -120,39 +128,57 @@ const LoginUser = () => {
                             </div>
                           </>
                         )}
+                        {/* 프로필 라벨 영역 end */}
                       </div>
                       <div className="login-user-info-label-box">
-                        {/* 교직원의 경우 */}
-                        {loginUserType === 1 ? (
+                        {/* 프로필 정보 영역 start */}
+                        {loginUserType === "ROLE_PARENTS" ? (
+                          // 학부모의 경우
                           <>
                             <div className="login-user-info-text">
-                              {/* {userInfo.data} */}
+                              {loginUserInfo.name}
                             </div>
                             <div className="login-user-info-text">
                               {loginUserInfo.age}
                             </div>
                             <div className="login-user-info-text">
-                              {loginUserInfo.classNum}
+                              {loginUserInfo.classNum === "" ||
+                              loginUserInfo.classNum === null ? (
+                                <div className="home-my-info-no-style">
+                                  미정
+                                </div>
+                              ) : (
+                                loginUserInfo.classNum
+                              )}
                             </div>
                             <div className="login-user-info-text">
-                              {loginUserInfo.teacherName}
+                              {loginUserInfo.teacherName === "" ||
+                              loginUserInfo.teacherName === null ? (
+                                <div className="home-my-info-no-style">
+                                  미정
+                                </div>
+                              ) : (
+                                loginUserInfo.teacherName
+                              )}
                             </div>
                           </>
                         ) : (
+                          // 교직원의 경우
                           <>
                             <div className="login-user-info-text">
-                              {/* {userInfo.name} */}
+                              {getCookie("userName")}
                             </div>
                             {/* <div className="login-user-info-text">
                               {loginUserInfo.classNum}
                             </div> */}
                             <div className="login-user-info-text">
-                              {splitEmail[0]}
+                              {getCookie("userEmail").split("@")[0]}
                               <br />
-                              {"@" + splitEmail[1]}
+                              {"@" + getCookie("userEmail").split("@")[1]}
                             </div>
                           </>
                         )}
+                        {/* 프로필 정보 영역 end */}
                       </div>
                     </div>
                     <div
@@ -164,47 +190,37 @@ const LoginUser = () => {
                       <MdOutlineLogout size="100%" title="로그아웃" />
                     </div>
                   </div>
+                  {/* 프로필 버튼 영역 start */}
                   <div className="login-user-btn">
-                    {loginUserType === 1 ? (
-                      <>
-                        <button
-                          className="subject-grade-btn"
-                          onClick={() => {
-                            moveMyGradePage();
-                          }}
-                        >
-                          과목별 성적
-                        </button>
-                        <button
-                          className="my-page-btn"
-                          onClick={() => {
-                            moveMyPage();
-                          }}
-                        >
-                          마이페이지
-                        </button>
-                      </>
+                    {loginUserType === "ROLE_PARENTS" ? (
+                      <button
+                        className="subject-grade-btn"
+                        onClick={() => {
+                          moveMyGradePage();
+                        }}
+                      >
+                        과목별 성적
+                      </button>
                     ) : (
-                      <>
-                        <button
-                          className="subject-grade-btn"
-                          onClick={() => {
-                            moveMyStudentsPage();
-                          }}
-                        >
-                          우리 학급 바로가기
-                        </button>
-                        <button
-                          className="my-page-btn"
-                          onClick={() => {
-                            moveMyPage();
-                          }}
-                        >
-                          마이페이지
-                        </button>
-                      </>
+                      <button
+                        className="subject-grade-btn"
+                        onClick={() => {
+                          moveMyStudentsPage();
+                        }}
+                      >
+                        우리 학급 바로가기
+                      </button>
                     )}
+                    <button
+                      className="my-page-btn"
+                      onClick={() => {
+                        moveMyPage();
+                      }}
+                    >
+                      마이페이지
+                    </button>
                   </div>
+                  {/* 프로필 버튼 영역 end */}
                 </div>
               </div>
             </div>

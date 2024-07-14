@@ -8,8 +8,10 @@
   }
   .grid-inner {
     grid-template-columns: 80px 200px 130px 80px 80px 1fr 1fr;
+  }
 
-    &:hover {
+  .grid-frame {
+    .item:not(:first-of-type):hover {
       background-color: $b100;
     }
   }
@@ -54,6 +56,10 @@
 
     .grid-inner-item {
       // border-right: 1px solid $pc-line-p;
+      .admin-no-list-style {
+        color: $old-g700;
+        font-size: 15px;
+      }
     }
 
     .grid-inner-item:last-child {
