@@ -22,7 +22,7 @@ const PhoneInputFields = ({ placeholder, phoneNum }) => {
           className="fieleds-section-input"
           type="text"
           placeholder={placeholder}
-          // value={phoneNum}
+          value={phoneNum}
           onChange={e => {
             // setUserPhoneNum(e.target.value);
             handleOnChange(e);

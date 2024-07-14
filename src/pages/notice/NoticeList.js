@@ -19,32 +19,32 @@ const NoticeList = () => {
   const state = 1;
 
   // 임시 데이터
-  const class_id = 101;
-  const stu_id = 2;
+  // const class_id = 101;
+  // const stu_id = 2;
 
   const [studentClass, setStudentClass] = useState("");
   const [noticeList, setNoticeList] = useState([]);
 
-  // 학생 정보 불러오기
-  const studentInfoData = async () => {
-    try {
-      const response = await getStudentInfo(stu_id);
-      const result = response.data;
-      setStudentClass(result.studentClass);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  useEffect(() => {
-    // 학생 데이터 불러오기
-    console.log("studentInfoData 확인중 : ", studentInfoData);
-    studentInfoData();
-  }, []);
+  // // 학생 정보 불러오기
+  // const studentInfoData = async () => {
+  //   try {
+  //     const response = await getStudentInfo(stu_id);
+  //     const result = response.data;
+  //     setStudentClass(result.studentClass);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+  // useEffect(() => {
+  //   // 학생 데이터 불러오기
+  //   console.log("studentInfoData 확인중 : ", studentInfoData);
+  //   studentInfoData();
+  // }, []);
 
   // 알림장 데이터 연동
   const noticeListData = async () => {
     try {
-      const response = await getNoticeList(class_id, state);
+      const response = await getNoticeList(state);
       if (Array.isArray(response.data.result)) {
         setNoticeList(response.data.result);
       } else {
@@ -57,7 +57,7 @@ const NoticeList = () => {
   useEffect(() => {
     console.log("noticeListData 확인중 : ", noticeListData);
     noticeListData();
-  }, [class_id, state]);
+  }, [state]);
 
   const NoticeListStyle = styled.div`
     display: flex;

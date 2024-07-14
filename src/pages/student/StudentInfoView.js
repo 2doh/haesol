@@ -242,8 +242,9 @@ const StudentInfoView = () => {
             <div className="info-title">
               <span>전화번호</span>
               <PhoneInputFields
-                placeholder="전화번호를 입력하세요"
-                value={studentPhone}
+                // placeholder={studentPhone}
+                // defaultValue={studentPhone}
+                phoneNum={studentPhone}
                 onChange={e => setStudentPhone(e.target.value)}
               />
               {/* <input
@@ -286,7 +287,7 @@ const StudentInfoView = () => {
                 <span>학부모 전화번호</span>
                 <PhoneInputFields
                   placeholder="전화번호를 입력하세요"
-                  value={parentPhone}
+                  phoneNum={parentPhone}
                   onChange={e => setParentPhone(e.target.value)}
                 />
               </div>
