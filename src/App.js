@@ -1,25 +1,24 @@
-import "./css/reset.css";
-import "../src/scss/common.scss";
-import "./App.css";
 import styled from "@emotion/styled";
 import Footer from "components/layout/Footer";
 import Header from "components/layout/Header";
 import Home from "pages/Home/Home";
-import Login from "pages/Login";
+import Login from "pages/user/Login";
 import NotFound from "pages/NotFound";
-import Signup from "pages/Signup";
+import Signup from "pages/user/Signup";
 import AdminHome from "pages/admin/AdminHome";
-import AdminLogin from "pages/admin/AdminLogin";
-import Grade from "pages/grade/Grade";
-import GradeStatistics from "pages/grade/GradeStatistics";
 import Notice from "pages/notice/Notice";
 import NoticeEdit from "pages/notice/NoticeEdit";
 import NoticeModify from "pages/notice/NoticeModify";
 import StudentInfoView from "pages/student/StudentInfoView";
 import Students from "pages/student/StudentsList";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import "../src/scss/common.scss";
+import "./App.css";
+import "./css/reset.css";
 
 import Modal from "components/common/Modal";
+import FindId from "components/login/FindId";
+import FindPass from "components/login/FindPass";
 import GradeView from "pages/grade/GradeView";
 import NoticeItem from "pages/notice/NoticeItem";
 import NoticeList from "pages/notice/NoticeList";
@@ -87,9 +86,11 @@ function App() {
       <Main>
         <Routes>
           <Route index element={<Home />}></Route>
-          <Route path="/login" element={<Login />}></Route>
           <Route path="/students" element={<Students />}></Route>
           <Route path="/signup" element={<Signup />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/findid" element={<FindId />}></Route>
+          <Route path="/findpass" element={<FindPass />}></Route>
 
           <Route path="/admin">
             {/* <Route index element={index<AdminLogin />}></Route> */}

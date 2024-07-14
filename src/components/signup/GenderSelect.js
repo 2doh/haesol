@@ -16,12 +16,12 @@ const GenderSelect = ({ setUserGender }) => {
           <input
             className="signup-main-fields-gender"
             type="radio"
-            value="남자"
+            value="남"
             onChange={e => {
               categoryHandler(e);
-              setUserGender("남자");
+              setUserGender("남");
             }}
-            checked={subCategoryId === "남자"}
+            checked={subCategoryId === "남"}
           />
           <div>남성</div>
         </label>
@@ -29,12 +29,12 @@ const GenderSelect = ({ setUserGender }) => {
           <input
             className="signup-main-fields-gender"
             type="radio"
-            value="여자"
+            value="여"
             onChange={e => {
               categoryHandler(e);
-              setUserGender("여자");
+              setUserGender("여");
             }}
-            checked={subCategoryId === "여자"}
+            checked={subCategoryId === "여"}
           />
           <div>여성</div>
         </label>

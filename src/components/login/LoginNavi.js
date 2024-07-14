@@ -1,16 +1,11 @@
 const LoginNavi = ({ setNaviState, naviState }) => {
-  const findIdStyle = {
+  const LoginWrapStyle = {
     width: "100%",
     borderLeft: "1px solid #886348",
     borderTopLeftRadius: "10px",
     borderRight: "0",
   };
-  const findPassStyle = {
-    width: "100%",
-    borderLeft: "1px solid #886348",
-    borderRight: "none",
-    borderTopLeftRadius: "10px",
-  };
+  
   return (
     <div className="login-wrap-navi br10">
       <div
@@ -28,7 +23,7 @@ const LoginNavi = ({ setNaviState, naviState }) => {
         onClick={() => {
           setNaviState("teacherlogin");
         }}
-        style={naviState === "teacherlogin" ? findIdStyle : null}
+        style={naviState === "teacherlogin" ? LoginWrapStyle : null}
       >
         교직원
       </div>

@@ -2,8 +2,8 @@ import SignupField from "components/signup/SignupField";
 import UserSelect from "components/signup/UserSelect";
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import logo from "../images/logo_b.png";
-import "../scss/signup/signup.scss";
+import logo from "../../images/logo_b.png";
+import "../../scss/signup/signup.scss";
 
 const Signup = () => {
   const [userType, setUserType] = useState("parent");

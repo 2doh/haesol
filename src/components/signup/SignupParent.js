@@ -16,21 +16,21 @@ import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { openModal, updateModalDate } from "slices/modalSlice";
 
-const SignupParent = ({ userType, handleCancel, setUserType }) => {
+const SignupParent = ({ handleCancel, setUserType, userType }) => {
   const navi = useNavigate();
-  const [userId, setUserId] = useState("");
-  const [userPass, setUserPass] = useState("");
-  const [userPassConfirm, setUserPassConfirm] = useState("");
-  const [userName, setUserName] = useState("");
-  const [userChildrenName, setUserChildrenName] = useState("");
-  const [userPhoneNum, setUserPhoneNum] = useState("");
+  const [userId, setUserId] = useState("dbwj312");
+  const [userPass, setUserPass] = useState("USERIDtest1!");
+  const [userPassConfirm, setUserPassConfirm] = useState("USERIDtest1!");
+  const [userName, setUserName] = useState("김순수");
+  const [userChildrenName, setUserChildrenName] = useState("최박수");
+  const [userPhoneNum, setUserPhoneNum] = useState("010-1591-3573");
   const [userSubPhoneNum, setUserSubPhoneNum] = useState("");
-  const [userEmail, setUserEmail] = useState("");
+  const [userEmail, setUserEmail] = useState("soonja1234@naver.com");
   const [userConnet, setUserConnet] = useState("");
   const [zoneCode, setZoneCode] = useState("");
   const [addr, setAddr] = useState("");
-
-  const [result, setErrObj] = useState(null);
+  const [canId, setCanId] = useState(false)
+  
   const [modalText, setModalText] = useState("");
   const dispatch = useDispatch();
 
@@ -52,35 +52,49 @@ const SignupParent = ({ userType, handleCancel, setUserType }) => {
     zoneCode: zoneCode,
     addr: addr,
   };
-
-  const handleModal = () => {
-    showModal("BasicModal");
-  };
+  // console.log(tempObj)
+  // const handleModal = () => {
+  //   showModal("BasicModal");
+  // };
 
   const handleOnSubmit = async e => {
     e.preventDefault();
     const result = await parentSignup(tempObj);
-    if (
-      !(
-        userId &&
-        userPass &&
-        userPassConfirm &&
-        userName &&
-        userConnet &&
-        userPhoneNum &&
-        userEmail
-      )
-    ) {
+    if(canId === false) {
+      setModalText("아이디 중복확인을 해주세요");
+      return
+    }
+    if (canId===true) {
+      if (
+        !(
+          userId &&
+          userPass &&
+          userPassConfirm &&
+          userName &&
+          userConnet &&
+          userPhoneNum &&
+          userEmail
+        )
+      ) {
       setModalText("필수입력항목을 작성해주세요");
-    }
-    if (result?.data === 1) {
+      return;
+      }
+      if (result.data === 1) {
       setModalText("회원가입 되었습니다");
+      return;
+      }
+      if (result === "err") {
+      setModalText("이미 존재하는 정보입니다");
+      return;
+      }
     }
-    if (result === "err") {
-      setModalText("회원가입 실패");
-    }
-    handleModal();
   };
+
+  useEffect(() => {
+    if (modalText) {
+      showModal("BasicModal");
+    }
+  }, [modalText]);
 
   return (
     <form
@@ -91,9 +105,10 @@ const SignupParent = ({ userType, handleCancel, setUserType }) => {
       <div className="signup-main">
         <IdInputField
           userId={userId}
-          setUserId={setUserId}
           userType={userType}
+          setUserId={setUserId}
           setUserType={setUserType}
+          setCanId={setCanId}
         ></IdInputField>
         <PassInputField
           userPass={userPass}
@@ -116,7 +131,7 @@ const SignupParent = ({ userType, handleCancel, setUserType }) => {
           전화번호
         </PhoneInputFields>
         <DropFields setUserConnet={setUserConnet}>가족관계</DropFields>
-        <EmailInputField setUserEmail={setUserEmail}>이메일</EmailInputField>
+        <EmailInputField setUserEmail={setUserEmail} userEmail={userEmail}>이메일</EmailInputField>
         <SubPhoneInputFields setUserSubPhoneNum={setUserSubPhoneNum}>
           추가연락처(선택)
         </SubPhoneInputFields>
