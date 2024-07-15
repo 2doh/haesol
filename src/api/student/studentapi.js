@@ -1,4 +1,5 @@
-import axios from "axios";
+import jwtAxios from "api/jwtUtil";
+import axios, { Axios } from "axios";
 import { getCookie } from "utils/cookie";
 
 // 학생 리스트 불러오는 api
@@ -104,10 +105,15 @@ export const getNoticeList = async (class_id, state) => {
 export const createNotice = async () => {
   const accessToken = getCookie("accessToken");
   try {
-    const response = await axios.post("/api/notice", {
+    const response = await jwtAxios.post("/api/notice", {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
+      // data: {
+      //   title: "string",
+      //   content: "string",
+      //   state: 1073741824,
+      // },
     });
     console.log("response : ", response);
     return response;

@@ -1,6 +1,12 @@
 @import "../valiables";
 @import "../mixin";
 
+.logout-icon {
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+}
+
 .main {
   h1 {
     padding-bottom: 40px;
@@ -60,13 +66,11 @@
         }
 
         .login-user-info-text {
+          .home-my-info-no-style {
+            color: $old-g600;
+            font-size: 12px;
+          }
         }
-      }
-
-      .logout-icon {
-        cursor: pointer;
-        width: 18px;
-        height: 18px;
       }
     }
 

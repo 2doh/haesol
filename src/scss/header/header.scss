@@ -31,14 +31,17 @@
     height: 100%;
   }
 
-  .header-right-div {
+  .header-right-div,
+  .admin-header-timer-div {
     width: 100%;
     height: 100%;
+
+    gap: 10px;
 
     .inner-div {
       height: 100%;
       margin-left: 10px;
-      max-width: 140px;
+      // max-width: 200px;
       display: flex;
       justify-content: space-around;
       align-items: center;
@@ -61,6 +64,15 @@
       & svg > circle,
       polyline {
         color: #ffffff;
+      }
+
+      .logout-icon {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-left: 20px;
       }
     }
   }
@@ -88,6 +100,22 @@
 
         .menu-main-title {
           color: #ffffff;
+        }
+      }
+
+      .admin-nav-inner {
+        .admin-header-timer-div {
+          position: absolute;
+          z-index: 1;
+
+          .inner-div {
+            position: inherit;
+            right: 20px;
+          }
+
+          .logout-icon * {
+            color: $navy-blue;
+          }
         }
       }
     }
