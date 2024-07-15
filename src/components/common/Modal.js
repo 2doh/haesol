@@ -143,7 +143,9 @@ const Modal = () => {
     if (modalState.modalType === "BasicModal") {
       if (modalState.modalRes[0] === 44) {
         console.log("삭제처리를 하겠습니다.");
+        console.log(modalState);
         let res = deleteNotice(modalState.modalRes[1]);
+        console.log(modalState.modalRes);
         console.log("res : ", res);
         if (res) {
           dispatch(closeModal());

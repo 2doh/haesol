@@ -84,6 +84,41 @@ export const getStudentGrade2 = async studentPk => {
   }
 };
 
+// 지정한 학기 성적 불러오기 중간
+export const getStudentGradeSelect1 = async (studentPk, grade, semester) => {
+  const accessToken = getCookie("accessToken");
+  try {
+    const response = await axios.get(
+      `/api/Score/getScoreDetail?studentPk=${studentPk}&gradle=${grade}&semester=${semester}&exam=1`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+// 지정한 학기 성적 불러오기 기말
+export const getStudentGradeSelect2 = async (studentPk, grade, semester) => {
+  const accessToken = getCookie("accessToken");
+  try {
+    const response = await axios.get(
+      `/api/Score/getScoreDetail?studentPk=${studentPk}&gradle=${grade}&semester=${semester}&exam=2`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 // 알림장 데이터 불러오기
 export const getNoticeList = async state => {
   const accessToken = getCookie("accessToken");
@@ -116,11 +151,11 @@ export const createNotice = async data => {
 };
 
 // 알림장 삭제하기
-export const deleteNotice = async noticeId => {
+export const deleteNotice = async notice_id => {
   const accessToken = getCookie("accessToken");
-  console.log("와따! ", noticeId);
+  console.log("와따! ", notice_id);
   try {
-    const response = await jwtAxios.delete("/api/notice", noticeId, {
+    const response = await jwtAxios.delete("/api/notice", notice_id, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },

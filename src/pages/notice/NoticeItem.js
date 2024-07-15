@@ -46,7 +46,6 @@ const NoticeItem = () => {
   /** 모달 호출 */
   const showModal = (selectModalType, createdAt, title, content) => {
     /** (선택) 들어갈 내용 수정 */
-    console.log("huh", title);
     const data = {
       headerText: `준비물 - ${createdAt}`,
       // bodyTextLabel: [title],
@@ -126,7 +125,7 @@ const NoticeItem = () => {
                   <div className="grid-inner-item-text">{item.createdAt}</div>
                 </div>
                 <div className="grid-inner-item">
-                  <div className="grid-inner-item-text">{item.content}</div>
+                  <div className="grid-inner-item-text">{item.title}</div>
                 </div>
               </div>
             </div>

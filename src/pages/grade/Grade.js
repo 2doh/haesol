@@ -43,6 +43,7 @@ const Grade = () => {
           </div>
 
           <div className="info-button">
+            <button>조회</button>
             <button>저장</button>
             <button>취소</button>
           </div>

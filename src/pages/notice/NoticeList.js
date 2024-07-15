@@ -15,6 +15,7 @@ import { RiDeleteBack2Fill } from "react-icons/ri";
 
 const NoticeList = () => {
   const userClass = getCookie("userClass");
+  const userRole = getCookie("userRole");
   // 네비게이트
   const navigate = useNavigate();
   const handleClick = () => {
@@ -41,6 +42,7 @@ const NoticeList = () => {
       } else {
         setNoticeList([response.data.result]);
       }
+      console.log(noticeList);
     } catch (error) {
       console.log(error);
     }
@@ -51,7 +53,7 @@ const NoticeList = () => {
 
   const dispatch = useDispatch();
   /** 모달 호출 */
-  const showModal = (selectModalType, createdAt, content) => {
+  const showModal = (selectModalType, createdAt, title, content) => {
     /** (선택) 들어갈 내용 수정 */
     const data = {
       headerText: `준비물 - ${createdAt}`,
@@ -64,16 +66,17 @@ const NoticeList = () => {
 
     /**(고정) 모달 활성화 */
     const modalRes = dispatch(openModal(selectModalType));
+    console.log("모달 결과 출력 내용 확인 : ", modalRes);
   };
 
-  const handleDelete = (e, selectModalType, noticeId) => {
+  const handleDelete = (e, selectModalType, notice_id) => {
     e.stopPropagation();
-    console.log("noticeId : ", noticeId);
+    console.log("notice_id : ", notice_id);
     const data = {
       headerText: ["삭제"],
       bodyText: ["해당 내용을 삭제하시겠습니까?"],
       buttonText: ["삭제", "취소"],
-      modalRes: [44, noticeId],
+      modalRes: [44, notice_id],
     };
     /** (선택) 위와 아래는 세트 */
     dispatch(updateModalDate(data));
@@ -154,7 +157,7 @@ const NoticeList = () => {
                   <div
                     className="delete-button"
                     onClick={e => {
-                      handleDelete(e, "BasicModal", item.noticeId);
+                      handleDelete(e, "BasicModal", item.notice_id);
                     }}
                   >
                     <RiDeleteBack2Fill size="2.5rem" />
