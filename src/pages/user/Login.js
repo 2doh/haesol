@@ -10,23 +10,23 @@ const Login = () => {
   const navi = useNavigate();
 
   const [naviState, setNaviState] = useState("signin");
-  console.log(naviState)
+  console.log(naviState);
   const goHome = () => {
     navi("/");
   };
 
-  const handleClickFindId = (e) => {
-    e.preventDefault()
-    navi("/findid")
-  }
-  const handleClickFindPass = (e) => {
-    e.preventDefault()
-    navi("/findpass")
-  }
-  const handleClickSignup = (e) => {
-    e.preventDefault()
-    navi("/signup")
-  }
+  const handleClickFindId = e => {
+    e.preventDefault();
+    navi("/findid");
+  };
+  const handleClickFindPass = e => {
+    e.preventDefault();
+    navi("/findpass");
+  };
+  const handleClickSignup = e => {
+    e.preventDefault();
+    navi("/signup");
+  };
 
   return (
     <main className="login">
@@ -47,9 +47,30 @@ const Login = () => {
           </Signin>
         </div>
         <div className="login-menu">
-          <div onClick={(e)=>{handleClickFindId(e)}} className="login-navi">아이디 찾기</div>
-          <div onClick={(e)=>{handleClickFindPass(e)}} className="login-navi">비밀번호 찾기</div>
-          <div onClick={(e)=>{handleClickSignup(e)}} className="login-navi">회원가입</div>
+          <div
+            onClick={e => {
+              handleClickFindId(e);
+            }}
+            className="login-navi"
+          >
+            아이디 찾기
+          </div>
+          <div
+            onClick={e => {
+              handleClickFindPass(e);
+            }}
+            className="login-navi"
+          >
+            비밀번호 찾기
+          </div>
+          <div
+            onClick={e => {
+              handleClickSignup(e);
+            }}
+            className="login-navi"
+          >
+            회원가입
+          </div>
         </div>
       </div>
     </main>

@@ -6,12 +6,12 @@ import LoginIdField from "./LoginIdField";
 import LoginPassField from "./LoginPassField";
 import SocialSignin from "./SocialSignin";
 
-const Signin = ({ children, naviState, setNaviState, navi }) => {
+const Signin = ({ children, naviState, setNaviState }) => {
   const [userId, setUserId] = useState("");
   const [userPass, setUserPass] = useState("");
+  const [errMsg, setErrMsg] = useState("");
 
   const login = async e => {
-    console.log(naviState);
     e.preventDefault();
     const reqData = {
       teacherId: userId,
@@ -21,22 +21,26 @@ const Signin = ({ children, naviState, setNaviState, navi }) => {
       uid: userId,
       upw: userPass,
     };
+    if (userId === "" || userPass === "") {
+      setErrMsg("빈칸을 모두 입력해주세요");
+      return;
+    }
     if (naviState === "signin") {
       const result = await postParentSignin(request);
-      console.log(result);
       if (result.status === 200) {
-        console.log("학부모회원가입성공");
         window.location.replace("/");
-      } else {
-        console.log("에러시 처리코드 필요");
       }
-    } else if (naviState === "teacherlogin") {
+      if (result === "error") {
+        setErrMsg("아이디 혹은 비밀번호를 확인해주세요");
+      }
+    }
+    if (naviState === "teacherlogin") {
       const result = await postTeacherSignin(reqData);
       if (result.status === 200) {
-        console.log("교사회원가입성공");
         window.location.replace("/");
-      } else {
-        console.log("에러시 처리코드 필요");
+      }
+      if (result === "error") {
+        setErrMsg("아이디 혹은 비밀번호를 확인해주세요");
       }
     }
   };
@@ -45,6 +49,17 @@ const Signin = ({ children, naviState, setNaviState, navi }) => {
     setNaviState(children);
     return;
   }, [setNaviState]);
+
+  useEffect(() => {
+    setUserPass("");
+    setUserId("");
+  }, [naviState]);
+
+  useEffect(() => {
+    if (userPass === "" || userId === "") {
+      setErrMsg("");
+    }
+  }, [userPass, userId]);
 
   return (
     <>
@@ -68,6 +83,7 @@ const Signin = ({ children, naviState, setNaviState, navi }) => {
         >
           비밀번호
         </LoginPassField>
+        <div className="fields-section-errmsg">{errMsg}</div>
         <button className="login-wrap-panel-loginbt">로그인</button>
         {naviState === "signin" ? <SocialSignin /> : null}
       </form>
