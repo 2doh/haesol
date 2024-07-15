@@ -4,7 +4,6 @@ import { getCookie } from "utils/cookie";
 /** 선생님 정보 불러오기 */
 export const getTeacherInfo = async () => {
   const accessToken = getCookie("accessToken");
-  console.log("들어오나? : ", accessToken);
   try {
     const response = await axios.get("/api/teacher", {
       headers: {

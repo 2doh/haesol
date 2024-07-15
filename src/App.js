@@ -28,6 +28,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCookie } from "utils/cookie";
 import { openModal } from "slices/modalSlice";
 import PrivateRoute from "components/common/PrivateRoute";
+import MyChildInfo from "pages/parents/MyChildInfo";
 
 const ModalStyle = styled.div`
   position: absolute;
@@ -57,17 +58,31 @@ const ModalStyle = styled.div`
 `;
 
 const Main = styled.div`
-  /* & > .name { */
-  background-color: #f3f9fa;
-  width: 1180px;
+  /* background-color: #f3f9fa;
+  width: 1180px; */
   /* min-height: 687px; */
+  /* min-height: calc(100vh - 260px);
+  height: 100%;
+  margin: 0 auto;
+  padding: 40px;
+  padding-bottom: 80px; */
+
+  /* background-color: #f3f9fa; */
+  background-color: ${getCookie("accessToken") ? "#FBFAF9" : "#f3f9fa"};
+  width: 1180px;
   min-height: calc(100vh - 260px);
   height: 100%;
   margin: 0 auto;
   padding: 40px;
-  padding-bottom: 80px;
+  padding-bottom: 0;
+  margin-bottom: -40px;
 
-  /* } */
+  /* 내부 스타일 */
+  & > div,
+  main {
+    min-height: calc(100vh - 260px);
+    padding-bottom: 100px;
+  }
 `;
 
 function App() {
@@ -77,22 +92,21 @@ function App() {
 
   useEffect(() => {}, [notFoundPage]);
 
+  console.log(loginUserType);
+
   /** 모달 상태 관리 */
   const modalState = useSelector(state => state.modalSlice);
 
   const dispatch = useDispatch();
+
   /** 모달 호출 */
   const showModal = selectModalType => {
-    /** (선택) 들어갈 내용 수정 */
-    // const data = { bodyTextLabel: ["변경값"] };
-    /** (선택) 위와 아래는 세트 */
-    // dispatch(updateModalDate(data));
-
     /**(고정) 모달 활성화 */
     const modalRes = dispatch(openModal(selectModalType));
-    console.log("모달 결과 출력 내용 확인 : ", modalRes);
+    // console.log("모달 결과 출력 내용 확인 : ", modalRes);
   };
 
+  console.log("현재 토큰 : ", accessToken);
   return (
     <BrowserRouter>
       {modalState.isOpen ? (
@@ -114,7 +128,6 @@ function App() {
           <Route path="/findpass" element={<FindPass />}></Route>
 
           {/* 어드민 */}
-
           {
             loginUserType === "ROLE_ADMIN" ? (
               <Route
@@ -156,7 +169,7 @@ function App() {
 
           {/* 교직원 : 정보 수정 페이지 */}
           <Route path="/teacherinfo" element={<TeacherEdit />}></Route>
-          <Route path="/studentinfo" element={<TeacherEdit />}></Route>
+          <Route path="/studentinfo" element={<MyChildInfo />}></Route>
           {/* 학부모 - 학생 : 정보 수정 페이지 */}
           {/* 추가예정 */}
 

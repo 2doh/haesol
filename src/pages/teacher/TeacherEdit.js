@@ -39,9 +39,9 @@ const TeacherEdit = () => {
   const genW = useRef("");
   // const phoneNum2 = useRef("");
   const birth = useRef("");
-  const addrNum = useRef("");
-  const addrText = useRef("");
-  const addrDetailText = useRef("");
+  // const addrNum = useRef("");
+  // const addrText = useRef("");
+  // const addrDetailText = useRef("");
   const classNum = useRef("");
   const classGrade = useRef("");
   const [userId, setUserId] = useState("");
@@ -64,15 +64,21 @@ const TeacherEdit = () => {
       // phoneNum2.current.value = res.data.phone;
       setPhoneNum(res.data.phone);
       // setPhoneNum(res.data.phone.replace(/-/g, ""));
-      addrNum.current.value = res.data.addr.split("#")[0];
-      addrText.current.value = res.data.addr.split("#")[1];
-      if (res.data.addr.split("#")[2]) {
-        addrDetailText.current.value = res.data.addr.split("#")[2];
+      // addrNum.current.value = res.data.addr.split("#")[0];
+      // addrText.current.value = res.data.addr.split("#")[1];
+      // if (res.data.addr.split("#")[2]) {
+      //   addrDetailText.current.value = res.data.addr.split("#")[2];
+      // } else {
+      //   addrDetailText.current.value = "";
+      // }
+      if (res.data.class === null) {
+        classGrade.current.value = "미등록";
+        classNum.current.value = "미등록";
       } else {
-        addrDetailText.current.value = "";
+        classGrade.current.valueOf = res.data.class.split(" ")[0];
+        classNum.current.valueOf = res.data.class.split(" ")[1];
       }
-      classGrade.current.value = res.data.class.split(" ")[0];
-      classNum.current.value = res.data.class.split(" ")[1];
+
       setUserId(res.data.id);
     } catch (error) {
       console.log(error);
@@ -84,7 +90,7 @@ const TeacherEdit = () => {
 
   const saveInfo = () => {
     /** (선택) 들어갈 내용 수정 */
-    const data = { modalRes: [userName.current.value, phoneNum, ] };
+    const data = { modalRes: [userName.current.value, phoneNum] };
     /** (선택) 위와 아래는 세트 */
     dispatch(updateModalDate(data));
   };
@@ -115,7 +121,7 @@ const TeacherEdit = () => {
 
     /**(고정) 모달 활성화 */
     const modalRes = dispatch(openModal(selectModalType));
-    console.log("모달 결과 출력 내용 확인 : ", modalRes);
+    // console.log("모달 결과 출력 내용 확인 : ", modalRes);
   };
 
   useEffect(() => {
@@ -272,7 +278,8 @@ const TeacherEdit = () => {
                       type="text"
                       name="text"
                       placeholder=""
-                      ref={addrNum}
+                      // ref={addrNum}
+                      value={123}
                     />
                     <button type="button">우편번호 찾기</button>
                   </div>
@@ -281,14 +288,16 @@ const TeacherEdit = () => {
                     name="text"
                     placeholder=""
                     className="info-add"
-                    ref={addrText}
+                    // ref={addrText}
+                    value={"가나다"}
                   />
                   <input
                     type="text"
                     name="text"
                     placeholder="상세주소를 입력해주세요."
                     className="info-add"
-                    ref={addrDetailText}
+                    // ref={addrDetailText}
+                    value={"라마바사"}
                   />
                 </div>
               </div>
