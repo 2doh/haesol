@@ -5,7 +5,7 @@ import "../../scss/teacher/teacheredit.css";
 import { getTeacherInfo } from "api/teacher/teacherapi";
 import StudentImg from "pages/student/StudentImg";
 import { useDispatch } from "react-redux";
-import { openModal } from "slices/modalSlice";
+import { openModal, updateModalDate } from "slices/modalSlice";
 import PhoneInputFields from "pages/student/PhoneInputFields";
 
 const StudentsInfoStyle = styled.div`
@@ -37,6 +37,7 @@ const TeacherEdit = () => {
   const userName = useRef("");
   const genM = useRef("");
   const genW = useRef("");
+  // const phoneNum2 = useRef("");
   const birth = useRef("");
   const addrNum = useRef("");
   const addrText = useRef("");
@@ -60,7 +61,9 @@ const TeacherEdit = () => {
       }
       userName.current.value = res.data.name;
       birth.current.value = res.data.birth;
-      setPhoneNum(res.data.phone.replace(/-/g, ""));
+      // phoneNum2.current.value = res.data.phone;
+      setPhoneNum(res.data.phone);
+      // setPhoneNum(res.data.phone.replace(/-/g, ""));
       addrNum.current.value = res.data.addr.split("#")[0];
       addrText.current.value = res.data.addr.split("#")[1];
       if (res.data.addr.split("#")[2]) {
@@ -79,16 +82,11 @@ const TeacherEdit = () => {
     // return res;
   };
 
-  const aaa = () => {
-    let formattedNumber = e.target.value.replace(/[^0-9]/g, "");
-    if (formattedNumber.length > 3 && formattedNumber.length <= 7) {
-      formattedNumber = formattedNumber.replace(/^(\d{3})(\d{1,4})/, "$1-$2");
-    } else if (formattedNumber.length > 7) {
-      formattedNumber = formattedNumber.replace(
-        /^(\d{3})(\d{4})(\d{1,4})/,
-        "$1-$2-$3",
-      );
-    }
+  const saveInfo = () => {
+    /** (선택) 들어갈 내용 수정 */
+    const data = { modalRes: [userName.current.value, phoneNum, ] };
+    /** (선택) 위와 아래는 세트 */
+    dispatch(updateModalDate(data));
   };
 
   useEffect(() => {
@@ -111,28 +109,17 @@ const TeacherEdit = () => {
   /** 모달 호출 */
   const showModal = selectModalType => {
     /** (선택) 들어갈 내용 수정 */
-    // const data = { bodyTextLabel: ["변경값"] };
+    const data = { bodyText: [userId] };
     /** (선택) 위와 아래는 세트 */
-    // dispatch(updateModalDate(data));
+    dispatch(updateModalDate(data));
 
     /**(고정) 모달 활성화 */
     const modalRes = dispatch(openModal(selectModalType));
     console.log("모달 결과 출력 내용 확인 : ", modalRes);
   };
 
-  // const modalInfo = {
-  //   headerText: "확인",
-  //   bodyTextLabel: ["구분", "아이디"],
-  //   // bodyText: ["완료하시겠습니까?"],
-  //   bodyText: ["학부모", "acahe1d3"],
-  //   // buttonText: ["완료"],
-  //   buttonText: ["완료", "취소"],
-  //   buttonNum: 2,
-  // };
-
   useEffect(() => {
     if (pwChangeModalResult) {
-      // 동작
       console.log("pwChangeModalResult : ", pwChangeModalResult);
       setPwChangeModalResult(false);
     }
@@ -187,8 +174,20 @@ const TeacherEdit = () => {
             </div>
 
             <div className="info-button">
-              <button>저장</button>
-              <button>취소</button>
+              <button
+                onClick={e => {
+                  saveInfo();
+                }}
+              >
+                저장
+              </button>
+              <button
+                onClick={e => {
+                  nowUserInfo();
+                }}
+              >
+                취소
+              </button>
             </div>
           </div>
           <div className="info-contain-top">
@@ -238,7 +237,7 @@ const TeacherEdit = () => {
                 <PhoneInputFields
                   placeholder="전화번호를 입력하세요"
                   phoneNum={phoneNum}
-                  // ref={phone.current.val}
+                  // ref={phoneNum2.current.value}
                 />
               </div>
             </div>
@@ -261,9 +260,7 @@ const TeacherEdit = () => {
                 {/* <input type="number" name="tel" placeholder="" /> */}
               </div>
             </div>
-            <div className="info-img">
-              <StudentImg />
-            </div>
+            <div className="info-img">{/* <StudentImg /> */}</div>
           </div>
           <div className="info-contain-mid">
             <div className="info-item-mid">

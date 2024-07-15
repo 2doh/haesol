@@ -26,7 +26,7 @@ const Home = () => {
 
   /**  */
   useEffect(() => {
-    console.log("현재 권한은 ? ", getCookie("userRole"));
+    // console.log("현재 권한은 ? ", getCookie("userRole"));
     // const [loginUserType, setLoginUserType] = useState("ROLE_ADMIN");
     // if (getCookie("userRole") === "ROLE_ADMIN") navigate("/admin/home");
   }, []);

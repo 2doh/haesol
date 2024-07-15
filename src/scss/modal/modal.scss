@@ -1,0 +1,165 @@
+@import "../valiables";
+@import "../mixin";
+
+.modal-wrap {
+  width: 400px;
+  min-width: 400px;
+  //   height: 210px;
+  height: 250px;
+  font-size: 18px;
+  position: relative;
+
+  .modal-inner {
+    @include text-n-box-shadow;
+
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: -150px;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    // flex: 1 1 1;
+
+    & > div {
+      display: flex;
+      align-items: center;
+    }
+
+    .modal-text {
+    }
+
+    .modal-body {
+      // margin-top: 20px;
+      margin: 30px 0px 10px;
+      text-align: center;
+      flex-direction: row;
+      justify-content: center;
+      height: 100%;
+      width: 100%;
+      margin: 45px 0px;
+
+      // 아래에 추가됨
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+
+      .modal-body-text-div {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+
+      .modal-body-text-div:nth-child(2) {
+        margin: 0px 10px;
+      }
+
+      .pw-modal-body-text-div {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 75%;
+      }
+    }
+
+    .arr-value-modal-body {
+      flex-direction: row;
+    }
+
+    .basic-modal-body {
+    }
+
+    // TelAcceptModal
+    .tel-accept-modal-body {
+      margin: 25px 0px 35px;
+
+      .tel-accept-modal-wrap {
+        gap: 30px;
+
+        .text-box {
+          width: 65%;
+
+          .modal-body-text-div:nth-child(1) {
+            width: 60px;
+          }
+          .modal-body-text-div:nth-child(2) {
+            width: 10px;
+          }
+          .modal-body-text-div:nth-child(3) {
+            width: 100%;
+          }
+
+          .modal-body-text-div {
+            gap: 10px;
+          }
+        }
+
+        .tel-input-box {
+          & h3 {
+            text-align: left;
+            padding-bottom: 10px;
+          }
+          .tel-box-inner > form {
+            // background-color: blue;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            width: 100%;
+
+            & p {
+              padding: 0 10px;
+            }
+          }
+        }
+      }
+    }
+
+    .pw-modal-text {
+      text-align: left;
+    }
+
+    .modal-header {
+      padding-left: 20px;
+      min-height: 45px;
+      width: 100%;
+      border-bottom: 1px solid #cccccc;
+    }
+
+    .modal-footer {
+      position: relative;
+      width: 100%;
+      min-height: 70px;
+
+      // 아래에 추가됨
+      padding-bottom: 20px;
+
+      .modal-btn {
+        position: absolute;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 15px;
+        width: 100%;
+        justify-content: center;
+
+        & > button {
+          font-size: 15px;
+          width: 55px;
+          height: 35px;
+          border: 1px solid $btn-c-1;
+          border-radius: 6px;
+        }
+        & > .white-button {
+          color: #ffffff;
+          background-color: $btn-c-1;
+        }
+        // & > button:nth-child(2) {
+        //   color: #ffffff;
+        //   background-color: $btn-c-1;
+        // }
+      }
+    }
+  }
+}

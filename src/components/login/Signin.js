@@ -1,11 +1,10 @@
+import { postParentSignin } from "api/login/parentloginapi";
+import { postTeacherSignin } from "api/login/teacherloginapi";
 import { useEffect, useState } from "react";
-import IdPwFind from "./IdPwFind";
+import cleanupBt from "../../images/tabler_circle-x-filled.svg";
 import LoginIdField from "./LoginIdField";
 import LoginPassField from "./LoginPassField";
 import SocialSignin from "./SocialSignin";
-import { postTeacherSignin } from "api/login/teacherloginapi";
-import cleanupBt from "../../images/tabler_circle-x-filled.svg";
-import { postParentSignin } from "api/login/parentloginapi";
 
 const Signin = ({ children, naviState, setNaviState, navi }) => {
   const [userId, setUserId] = useState("");
@@ -27,15 +26,15 @@ const Signin = ({ children, naviState, setNaviState, navi }) => {
       console.log(result);
       if (result.status === 200) {
         console.log("학부모회원가입성공");
-        navi("/");
+        window.location.replace("/");
       } else {
         console.log("에러시 처리코드 필요");
       }
     } else if (naviState === "teacherlogin") {
       const result = await postTeacherSignin(reqData);
       if (result.status === 200) {
-        navi("/");
         console.log("교사회원가입성공");
+        window.location.replace("/");
       } else {
         console.log("에러시 처리코드 필요");
       }

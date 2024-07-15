@@ -107,6 +107,11 @@ export const createNotice = async () => {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
+      // data: {
+      //   title: "string",
+      //   content: "string",
+      //   state: 1073741824,
+      // },
     });
     console.log("response : ", response);
     return response;

@@ -2,7 +2,7 @@ import jwtAxios from "api/jwtUtil";
 import axios from "axios";
 import { getCookie } from "utils/cookie";
 
-/** 회원가입 신청 */
+/** 회원가입 신청 리스트 */
 export const getAwaitAcceptList = async userListType => {
   const accessToken = getCookie("accessToken");
   // console.log("유저 타입 : ", userListType);
@@ -22,14 +22,12 @@ export const getAwaitAcceptList = async userListType => {
 /** 회원가입 신청 승인 */
 export const singupAccept = async (selectUserPk, userListType) => {
   const accessToken = getCookie("accessToken");
-  // console.log(
-  //   `선택한 유저 PK : ${selectUserPk}, 선택한 유저 타입 : ${userListType}`,
-  // );
-
+  console.log(
+    `선택한 유저 PK : ${selectUserPk}, 선택한 유저 타입 : ${userListType}`,
+  );
   try {
     const response = await jwtAxios.put(
       `/api/admin?p=${userListType}&pk=${selectUserPk}`,
-      {},
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -37,6 +35,7 @@ export const singupAccept = async (selectUserPk, userListType) => {
       },
     );
     console.log("승인 처리 완료");
+    // return true;
   } catch (error) {
     console.log(error);
   }
@@ -48,7 +47,6 @@ export const delectAwaitAccept = async (selectUserPk, userListType) => {
   console.log(
     `선택한 유저 PK : ${selectUserPk}, 선택한 유저 타입 : ${userListType}`,
   );
-  //   console.log(typeof selectUserPk);
   try {
     const response = await axios.delete(
       `/api/admin?p=${userListType}&pk=${selectUserPk}`,
@@ -59,6 +57,7 @@ export const delectAwaitAccept = async (selectUserPk, userListType) => {
       },
     );
     console.log("반려 처리 완료");
+    return true;
   } catch (error) {
     console.log(error);
   }
