@@ -17,8 +17,8 @@ const NoticeItem = () => {
   const state = 2;
 
   // 임시 데이터
-  const class_id = 101;
-  const stu_id = 2;
+  // const class_id = 101;
+  // const stu_id = 2;
 
   const [studentClass, setStudentClass] = useState("");
   const [noticeList, setNoticeList] = useState([]);
@@ -42,7 +42,7 @@ const NoticeItem = () => {
   // 알림장 데이터 연동
   const noticeListData = async () => {
     try {
-      const response = await getNoticeList(class_id, state);
+      const response = await getNoticeList(state);
       if (Array.isArray(response.data.result)) {
         setNoticeList(response.data.result);
       } else {
@@ -55,7 +55,7 @@ const NoticeItem = () => {
   useEffect(() => {
     console.log("noticeListData 확인중 : ", noticeListData);
     noticeListData();
-  }, [class_id, state]);
+  }, [state]);
 
   const NoticeListStyle = styled.div`
     display: flex;

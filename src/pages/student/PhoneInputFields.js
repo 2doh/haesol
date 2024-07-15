@@ -24,6 +24,7 @@ const PhoneInputFields = ({ placeholder, phoneNum }) => {
           className="fieleds-section-input"
           type="text"
           placeholder={placeholder}
+          value={phoneNum}
           onChange={e => {
             handleOnChange(e);
           }}

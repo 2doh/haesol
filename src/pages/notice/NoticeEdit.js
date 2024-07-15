@@ -32,7 +32,7 @@ const NoticeEdit = () => {
   // 저장 버튼 클릭 핸들러
   const handleSave = async () => {
     if (state === null || !date || !content) {
-      alert("모든 필드를 채워주세요.");
+      alert("모든 항목을 채워주세요.");
       return;
     }
 

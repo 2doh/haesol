@@ -3,7 +3,11 @@ import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router";
 import "../../scss/student/grade.css";
 import "../../scss/student/studentEdit.css";
-import { getStudentGrade1, getStudentInfo } from "api/student/studentapi";
+import {
+  getStudentGrade1,
+  getStudentGrade2,
+  getStudentInfo,
+} from "api/student/studentapi";
 
 const GradeView = () => {
   // 네비게이트
@@ -15,40 +19,24 @@ const GradeView = () => {
 
   // 반 정보 > 추후 데이터 받아와서 처리
   const totalStudent = "21 / 321";
-  const exam = 1;
 
   const [studentInfo, setStudentInfo] = useState({});
   const [studentName, setStudentName] = useState("");
   const [studentClass, setStudentClass] = useState("");
-  const [studentGrade, setStudentGrade] = useState([]);
 
-  // 과목 ref
-  // 국 수 바른생활 사회도덕 과학 영어 실과 체육 음악 미술
-  // const ko = useRef();
-  // const math = useRef();
-  // const Disciplined = useRef();
-  // const social = useRef();
-  // const Science = useRef();
-  // const Eg = useRef();
-  // const Practical = useRef();
-  // const physical = useRef();
-  // const music = useRef();
-  // const art = useRef();
-
-  // const refs = {
-  //   국어: ko,
-  //   수학: math,
-  //   "바른 생활": Disciplined,
-  //   "사회/도덕": social,
-  //   과학: Science,
-  //   영어: Eg,
-  //   실과: Practical,
-  //   체육: physical,
-  //   음악: music,
-  //   미술: art,
-  // };
-
-  const [grades, setGrades] = useState({
+  const [midGrades, setMidGrades] = useState({
+    국어: "",
+    수학: "",
+    "바른 생활": "",
+    "사회/도덕": "",
+    과학: "",
+    영어: "",
+    실과: "",
+    체육: "",
+    음악: "",
+    미술: "",
+  });
+  const [finalGrades, setfinalGrades] = useState({
     국어: "",
     수학: "",
     "바른 생활": "",
@@ -92,22 +80,17 @@ const GradeView = () => {
     studentInfoData();
   }, [studentPk]);
 
-  // 성적 불러오기 1학기
+  // 성적 불러오기 중간고사
   const studentGrade1 = async () => {
     try {
-      const response = await getStudentGrade1(studentPk, exam);
+      const response = await getStudentGrade1(studentPk);
       const result = response.data.data.list || [];
-      const list = result.list || [];
+      const list = result || [];
 
       // setStudentGrade(result);
 
       // 과목별 성적을 매핑할 객체
-      const gradeMap = {};
-
-      // const gradeMap = result.reduce((acc, subject) => {
-      //   acc[subject.name] = subject.mark;
-      //   return acc;
-      // }, {});
+      const midgradeMap = {};
 
       // 각 과목에 대해 데이터 추출 및 매핑
       list.forEach(subject => {
@@ -122,7 +105,7 @@ const GradeView = () => {
           final_avg,
           subjectAvg,
         } = subject;
-        gradeMap[name] = {
+        midgradeMap[name] = {
           mark,
           classAvg,
           classRank,
@@ -133,83 +116,65 @@ const GradeView = () => {
           subjectAvg,
         }; // 필요한 데이터들을 객체 형태로 매핑
       });
-
-      setGrades(prevGrades => ({ ...prevGrades, ...gradeMap }));
-
-      // setGrades(prevGrades => ({ ...prevGrades, ...gradeMap }));
-      // console.log("Grades loaded:", gradeMap);
-      // Object.keys(refs).forEach(subject => {
-      //   if (refs[subject].current) {
-      //     refs[subject].current.value = gradeMap[subject] || "";
-      //   }
-      // });
+      setMidGrades(prevGrades => ({ ...prevGrades, ...midgradeMap }));
 
       // console.log(result);
-
-      // // 각 과목별 원점수를 ref에 할당
-      // result.forEach(subject => {
-      //   switch (subject.name) {
-      //     case "국어":
-      //       Ko.current.value = subject.mark;
-      //       break;
-      //     case "수학":
-      //       math.current.value = subject.mark;
-      //       break;
-      //     case "바른 생활":
-      //       Disciplined.current.value = subject.mark;
-      //       break;
-      //     case "사회/도덕":
-      //       social.current.value = subject.mark;
-      //       break;
-      //     case "과학":
-      //       Science.current.value = subject.mark;
-      //       break;
-      //     case "영어":
-      //       Eg.current.value = subject.mark;
-      //       break;
-      //     case "실과":
-      //       Practical.current.value = subject.mark;
-      //       break;
-      //     case "체육":
-      //       physical.current.value = subject.mark;
-      //       break;
-      //     case "음악":
-      //       music.current.value = subject.mark;
-      //       break;
-      //     case "미술":
-      //       art.current.value = subject.mark;
-      //       break;
-      //     default:
-      //       break;
-      //   }
-      // });
-
-      // ko.current.value = result.mark;
-      // math.current.value = result.mark;
-      // Disciplined.current.value = result.mark;
-      // social.current.value = result.mark;
-      // Science.current.value = result.mark;
-      // Eg.current.value = result.mark;
-      // Practical.current.value = result.mark;
-      // physical.current.value = result.mark;
-      // music.current.value = result.mark;
-      // art.current.value = result.mark;
-
-      // setStudentGrade(result);
-      console.log(result);
       // console.log(response);
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
-    studentInfoData();
     studentGrade1();
-  }, [studentPk, exam]);
+  }, [studentPk]);
 
-  // useEffect(() => {
-  //   console.log("영어의 결과 : ", studentGrade);
-  // }, [studentGrade]);
+  // 성적 불러오기 기말고사
+  const studentGrade2 = async () => {
+    try {
+      const response = await getStudentGrade2(studentPk);
+      const result = response.data.data.list || [];
+      const list = result || [];
+
+      // setStudentGrade(result);
+
+      // 과목별 성적을 매핑할 객체
+      const gradeMap2 = {};
+
+      // 각 과목에 대해 데이터 추출 및 매핑
+      list.forEach(subject => {
+        const {
+          name,
+          mark,
+          classAvg,
+          classRank,
+          schoolAvg,
+          schoolRank,
+          midtermAvg,
+          final_avg,
+          subjectAvg,
+        } = subject;
+        gradeMap2[name] = {
+          mark,
+          classAvg,
+          classRank,
+          schoolAvg,
+          schoolRank,
+          midtermAvg,
+          final_avg,
+          subjectAvg,
+        }; // 필요한 데이터들을 객체 형태로 매핑
+      });
+      setfinalGrades(prevGrades => ({ ...prevGrades, ...gradeMap2 }));
+
+      // console.log(result);
+      // console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    studentGrade2();
+  }, [studentPk]);
 
   return (
     <div className="main-core">
@@ -279,19 +244,28 @@ const GradeView = () => {
                   <div className="grade-info">
                     <p>원점수</p>
                     <input
-                      type="number"
+                      // type="number"
                       readOnly
-                      value={grades[subject]?.mark || ""}
+                      value={midGrades[subject]?.mark || "-"}
                     />
                     점
                   </div>
                   <div className="grade-info">
                     <p>반/전체 평균</p>
-                    <input readOnly placeholder="-" /> 점
+                    <input
+                      readOnly
+                      // placeholder="-"
+                      value={`${midGrades[subject]?.classAvg || "-"} / ${midGrades[subject]?.schoolAvg || "-"}`}
+                    />
+                    점
                   </div>
                   <div className="grade-info">
                     <p>반/전체 등수</p>
-                    <input readOnly placeholder="-" /> 등
+                    <input
+                      readOnly
+                      value={`${midGrades[subject]?.classRank || "-"} / ${midGrades[subject]?.schoolRank || "-"}`}
+                    />
+                    등
                   </div>
                 </div>
               </div>
@@ -300,7 +274,7 @@ const GradeView = () => {
         </div>
         <div className="all-grade">
           <div className="grade-rank">
-            학년 전체 등수 <input readOnly placeholder="-" /> /312등
+            학년 전체 등수 <input readOnly /> /312등
           </div>
           <div className="grade-rank">
             반 등수 <input readOnly placeholder="-" /> /21등
@@ -317,176 +291,39 @@ const GradeView = () => {
         </div>
         <div className="info-contain-top">
           <div className="info-item-top">
-            <div className="info-title" id="info-grade-select">
-              <span>국어</span>
-              <div className="grade-info-section">
-                <div className="grade-info">
-                  <p>원점수</p>
-                  <input type="number" readOnly /> 점
-                </div>
-                <div className="grade-info">
-                  <p>반/전체 평균</p>
-                  <input readOnly placeholder="-" /> 점
-                </div>
-                <div className="grade-info">
-                  <p>반/전체 등수</p>
-                  <input readOnly placeholder="-" /> 등
-                </div>
-              </div>
-            </div>
-            <div className="info-title" id="info-grade-select">
-              <span>수학</span>
-              <div className="grade-info-section">
-                <div className="grade-info">
-                  <p>원점수</p>
-                  <input type="number" readOnly /> 점
-                </div>
-                <div className="grade-info">
-                  <p>반/전체 평균</p>
-                  <input readOnly placeholder="-" /> 점
-                </div>
-                <div className="grade-info">
-                  <p>반/전체 등수</p>
-                  <input readOnly placeholder="-" /> 등
-                </div>
-              </div>
-            </div>
-            <div className="info-title" id="info-grade-select">
-              <span>바른 생활</span>
-              <div className="grade-info-section">
-                <div className="grade-info">
-                  <p>원점수</p>
-                  <input type="number" readOnly /> 점
-                </div>
-                <div className="grade-info">
-                  <p>반/전체 평균</p>
-                  <input readOnly placeholder="-" /> 점
-                </div>
-                <div className="grade-info">
-                  <p>반/전체 등수</p>
-                  <input readOnly placeholder="-" /> 등
+            {subjects.map((subject, index) => (
+              <div className="info-title" id="info-grade-select" key={index}>
+                <span>{subject}</span>
+                <div className="grade-info-section">
+                  <div className="grade-info">
+                    <p>원점수</p>
+                    <input
+                      // type="number"
+                      readOnly
+                      value={finalGrades[subject]?.mark || "-"}
+                    />
+                    점
+                  </div>
+                  <div className="grade-info">
+                    <p>반/전체 평균</p>
+                    <input
+                      readOnly
+                      // placeholder="-"
+                      value={`${finalGrades[subject]?.classAvg || "-"} / ${finalGrades[subject]?.schoolAvg || "-"}`}
+                    />
+                    점
+                  </div>
+                  <div className="grade-info">
+                    <p>반/전체 등수</p>
+                    <input
+                      readOnly
+                      value={`${finalGrades[subject]?.classRank || "-"} / ${finalGrades[subject]?.schoolRank || "-"}`}
+                    />
+                    등
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="info-title" id="info-grade-select">
-              <span>사회/도덕</span>
-              <div className="grade-info-section">
-                <div className="grade-info">
-                  <p>원점수</p>
-                  <input type="number" readOnly /> 점
-                </div>
-                <div className="grade-info">
-                  <p>반/전체 평균</p>
-                  <input readOnly placeholder="-" /> 점
-                </div>
-                <div className="grade-info">
-                  <p>반/전체 등수</p>
-                  <input readOnly placeholder="-" /> 등
-                </div>
-              </div>
-            </div>
-            <div className="info-title" id="info-grade-select">
-              <span>과학</span>
-              <div className="grade-info-section">
-                <div className="grade-info">
-                  <p>원점수</p>
-                  <input type="number" readOnly /> 점
-                </div>
-                <div className="grade-info">
-                  <p>반/전체 평균</p>
-                  <input readOnly placeholder="-" /> 점
-                </div>
-                <div className="grade-info">
-                  <p>반/전체 등수</p>
-                  <input readOnly placeholder="-" /> 등
-                </div>
-              </div>
-            </div>
-            <div className="info-title" id="info-grade-select">
-              <span>영어</span>
-              <div className="grade-info-section">
-                <div className="grade-info">
-                  <p>원점수</p>
-                  <input type="number" readOnly /> 점
-                </div>
-                <div className="grade-info">
-                  <p>반/전체 평균</p>
-                  <input readOnly placeholder="-" /> 점
-                </div>
-                <div className="grade-info">
-                  <p>반/전체 등수</p>
-                  <input readOnly placeholder="-" /> 등
-                </div>
-              </div>
-            </div>
-            <div className="info-title" id="info-grade-select">
-              <span>실과</span>
-              <div className="grade-info-section">
-                <div className="grade-info">
-                  <p>원점수</p>
-                  <input type="number" readOnly /> 점
-                </div>
-                <div className="grade-info">
-                  <p>반/전체 평균</p>
-                  <input readOnly placeholder="-" /> 점
-                </div>
-                <div className="grade-info">
-                  <p>반/전체 등수</p>
-                  <input readOnly placeholder="-" /> 등
-                </div>
-              </div>
-            </div>
-            <div className="info-title" id="info-grade-select">
-              <span>체육</span>
-              <div className="grade-info-section">
-                <div className="grade-info">
-                  <p>원점수</p>
-                  <input type="number" readOnly /> 점
-                </div>
-                <div className="grade-info">
-                  <p>반/전체 평균</p>
-                  <input readOnly placeholder="-" /> 점
-                </div>
-                <div className="grade-info">
-                  <p>반/전체 등수</p>
-                  <input readOnly placeholder="-" /> 등
-                </div>
-              </div>
-            </div>
-            <div className="info-title" id="info-grade-select">
-              <span>음악</span>
-              <div className="grade-info-section">
-                <div className="grade-info">
-                  <p>원점수</p>
-                  <input type="number" readOnly /> 점
-                </div>
-                <div className="grade-info">
-                  <p>반/전체 평균</p>
-                  <input readOnly placeholder="-" /> 점
-                </div>
-                <div className="grade-info">
-                  <p>반/전체 등수</p>
-                  <input readOnly placeholder="-" /> 등
-                </div>
-              </div>
-            </div>
-            <div className="info-title" id="info-grade-select">
-              <span>미술</span>
-              <div className="grade-info-section">
-                <div className="grade-info">
-                  <p>원점수</p>
-                  <input type="number" readOnly /> 점
-                </div>
-                <div className="grade-info">
-                  <p>반/전체 평균</p>
-                  <input readOnly placeholder="-" /> 점
-                </div>
-                <div className="grade-info">
-                  <p>반/전체 등수</p>
-                  <input readOnly placeholder="-" /> 등
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
         <div className="all-grade">

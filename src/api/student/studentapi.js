@@ -1,5 +1,5 @@
 import jwtAxios from "api/jwtUtil";
-import axios, { Axios } from "axios";
+import axios from "axios";
 import { getCookie } from "utils/cookie";
 
 // 학생 리스트 불러오는 api
@@ -49,12 +49,12 @@ export const modifyStudentInfo = async () => {
   }
 };
 
-// 학생 성적 조회
-export const getStudentGrade1 = async (studentPk, exam) => {
+// 학생 성적 조회 중간
+export const getStudentGrade1 = async studentPk => {
   const accessToken = getCookie("accessToken");
   try {
     const response = await axios.get(
-      `/api/Score/getScore?studentPk=${studentPk}&exam=${exam}`,
+      `/api/Score/getScore?studentPk=${studentPk}&exam=1`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -66,6 +66,7 @@ export const getStudentGrade1 = async (studentPk, exam) => {
     console.log(error);
   }
 };
+// 성적 조회 기말
 export const getStudentGrade2 = async studentPk => {
   const accessToken = getCookie("accessToken");
   try {
@@ -84,17 +85,14 @@ export const getStudentGrade2 = async studentPk => {
 };
 
 // 알림장 데이터 불러오기
-export const getNoticeList = async (class_id, state) => {
+export const getNoticeList = async state => {
   const accessToken = getCookie("accessToken");
   try {
-    const response = await axios.get(
-      `/api/notice?class_id=${class_id}&state=${state}`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
+    const response = await axios.get(`/api/notice?state=${state}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
       },
-    );
+    });
     return response;
   } catch (error) {
     console.log(error);
