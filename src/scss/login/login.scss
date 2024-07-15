@@ -136,6 +136,13 @@
     background-color: black;
   }
 }
+.fields-section-errmsg {
+  width: 100%;
+  height: 100%;
+  margin-top: 10px;
+  font-size: 14px;
+  color: red;
+}
 .login-menu {
   @include flex-center();
   justify-content: space-between;
@@ -145,6 +152,6 @@
   gap: 15px;
   font-size: 17px;
 }
-.login-navi{
+.login-navi {
   cursor: pointer;
 }

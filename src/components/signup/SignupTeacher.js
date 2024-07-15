@@ -25,8 +25,7 @@ const SignupTeacher = ({ handleCancel, userType, setUserType }) => {
   const [addr, setAddr] = useState("");
   const [modalText, setModalText] = useState("");
   const dispatch = useDispatch();
-  const [errObj, setErrObj] = useState(null);
-  const [canId, setCanId] = useState(false)
+  const [canId, setCanId] = useState(false);
 
   const tempObj = {
     teacherId: userId,
@@ -40,21 +39,21 @@ const SignupTeacher = ({ handleCancel, userType, setUserType }) => {
     addr: addr,
   };
 
-  console.log(tempObj)
+  console.log(tempObj);
   const showModal = selectModalType => {
     const data = { bodyText: [modalText] };
     dispatch(updateModalDate(data));
     const modalRes = dispatch(openModal(selectModalType));
   };
-  
+
   const signupTeacher = async e => {
-    console.log(canId)
+    console.log(canId);
     e.preventDefault();
-    if(canId === false) {
+    if (canId === false) {
       setModalText("아이디 중복확인을 해주세요");
-      return
+      return;
     }
-    if (canId===true) {
+    if (canId === true) {
       if (
         !(
           userId &&
@@ -69,16 +68,16 @@ const SignupTeacher = ({ handleCancel, userType, setUserType }) => {
         setModalText("필수입력항목을 작성해주세요");
         return;
       }
-    const result = await teacherSignup(tempObj);
-    if (result.data === 1) {
-      setModalText("회원가입 되었습니다");
-      return;
+      const result = await teacherSignup(tempObj);
+      if (result.data === 1) {
+        setModalText("회원가입 되었습니다");
+        return;
+      }
+      if (result === "err") {
+        setModalText("이미 존재하는 이메일/전화번호 정보입니다");
+        return;
+      }
     }
-    if (result === "err") {
-      setModalText("이미 존재하는 이메일/전화번호 정보입니다");
-      return;
-    }
-  }
   };
 
   useEffect(() => {
@@ -127,7 +126,7 @@ const SignupTeacher = ({ handleCancel, userType, setUserType }) => {
         <div className="btwrap">
           <button
             className="signupbt"
-            onClick={e => {
+            onClick={() => {
               showModal("BasicModal");
             }}
           >
