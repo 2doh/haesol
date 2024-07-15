@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 const HomeAdressFields = ({ children, setZoneCode, setAddr }) => {
   const [postCode, setPostCode] = useState("우편번호");
-  const [address, setAddress] = useState("주소");
+  const [address, setAddress] = useState("");
   const [detailedAddress, setDetailedAddress] = useState("");
   const handleClick = async e => {
     e.preventDefault();
@@ -51,7 +51,7 @@ const HomeAdressFields = ({ children, setZoneCode, setAddr }) => {
             우편번호 찾기
           </button>
         </div>
-        <div className="fieleds-homeadress-adress">{address}</div>
+        <input className="fieleds-homeadress-adress" placeholder={"주소"}></input>
         <input
           className="fieleds-homearess-input"
           type="text"

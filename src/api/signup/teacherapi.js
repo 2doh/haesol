@@ -2,10 +2,11 @@ import axios from "axios";
 
 export const teacherSignup = async data => {
   try {
-    const response = await axios.post(`/api/teacher/sign-up`, { data });
+    const response = await axios.post(`/api/teacher/sign-up`,  data );
     return response;
   } catch (error) {
-    console.log(error);
+    const err = "err";
+    return err;
   }
 };
 
