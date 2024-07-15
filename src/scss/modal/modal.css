@@ -1,0 +1,122 @@
+.modal-wrap {
+  width: 400px;
+  min-width: 400px;
+  height: 250px;
+  font-size: 18px;
+  position: relative;
+}
+.modal-wrap .modal-inner {
+  text-shadow: 0 1.5px 0 rgba(0, 0, 0, 0.15);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.34) inset, 0 2px 0 -1px rgba(0, 0, 0, 0.13), 0 3px 0 -1px rgba(0, 0, 0, 0.08), 0 3px 13px -1px rgba(0, 0, 0, 0.21);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: -150px;
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+.modal-wrap .modal-inner > div {
+  display: flex;
+  align-items: center;
+}
+.modal-wrap .modal-inner .modal-body {
+  margin: 30px 0px 10px;
+  text-align: center;
+  flex-direction: row;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  margin: 45px 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.modal-wrap .modal-inner .modal-body .modal-body-text-div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.modal-wrap .modal-inner .modal-body .modal-body-text-div:nth-child(2) {
+  margin: 0px 10px;
+}
+.modal-wrap .modal-inner .modal-body .pw-modal-body-text-div {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 75%;
+}
+.modal-wrap .modal-inner .arr-value-modal-body {
+  flex-direction: row;
+}
+.modal-wrap .modal-inner .tel-accept-modal-body {
+  margin: 25px 0px 35px;
+}
+.modal-wrap .modal-inner .tel-accept-modal-body .tel-accept-modal-wrap {
+  gap: 30px;
+}
+.modal-wrap .modal-inner .tel-accept-modal-body .tel-accept-modal-wrap .text-box {
+  width: 65%;
+}
+.modal-wrap .modal-inner .tel-accept-modal-body .tel-accept-modal-wrap .text-box .modal-body-text-div:nth-child(1) {
+  width: 60px;
+}
+.modal-wrap .modal-inner .tel-accept-modal-body .tel-accept-modal-wrap .text-box .modal-body-text-div:nth-child(2) {
+  width: 10px;
+}
+.modal-wrap .modal-inner .tel-accept-modal-body .tel-accept-modal-wrap .text-box .modal-body-text-div:nth-child(3) {
+  width: 100%;
+}
+.modal-wrap .modal-inner .tel-accept-modal-body .tel-accept-modal-wrap .text-box .modal-body-text-div {
+  gap: 10px;
+}
+.modal-wrap .modal-inner .tel-accept-modal-body .tel-accept-modal-wrap .tel-input-box h3 {
+  text-align: left;
+  padding-bottom: 10px;
+}
+.modal-wrap .modal-inner .tel-accept-modal-body .tel-accept-modal-wrap .tel-input-box .tel-box-inner > form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+}
+.modal-wrap .modal-inner .tel-accept-modal-body .tel-accept-modal-wrap .tel-input-box .tel-box-inner > form p {
+  padding: 0 10px;
+}
+.modal-wrap .modal-inner .pw-modal-text {
+  text-align: left;
+}
+.modal-wrap .modal-inner .modal-header {
+  padding-left: 20px;
+  min-height: 45px;
+  width: 100%;
+  border-bottom: 1px solid #cccccc;
+}
+.modal-wrap .modal-inner .modal-footer {
+  position: relative;
+  width: 100%;
+  min-height: 70px;
+  padding-bottom: 20px;
+}
+.modal-wrap .modal-inner .modal-footer .modal-btn {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  justify-content: center;
+}
+.modal-wrap .modal-inner .modal-footer .modal-btn > button {
+  font-size: 15px;
+  width: 55px;
+  height: 35px;
+  border: 1px solid #747474;
+  border-radius: 6px;
+}
+.modal-wrap .modal-inner .modal-footer .modal-btn > .white-button {
+  color: #ffffff;
+  background-color: #747474;
+}/*# sourceMappingURL=modal.css.map */

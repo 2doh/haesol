@@ -4,7 +4,7 @@
 .admin-home-core .grid-inner {
   grid-template-columns: 80px 200px 130px 80px 80px 1fr 1fr;
 }
-.admin-home-core .grid-inner:hover {
+.admin-home-core .grid-frame .item:not(:first-of-type):hover {
   background-color: #dee8e9;
 }
 
@@ -44,6 +44,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.grid-frame .grid-inner .grid-inner-item .admin-no-list-style {
+  color: #bbbece;
+  font-size: 15px;
 }
 .grid-frame .grid-inner .grid-inner-item:last-child {
   border-right: none;

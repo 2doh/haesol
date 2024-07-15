@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../scss/notice/noticeEdit.css";
-import { createNotice } from "api/student/studentapi";
+import { createNotice, getStudentInfo } from "api/student/studentapi";
+import { postTeacherSignin } from "api/login/teacherloginapi";
 
 const NoticeEdit = () => {
-  // 반 정보
-  const gradeClass = "5학년 7반";
+  // const [teacherClass, setTeacherClass] = useState("");
 
   // 상태 설정
   const [state, setState] = useState(null);
@@ -30,8 +30,7 @@ const NoticeEdit = () => {
     setContent(e.target.value);
   };
   // 저장 버튼 클릭 핸들러
-  const handleSave = async e => {
-    e.preventDefault();
+  const handleSave = async () => {
     if (state === null || !date || !content) {
       alert("모든 필드를 채워주세요.");
       return;
@@ -50,7 +49,7 @@ const NoticeEdit = () => {
     <div className="main-core">
       <div className="student-list-title">
         {/* 제목 위치 */}
-        <span>{gradeClass}</span>
+        <span>{}</span>
         <p>알림장 작성</p>
       </div>
       <div className="write-notice-wrap">
@@ -58,8 +57,8 @@ const NoticeEdit = () => {
           <div className="select-notice-inner-left">
             <select
               name="select-notice"
-              onChange={() => {
-                handleSelectChange();
+              onChange={e => {
+                handleSelectChange(e);
               }}
             >
               <option value="none" disabled selected>
@@ -71,8 +70,8 @@ const NoticeEdit = () => {
             <input
               type="date"
               value={date}
-              onChange={() => {
-                handleDateChange();
+              onChange={e => {
+                handleDateChange(e);
               }}
             />
           </div>
@@ -92,8 +91,8 @@ const NoticeEdit = () => {
             type="text"
             placeholder="내용을 입력하세요."
             value={content}
-            onChange={() => {
-              handleContentChange;
+            onChange={e => {
+              handleContentChange(e);
             }}
           />
         </div>
