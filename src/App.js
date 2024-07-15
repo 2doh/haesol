@@ -29,6 +29,7 @@ import { getCookie } from "utils/cookie";
 import { openModal } from "slices/modalSlice";
 import PrivateRoute from "components/common/PrivateRoute";
 import MyChildInfo from "pages/parents/MyChildInfo";
+import ReturnHomeRoute from "components/common/ReturnHomeRoute";
 
 const ModalStyle = styled.div`
   position: absolute;
@@ -92,8 +93,6 @@ function App() {
 
   useEffect(() => {}, [notFoundPage]);
 
-  console.log(loginUserType);
-
   /** 모달 상태 관리 */
   const modalState = useSelector(state => state.modalSlice);
 
@@ -106,7 +105,7 @@ function App() {
     // console.log("모달 결과 출력 내용 확인 : ", modalRes);
   };
 
-  console.log("현재 토큰 : ", accessToken);
+  // console.log("현재 토큰 : ", accessToken);
   return (
     <BrowserRouter>
       {modalState.isOpen ? (
@@ -130,19 +129,22 @@ function App() {
           {/* 어드민 */}
           {
             loginUserType === "ROLE_ADMIN" ? (
-              <Route
-                path="*"
-                element={
-                  <PrivateRoute
-                    component={<AdminHome />}
-                    authenticated={accessToken}
-                  />
-                }
-              >
-                <Route index path="home" element={<AdminHome />}></Route>
-              </Route>
+              <>
+                <Route
+                  path="*"
+                  element={
+                    <PrivateRoute
+                      component={<AdminHome />}
+                      authenticated={accessToken}
+                    />
+                  }
+                ></Route>
+                <Route path="/admin" element={<AdminHome />}>
+                  <Route index path="home" element={<AdminHome />}></Route>
+                </Route>
+              </>
             ) : (
-              <Route path="/admin" element={<Home />}></Route>
+              <Route path="/admin/*" element={<ReturnHomeRoute />}></Route>
             )
             // <Route path="/admin" {...alert("권한한 페이지 입니다.")}></Route>
           }

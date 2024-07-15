@@ -182,6 +182,14 @@
   background-color: black;
 }
 
+.fields-section-errmsg {
+  width: 100%;
+  height: 100%;
+  margin-top: 10px;
+  font-size: 14px;
+  color: red;
+}
+
 .login-menu {
   display: flex;
   align-items: center;

@@ -5,7 +5,7 @@
 }
 
 .access-login-main {
-  border: 1px solid #886348;
+  border: 2px solid #886348;
   border-radius: 10px;
   overflow: hidden;
   background-color: #f3f9fa;
@@ -16,7 +16,7 @@
 }
 
 .access-login-main:nth-child(2) {
-  border: 1px solid #886348;
+  border: 2px solid #886348;
   border-radius: 10px;
   overflow: hidden;
   background-clip: content-box;
