@@ -242,16 +242,9 @@ const StudentInfoView = () => {
             <div className="info-title">
               <span>전화번호</span>
               <PhoneInputFields
-                // placeholder={studentPhone}
-                // defaultValue={studentPhone}
                 phoneNum={studentPhone}
                 onChange={e => setStudentPhone(e.target.value)}
               />
-              {/* <input
-                placeholder="전화번호를 입력하세요"
-                value={studentPhone}
-                onChange={e => setStudentPhone(e.target.value)}
-              /> */}
             </div>
           </div>
           <div className="info-item-right">

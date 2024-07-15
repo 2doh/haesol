@@ -94,6 +94,20 @@
 
     & .item {
       height: 60px;
+      position: relative;
+    }
+    .delete-button {
+      display: none;
+      position: absolute;
+      z-index: 1;
+      right: 20px;
+    }
+    & .item:hover {
+      .delete-button {
+        position: absolute;
+        z-index: 999;
+        display: block;
+      }
     }
 
     & .item:nth-child(odd) {
@@ -114,6 +128,7 @@
       text-align: center;
 
       .grid-inner-item {
+        position: relative;
         height: 100%;
         display: flex;
         justify-content: center;

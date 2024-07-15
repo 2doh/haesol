@@ -9,6 +9,7 @@ import ViewPw from "./ViewPw";
 import { putTeacherPwChange } from "api/teacher/teacherapi";
 import PhoneInputFields from "pages/student/PhoneInputFields";
 import { getCookie } from "utils/cookie";
+import { deleteNotice } from "api/student/studentapi";
 
 const ModalStyle = styled.div`
   position: fixed;
@@ -138,11 +139,16 @@ const Modal = () => {
   };
 
   /** 확인 처리 : 기능 추가 */
-  const modalAccept = () => {
+  const modalAccept = async () => {
     if (modalState.modalType === "BasicModal") {
-      console.log("BasicModal 타입 확인 버튼 클릭");
-      // 처리
-      dispatch(closeModal());
+      if (modalState.modalRes[0] === 44) {
+        console.log("삭제처리를 하겠습니다.");
+        let res = deleteNotice(modalState.modalRes[1]);
+        console.log("res : ", res);
+        if (res) {
+          dispatch(closeModal());
+        }
+      }
     }
     if (modalState.modalType === "ArrValueModal") {
       if (modalState.headerText.includes("반려")) {
