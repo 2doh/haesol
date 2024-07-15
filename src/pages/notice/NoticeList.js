@@ -3,9 +3,18 @@ import "../../scss/notice/noticeList.css";
 
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { getNoticeList, getStudentInfo } from "api/student/studentapi";
+import {
+  deleteNotice,
+  getNoticeList,
+  getStudentInfo,
+} from "api/student/studentapi";
+import { getCookie } from "utils/cookie";
+import { useDispatch } from "react-redux";
+import { openModal, updateModalDate } from "slices/modalSlice";
+import { RiDeleteBack2Fill } from "react-icons/ri";
 
 const NoticeList = () => {
+  const userClass = getCookie("userClass");
   // 네비게이트
   const navigate = useNavigate();
   const handleClick = () => {
@@ -18,28 +27,10 @@ const NoticeList = () => {
   // 알림장 state
   const state = 1;
 
-  // 임시 데이터
-  // const class_id = 101;
-  // const stu_id = 2;
-
-  const [studentClass, setStudentClass] = useState("");
   const [noticeList, setNoticeList] = useState([]);
-
-  // // 학생 정보 불러오기
-  // const studentInfoData = async () => {
-  //   try {
-  //     const response = await getStudentInfo(stu_id);
-  //     const result = response.data;
-  //     setStudentClass(result.studentClass);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-  // useEffect(() => {
-  //   // 학생 데이터 불러오기
-  //   console.log("studentInfoData 확인중 : ", studentInfoData);
-  //   studentInfoData();
-  // }, []);
+  // const [createdAt, setCreatedAt] = useState([]);
+  // const [title, setTitle] = useState("");
+  // const [content, setContent] = useState("");
 
   // 알림장 데이터 연동
   const noticeListData = async () => {
@@ -55,22 +46,55 @@ const NoticeList = () => {
     }
   };
   useEffect(() => {
-    console.log("noticeListData 확인중 : ", noticeListData);
     noticeListData();
   }, [state]);
+
+  const dispatch = useDispatch();
+  /** 모달 호출 */
+  const showModal = (selectModalType, createdAt, content) => {
+    /** (선택) 들어갈 내용 수정 */
+    const data = {
+      headerText: `준비물 - ${createdAt}`,
+      // bodyTextLabel: [title],
+      bodyText: [content],
+      buttonText: ["전송", "취소"],
+    };
+    /** (선택) 위와 아래는 세트 */
+    dispatch(updateModalDate(data));
+
+    /**(고정) 모달 활성화 */
+    const modalRes = dispatch(openModal(selectModalType));
+  };
+
+  const handleDelete = (e, selectModalType, noticeId) => {
+    e.stopPropagation();
+    console.log("noticeId : ", noticeId);
+    const data = {
+      headerText: ["삭제"],
+      bodyText: ["해당 내용을 삭제하시겠습니까?"],
+      buttonText: ["삭제", "취소"],
+      modalRes: [44, noticeId],
+    };
+    /** (선택) 위와 아래는 세트 */
+    dispatch(updateModalDate(data));
+
+    /**(고정) 모달 활성화 */
+    const modalRes = dispatch(openModal(selectModalType));
+  };
 
   const NoticeListStyle = styled.div`
     display: flex;
     justify-content: center;
     width: 100%;
     height: 100%;
+    position: relative;
   `;
 
   return (
     <div className="main-core">
       <div className="student-list-title">
         {/* 제목 위치 */}
-        <span>{studentClass}</span>
+        <span>{userClass}</span>
         <p>알림장 목록</p>
       </div>
       <div className="user-info-wrap">
@@ -107,14 +131,34 @@ const NoticeList = () => {
       <NoticeListStyle>
         <div className="notice-frame">
           {noticeList.map((item, index) => (
-            <div className="item" key={index}>
+            <div
+              className="item"
+              key={index}
+              onClick={() => {
+                showModal(
+                  "BasicModal",
+                  item.createdAt,
+                  item.title,
+                  item.content,
+                  item.noticeId,
+                );
+              }}
+            >
               <div className="grid-inner">
                 <div className="grid-inner-item">
                   <div className="grid-inner-item-text">{item.createdAt}</div>
                 </div>
                 <div className="grid-inner-item">
                   {/* <div className="grid-inner-item-text">{item.title}</div> */}
-                  <div className="grid-inner-item-text">{item.content}</div>
+                  <div className="grid-inner-item-text">{item.title}</div>
+                  <div
+                    className="delete-button"
+                    onClick={e => {
+                      handleDelete(e, "BasicModal", item.noticeId);
+                    }}
+                  >
+                    <RiDeleteBack2Fill size="2.5rem" />
+                  </div>
                 </div>
               </div>
             </div>

@@ -84,6 +84,18 @@
 }
 .main-core .notice-frame .item {
   height: 60px;
+  position: relative;
+}
+.main-core .notice-frame .delete-button {
+  display: none;
+  position: absolute;
+  z-index: 1;
+  right: 20px;
+}
+.main-core .notice-frame .item:hover .delete-button {
+  position: absolute;
+  z-index: 999;
+  display: block;
 }
 .main-core .notice-frame .item:nth-child(odd) {
   background-color: #dee8e9;
@@ -109,6 +121,7 @@
   text-align: center;
 }
 .main-core .notice-frame .grid-inner .grid-inner-item {
+  position: relative;
   height: 100%;
   display: flex;
   justify-content: center;

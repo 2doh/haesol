@@ -44,7 +44,7 @@ const LoginUser = () => {
   /** 성적 확인 페이지 이동 */
   const moveMyGradePage = () => {
     // 아래의 부분에 학생 PK 등록 예정
-    const stPk = 3;
+    const stPk = 4;
     // navigate("/grade/1");
     navigate(`/grade/${stPk}`);
   };

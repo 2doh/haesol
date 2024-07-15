@@ -2,13 +2,15 @@ import React, { useState, useEffect } from "react";
 import "../../scss/notice/noticeEdit.css";
 import { createNotice, getStudentInfo } from "api/student/studentapi";
 import { postTeacherSignin } from "api/login/teacherloginapi";
+import { getCookie } from "utils/cookie";
 
 const NoticeEdit = () => {
-  // const [teacherClass, setTeacherClass] = useState("");
+  const userClass = getCookie("userClass");
 
   // 상태 설정
   const [state, setState] = useState(null);
   const [date, setDate] = useState("");
+  const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
   // Select 변경 핸들러
@@ -25,13 +27,17 @@ const NoticeEdit = () => {
   const handleDateChange = e => {
     setDate(e.target.value);
   };
+  // Title 변경 핸들러
+  const handleTitleChange = e => {
+    setTitle(e.target.value);
+  };
   // Content 변경 핸들러
   const handleContentChange = e => {
     setContent(e.target.value);
   };
   // 저장 버튼 클릭 핸들러
   const handleSave = async () => {
-    if (state === null || !date || !content) {
+    if (state === null || !date || !title || !content) {
       alert("모든 항목을 채워주세요.");
       return;
     }
@@ -39,6 +45,7 @@ const NoticeEdit = () => {
     const noticeData = {
       state,
       date,
+      title,
       content,
     };
     const result = await createNotice(noticeData);
@@ -49,7 +56,7 @@ const NoticeEdit = () => {
     <div className="main-core">
       <div className="student-list-title">
         {/* 제목 위치 */}
-        <span>{}</span>
+        <span>{userClass}</span>
         <p>알림장 작성</p>
       </div>
       <div className="write-notice-wrap">
@@ -87,6 +94,14 @@ const NoticeEdit = () => {
           </div>
         </div>
         <div className="write-notice-section">
+          <input
+            type="text"
+            placeholder="제목을 입력하세요"
+            value={title}
+            onChange={e => {
+              handleTitleChange(e);
+            }}
+          />
           <textarea
             type="text"
             placeholder="내용을 입력하세요."

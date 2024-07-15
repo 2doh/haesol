@@ -100,20 +100,32 @@ export const getNoticeList = async state => {
 };
 
 // 알림장 작성하기
-export const createNotice = async () => {
+export const createNotice = async data => {
   const accessToken = getCookie("accessToken");
   try {
-    const response = await jwtAxios.post("/api/notice", {
+    const response = await jwtAxios.post("/api/notice", data, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
-      // data: {
-      //   title: "string",
-      //   content: "string",
-      //   state: 1073741824,
-      // },
     });
-    console.log("response : ", response);
+    // console.log("response : ", response);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// 알림장 삭제하기
+export const deleteNotice = async noticeId => {
+  const accessToken = getCookie("accessToken");
+  console.log("와따! ", noticeId);
+  try {
+    const response = await jwtAxios.delete("/api/notice", noticeId, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    console.log("response :", response);
     return response;
   } catch (error) {
     console.log(error);

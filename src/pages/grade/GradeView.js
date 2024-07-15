@@ -18,7 +18,7 @@ const GradeView = () => {
   };
 
   // 반 정보 > 추후 데이터 받아와서 처리
-  const totalStudent = "21 / 321";
+  // const totalStudent = "21 / 321";
 
   const [studentInfo, setStudentInfo] = useState({});
   const [studentName, setStudentName] = useState("");
@@ -61,6 +61,10 @@ const GradeView = () => {
     "음악",
     "미술",
   ];
+  const [classStudentCount, setClassStudentCount] = useState("-");
+  const [gradeStudentCount, setGradeStudentCount] = useState("-");
+  const [classRank, setClassRank] = useState("-");
+  const [gradeRank, setGradeRank] = useState("-");
 
   // 학생 정보 불러오기
   const studentInfoData = async () => {
@@ -87,33 +91,35 @@ const GradeView = () => {
       const result = response.data.data.list || [];
       const list = result || [];
 
-      // setStudentGrade(result);
-
       // 과목별 성적을 매핑할 객체
       const midgradeMap = {};
+      setClassStudentCount(result[0].classStudentCount || "-");
+      setGradeStudentCount(result[0].gradeStudentCount || "-");
+      setClassRank(result[0].classRank || "-");
+      setGradeRank(result[0].gradeRank || "-");
 
       // 각 과목에 대해 데이터 추출 및 매핑
       list.forEach(subject => {
         const {
-          name,
-          mark,
-          classAvg,
-          classRank,
-          schoolAvg,
-          schoolRank,
-          midtermAvg,
-          final_avg,
-          subjectAvg,
+          name, // 과목 이름
+          mark, // 원점수
+          classAvg, // 반평균
+          classRank, // 반 등수
+          gradeAvg, // 학년 평균
+          gradeRank, // 학교 등수
+          subjectGradeRank, // 과목별 등수
+          gradeStudentCount, // 전체 학년
+          classStudentCount, // 반 몇 명?
         } = subject;
         midgradeMap[name] = {
-          mark,
-          classAvg,
-          classRank,
-          schoolAvg,
-          schoolRank,
-          midtermAvg,
-          final_avg,
-          subjectAvg,
+          mark, // 원점수
+          classAvg, // 반평균
+          classRank, // 반 등수
+          gradeAvg, // 학년 평균
+          gradeRank, // 학교 등수
+          subjectGradeRank, // 과목별 등수
+          gradeStudentCount, // 전체 학년
+          classStudentCount, // 반 몇 명?
         }; // 필요한 데이터들을 객체 형태로 매핑
       });
       setMidGrades(prevGrades => ({ ...prevGrades, ...midgradeMap }));
@@ -139,29 +145,33 @@ const GradeView = () => {
 
       // 과목별 성적을 매핑할 객체
       const gradeMap2 = {};
+      setClassStudentCount(result[0].classStudentCount || "-");
+      setGradeStudentCount(result[0].gradeStudentCount || "-");
+      setClassRank(result[0].classRank || "-");
+      setGradeRank(result[0].gradeRank || "-");
 
       // 각 과목에 대해 데이터 추출 및 매핑
       list.forEach(subject => {
         const {
-          name,
-          mark,
-          classAvg,
-          classRank,
-          schoolAvg,
-          schoolRank,
-          midtermAvg,
-          final_avg,
-          subjectAvg,
+          name, // 과목 이름
+          mark, // 원점수
+          classAvg, // 반평균
+          classRank, // 반 등수
+          gradeAvg, // 학년 평균
+          gradeRank, // 학교 등수
+          subjectGradeRank, // 과목별 등수
+          gradeStudentCount, // 전체 학년
+          classStudentCount, // 반 몇 명?
         } = subject;
         gradeMap2[name] = {
-          mark,
-          classAvg,
-          classRank,
-          schoolAvg,
-          schoolRank,
-          midtermAvg,
-          final_avg,
-          subjectAvg,
+          mark, // 원점수
+          classAvg, // 반평균
+          classRank, // 반 등수
+          gradeAvg, // 학년 평균
+          gradeRank, // 학교 등수
+          subjectGradeRank, // 과목별 등수
+          gradeStudentCount, // 전체 학년
+          classStudentCount, // 반 몇 명?
         }; // 필요한 데이터들을 객체 형태로 매핑
       });
       setfinalGrades(prevGrades => ({ ...prevGrades, ...gradeMap2 }));
@@ -223,7 +233,11 @@ const GradeView = () => {
               </div>
               <div className="total-student">
                 <p>반/학년 전체 인원</p>
-                <input value={totalStudent} readOnly /> 명
+                <input
+                  value={`${classStudentCount} / ${gradeStudentCount}`}
+                  readOnly
+                />
+                명
               </div>
             </div>
           </div>
@@ -255,7 +269,7 @@ const GradeView = () => {
                     <input
                       readOnly
                       // placeholder="-"
-                      value={`${midGrades[subject]?.classAvg || "-"} / ${midGrades[subject]?.schoolAvg || "-"}`}
+                      value={`${midGrades[subject]?.classAvg || "-"} / ${midGrades[subject]?.gradeAvg || "-"}`}
                     />
                     점
                   </div>
@@ -263,7 +277,7 @@ const GradeView = () => {
                     <p>반/전체 등수</p>
                     <input
                       readOnly
-                      value={`${midGrades[subject]?.classRank || "-"} / ${midGrades[subject]?.schoolRank || "-"}`}
+                      value={`${midGrades[subject]?.classRank || "-"} / ${midGrades[subject]?.subjectGradeRank || "-"}`}
                     />
                     등
                   </div>
@@ -274,10 +288,10 @@ const GradeView = () => {
         </div>
         <div className="all-grade">
           <div className="grade-rank">
-            학년 전체 등수 <input readOnly /> /312등
+            학년 전체 등수 <input readOnly value={gradeRank} /> 등
           </div>
           <div className="grade-rank">
-            반 등수 <input readOnly placeholder="-" /> /21등
+            반 등수 <input readOnly value={classRank} /> 등
           </div>
         </div>
         <Signature />
