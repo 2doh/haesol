@@ -50,7 +50,7 @@ const AdminHome = () => {
   /** 리스트 출력 함수 */
   const getAwaitList = async ({ userListType }) => {
     const res = await getAwaitAcceptList(userListType);
-    // console.log("axios 결과값 : ", res);
+    console.log("axios 결과값 : ", res);
     setAcceptUserList(res);
   };
 

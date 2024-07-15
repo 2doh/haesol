@@ -26,8 +26,9 @@ export const singupAccept = async (selectUserPk, userListType) => {
     `선택한 유저 PK : ${selectUserPk}, 선택한 유저 타입 : ${userListType}`,
   );
   try {
-    const response = await jwtAxios.put(
+    const res = await axios.put(
       `/api/admin?p=${userListType}&pk=${selectUserPk}`,
+      {},
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -35,16 +36,41 @@ export const singupAccept = async (selectUserPk, userListType) => {
       },
     );
     console.log("승인 처리 완료");
+    return true;
     // return true;
   } catch (error) {
-    console.log(error);
+    console.error("에러 발생:", error);
   }
 };
+
+// 아래 참고
+// import axios from 'axios';
+// const url = 'https://example.com/api/resource';
+// const data = {
+//   key1: 'value1',
+//   key2: 'value2'
+// };
+// // 헤더 설정
+// const config = {
+//   headers: {
+//     'Content-Type': 'application/json',
+//     'Authorization': 'Bearer YOUR_TOKEN_HERE',
+//     'Custom-Header': 'CustomValue'
+//   }
+// };
+// axios.put(url, data, config)
+//   .then(response => {
+//     console.log('응답 데이터:', response.data);
+//   })
+//   .catch(error => {
+//     console.error('에러 발생:', error);
+//   });
 
 /** 회원가입 신청 반려 */
 export const delectAwaitAccept = async (selectUserPk, userListType) => {
   const accessToken = getCookie("accessToken");
   console.log(
+    // `선택한 유저 PK : ${selectUserPk}, 선택한 유저 타입 : ${userListType}`,
     `선택한 유저 PK : ${selectUserPk}, 선택한 유저 타입 : ${userListType}`,
   );
   try {

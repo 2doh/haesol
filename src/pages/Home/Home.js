@@ -14,22 +14,28 @@ import "../../scss/main/home.css";
 import LoginUser from "./LoginUser";
 import MainSchedule from "./MainSchedule";
 
-const HomeStyle = styled.div``;
 const Home = () => {
+  const HomeStyle = styled.div`
+    width: 1180px;
+    min-height: calc(100vh - 281px);
+    position: relative;
+    left: -40px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    top: -40px;
+    background-color: ${getCookie("accessToken") ? "#FBFAF9" : "#fbfaf9"};
+    padding-bottom: 60px;
+    padding-top: 40px;
+    background-clip: content-box;
+  `;
+
   const navigate = useNavigate();
   const [menuArr, setMenuArr] = useState([""]);
   const today = moment().format("YYYYMMDD");
   const mlsvDay = moment().format("YY년 M월 D일");
   const week = ["일", "월", "화", "수", "목", "금", "토"];
   const dayOfWeek = week[moment().day()].concat("요일");
-  // const aaArr = [];
-
-  /**  */
-  useEffect(() => {
-    // console.log("현재 권한은 ? ", getCookie("userRole"));
-    // const [loginUserType, setLoginUserType] = useState("ROLE_ADMIN");
-    // if (getCookie("userRole") === "ROLE_ADMIN") navigate("/admin/home");
-  }, []);
 
   useEffect(() => {
     const url = `${MLSV_SERVER_URL}?ATPT_OFCDC_SC_CODE=${ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${SD_SCHUL_CODE}&KEY=${KEY}&MLSV_YMD=${today}&TYPE=JSON`;
@@ -71,12 +77,17 @@ const Home = () => {
   //   });
   // }, []);
 
-  useEffect(() => {
-    // console.log("오늘의 메뉴 확인 : ", menuArr);
-  }, [menuArr]);
   const moveLoginPage = () => {
     navigate("/login");
   };
+
+  const moveFindIdPage = () => {
+    navigate("/findid");
+  };
+  const moveFindPwPage = () => {
+    navigate("/findpass");
+  };
+
   const moveSingupPage = () => {
     navigate("/signup");
   };
@@ -85,7 +96,9 @@ const Home = () => {
     <HomeStyle>
       {getCookie("accessToken") ? <LoginUser /> : null}
 
-      <div className="main">
+      <div
+        className={getCookie("accessToken") ? "access-login-main main" : "main"}
+      >
         <div className="main-inner">
           <div className="main-inner-class">
             <div className="main-schedule">
@@ -123,12 +136,21 @@ const Home = () => {
                     </button>
                     <div className="main-info-login-menu">
                       <div
-                        className="id-inquiry-page-move
-                      "
+                        className="id-inquiry-page-move"
+                        onClick={() => {
+                          moveFindIdPage();
+                        }}
                       >
                         아이디 찾기
                       </div>
-                      <div className="pw-inquiry-page-move">비밀번호 찾기</div>
+                      <div
+                        className="pw-inquiry-page-move"
+                        onClick={() => {
+                          moveFindPwPage();
+                        }}
+                      >
+                        비밀번호 찾기
+                      </div>
                       <div
                         className="signup-page-move"
                         onClick={() => {

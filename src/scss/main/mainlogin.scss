@@ -7,6 +7,33 @@
   height: 18px;
 }
 
+.access-login-main {
+  border: 1px solid $pc-line-p;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #f3f9fa;
+  // background-clip: content-box;
+
+  .access-login-main-inner {
+    & > h1 {
+      margin: 40px 0px -40px 35px;
+      background-color: #f3f9fa;
+    }
+  }
+}
+
+.access-login-main:nth-child(2) {
+  border: 1px solid $pc-line-p;
+  border-radius: 10px;
+  overflow: hidden;
+  background-clip: content-box;
+
+  & .main-inner {
+    padding: 40px 0;
+    background-color: $b-color;
+  }
+}
+
 .main {
   h1 {
     padding-bottom: 40px;
@@ -91,6 +118,7 @@
         border-radius: 5px;
         font-size: 20px;
       }
+
       & > button:first-child {
         background-color: $p200;
         // border: 2px solid $p200;

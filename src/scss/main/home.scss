@@ -6,7 +6,14 @@
   //   margin: 40px;
   display: flex;
   gap: 60px;
+  background-color: $b-color;
+  width: 100%;
+  justify-content: center;
 }
+
+// .main-inner:first {
+//   border-radius: 20px;
+// }
 
 .main-inner-class {
   width: 700px;
@@ -148,7 +155,7 @@
       @include text-n-box-shadow;
       @include br-10-h;
 
-      border: 3px solid $pc-line-p;
+      border: 2px solid $pc-line-p;
 
       margin-top: 20px;
       width: 100%;
