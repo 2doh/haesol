@@ -1,13 +1,12 @@
 import styled from "@emotion/styled";
-import { MdOutlineLogout } from "react-icons/md";
-import "../../scss/main/mainlogin.css";
+import { getMyChildInfo } from "api/parents/mychildinfo";
 import { useEffect, useRef, useState } from "react";
+import { MdOutlineLogout } from "react-icons/md";
 import { useNavigate } from "react-router";
+import { getCookie, removeCookie, setCookie } from "utils/cookie";
+import "../../scss/main/mainlogin.css";
 import ClassNotice from "./ClassNotice";
 import ClassSchedule from "./ClassSchedule";
-import { getCookie, removeCookie } from "utils/cookie";
-import { getNoticeList } from "api/student/studentapi";
-import { getMyChildInfo } from "api/parents/mychildinfo";
 
 const LoginUserStyle = styled.div`
   /* border: 1px solid black; */
@@ -76,6 +75,24 @@ const LoginUser = () => {
 
   const navigate = useNavigate();
   const [loginUserType, setLoginUserType] = useState(getCookie("userRole"));
+  const [myChildList, setMyChildList] = useState([]);
+
+  // 선택한 학생 번호 쿠키에 저장
+  setCookie("selectChildNum", 1);
+
+  // 선택되어 있는 학생 한 명의 정보
+  const [birth, setBirth] = useState("");
+  const [classId, setClassId] = useState("");
+  const [gender, setGender] = useState("");
+  const [name, setName] = useState("");
+  const [parentName, setParentName] = useState("");
+  const [parentPhone, setParentPhone] = useState("");
+  const [parentsPK, setParentsPK] = useState("");
+  const [phone, setPhone] = useState("");
+  const [studentPk, setStudentPk] = useState("");
+
+  const [selectChildInfo, setSelectChildInfo] = useState([]);
+  const [selectNum, setSelectNum] = useState(0);
 
   const refStudentMenu1 = useRef();
   const refStudentMenu2 = useRef();
@@ -85,15 +102,40 @@ const LoginUser = () => {
   // ROLE_PARENTS = 학부모;
   useEffect(() => {
     if (loginUserType === "ROLE_ADMIN") navigate("/admin/home");
-
-    getMyChildInfo();
+    myChildInfo();
   }, []);
+
+  /** 아이들 정보 불러오기 */
+  const myChildInfo = async () => {
+    const res = await getMyChildInfo();
+    // 불러온 학생 리스트 정보 저장
+    setMyChildList(res);
+  };
+
+  /** 선택되어 있는 학생의 정보 저장 */
+  const getSelectChildInfo = selectNum => {
+    // console.log("selectNum : ", selectNum);
+    // setBirth(myChildList[selectNum].birth);
+    // setClassId(myChildList[selectNum].classId);
+    // setGender(myChildList[selectNum].gender);
+    // setName(myChildList[selectNum].name);
+    // setParentName(myChildList[selectNum].parentName);
+    // setParentPhone(myChildList[selectNum].parentPhone);
+    // setParentsPK(myChildList[selectNum].parentsPK);
+    // setPhone(myChildList[selectNum].phone);
+    // setStudentPk(myChildList[selectNum].studentPk);
+    // console.log("한명 ", myChildList[selectNum].birth);
+    // console.log("한명 ", myChildList[selectNum].birth);
+  };
 
   useEffect(() => {
-    const res = getNoticeList();
-    console.log("알림장 : ", res);
-  }, []);
+    getSelectChildInfo(getCookie("selectChildNum"));
+  }, [myChildList]);
 
+  useEffect(() => {
+    // const res = getNoticeList();
+    // console.log("알림장 : ", res);
+  }, []);
   // 더미 데이터
   const loginUserInfo = {
     pic: "",
@@ -178,11 +220,7 @@ const LoginUser = () => {
       </div>
       <div className="access-login-main main">
         <div className="access-login-main-inner">
-          <h1>
-            {getCookie("userClass")
-              ? getCookie("userClass")
-              : loginUserInfo.classNum}
-          </h1>
+          <h1>{myChildList.classId}</h1>
           <div className="main-inner">
             <div className="main-inner-class login-user-view">
               <div className="main-schedule main-class-schedule">

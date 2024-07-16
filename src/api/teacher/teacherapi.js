@@ -42,6 +42,7 @@ export const putTeacherPwChange = async (newPw, userId) => {
   }
 };
 
+// 수정중
 /** 선생님 정보 수정 */
 export const patchTeacherInfo = async newInfo => {
   const accessToken = getCookie("accessToken");
@@ -57,7 +58,15 @@ export const patchTeacherInfo = async newInfo => {
   try {
     const response = await axios.patch(
       "/api/teacher",
-      arrInfo, // newInfo를 사용하여 요청 본문을 동적으로 설정합니다.
+      {
+        data: {
+          name: `${newInfo[0]}`,
+          phone: `${newInfo[1]}`,
+          email: `${newInfo[2]}`,
+          zoneCode: `${newInfo[3]}`,
+          addr: `${newInfo[4]}`,
+        },
+      }, // newInfo를 사용하여 요청 본문을 동적으로 설정합니다.
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -96,3 +105,21 @@ export const patchTeacherInfo = async newInfo => {
 //     console.log(error);
 //   }
 // };
+
+/** 최신 알림장 정보 불러오기 */
+export const getRecentNoticeInfo = async () => {
+  console.log("여기 들어옵니다.");
+  const accessToken = getCookie("accessToken");
+  const noticeState = 1;
+  try {
+    const response = await axios.get(`/api/notice/main?state=1`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    console.log("알림장 불러오기 : ", response);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};

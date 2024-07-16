@@ -92,15 +92,19 @@
 .signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-section-top {
   display: flex;
   align-items: center;
+  flex-direction: row;
   gap: 10px;
   margin-bottom: 8px;
 }
 .signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-section-top .fields-section-title {
   font-size: 20px;
+  width: auto;
+  white-space: nowrap;
 }
 .signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-section-top .fields-section-errmsg {
   font-size: 12px;
   color: #dd838f;
+  margin-top: 0px;
 }
 .signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-section-bottom-id {
   width: 100%;

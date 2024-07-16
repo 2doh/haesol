@@ -82,7 +82,7 @@ const Main = styled.div`
   & > div,
   main {
     min-height: calc(100vh - 260px);
-    padding-bottom: 100px;
+    padding-bottom: 120px;
   }
 `;
 

@@ -13,6 +13,7 @@ import { getCookie } from "utils/cookie";
 import "../../scss/main/home.css";
 import LoginUser from "./LoginUser";
 import MainSchedule from "./MainSchedule";
+import LoginTeahcer from "./LoginTeahcer";
 
 const Home = () => {
   const HomeStyle = styled.div`
@@ -22,7 +23,7 @@ const Home = () => {
     left: -40px;
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: 60px;
     top: -40px;
     background-color: ${getCookie("accessToken") ? "#FBFAF9" : "#fbfaf9"};
     padding-bottom: 60px;
@@ -77,6 +78,14 @@ const Home = () => {
   //   });
   // }, []);
 
+  // 어드민의 경우
+  const [loginUserType, setLoginUserType] = useState(getCookie("userRole"));
+  useEffect(() => {
+    if (loginUserType === "ROLE_ADMIN") {
+      navigate("/admin/home");
+    }
+  }, []);
+
   const moveLoginPage = () => {
     navigate("/login");
   };
@@ -95,6 +104,7 @@ const Home = () => {
   return (
     <HomeStyle>
       {getCookie("accessToken") ? <LoginUser /> : null}
+      {/* {getCookie("accessToken") ? <LoginTeahcer /> : null} */}
 
       <div
         className={getCookie("accessToken") ? "access-login-main main" : "main"}
