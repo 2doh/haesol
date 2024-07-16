@@ -6,7 +6,7 @@ const IdInputField = ({ userId, setUserId, userType, setCanId }) => {
   const [validationMsg, setValidationMsg] = useState("");
 
   const handleCheckUserId = async e => {
-    e.preventDefault();  
+    e.preventDefault();
     if (!userId) {
       setValidationMsg("아이디를 입력해 주세요");
       return;
@@ -15,22 +15,22 @@ const IdInputField = ({ userId, setUserId, userType, setCanId }) => {
       const result = await duplicateParentId(userId);
       if (result.data === "사용할 수 있는 값입니다.") {
         setValidationMsg("사용 가능한 아이디 입니다");
-        setCanId(true)
+        setCanId(true);
       }
       if (result.data === "이미 사용 중 입니다.") {
         setValidationMsg("사용할 수 없는 아이디 입니다");
-        setCanId(false)
+        setCanId(false);
       }
     }
     if (userType === "teacher") {
       const result = await duplicateId(userId);
       if (result.status === 200) {
         setValidationMsg("사용가능한 아이디입니다");
-        setCanId(true)
+        setCanId(true);
       }
       if (result === "err") {
         setValidationMsg("사용할 수 없는 아이디 입니다");
-        setCanId(false)
+        setCanId(false);
       }
     }
   };

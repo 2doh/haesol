@@ -29,8 +29,8 @@ const SignupParent = ({ handleCancel, setUserType, userType }) => {
   const [userConnet, setUserConnet] = useState("");
   const [zoneCode, setZoneCode] = useState("");
   const [addr, setAddr] = useState("");
-  const [canId, setCanId] = useState(false)
-  
+  const [canId, setCanId] = useState(false);
+
   const [modalText, setModalText] = useState("");
   const dispatch = useDispatch();
 
@@ -60,11 +60,11 @@ const SignupParent = ({ handleCancel, setUserType, userType }) => {
   const handleOnSubmit = async e => {
     e.preventDefault();
     const result = await parentSignup(tempObj);
-    if(canId === false) {
+    if (canId === false) {
       setModalText("아이디 중복확인을 해주세요");
-      return
+      return;
     }
-    if (canId===true) {
+    if (canId === true) {
       if (
         !(
           userId &&
@@ -76,16 +76,16 @@ const SignupParent = ({ handleCancel, setUserType, userType }) => {
           userEmail
         )
       ) {
-      setModalText("필수입력항목을 작성해주세요");
-      return;
+        setModalText("필수입력항목을 작성해주세요");
+        return;
       }
       if (result.data === 1) {
-      setModalText("회원가입 되었습니다");
-      return;
+        setModalText("회원가입 되었습니다");
+        return;
       }
       if (result === "err") {
-      setModalText("이미 존재하는 정보입니다");
-      return;
+        setModalText("이미 존재하는 정보입니다");
+        return;
       }
     }
   };
@@ -120,7 +120,10 @@ const SignupParent = ({ handleCancel, setUserType, userType }) => {
           <ParentInputFields setUserName={setUserName} userName={userName}>
             보호자
           </ParentInputFields>
-          <ChildInputFields setUserChildrenName={setUserChildrenName}>
+          <ChildInputFields
+            setUserChildrenName={setUserChildrenName}
+            userChildrenName={userChildrenName}
+          >
             자녀이름
           </ChildInputFields>
         </UserNameStyle>
@@ -131,7 +134,9 @@ const SignupParent = ({ handleCancel, setUserType, userType }) => {
           전화번호
         </PhoneInputFields>
         <DropFields setUserConnet={setUserConnet}>가족관계</DropFields>
-        <EmailInputField setUserEmail={setUserEmail} userEmail={userEmail}>이메일</EmailInputField>
+        <EmailInputField setUserEmail={setUserEmail} userEmail={userEmail}>
+          이메일
+        </EmailInputField>
         <SubPhoneInputFields setUserSubPhoneNum={setUserSubPhoneNum}>
           추가연락처(선택)
         </SubPhoneInputFields>

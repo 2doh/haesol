@@ -51,6 +51,7 @@ const FindId = () => {
     }
     if (naviState === "teacher") {
       const result = await findTeacherId(reqData);
+      console.log(result);
       if (result === "err") {
         setErrMsg("없는 정보입니다 다시 확인해주세요");
         setShowErrMsg(true);

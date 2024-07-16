@@ -1,4 +1,4 @@
-import { findParentPass } from "api/findinfo/findinfoparentapi";
+import { findParentPass, putPwdParent } from "api/findinfo/findinfoparentapi";
 import { findTeacherPass, putPwd } from "api/findinfo/findinfoteacherapi";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
@@ -9,18 +9,20 @@ import FindInfoNavi from "./FindInfoNavi";
 
 const FindPass = () => {
   // 교사 테스트 : xptmxmid1111 / 010-8323-6670 / TESTPASs!!1
-  // 학부모 테스트 : dbwj312 / 010-1591-3573
+  // 학부모 테스트 : dbwj312 / 010-1591-3573 / USERIDtest1!
   const navi = useNavigate();
-  const [naviState, setNaviState] = useState("teacher");
+  const [naviState, setNaviState] = useState("parent");
   const [userId, setUserName] = useState("dbwj312");
   const [userNum, setUserNum] = useState("010-1591-3573");
   //  추후 false로 전환
   const [tempState, setTempState] = useState(true);
+  // const [tempState, setTempState] = useState(false);
   const [showErrMsg, setShowErrMsg] = useState(false);
   const [errMsg, setErrMsg] = useState("");
   const [changePass, setChangePass] = useState("");
   const [confirmChangePass, setConfirmChangePass] = useState("");
   // 추후 false로 전환
+  // const [certification, setCertification] = useState(false);
   const [certification, setCertification] = useState(true);
   const [certCode, setCertCode] = useState("");
   const [randomCode, setRandomCode] = useState("");
@@ -109,22 +111,50 @@ const FindPass = () => {
     e.preventDefault();
     if (
       confirmChangePass === changePass &&
-      errMsg === "" &&
       confirmChangePass !== "" &&
       changePass !== ""
     ) {
+      const regex =
+        /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*]{8,20}$/;
+      const canPass = regex.test(confirmChangePass, changePass);
+      if (canPass) {
+        setErrMsg("");
+      } else {
+        setErrMsg("비밀번호 형식에 맞지 않습니다");
+        setShowErrMsg(true);
+        return;
+      }
       const tempObj = {
         teacherId: userId,
         passWord: changePass,
       };
-      const result = await putPwd(tempObj);
-      console.log(result);
+      const temp = {
+        uid: userId,
+        newUpw: changePass,
+      };
+      if (naviState === "teacher") {
+        const result = await putPwd(tempObj);
+        if (result.status === 200) {
+          console.log("교사 비밀번호 변경");
+          navi("/login");
+        }
+      }
+      if (naviState === "parent") {
+        console.log(temp);
+        const result = await putPwdParent(temp);
+        if (result.status === 200) {
+          console.log("학부모 비밀번호 변경");
+          navi("/login");
+        }
+      }
     }
     if (confirmChangePass !== changePass) {
       setErrMsg("새 비밀번호가 일치하지 않습니다");
+      setShowErrMsg(true);
     }
     if (confirmChangePass === "" && changePass === "") {
       setErrMsg("빈 칸 모두 입력해주세요");
+      setShowErrMsg(true);
     }
   };
 
@@ -261,7 +291,6 @@ const FindPass = () => {
                   ) : null}
                 </div>
               </div>
-
               <div className="login-wrap-panel-userpass">
                 <div className="login-panel-userpass-title">
                   새 비밀번호 확인
