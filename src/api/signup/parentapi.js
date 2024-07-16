@@ -24,7 +24,7 @@ export const duplicateParentId = async parentId => {
 
 export const getChildList = async () => {
   try {
-    const resp = await axios.get(`/api/user/parents/get-student-parent`);
+    const resp = await axios.get(`/api/student/list`);
     return resp;
   } catch (error) {
     console.log(error);

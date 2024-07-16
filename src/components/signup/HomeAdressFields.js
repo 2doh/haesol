@@ -51,7 +51,11 @@ const HomeAdressFields = ({ children, setZoneCode, setAddr }) => {
             우편번호 찾기
           </button>
         </div>
-        <input className="fieleds-homeadress-adress" placeholder={"주소"}></input>
+        <input
+          className="fieleds-homeadress-adress"
+          placeholder={"주소"}
+          value={address}
+        />
         <input
           className="fieleds-homearess-input"
           type="text"

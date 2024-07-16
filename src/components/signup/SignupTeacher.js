@@ -39,9 +39,8 @@ const SignupTeacher = ({ handleCancel, userType, setUserType }) => {
     addr: addr,
   };
 
-  console.log(tempObj);
   const showModal = selectModalType => {
-    const data = { bodyText: [modalText] };
+    const data = { bodyText: [modalText], modalRes: [17], buttonCnt: 1 };
     dispatch(updateModalDate(data));
     const modalRes = dispatch(openModal(selectModalType));
   };

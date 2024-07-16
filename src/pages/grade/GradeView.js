@@ -428,6 +428,7 @@ const GradeView = () => {
             <div className="frame">
               <div className="text-wrapper">성적 입력</div>
             </div>
+            {/* <div className="div-wrapper"> */}
             <div className="div-wrapper">
               <div className="info-subtitle">차트</div>
             </div>

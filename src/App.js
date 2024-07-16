@@ -31,6 +31,7 @@ import PrivateRoute from "components/common/PrivateRoute";
 import MyChildInfo from "pages/parents/MyChildInfo";
 import ReturnHomeRoute from "components/common/ReturnHomeRoute";
 import Grade from "pages/grade/Grade";
+import GradeChart from "pages/grade/GradeChart";
 
 const ModalStyle = styled.div`
   position: absolute;
@@ -163,7 +164,10 @@ function App() {
             // <Route path="/grade/:studentPk" element={<GradeView />}></Route>
             <Route path="/grade/:studentPk" element={<GradeView />}></Route>
           )}
-
+          <Route
+            path="/grade/chart/:studentPk"
+            element={<GradeChart />}
+          ></Route>
           {/* 임시 경로 */}
           {/* <Route path="/students/edit" element={<StudentEdit />}></Route> */}
           {/* 학생 본인 정보 수정 페이지 임시 경로 */}

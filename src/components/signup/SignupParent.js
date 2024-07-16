@@ -17,12 +17,16 @@ import { useDispatch } from "react-redux";
 import { openModal, updateModalDate } from "slices/modalSlice";
 
 const SignupParent = ({ handleCancel, setUserType, userType }) => {
+  //   "uid": "test1234",
+  //   "upw": "String1234!@#$"
+
   const navi = useNavigate();
   const [userId, setUserId] = useState("dbwj312");
   const [userPass, setUserPass] = useState("USERIDtest1!");
   const [userPassConfirm, setUserPassConfirm] = useState("USERIDtest1!");
   const [userName, setUserName] = useState("김순수");
-  const [userChildrenName, setUserChildrenName] = useState("최박수");
+  const [userChildrenName, setUserChildrenName] = useState("");
+  const [userChildrenPk, setUserChildrenPk] = useState(30);
   const [userPhoneNum, setUserPhoneNum] = useState("010-1591-3573");
   const [userSubPhoneNum, setUserSubPhoneNum] = useState("");
   const [userEmail, setUserEmail] = useState("soonja1234@naver.com");
@@ -36,7 +40,7 @@ const SignupParent = ({ handleCancel, setUserType, userType }) => {
 
   /** 모달 호출 */
   const showModal = selectModalType => {
-    const data = { bodyText: [modalText] };
+    const data = { bodyText: [modalText], modalRes: [17], buttonCnt: 1 };
     dispatch(updateModalDate(data));
     const modalRes = dispatch(openModal(selectModalType));
   };
@@ -45,6 +49,7 @@ const SignupParent = ({ handleCancel, setUserType, userType }) => {
     uid: userId,
     upw: userPass,
     nm: userName,
+    userChildrenPk: userChildrenPk,
     phone: userPhoneNum,
     subPhone: userSubPhoneNum,
     email: userEmail,
@@ -73,6 +78,7 @@ const SignupParent = ({ handleCancel, setUserType, userType }) => {
           userName &&
           userConnet &&
           userPhoneNum &&
+          userChildrenPk &&
           userEmail
         )
       ) {
@@ -123,6 +129,7 @@ const SignupParent = ({ handleCancel, setUserType, userType }) => {
           <ChildInputFields
             setUserChildrenName={setUserChildrenName}
             userChildrenName={userChildrenName}
+            setUserChildrenPk={setUserChildrenPk}
           >
             자녀이름
           </ChildInputFields>
