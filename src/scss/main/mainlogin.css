@@ -263,4 +263,16 @@
 }
 .class-schedule-inner .grid-frame .class-schedule-week .grid-inner-item:nth-child(6) .grid-inner-item-text {
   border-color: #1b2017;
+}
+
+.access-teahcer-main .main-inner-info-teahcer .login-inner .login-teahcer-info-div {
+  width: 100%;
+  gap: 25px;
+}
+.access-teahcer-main .main-inner-info-teahcer .login-inner .login-teahcer-info-div .login-teahcer-info-label-box {
+  gap: 5px;
+}
+.access-teahcer-main .main-inner-info-teahcer .login-inner .login-teahcer-info-div .login-teahcer-info-label-box:first-child {
+  text-align: right;
+  width: 70px;
 }/*# sourceMappingURL=mainlogin.css.map */

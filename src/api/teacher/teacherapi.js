@@ -11,7 +11,7 @@ export const getTeacherInfo = async () => {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    // console.log("선생님 정보 확인 : ", response);
+    console.log("선생님 정보 확인 : ", response);
     return response;
   } catch (error) {
     console.log(error);

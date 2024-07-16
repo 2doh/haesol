@@ -146,6 +146,24 @@
     }
   }
 
+  // 교직원 - 메인
+  .main-inner-info-teahcer {
+    .login-inner {
+      .login-teahcer-info-div {
+        width: 100%;
+        gap: 25px;
+
+        .login-teahcer-info-label-box {
+          gap: 5px;
+        }
+
+        .login-teahcer-info-label-box:first-child {
+          text-align: right;
+        }
+      }
+    }
+  }
+
   .main-info-lunch {
     // margin-top: 110px;
     width: 100%;
