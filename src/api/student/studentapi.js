@@ -89,7 +89,7 @@ export const getStudentGradeSelect1 = async (studentPk, grade, semester) => {
   const accessToken = getCookie("accessToken");
   try {
     const response = await axios.get(
-      `/api/Score/getScoreDetail?studentPk=${studentPk}&gradle=${grade}&semester=${semester}&exam=1`,
+      `/api/Score/getScoreDetail?studentPk=${studentPk}&grade=${grade}&semester=${semester}&exam=1`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -106,7 +106,7 @@ export const getStudentGradeSelect2 = async (studentPk, grade, semester) => {
   const accessToken = getCookie("accessToken");
   try {
     const response = await axios.get(
-      `/api/Score/getScoreDetail?studentPk=${studentPk}&gradle=${grade}&semester=${semester}&exam=2`,
+      `/api/Score/getScoreDetail?studentPk=${studentPk}&grade=${grade}&semester=${semester}&exam=2`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -153,13 +153,16 @@ export const createNotice = async data => {
 // 알림장 삭제하기
 export const deleteNotice = async notice_id => {
   const accessToken = getCookie("accessToken");
-  console.log("와따! ", notice_id);
+  console.log("notice_id 확인중 : ", notice_id);
   try {
-    const response = await jwtAxios.delete("/api/notice", notice_id, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
+    const response = await jwtAxios.delete(
+      `/api/notice?notice_id=${notice_id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
       },
-    });
+    );
     console.log("response :", response);
     return response;
   } catch (error) {

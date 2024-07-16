@@ -29,9 +29,6 @@ const NoticeList = () => {
   const state = 1;
 
   const [noticeList, setNoticeList] = useState([]);
-  // const [createdAt, setCreatedAt] = useState([]);
-  // const [title, setTitle] = useState("");
-  // const [content, setContent] = useState("");
 
   // 알림장 데이터 연동
   const noticeListData = async () => {
@@ -143,7 +140,7 @@ const NoticeList = () => {
                   item.createdAt,
                   item.title,
                   item.content,
-                  item.noticeId,
+                  item.notice_id,
                 );
               }}
             >

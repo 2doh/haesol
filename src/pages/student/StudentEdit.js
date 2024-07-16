@@ -1,14 +1,15 @@
 import styled from "@emotion/styled";
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import "../../scss/student/studentEdit.css";
 import StudentImg from "./StudentImg";
 import PhoneInputFields from "./PhoneInputFields";
 const StudentEdit = () => {
   // 네비게이트
   const navigate = useNavigate();
+  const { studentPk } = useParams();
   const handleClick = () => {
-    navigate(`/grade/1`);
+    navigate(`/grade/${studentPk}`);
   };
 
   // 반 정보 > 추후 데이터 받아와서 처리
