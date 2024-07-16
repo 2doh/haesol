@@ -7,25 +7,7 @@ import { getCookie, removeCookie } from "utils/cookie";
 import ClassNotice from "./ClassNotice";
 import ClassSchedule from "./ClassSchedule";
 
-const LoginTeahcerStyle = styled.div`
-  // 교직원 - 메인
-  /* .main-inner-info-teahcer {
-    .login-inner {
-      .login-teahcer-info-div {
-        width: 100%;
-        gap: 25px;
-
-        .login-teahcer-info-label-box {
-          gap: 5px;
-        }
-
-        .login-teahcer-info-label-box:first-child {
-          text-align: right;
-        }
-      }
-    }
-  } */
-`;
+const LoginTeahcerStyle = styled.div``;
 
 const LoginTeahcer = () => {
   // 나중에 : api 수정 후
@@ -64,8 +46,8 @@ const LoginTeahcer = () => {
   return (
     <LoginTeahcerStyle>
       <div className="access-login-main main access-teahcer-main">
-        <div className="access-login-main-inner ">
-          <h1>우리 학급</h1>
+        <div className="access-login-main-inner">
+          <h1 className="access-login-title">우리 학급</h1>
           <div className="main-inner">
             <div className="main-inner-class login-user-view">
               <div className="main-schedule main-class-schedule">
@@ -86,12 +68,12 @@ const LoginTeahcer = () => {
                 </div>
               </div>
             </div>
-            <div className="main-inner-info">
+            <div className="main-inner-info main-inner-info-teahcer">
               <div className="main-login-user-info">
                 {/* <div className="main-schedule-title main-contents-title">
                     <div className="main-schedule-title-text">학교 일정</div>
                      </div> */}
-                <div className="main-inner-info-login main-inner-info-teahcer">
+                <div className="main-inner-info-login ">
                   <div className="login-inner">
                     <div className="login-user-info">
                       <div className="login-user-info-div login-teahcer-info-div">

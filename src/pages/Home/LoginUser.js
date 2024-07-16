@@ -8,6 +8,7 @@ import { getCookie, removeCookie, setCookie } from "utils/cookie";
 import "../../scss/main/mainlogin.css";
 import ClassNotice from "./ClassNotice";
 import ClassSchedule from "./ClassSchedule";
+import StudentImg from "pages/student/StudentImg";
 
 const LoginUserStyle = styled.div`
   /* border: 1px solid black; */
@@ -96,6 +97,9 @@ const LoginUser = () => {
   const [phone, setPhone] = useState("");
   const [studentPk, setStudentPk] = useState("");
 
+  // 이미지
+  const [studentPic, setStudentPic] = useState(null);
+
   const [selectChildInfo, setSelectChildInfo] = useState([]);
   const [selectNum, setSelectNum] = useState(0);
 
@@ -113,24 +117,32 @@ const LoginUser = () => {
   /** 아이들 정보 불러오기 */
   const myChildInfo = async () => {
     const res = await getMyChildInfo();
-    setMyChildList(res);
-    // console.log(res);
+
+    if (res === false) {
+      console.log("자녀 없음.");
+    }
 
     const num = getCookie("selectChildNum");
+    if (res) {
+      console.log("자녀 있음.");
+      setMyChildList(res);
+      console.log(res);
 
-    /** 선택되어 있는 학생의 정보 저장 */
-    setBirth(res[num].birth);
-    setClassId(res[selectNum].classId);
-    setClassName(res[selectNum].classId); // 여기 수정
-    setGender(res[selectNum].gender);
-    setName(res[selectNum].name);
-    setParentName(res[selectNum].parentName);
-    setParentPhone(res[selectNum].parentPhone);
-    setParentsPK(res[selectNum].parentsPK);
-    setPhone(res[selectNum].phone);
-    setStudentPk(res[selectNum].studentPk);
-    setAge(res[selectNum].age);
-    setTeacherName(res[selectNum].teacherName);
+      /** 선택되어 있는 학생의 정보 저장 */
+      setBirth(res[num].birth);
+      setClassId(res[selectNum].classId);
+      setClassName(res[selectNum].classId);
+      setGender(res[selectNum].gender);
+      setName(res[selectNum].name);
+      setParentName(res[selectNum].parentName);
+      setParentPhone(res[selectNum].parentPhone);
+      setParentsPK(res[selectNum].parentsPK);
+      setPhone(res[selectNum].phone);
+      setStudentPk(res[selectNum].studentPk);
+      setAge(res[selectNum].age);
+      setTeacherName(res[selectNum].teacherName);
+      setStudentPic(res[selectNum].pic);
+    }
   };
 
   useEffect(() => {
@@ -139,8 +151,8 @@ const LoginUser = () => {
 
   /** 알림장 최초 실행 */
   useEffect(() => {
-    const res = getRecentNoticeInfo(1);
-    console.log("알림장 : ", res);
+    // const res = getRecentNoticeInfo(1);
+    // console.log("알림장 : ", res);
   }, []);
 
   /** 반 시간표 */
@@ -209,7 +221,7 @@ const LoginUser = () => {
       </div>
       <div className="access-login-main main">
         <div className="access-login-main-inner">
-          <h1>{className}</h1>
+          <h1 className="access-login-title">{className}</h1>
           <div className="main-inner">
             <div className="main-inner-class login-user-view">
               <div className="main-schedule main-class-schedule">
@@ -239,7 +251,13 @@ const LoginUser = () => {
                 <div className="main-inner-info-login">
                   <div className="login-inner">
                     <div className="login-user-info">
-                      <div className="login-user-pic">사진 넣기</div>
+                      <div className="login-user-pic">
+                        {/* <StudentImg
+                          studentPic={studentPic}
+                          setStudentPic={setStudentPic}
+                          studentPk={studentPk}
+                        /> */}
+                      </div>
                       <div className="login-user-info-div">
                         <div className="login-user-info-label-box">
                           <div className="login-user-info-label">학생 이름</div>
