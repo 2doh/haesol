@@ -74,7 +74,7 @@ const TeacherEdit = () => {
       //   splitAddr[2] || "",
       // ];
       // setAddr(paddedAddr);
-      // setBirth(res.data.birth);
+      setBirth(res.data.birth);
       setZoneCode(res.data.addr.split(" # ")[0]);
       setAddr(res.data.addr.split(" # ")[1]);
       setGendar(res.data.gender);

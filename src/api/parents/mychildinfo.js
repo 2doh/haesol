@@ -11,8 +11,8 @@ export const getMyChildInfo = async () => {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    console.log("자녀 정보 GET : ", response);
-    return response.data.userList;
+    // console.log("자녀 정보 GET : ", response.data);
+    return response.data;
   } catch (error) {
     console.log(error);
   }

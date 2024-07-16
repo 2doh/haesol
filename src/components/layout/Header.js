@@ -10,7 +10,7 @@ const Header = () => {
   const [loginUserType, setLoginUserType] = useState(getCookie("userRole"));
 
   useEffect(() => {
-    console.log("loginUserType : ", loginUserType);
+    // console.log("loginUserType : ", loginUserType);
     // setLoginUserType(getCookie("userRole"));
   }, [loginUserType]);
 
