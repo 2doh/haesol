@@ -3,13 +3,15 @@ import "../../scss/notice/noticeEdit.css";
 import { createNotice, getStudentInfo } from "api/student/studentapi";
 import { postTeacherSignin } from "api/login/teacherloginapi";
 import { getCookie } from "utils/cookie";
+import { useNavigate } from "react-router";
 
 const NoticeEdit = () => {
   const userClass = getCookie("userClass");
+  const navigate = useNavigate();
 
   // 상태 설정
-  const [state, setState] = useState(null);
-  const [date, setDate] = useState("");
+  const [state, setState] = useState(2);
+  // const [date, setDate] = useState("");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
@@ -23,10 +25,10 @@ const NoticeEdit = () => {
     }
   };
 
-  // Date 변경 핸들러
-  const handleDateChange = e => {
-    setDate(e.target.value);
-  };
+  // // Date 변경 핸들러
+  // const handleDateChange = e => {
+  //   setDate(e.target.value);
+  // };
   // Title 변경 핸들러
   const handleTitleChange = e => {
     setTitle(e.target.value);
@@ -37,19 +39,24 @@ const NoticeEdit = () => {
   };
   // 저장 버튼 클릭 핸들러
   const handleSave = async () => {
-    if (state === null || !date || !title || !content) {
+    if (state === null || !title || !content) {
       alert("모든 항목을 채워주세요.");
       return;
     }
 
     const noticeData = {
       state,
-      date,
       title,
       content,
     };
     const result = await createNotice(noticeData);
     console.log(result);
+
+    if (state === 1) {
+      navigate(`/notice/list/${userClass}`);
+    } else if (state === 2) {
+      navigate(`/notice/item/${userClass}`);
+    }
   };
 
   return (
@@ -68,19 +75,16 @@ const NoticeEdit = () => {
                 handleSelectChange(e);
               }}
             >
-              <option value="none" disabled selected>
-                == 항목을 선택하세요 ==
-              </option>
               <option value="준비물">준비물</option>
               <option value="알림">알림</option>
             </select>
-            <input
+            {/* <input
               type="date"
               value={date}
               onChange={e => {
                 handleDateChange(e);
               }}
-            />
+            /> */}
           </div>
           <div className="info-button">
             <button

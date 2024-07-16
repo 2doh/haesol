@@ -190,8 +190,14 @@ function App() {
           </Route>
 
           {/* 임시 경로 */}
-          <Route path="/notice/list/classid" element={<NoticeList />}></Route>
-          <Route path="/notice/item/classid" element={<NoticeItem />}></Route>
+          <Route
+            path="/notice/list/:userClass"
+            element={<NoticeList />}
+          ></Route>
+          <Route
+            path="/notice/item/:userClass"
+            element={<NoticeItem />}
+          ></Route>
           <Route path="/notice/edit" element={<NoticeEdit />}></Route>
           <Route path="/notice" element={<Notice />}>
             {/* <Route path="list/classid" element={<NoticeList />}></Route>

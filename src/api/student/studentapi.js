@@ -118,6 +118,20 @@ export const getStudentGradeSelect2 = async (studentPk, grade, semester) => {
     console.log(error);
   }
 };
+// 성적 입력하기
+export const postStudentGradeScore = async () => {
+  const accessToken = getCookie("accessToken");
+  try {
+    const response = await jwtAxios.post(`/api/Score`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 // 알림장 데이터 불러오기
 export const getNoticeList = async state => {
@@ -153,17 +167,12 @@ export const createNotice = async data => {
 // 알림장 삭제하기
 export const deleteNotice = async notice_id => {
   const accessToken = getCookie("accessToken");
-  console.log("notice_id 확인중 : ", notice_id);
   try {
-    const response = await jwtAxios.delete(
-      `/api/notice?notice_id=${notice_id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
+    const response = await axios.delete(`/api/notice?notice_id=${notice_id}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
       },
-    );
-    console.log("response :", response);
+    });
     return response;
   } catch (error) {
     console.log(error);
