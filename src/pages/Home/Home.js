@@ -103,8 +103,8 @@ const Home = () => {
 
   return (
     <HomeStyle>
-      {getCookie("accessToken") ? <LoginUser /> : null}
-      {/* {getCookie("accessToken") ? <LoginTeahcer /> : null} */}
+      {/* {getCookie("accessToken") ? <LoginUser /> : null} */}
+      {getCookie("accessToken") ? <LoginTeahcer /> : null}
 
       <div
         className={getCookie("accessToken") ? "access-login-main main" : "main"}

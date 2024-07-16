@@ -8,6 +8,8 @@ import {
   getStudentGrade2,
   getStudentGradeSelect1,
   getStudentGradeSelect2,
+  getStudentInfo,
+  postStudentGradeScore,
 } from "api/student/studentapi";
 
 const Grade = () => {
@@ -23,7 +25,18 @@ const Grade = () => {
   const [studentClass, setStudentClass] = useState("");
   const [grade, setGrade] = useState("1"); // 선택된 학년 상태
   const [semester, setSemester] = useState("1"); // 선택된 학기 상태
-  const [list, setList] = useState([]);
+
+  const [nowYear, setNowYear] = useState(new Date().getFullYear());
+  const [year, setYear] = useState([]);
+  const [selectedYear, setSelectedYear] = useState(""); // 추가된 부분
+
+  const [classStudentCount, setClassStudentCount] = useState("-");
+  const [gradeStudentCount, setGradeStudentCount] = useState("-");
+  const [classRank, setClassRank] = useState("-");
+  const [gradeRank, setGradeRank] = useState("-");
+
+  // 점수 입력
+  const [score, setScore] = useState("");
 
   const [midGrades, setMidGrades] = useState({
     국어: "",
@@ -62,10 +75,6 @@ const Grade = () => {
     "음악",
     "미술",
   ];
-  const [classStudentCount, setClassStudentCount] = useState("-");
-  const [gradeStudentCount, setGradeStudentCount] = useState("-");
-  const [classRank, setClassRank] = useState("-");
-  const [gradeRank, setGradeRank] = useState("-");
 
   // 학생 정보 불러오기
   const studentInfoData = async () => {
@@ -179,6 +188,10 @@ const Grade = () => {
     setSemester(e.target.value);
   };
 
+  const handleYearChange = e => {
+    setSelectedYear(e.target.value);
+  };
+
   // 학기, 학년 선택 성적 출력 중간고사
   const studentGradeSelect1 = async () => {
     try {
@@ -221,7 +234,7 @@ const Grade = () => {
         });
 
         setMidGrades(midgradeMap);
-        // setfinalGrades({}); // 기말고사 데이터를 초기화
+        setMidGrades({}); // 기말고사 데이터를 초기화
       }
     } catch (error) {
       console.log(error);
@@ -283,6 +296,62 @@ const Grade = () => {
     studentGrade2();
   }, [studentPk]);
 
+  const handleMidGradeChange = (e, subject) => {
+    const value = e.target.value;
+    setMidGrades(prevGrades => ({
+      ...prevGrades,
+      [subject]: {
+        ...(prevGrades[subject] || {}),
+        mark: value,
+      },
+    }));
+  };
+
+  const handleFinalGradeChange = (e, subject) => {
+    const value = e.target.value;
+    setfinalGrades(prevGrades => ({
+      ...prevGrades,
+      [subject]: {
+        ...(prevGrades[subject] || {}),
+        mark: value,
+      },
+    }));
+  };
+
+  const handleSave = async () => {
+    const scoreData = {
+      studentPk: studentPk,
+      grade,
+      year: selectedYear,
+      semester,
+      name: subjects[0],
+      exam: "1",
+      mark: score,
+    };
+    try {
+      console.log("데이터 전송중? : ", scoreData);
+      await postStudentGradeScore(scoreData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const setDateSelectBox = () => {
+    let yearsArray = [];
+    // 2005년부터 현재 연도까지 옵션을 추가합니다.
+    for (let i = nowYear; i >= 2005; i--) {
+      yearsArray.push(
+        <option key={i} value={i}>
+          {i}
+        </option>,
+      );
+    }
+    setYear(yearsArray);
+  };
+  useEffect(() => {
+    setDateSelectBox();
+  }, []);
+
   return (
     <div className="main-core">
       <div className="student-list-title">
@@ -313,12 +382,17 @@ const Grade = () => {
             <button
               onClick={() => {
                 studentGradeSelect1();
-                studentGradeSelect2();
               }}
             >
               조회
             </button>
-            <button>저장</button>
+            <button
+              onClick={() => {
+                handleSave();
+              }}
+            >
+              저장
+            </button>
             <button>취소</button>
           </div>
         </div>
@@ -353,9 +427,13 @@ const Grade = () => {
                 </select>
               </div>
               <div className="total-student">
-                <p>반/학년 전체 인원</p>
-                <input value={`${classStudentCount} / ${gradeStudentCount}`} />
-                명
+                {/* <p>반/학년 전체 인원</p> */}
+                <p>년도 선택</p>
+                {/* <input value={`${classStudentCount} / ${gradeStudentCount}`} /> */}
+                <select id="year">
+                  <option value="">해당하는 해를 선택하세요.</option>
+                  {year}
+                </select>
               </div>
             </div>
           </div>
@@ -376,9 +454,22 @@ const Grade = () => {
                   <div className="grade-info">
                     <p>원점수</p>
                     <input
-                      // type="number"
-
-                      value={midGrades[subject]?.mark || "-"}
+                      placeholder="-"
+                      value={midGrades[subject]?.mark}
+                      // onChange={e => handleMidGradeChange(e, subject)}
+                      onChange={e => {
+                        setScore(e.target.value);
+                      }}
+                      // onChange={() => {
+                      //   const { value } = e.target;
+                      //   setMidGrades(prevGrades => ({
+                      //     ...prevGrades,
+                      //     [subject]: {
+                      //       ...prevGrades[subject],
+                      //       mark: value,
+                      //     },
+                      //   }));
+                      // }}
                     />
                     점
                   </div>
@@ -418,7 +509,25 @@ const Grade = () => {
               <div className="text-wrapper">기말고사</div>
             </div>
           </div>
+          <div className="info-button">
+            <button
+              onClick={() => {
+                studentGradeSelect2();
+              }}
+            >
+              조회
+            </button>
+            <button
+              onClick={() => {
+                handleSave();
+              }}
+            >
+              저장
+            </button>
+            <button>취소</button>
+          </div>
         </div>
+
         <div className="info-contain-top">
           <div className="info-item-top">
             {subjects.map((subject, index) => (
@@ -428,9 +537,9 @@ const Grade = () => {
                   <div className="grade-info">
                     <p>원점수</p>
                     <input
-                      // type="number"
-
-                      value={finalGrades[subject]?.mark || "-"}
+                      placeholder="-"
+                      value={finalGrades[subject]?.mark}
+                      onChange={e => handleFinalGradeChange(e, subject)}
                     />
                     점
                   </div>
