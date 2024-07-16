@@ -6,7 +6,7 @@ import { closeModal, updateModalDate } from "slices/modalSlice";
 import "../../scss/modal/modal.css";
 import { allowScroll, preventScroll } from "./ScrollManagement";
 import ViewPw from "./ViewPw";
-import { putTeacherPwChange } from "api/teacher/teacherapi";
+import { patchTeacherInfo, putTeacherPwChange } from "api/teacher/teacherapi";
 import PhoneInputFields from "pages/student/PhoneInputFields";
 import { getCookie } from "utils/cookie";
 import { deleteNotice } from "api/student/studentapi";
@@ -141,6 +141,26 @@ const Modal = () => {
   /** 확인 처리 : 기능 추가 */
   const modalAccept = async () => {
     if (modalState.modalType === "BasicModal") {
+      // 단순 true 출력
+      if (modalState.modalRes[0] === 1) {
+        console.log("true 를 리턴합니다.");
+        const data = {
+          modalRes: [false],
+        };
+        dispatch(updateModalDate(data));
+        dispatch(closeModal());
+      }
+
+      // 교직원 : 정보 수정 페이지 처리리
+      if (modalState.modalRes[0] === 11) {
+        console.log("수정처리를 하겠습니다.");
+        const res = patchTeacherInfo(modalState.modalRes.slice(1));
+        // console.log("res : ", res);
+        // if (res) {
+        //   dispatch(closeModal());
+        // }
+      }
+
       if (modalState.modalRes[0] === 44) {
         console.log("삭제처리를 하겠습니다.");
         console.log(modalState);
