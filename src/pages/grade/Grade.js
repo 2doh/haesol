@@ -24,20 +24,22 @@ const Grade = () => {
   const [studentInfo, setStudentInfo] = useState({});
   const [studentName, setStudentName] = useState("");
   const [studentClass, setStudentClass] = useState("");
-  const [grade, setGrade] = useState(1); // 선택된 학년 상태
-  const [semester, setSemester] = useState(1); // 선택된 학기 상태
-  const [year, setYear] = useState(2023);
+
+  const [grade, setGrade] = useState("1"); // 선택된 학년 상태
+  const [semester, setSemester] = useState("1"); // 선택된 학기 상태
+
+  const [nowYear, setNowYear] = useState(new Date().getFullYear());
+  const [year, setYear] = useState([]);
+  const [selectedYear, setSelectedYear] = useState(""); // 추가된 부분
 
   const [classStudentCount, setClassStudentCount] = useState("-");
   const [gradeStudentCount, setGradeStudentCount] = useState("-");
   const [classRank, setClassRank] = useState("-");
   const [gradeRank, setGradeRank] = useState("-");
 
-  // 점수 입력
-  const [score, setScore] = useState(null);
 
-  const [tempData, setTempData] = useState([]);
-  const tempList = [...tempData];
+  const [score, setScore] = useState("");
+
 
   const [midGrades, setMidGrades] = useState({
     국어: "",
@@ -189,6 +191,10 @@ const Grade = () => {
     setSemester(e.target.value);
   };
 
+  const handleYearChange = e => {
+    setSelectedYear(e.target.value);
+  };
+
   // 학기, 학년 선택 성적 출력 중간고사
   const studentGradeSelect1 = async () => {
     try {
@@ -231,7 +237,7 @@ const Grade = () => {
         });
 
         setMidGrades(midgradeMap);
-        // setfinalGrades({}); // 기말고사 데이터를 초기화
+        setMidGrades({}); // 기말고사 데이터를 초기화
       }
     } catch (error) {
       console.log(error);
@@ -293,16 +299,18 @@ const Grade = () => {
     studentGrade2();
   }, [studentPk]);
 
-  // const handleMidGradeChange = (e, subject) => {
-  //   const value = e.target.value;
-  //   setMidGrades(prevGrades => ({
-  //     ...prevGrades,
-  //     [subject]: {
-  //       ...(prevGrades[subject] || {}),
-  //       mark: value,
-  //     },
-  //   }));
-  // };
+
+  const handleMidGradeChange = (e, subject) => {
+    const value = e.target.value;
+    setMidGrades(prevGrades => ({
+      ...prevGrades,
+      [subject]: {
+        ...(prevGrades[subject] || {}),
+        mark: value,
+      },
+    }));
+  };
+
 
   const handleFinalGradeChange = (e, subject) => {
     const value = e.target.value;
@@ -317,13 +325,13 @@ const Grade = () => {
 
   const handleSave = async () => {
     const scoreData = {
-      // studentPk 숫자 변환하여 axios연동
+
       studentPk: studentPk,
       grade,
-      year,
+      year: selectedYear,
       semester,
       name: subjects[0],
-      exam: 1,
+      exam: "1",
       mark: score,
     };
     try {
@@ -333,6 +341,23 @@ const Grade = () => {
       console.log(error);
     }
   };
+
+
+  const setDateSelectBox = () => {
+    let yearsArray = [];
+    // 2005년부터 현재 연도까지 옵션을 추가합니다.
+    for (let i = nowYear; i >= 2005; i--) {
+      yearsArray.push(
+        <option key={i} value={i}>
+          {i}
+        </option>,
+      );
+    }
+    setYear(yearsArray);
+  };
+  useEffect(() => {
+    setDateSelectBox();
+  }, []);
 
   return (
     <div className="main-core">
@@ -415,9 +440,13 @@ const Grade = () => {
                 </select>
               </div>
               <div className="total-student">
-                <p>반/학년 전체 인원</p>
-                <input value={`${classStudentCount} / ${gradeStudentCount}`} />
-                명
+                {/* <p>반/학년 전체 인원</p> */}
+                <p>년도 선택</p>
+                {/* <input value={`${classStudentCount} / ${gradeStudentCount}`} /> */}
+                <select id="year">
+                  <option value="">해당하는 해를 선택하세요.</option>
+                  {year}
+                </select>
               </div>
             </div>
           </div>
@@ -440,12 +469,20 @@ const Grade = () => {
                     <input
                       placeholder="-"
                       value={midGrades[subject]?.mark}
+
+                      // onChange={e => handleMidGradeChange(e, subject)}
                       onChange={e => {
-                        handleMidGradeChange(e, subject, index);
                         setScore(e.target.value);
                       }}
-                      // onChange={e => {
-                      //   setScore(e.target.value);
+                      // onChange={() => {
+                      //   const { value } = e.target;
+                      //   setMidGrades(prevGrades => ({
+                      //     ...prevGrades,
+                      //     [subject]: {
+                      //       ...prevGrades[subject],
+                      //       mark: value,
+                      //     },
+                      //   }));
                       // }}
                     />
                     점

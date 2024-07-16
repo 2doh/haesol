@@ -10,6 +10,7 @@ import { patchTeacherInfo, putTeacherPwChange } from "api/teacher/teacherapi";
 import PhoneInputFields from "pages/student/PhoneInputFields";
 import { getCookie } from "utils/cookie";
 import { deleteNotice } from "api/student/studentapi";
+import NoticeList from "pages/notice/NoticeList";
 
 const ModalStyle = styled.div`
   position: fixed;
@@ -153,12 +154,11 @@ const Modal = () => {
 
       // 교직원 : 정보 수정 페이지 처리리
       if (modalState.modalRes[0] === 11) {
-        console.log("수정처리를 하겠습니다.");
-        const res = patchTeacherInfo(modalState.modalRes.slice(1));
-        // console.log("res : ", res);
-        // if (res) {
-        //   dispatch(closeModal());
-        // }
+        console.log("수정처리를 하겠습니다.", modalState.modalRes[1]);
+        const res = patchTeacherInfo(modalState.modalRes[1]);
+        if (res) {
+          dispatch(closeModal());
+        }
       }
 
       // 교직원 : 정보 수정 페이지 처리리
@@ -174,12 +174,17 @@ const Modal = () => {
       if (modalState.modalRes[0] === 44) {
         console.log("삭제처리를 하겠습니다.");
         console.log(modalState);
-        let res = deleteNotice(modalState.modalRes[1]);
+        deleteNotice(modalState.modalRes[1]);
         console.log(modalState.modalRes);
-        console.log("res : ", res);
-        if (res) {
-          dispatch(closeModal());
-        }
+        const data = {
+          modalRes: [false],
+        };
+        dispatch(updateModalDate(data));
+        dispatch(closeModal());
+
+        // const updateNotice = NoticeList.filter(
+        //   notice => notice.modalState.modalRes[0] !== modalState.modalRes[0],
+        // );
       }
     }
     if (modalState.modalType === "ArrValueModal") {

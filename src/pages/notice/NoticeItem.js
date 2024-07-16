@@ -3,7 +3,7 @@ import "../../scss/notice/noticeList.css";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { getNoticeList, getStudentInfo } from "api/student/studentapi";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { openModal, updateModalDate } from "slices/modalSlice";
 import { getCookie } from "utils/cookie";
 import { RiDeleteBack2Fill } from "react-icons/ri";
@@ -12,8 +12,8 @@ const NoticeItem = () => {
   const userClass = getCookie("userClass");
   // 네비게이트
   const navigate = useNavigate();
-  const handleClick = () => {
-    navigate(`/notice/list/classid`);
+  const handleListClick = () => {
+    navigate(`/notice/list/${userClass}`);
   };
   const handleEditClick = () => {
     navigate(`/notice/edit`);
@@ -22,9 +22,6 @@ const NoticeItem = () => {
   const state = 2;
 
   const [noticeList, setNoticeList] = useState([]);
-  const [createdAt, setCreatedAt] = useState([]);
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
 
   // 알림장 데이터 연동
   const noticeListData = async () => {
@@ -45,21 +42,22 @@ const NoticeItem = () => {
 
   const dispatch = useDispatch();
   /** 모달 호출 */
-  const showModal = (selectModalType, createdAt, title, content) => {
+  const showModal = (selectModalType, createdAt, title, content, notice_id) => {
     /** (선택) 들어갈 내용 수정 */
     const data = {
       headerText: `준비물 - ${createdAt}`,
-      // bodyTextLabel: [title],
       bodyText: [content],
       buttonText: ["전송", "취소"],
+      modalRes: [22, notice_id],
     };
     /** (선택) 위와 아래는 세트 */
     dispatch(updateModalDate(data));
 
-    /**(고정) 모달 활성화 */
-    const modalRes = dispatch(openModal(selectModalType));
-    console.log("모달 결과 출력 내용 확인 : ", modalRes);
+    dispatch(openModal(selectModalType));
+    // console.log("모달 결과 출력 내용 확인 : ", modalRes);
   };
+
+  const modalState = useSelector(state => state.modalSlice);
 
   const handleDelete = (e, selectModalType, notice_id) => {
     e.stopPropagation();
@@ -74,8 +72,13 @@ const NoticeItem = () => {
     dispatch(updateModalDate(data));
 
     /**(고정) 모달 활성화 */
-    const modalRes = dispatch(openModal(selectModalType));
+    dispatch(openModal(selectModalType));
   };
+  useEffect(() => {
+    // if (modalState.modalRes[0] === false) {
+    noticeListData();
+    // }
+  }, [modalState.modalRes[0]]);
 
   const NoticeListStyle = styled.div`
     display: flex;
@@ -102,7 +105,7 @@ const NoticeItem = () => {
             <div
               className="div-wrapper"
               onClick={() => {
-                handleClick();
+                handleListClick();
               }}
             >
               <div className="info-subtitle">알림장</div>
@@ -144,7 +147,6 @@ const NoticeItem = () => {
                   <div className="grid-inner-item-text">{item.createdAt}</div>
                 </div>
                 <div className="grid-inner-item">
-                  {/* <div className="grid-inner-item-text">{item.title}</div> */}
                   <div className="grid-inner-item-text">{item.title}</div>
                   <div
                     className="delete-button"
