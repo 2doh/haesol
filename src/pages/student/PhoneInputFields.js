@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { PhoneNumber } from "utils/helpers";
 
-const PhoneInputFields = ({ placeholder, phoneNum }) => {
+const PhoneInputFields = ({ placeholder, phoneNum, setPhoneNum }) => {
   const [userPhoneNum, setUserPhoneNum] = useState(phoneNum);
 
   useEffect(() => {
@@ -11,6 +11,7 @@ const PhoneInputFields = ({ placeholder, phoneNum }) => {
   const handleOnChange = e => {
     // console.log(e.target.value);
     setUserPhoneNum(PhoneNumber(e));
+    setPhoneNum(PhoneNumber(e));
   };
 
   return (

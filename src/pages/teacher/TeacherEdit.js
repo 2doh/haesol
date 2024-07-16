@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { useEffect, useRef, useState } from "react";
 import "../../scss/teacher/teacheredit.css";
 
-import { getTeacherInfo } from "api/teacher/teacherapi";
+import { duplicateEmail, getTeacherInfo } from "api/teacher/teacherapi";
 import StudentImg from "pages/student/StudentImg";
 import { useDispatch, useSelector } from "react-redux";
 import { openModal, updateModalDate } from "slices/modalSlice";
@@ -27,10 +27,66 @@ const StudentsInfoStyle = styled.div`
     height: 500px;
     background: red;
   }
+
+  .info-contain-top {
+    .info-item-right {
+      border-right: solid 2px #886348;
+    }
+  }
+  .info-contain-mid {
+    .info-item-mid {
+      border-right: solid 2px #886348;
+
+      .email-title > span {
+        height: auto;
+        padding: 13px 0;
+      }
+
+      .addr-title {
+        .add-form {
+          width: 80%;
+
+          & > input[type="text"] {
+            width: 80%;
+          }
+        }
+      }
+
+      .info-title {
+        border-bottom: solid 2px #886348;
+      }
+      .info-title:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+  .edit-select {
+    width: 180px;
+    height: 30px;
+    padding-left: 5px;
+    background: #fbfaf9;
+    border-width: 0;
+    border: solid 2px #886348;
+    /* margin-left: 10px; */
+  }
+
+  .is-none {
+    display: none;
+  }
+
+  .email-add-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
 `;
 
 const TeacherEdit = () => {
   const modalState = useSelector(state => state.modalSlice);
+  const emailText = useRef();
+  const emailDomain = useRef();
+  const emailDomainText = useRef();
 
   // const [isPwChangeModal, setIsPwChangeModal] = useState(false);
 
@@ -64,16 +120,7 @@ const TeacherEdit = () => {
   const nowUserInfo = async () => {
     try {
       const res = await getTeacherInfo();
-      console.log("받은 데이터 확인 : ", res.data);
 
-      // 주소 저장
-      // const splitAddr = res.data.addr.split("#");
-      // const paddedAddr = [
-      //   splitAddr[0] || "",
-      //   splitAddr[1] || "",
-      //   splitAddr[2] || "",
-      // ];
-      // setAddr(paddedAddr);
       setBirth(res.data.birth);
       setZoneCode(res.data.addr.split(" # ")[0]);
       setAddr(res.data.addr.split(" # ")[1]);
@@ -91,6 +138,29 @@ const TeacherEdit = () => {
 
       // setEmail(res.data.email.split("@"));
       setEmail(res.data.email);
+      emailText.current.value = res.data.email.split("@")[0];
+      switch (res.data.email.split("@")[1]) {
+        case "naver.com":
+          emailDomain.current.value = "naver.com";
+          break;
+        case "google.com":
+          emailDomain.current.value = "google.com";
+          console.log("네이버 아님");
+          break;
+        case "hanmail.net":
+          emailDomain.current.value = "hanmail.net";
+          break;
+        case "nate.com":
+          emailDomain.current.value = "nate.com";
+          break;
+        case "kakao.com":
+          emailDomain.current.value = "kakao.com";
+          break;
+        default:
+          emailDomain.current.value = "type";
+          break;
+      }
+
       setUserName(res.data.name);
       setPhoneNum(res.data.phone);
     } catch (error) {
@@ -99,22 +169,27 @@ const TeacherEdit = () => {
   };
 
   /** 저장 기능 */
-  const saveInfo = selectModalType => {
-    // e.preventDefault();
-    // const formData = new FormData();
+  const saveInfo = (selectModalType, newEamil) => {
+    // 기본 이메일과 중복 확인
+    if (email === newEamil) {
+      console.log("중복 이메일입니다.");
 
-    /** (선택) 들어갈 내용 수정 */
-    const data = {
-      bodyText: ["정보를 수정하시겠습니까?"],
-      modalRes: [11, userName, phoneNum, email, zoneCode, addr],
-      buttonText: ["수정", "취소"],
-    };
-    /** (선택) 위와 아래는 세트 */
-    dispatch(updateModalDate(data));
+      const data = {
+        bodyText: ["정보를 수정하시겠습니까?"],
+        modalRes: [11, { name: userName, phone: phoneNum, zoneCode, addr }],
+        buttonText: ["수정", "취소"],
+      };
+      dispatch(updateModalDate(data));
+    } else {
+      const data = {
+        bodyText: ["정보를 수정하시겠습니까?"],
+        modalRes: [11, { userName, phoneNum, zoneCode, addr, email: newEamil }],
+        buttonText: ["수정", "취소"],
+      };
+      dispatch(updateModalDate(data));
+    }
 
-    /**(고정) 모달 활성화 */
-    const modalRes = dispatch(openModal(selectModalType));
-    // console.log("모달 결과 출력 내용 확인 : ", modalRes);
+    dispatch(openModal(selectModalType));
   };
 
   /** 취소 기능 */
@@ -129,13 +204,8 @@ const TeacherEdit = () => {
       buttonText: ["취소", "닫기"],
     };
 
-    /** (선택) 위와 아래는 세트 */
     dispatch(updateModalDate(data));
-
-    /**(고정) 모달 활성화 */
     dispatch(openModal(selectModalType));
-
-    // console.log("모달 결과 출력 내용 확인 : ", modalRes);
   };
 
   useEffect(() => {
@@ -148,16 +218,6 @@ const TeacherEdit = () => {
     }
   }, [modalState.modalRes[0]]);
 
-  // const modalRes = null;
-  // const showPwChangeModal = () => {
-  //   setIsPwChangeModal(!isPwChangeModal);
-  // };
-  // const pwChangeModalCancel = e => {
-  //   setIsPwChangeModal(false);
-  // };
-
-  // const modalState = useSelector(state => state.modalSlice);
-
   const dispatch = useDispatch();
   /** 모달 호출 */
   const showModal = selectModalType => {
@@ -168,33 +228,6 @@ const TeacherEdit = () => {
 
     /**(고정) 모달 활성화 */
     const modalRes = dispatch(openModal(selectModalType));
-    // console.log("모달 결과 출력 내용 확인 : ", modalRes);
-  };
-
-  // useEffect(() => {
-  //   if (pwChangeModalResult) {
-  //     console.log("pwChangeModalResult : ", pwChangeModalResult);
-  //     setPwChangeModalResult(false);
-  //   }
-  // }, [pwChangeModalResult]);
-
-  /** 이름 변경 감지 */
-  const handleChange = e => {
-    // setUserName(e.target.value);
-    const val = (userName.current.value = e.target.value);
-    console.log("이름 : ", val);
-  };
-
-  // 반 정보 > 추후 데이터 받아와서 처리
-  const gradeClass = "5학년 7반";
-
-  // 선생님 더미 데이터
-  const readOnlyInfo = {
-    name: "홍길동",
-    phone: "010-0000-0000",
-    email: "test1234@naver.com",
-    zoneCode: "12345",
-    addr: "서울 판교 1234",
   };
 
   const [postCode, setPostCode] = useState("우편번호");
@@ -222,6 +255,46 @@ const TeacherEdit = () => {
         setAddress(roadAddr);
       },
     }).open();
+  };
+
+  const changeEmailDomain = e => {
+    if (e.target.value !== "type") {
+      // 선택한 도메인을 input에 입력하고 disabled
+      // emailText.current.value = e.target.value;
+      emailDomainText.current.classList = "box is-none";
+    } else {
+      // 직접 입력 시
+      // input 내용 초기화 & 입력 가능하도록 변경
+      emailDomainText.current.value = "";
+      emailDomainText.current.classList = "box";
+      // emailText.current.disabled = false;
+    }
+  };
+
+  // const [passEmail, setPassEmail] = useState();
+  /** 이메일 체크 */
+  const cheackInfo = e => {
+    if (emailDomain.current.value === "type") {
+      const newEmail = `${emailText.current.value}@${emailDomainText.current.value}`;
+      handleOnChange(newEmail);
+      // emailDomainText.current.value;
+    } else {
+      const newEmail = `${emailText.current.value}@${emailDomain.current.value}`;
+      handleOnChange(newEmail);
+      // emailDomain.current.value;
+    }
+  };
+
+  const [errMsg, setErrMsg] = useState("");
+  /** 이메일 유효성 검사 */
+  const handleOnChange = newEamil => {
+    const regex = /^[^\s@]+@[^\s@]+\.(com|net|co\.kr)$/i;
+    if (regex.test(newEamil)) {
+      setErrMsg("");
+      saveInfo("BasicModal", newEamil);
+    } else {
+      setErrMsg("이메일 형식에 맞지 않습니다");
+    }
   };
 
   return (
@@ -253,7 +326,7 @@ const TeacherEdit = () => {
             <div className="info-button">
               <button
                 onClick={e => {
-                  saveInfo("BasicModal");
+                  cheackInfo(e);
                 }}
               >
                 저장
@@ -312,16 +385,10 @@ const TeacherEdit = () => {
               </div>
               <div className="info-title">
                 <span>전화번호</span>
-
-                {/* <input
-                  type="number"
-                  name="tel"
-                  placeholder="전화번호를 입력해주세요"
-                  ref={phone}
-                /> */}
                 <PhoneInputFields
                   placeholder="전화번호를 입력하세요"
                   phoneNum={phoneNum}
+                  setPhoneNum={setPhoneNum}
                 />
               </div>
             </div>
@@ -351,11 +418,49 @@ const TeacherEdit = () => {
                 {/* <input type="number" name="tel" placeholder="" /> */}
               </div>
             </div>
-            <div className="info-img">{/* <StudentImg /> */}</div>
+            {/* <div className="info-img"><StudentImg /></div> */}
           </div>
           <div className="info-contain-mid">
             <div className="info-item-mid">
-              <div className="info-title">
+              <div className="info-title email-title">
+                <span>이메일</span>
+                <div className="add-form">
+                  <div className="email-add-form">
+                    <input
+                      type="text"
+                      name="text"
+                      placeholder=""
+                      ref={emailText}
+                    />
+                    <div>@</div>
+                    <input
+                      className="box is-none"
+                      id="domain-txt"
+                      type="text"
+                      name="text"
+                      placeholder=""
+                      ref={emailDomainText}
+                    />
+                    <select
+                      className="edit-select"
+                      id="domain-list"
+                      ref={emailDomain}
+                      onChange={e => {
+                        changeEmailDomain(e);
+                      }}
+                    >
+                      <option value="type">직접 입력</option>
+                      <option value="naver.com">naver.com</option>
+                      <option value="google.com">google.com</option>
+                      <option value="hanmail.net">hanmail.net</option>
+                      <option value="nate.com">nate.com</option>
+                      <option value="kakao.com">kakao.com</option>
+                    </select>
+                    <div>{errMsg}</div>
+                  </div>
+                </div>
+              </div>
+              <div className="info-title addr-title">
                 <span>주소</span>
                 <div className="add-form">
                   <div>
@@ -389,7 +494,6 @@ const TeacherEdit = () => {
                   />
                 </div>
               </div>
-              <div className="info-title"></div>
             </div>
           </div>
           <div className="info-contain-top">
