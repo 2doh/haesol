@@ -30,6 +30,7 @@ import { openModal } from "slices/modalSlice";
 import PrivateRoute from "components/common/PrivateRoute";
 import MyChildInfo from "pages/parents/MyChildInfo";
 import ReturnHomeRoute from "components/common/ReturnHomeRoute";
+import Grade from "pages/grade/Grade";
 
 const ModalStyle = styled.div`
   position: absolute;
@@ -156,10 +157,12 @@ function App() {
             ></Route>
             <Route path=":userid" element={<Grade />}></Route>
           </Route> */}
-          {/* 성적 입력 페이지 임시 경로 */}
-          {/* <Route path="/grade/:studentPk" element={<Grade />}></Route> */}
-          {/* 성적 확인 페이지 임시 경로 */}
-          <Route path="/grade/:studentPk" element={<GradeView />}></Route>
+          {loginUserType === "ROLE_TEAHCER" ? (
+            <Route path="/grade/:studentPk" element={<Grade />}></Route>
+          ) : (
+            // <Route path="/grade/:studentPk" element={<GradeView />}></Route>
+            <Route path="/grade/:studentPk" element={<GradeView />}></Route>
+          )}
 
           {/* 임시 경로 */}
           {/* <Route path="/students/edit" element={<StudentEdit />}></Route> */}

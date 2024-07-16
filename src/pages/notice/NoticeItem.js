@@ -6,6 +6,7 @@ import { getNoticeList, getStudentInfo } from "api/student/studentapi";
 import { useDispatch } from "react-redux";
 import { openModal, updateModalDate } from "slices/modalSlice";
 import { getCookie } from "utils/cookie";
+import { RiDeleteBack2Fill } from "react-icons/ri";
 
 const NoticeItem = () => {
   const userClass = getCookie("userClass");
@@ -60,11 +61,28 @@ const NoticeItem = () => {
     console.log("모달 결과 출력 내용 확인 : ", modalRes);
   };
 
+  const handleDelete = (e, selectModalType, notice_id) => {
+    e.stopPropagation();
+    console.log("notice_id : ", notice_id);
+    const data = {
+      headerText: ["삭제"],
+      bodyText: ["해당 내용을 삭제하시겠습니까?"],
+      buttonText: ["삭제", "취소"],
+      modalRes: [44, notice_id],
+    };
+    /** (선택) 위와 아래는 세트 */
+    dispatch(updateModalDate(data));
+
+    /**(고정) 모달 활성화 */
+    const modalRes = dispatch(openModal(selectModalType));
+  };
+
   const NoticeListStyle = styled.div`
     display: flex;
     justify-content: center;
     width: 100%;
     height: 100%;
+    position: relative;
   `;
 
   return (
@@ -117,6 +135,7 @@ const NoticeItem = () => {
                   item.createdAt,
                   item.title,
                   item.content,
+                  item.notice_id,
                 );
               }}
             >
@@ -125,7 +144,16 @@ const NoticeItem = () => {
                   <div className="grid-inner-item-text">{item.createdAt}</div>
                 </div>
                 <div className="grid-inner-item">
+                  {/* <div className="grid-inner-item-text">{item.title}</div> */}
                   <div className="grid-inner-item-text">{item.title}</div>
+                  <div
+                    className="delete-button"
+                    onClick={e => {
+                      handleDelete(e, "BasicModal", item.notice_id);
+                    }}
+                  >
+                    <RiDeleteBack2Fill size="2.5rem" />
+                  </div>
                 </div>
               </div>
             </div>

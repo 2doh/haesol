@@ -3,9 +3,9 @@ import "../../scss/student/studentList.css";
 import { useNavigate } from "react-router";
 import styled from "@emotion/styled";
 import { getStudentList } from "api/student/studentapi";
+import { getCookie } from "utils/cookie";
 const StudentsList = () => {
-  // 반 정보
-  const gradeClass = "5학년 7반";
+  const userClass = getCookie("userClass");
 
   const navigate = useNavigate();
   const handleClick = studentPk => {
@@ -47,7 +47,7 @@ const StudentsList = () => {
     <div className="main-core">
       <div className="student-list-title">
         {/* 제목 위치 */}
-        <span>{gradeClass}</span>
+        <span>{userClass}</span>
       </div>
       <StudentsListStyle>
         <div className="grid-frame">

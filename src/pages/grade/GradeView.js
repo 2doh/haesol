@@ -262,7 +262,14 @@ const GradeView = () => {
   const studentGradeSelect1 = async () => {
     try {
       const response = await getStudentGradeSelect1(studentPk, grade, semester);
-      console.log(response.data);
+
+      const err = response.data;
+      if (err.code < 0) {
+        alert("선택한 학기의 중간고사 성적이 없습니다.");
+        setMidGrades({});
+        return;
+      }
+
       const result = response.data.data.list || [];
       const midgradeMap = {};
 
@@ -293,12 +300,15 @@ const GradeView = () => {
         });
 
         setMidGrades(midgradeMap);
-        setfinalGrades({}); // 기말고사 데이터를 초기화
+        // setfinalGrades({}); // 기말고사 데이터를 초기화
       }
     } catch (error) {
       console.log(error);
     }
   };
+  useEffect(() => {
+    studentGrade1();
+  }, [studentPk]);
   //     // const list = result || [];
 
   //     const lists = result;
@@ -348,7 +358,14 @@ const GradeView = () => {
   const studentGradeSelect2 = async () => {
     try {
       const response = await getStudentGradeSelect2(studentPk, grade, semester);
-      console.log(response.data);
+
+      const err = response.data;
+      if (err.code < 0) {
+        alert("선택한 학기의 기말고사 성적이 없습니다.");
+        setfinalGrades({});
+        return;
+      }
+
       const result = response.data.data.list || [];
       const finalgradeMap = {};
 
@@ -378,13 +395,16 @@ const GradeView = () => {
           };
         });
 
-        setMidGrades({});
+        // setMidGrades({});
         setfinalGrades(finalgradeMap);
       }
     } catch (error) {
       console.log(error);
     }
   };
+  useEffect(() => {
+    studentGrade2();
+  }, [studentPk]);
 
   return (
     <div className="main-core">
@@ -414,8 +434,9 @@ const GradeView = () => {
           </div>
           <div className="info-button">
             <button
-              onClick={e => {
-                studentGradeSelect1(e);
+              onClick={() => {
+                studentGradeSelect1();
+                studentGradeSelect2();
               }}
             >
               조회
@@ -509,10 +530,12 @@ const GradeView = () => {
         </div>
         <div className="all-grade">
           <div className="grade-rank">
-            학년 전체 등수 <input readOnly value={gradeRank} /> 등
+            학년 전체 등수 <input readOnly value={gradeRank} /> /{" "}
+            {gradeStudentCount} 등
           </div>
           <div className="grade-rank">
-            반 등수 <input readOnly value={classRank} /> 등
+            반 등수 <input readOnly value={classRank} /> / {classStudentCount}{" "}
+            등
           </div>
         </div>
         <Signature />
@@ -563,10 +586,12 @@ const GradeView = () => {
         </div>
         <div className="all-grade">
           <div className="grade-rank">
-            학년 전체 등수 <input readOnly placeholder="-" /> /312등
+            학년 전체 등수 <input readOnly value={gradeRank} /> /{" "}
+            {gradeStudentCount} 등
           </div>
           <div className="grade-rank">
-            반 등수 <input readOnly placeholder="-" /> /312등
+            반 등수 <input readOnly value={classRank} /> / {classStudentCount}{" "}
+            등
           </div>
         </div>
         <Signature />
