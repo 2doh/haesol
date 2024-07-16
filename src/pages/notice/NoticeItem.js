@@ -61,7 +61,6 @@ const NoticeItem = () => {
 
   const handleDelete = (e, selectModalType, notice_id) => {
     e.stopPropagation();
-    console.log("notice_id : ", notice_id);
     const data = {
       headerText: ["삭제"],
       bodyText: ["해당 내용을 삭제하시겠습니까?"],
@@ -74,11 +73,15 @@ const NoticeItem = () => {
     /**(고정) 모달 활성화 */
     dispatch(openModal(selectModalType));
   };
-  useEffect(() => {
-    // if (modalState.modalRes[0] === false) {
-    noticeListData();
-    // }
-  }, [modalState.modalRes[0]]);
+  useEffect(
+    () => {
+      // if (modalState.modalRes[0] === false) {
+      noticeListData();
+      // }
+    },
+    [modalState.modalRes[0]],
+    state,
+  );
 
   const NoticeListStyle = styled.div`
     display: flex;
