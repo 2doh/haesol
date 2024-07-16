@@ -79,11 +79,15 @@
               align-items: center;
               gap: 10px;
               margin-bottom: 8px;
+              width: 100%;
               .fields-section-title {
+                display: flex;
                 font-size: 20px;
+                white-space: nowrap;
               }
               .fields-section-errmsg {
                 font-size: 12px;
+                margin-top: 0;
                 color: #dd838f;
               }
             }
@@ -124,6 +128,13 @@
               font-size: 18px;
               gap: 10px;
             }
+            .fieleds-section-children {
+              @include input();
+              display: flex;
+              align-items: center;
+              font-size: 12px;
+              background-color: white;
+            }
             .signup-main-fields-gender {
               width: 20px;
               height: 20px;
@@ -132,8 +143,14 @@
               width: 100%;
               display: flex;
               align-items: center;
+              position: relative;
               .fieleds-section-input {
                 @include input();
+              }
+              .check-duplicate-id-bt {
+                @include btStyle();
+                position: absolute;
+                right: 5px;
               }
             }
             .signup-main-fields-homeadress {

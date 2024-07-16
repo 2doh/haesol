@@ -7,7 +7,7 @@ export const findTeacherId = async data => {
     );
     return response;
   } catch (error) {
-    return "error";
+    return "err";
   }
 };
 
@@ -23,11 +23,10 @@ export const findTeacherPass = async data => {
 };
 
 export const putPwd = async data => {
-  console.log(data);
   try {
-    const resp = await axios.put(`/api/teacher/put_pwd`, { data });
+    const resp = await axios.put(`/api/teacher/put_pwd`, data);
     return resp;
   } catch (error) {
-    return "err";
+    return error;
   }
 };
