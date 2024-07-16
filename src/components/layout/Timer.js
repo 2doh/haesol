@@ -82,8 +82,10 @@ const Timer = () => {
   }, []);
 
   const reAccessToken = async () => {
-    // await getReAccessToken();
-    timerTime();
+    const res = getReAccessToken();
+    if (res) {
+      timerTime();
+    }
   };
 
   return (

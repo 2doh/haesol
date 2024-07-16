@@ -15,8 +15,11 @@
   // background-clip: content-box;
 
   .access-login-main-inner {
-    & > h1 {
-      margin: 40px 0px -40px 35px;
+    .access-login-title {
+      display: flex;
+      justify-content: center;
+      margin-top: 40px;
+      // margin: 40px 0px 0px 45px;
       background-color: #f3f9fa;
     }
   }
@@ -66,7 +69,10 @@
         width: 90px;
         height: 90px;
         border-radius: 50px;
-        background-color: $b100;
+        // background-color: $b100;
+        background-image: url("../../images/default_pic.png");
+        background-repeat: no-repeat;
+        background-size: cover;
       }
 
       .login-user-info-div {
@@ -219,10 +225,11 @@
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     padding: 1px;
 
+    // 하이라이트, 형광펜 효과
     .highlight {
-      background: url(//s2.svgbox.net/pen-brushes.svg?ic=brush-1&color=ffff43);
-      margin: -2px -6px;
-      padding: 2px 6px;
+      // background: url(//s2.svgbox.net/pen-brushes.svg?ic=brush-1&color=ffff43);
+      // margin: -2px -6px;
+      // padding: 2px 6px;
     }
 
     & .item {
