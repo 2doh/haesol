@@ -1,15 +1,25 @@
 import { getChildList } from "api/signup/parentapi";
+import { updateModalDate } from "slices/modalSlice";
 
 const ChildInputFields = ({
   children,
   setUserChildrenName,
   userChildrenName,
+  setUserChildrenPk,
 }) => {
   const handleonClick = async e => {
     e.preventDefault();
     const result = await getChildList();
-    console.log(result);
+    setUserChildrenName(result.data[0].name);
+    // showModal("BasicModal");
+    console.log(result.data[0]);
   };
+
+  // const showModal = selectModalType => {
+  //   const data = { bodyText: ["1"], buttonCnt: 1 };
+  //   dispatch(updateModalDate(data));
+  //   const modalRes = dispatch(openModal(selectModalType));
+  // };
 
   return (
     <div className="signup-main-fields">

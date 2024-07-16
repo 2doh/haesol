@@ -161,6 +161,16 @@ const Modal = () => {
         }
       }
 
+      // 교직원 : 정보 수정 페이지 처리리
+      if (modalState.modalRes[0] === 17) {
+        console.log("확인중입니다");
+        dispatch(closeModal());
+        // console.log("res : ", res);
+        // if (res) {
+        //   dispatch(closeModal());
+        // }
+      }
+
       if (modalState.modalRes[0] === 44) {
         console.log("삭제처리를 하겠습니다.");
         console.log(modalState);

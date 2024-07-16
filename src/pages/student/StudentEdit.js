@@ -12,6 +12,10 @@ const StudentEdit = () => {
     navigate(`/grade/${studentPk}`);
   };
 
+  const handleChart = () => {
+    navigate(``);
+  };
+
   // 반 정보 > 추후 데이터 받아와서 처리
   const gradeClass = "5학년 7반";
 
@@ -102,7 +106,12 @@ const StudentEdit = () => {
             >
               <div className="info-subtitle">성적 입력</div>
             </div>
-            <div className="div-wrapper">
+            <div
+              className="div-wrapper"
+              onClick={() => {
+                handleChart();
+              }}
+            >
               <div className="info-subtitle">차트</div>
             </div>
           </div>

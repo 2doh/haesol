@@ -1,17 +1,20 @@
-import React from "react";
+import { getStudentInfo } from "api/student/studentapi";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 
 const SelectTopMenu = () => {
   // 네비게이트
   const navigate = useNavigate();
   const { studentPk } = useParams();
+  console.log(studentPk);
 
-  const handleClick = () => {
-    // 네비게이트 필요값 넣기
-    navigate(`/students/edit/...`);
+  const handleOnGrade = () => {
+    navigate(`/grade/${studentPk}`);
   };
 
   const [studentClass, setStudentClass] = useState("");
+  const [studentInfo, setStudentInfo] = useState({});
+  const [studentName, setStudentName] = useState("");
 
   return (
     <div className="main-core">
@@ -24,24 +27,20 @@ const SelectTopMenu = () => {
         {/* <!-- 탭 선택 부분 --> */}
         <div className="user-info-tap">
           <div className="property">
-            <div
-              className="div-wrapper"
-              onClick={() => {
-                handleClick();
-              }}
-            >
+            <div className="div-wrapper">
               <div className="info-subtitle">신상 정보</div>
             </div>
-            <div className="frame">
-              <div className="text-wrapper">성적 입력</div>
-            </div>
             <div className="div-wrapper">
+              <div className="text-wrapper" onClick={e => handleOnGrade(e)}>
+                성적 입력
+              </div>
+            </div>
+            <div className="frame">
               <div className="info-subtitle">차트</div>
             </div>
           </div>
           <div className="info-button">
-            <button>버튼</button>
-            <button>버튼</button>
+            <button>조회</button>
           </div>
         </div>
         <div className="info-contain-top">
