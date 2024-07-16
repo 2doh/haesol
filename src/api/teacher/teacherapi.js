@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useState } from "react";
 import { getCookie } from "utils/cookie";
 
 /** 선생님 정보 불러오기 */
@@ -10,7 +11,7 @@ export const getTeacherInfo = async () => {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    console.log("선생님 정보 확인 : ", response);
+    // console.log("선생님 정보 확인 : ", response);
     return response;
   } catch (error) {
     console.log(error);
@@ -42,77 +43,29 @@ export const putTeacherPwChange = async (newPw, userId) => {
   }
 };
 
-// 수정중
 /** 선생님 정보 수정 */
 export const patchTeacherInfo = async newInfo => {
   const accessToken = getCookie("accessToken");
 
-  const arrInfo = {
-    name: `${newInfo[0]}`,
-    phone: `${newInfo[1]}`,
-    email: `${newInfo[2]}`,
-    zoneCode: `${newInfo[3]}`,
-    addr: `${newInfo[4]}`,
-  };
-
   try {
-    const response = await axios.patch(
-      "/api/teacher",
-      {
-        data: {
-          name: `${newInfo[0]}`,
-          phone: `${newInfo[1]}`,
-          email: `${newInfo[2]}`,
-          zoneCode: `${newInfo[3]}`,
-          addr: `${newInfo[4]}`,
-        },
-      }, // newInfo를 사용하여 요청 본문을 동적으로 설정합니다.
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
+    const response = await axios.patch("/api/teacher", newInfo, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
       },
-    );
+    });
     console.log("정보 수정 완료");
-    return response;
+    return true;
   } catch (error) {
     console.log("정보 수정 실패:", error);
   }
 };
-// export const patchTeacherInfo = async newInfo => {
-//   const accessToken = getCookie("accessToken");
-
-//   console.log(`수정 정보 : ${newInfo}`);
-//   try {
-//     const response = await axios.patch(
-//       "/api/teacher",
-//       {
-//         name: `${newInfo[1]}`,
-//         phone: `${newInfo[2]}`,
-//         email: `${newInfo[3]}`,
-//         zoneCode: "",
-//         addr: `${newInfo[5]}`,
-//       },
-//       {
-//         headers: {
-//           Authorization: `Bearer ${accessToken}`,
-//         },
-//       },
-//     );
-//     console.log("정보 수정 완료");
-//     return response;
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
 
 /** 최신 알림장 정보 불러오기 */
-export const getRecentNoticeInfo = async () => {
-  console.log("여기 들어옵니다.");
+export const getRecentNoticeInfo = async noticeState => {
   const accessToken = getCookie("accessToken");
-  const noticeState = 1;
+
   try {
-    const response = await axios.get(`/api/notice/main?state=1`, {
+    const response = await axios.get(`/api/notice/main?state=${noticeState}`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
@@ -123,3 +76,31 @@ export const getRecentNoticeInfo = async () => {
     console.log(error);
   }
 };
+
+/** 교직원 정보 수정 - 이메일 중복 체크 */
+export const duplicateEmail = async teacherEmail => {
+  console.log(teacherEmail);
+  try {
+    const res = await axios.get(`/api/teacher/duplicate?email=${teacherEmail}`);
+    console.log("이메일이 중복되지 않습니다.");
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+/** 메인 - 최신 알림장 데이터 불러오기 */
+// export const getNoticeList = async state => {
+//   const accessToken = getCookie("accessToken");
+//   try {
+//     const response = await axios.get(`/api/notice?state=${state}`, {
+//       headers: {
+//         Authorization: `Bearer ${accessToken}`,
+//       },
+//     });
+//     return response;
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };

@@ -153,12 +153,11 @@ const Modal = () => {
 
       // 교직원 : 정보 수정 페이지 처리리
       if (modalState.modalRes[0] === 11) {
-        console.log("수정처리를 하겠습니다.");
-        const res = patchTeacherInfo(modalState.modalRes.slice(1));
-        // console.log("res : ", res);
-        // if (res) {
-        //   dispatch(closeModal());
-        // }
+        console.log("수정처리를 하겠습니다.", modalState.modalRes[1]);
+        const res = patchTeacherInfo(modalState.modalRes[1]);
+        if (res) {
+          dispatch(closeModal());
+        }
       }
 
       if (modalState.modalRes[0] === 44) {
