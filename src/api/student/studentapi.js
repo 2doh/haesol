@@ -49,7 +49,7 @@ export const modifyStudentInfo = async data => {
   }
 };
 
-// 학생 성적 조회 중간
+// 학생 성적 조회 중간고사: 1
 export const getStudentGrade1 = async studentPk => {
   const accessToken = getCookie("accessToken");
   try {
@@ -57,16 +57,48 @@ export const getStudentGrade1 = async studentPk => {
       `/api/Score/getScore?studentPk=${studentPk}&exam=1`,
       {
         headers: {
+          "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${accessToken}`,
         },
       },
     );
     return response;
   } catch (error) {
-    console.log(error);
+    console.log("에러입니다. 데모데이터입니다. ", error);
+    return {
+      statusCode: null,
+      resultMsg: null,
+      resultData: null,
+      code: 1,
+      msg: "성적조회성공",
+      data: {
+        list: [
+          {
+            name: "영어",
+            exam: 1,
+            mark: 81,
+            scoreId: 13,
+            subjectClassRank: 1,
+            studentPk: 4,
+            classAvg: 81,
+            gradeAvg: 81,
+            subjectGradeRank: 1,
+            classStudentCount: 2,
+            classRank: 2,
+            gradeRank: 2,
+            gradeStudentCount: 2,
+          },
+        ],
+        studentPk: 4,
+        latestGrade: 1,
+        latestSemester: 2,
+        latestYear: "2023",
+        exam: 0,
+      },
+    };
   }
 };
-// 성적 조회 기말
+// 성적 조회 기말:2
 export const getStudentGrade2 = async studentPk => {
   const accessToken = getCookie("accessToken");
   try {
@@ -119,13 +151,23 @@ export const getStudentGradeSelect2 = async (studentPk, grade, semester) => {
   }
 };
 // 성적 입력하기
-export const postStudentGradeScore = async () => {
+export const postStudentGradeScore = async ({
+  studentPk,
+  year,
+  semester,
+  name,
+  exam,
+  mark,
+}) => {
   const accessToken = getCookie("accessToken");
   try {
     const response = await jwtAxios.post(`/api/Score`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
+      studentPk,
+      year,
+      semester,
+      name,
+      exam,
+      mark,
     });
     return response;
   } catch (error) {
@@ -157,7 +199,6 @@ export const createNotice = async data => {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    // console.log("response : ", response);
     return response;
   } catch (error) {
     console.log(error);

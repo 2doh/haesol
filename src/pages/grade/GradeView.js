@@ -1,15 +1,14 @@
-import Signature from "pages/grade/Signature";
-import { useEffect, useRef, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router";
-import "../../scss/student/grade.css";
-import "../../scss/student/studentEdit.css";
 import {
-  getStudentGrade1,
   getStudentGrade2,
   getStudentGradeSelect1,
   getStudentGradeSelect2,
   getStudentInfo,
 } from "api/student/studentapi";
+import Signature from "pages/grade/Signature";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router";
+import "../../scss/student/grade.css";
+import "../../scss/student/studentEdit.css";
 
 const GradeView = () => {
   // 네비게이트
@@ -88,42 +87,39 @@ const GradeView = () => {
 
   // 최초 조회 시 성적 불러오기 중간고사
   const studentGrade1 = async () => {
-    try {
-      const response = await getStudentGrade1(studentPk);
-      const result = response.data.data.list || [];
-      const midgradeMap = {};
-
-      if (result.length > 0) {
-        setClassStudentCount(result[0].classStudentCount || "-");
-        setGradeStudentCount(result[0].gradeStudentCount || "-");
-        setClassRank(result[0].classRank || "-");
-        setGradeRank(result[0].gradeRank || "-");
-
-        result.forEach(subject => {
-          const {
-            name,
-            mark,
-            classAvg,
-            classRank,
-            gradeAvg,
-            gradeRank,
-            subjectGradeRank,
-          } = subject;
-          midgradeMap[name] = {
-            mark,
-            classAvg,
-            classRank,
-            gradeAvg,
-            gradeRank,
-            subjectGradeRank,
-          };
-        });
-
-        setMidGrades(midgradeMap);
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    // try {
+    //   const response = await getStudentGradeInit(studentPk);
+    //   const result = response.data.data.list || [];
+    //   const midgradeMap = {};
+    //   if (result.length > 0) {
+    //     setClassStudentCount(result[0].classStudentCount || "-");
+    //     setGradeStudentCount(result[0].gradeStudentCount || "-");
+    //     setClassRank(result[0].classRank || "-");
+    //     setGradeRank(result[0].gradeRank || "-");
+    //     result.forEach(subject => {
+    //       const {
+    //         name,
+    //         mark,
+    //         classAvg,
+    //         classRank,
+    //         gradeAvg,
+    //         gradeRank,
+    //         subjectGradeRank,
+    //       } = subject;
+    //       midgradeMap[name] = {
+    //         mark,
+    //         classAvg,
+    //         classRank,
+    //         gradeAvg,
+    //         gradeRank,
+    //         subjectGradeRank,
+    //       };
+    //     });
+    //     setMidGrades(midgradeMap);
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
   //     const list = result || [];
 
