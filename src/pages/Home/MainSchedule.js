@@ -1,9 +1,4 @@
 import styled from "@emotion/styled";
-import { useEffect, useState } from "react";
-import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
-import "../../scss/main/mainschedule.css";
-import moment from "moment";
 import {
   AA_SERVER_URL,
   ATPT_OFCDC_SC_CODE,
@@ -11,6 +6,11 @@ import {
   SD_SCHUL_CODE,
 } from "api/config";
 import axios from "axios";
+import moment from "moment";
+import { useEffect, useState } from "react";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
+import "../../scss/main/mainschedule.css";
 
 const ScWrap = styled.div`
   width: 100%;
@@ -153,8 +153,6 @@ const MainSchedule = () => {
         //   getActiveMonth(activeStartDate)
         // }
       />
-      <div>디자인 수정중</div>
-      <div className="aaa"></div>
       <div className="calendar-now-month-list-wrap">
         <div className="now-schedule-day">{today}</div>
         <div className="">일정 리스트 영역(오늘 일정에는 하이라이트 주기)</div>
