@@ -19,13 +19,22 @@ import ClassSchedule from "./ClassSchedule";
 // import StudentImg from "pages/student/StudentImg";
 import Chat from "./Chat";
 import ClassNotice from "./ClassNotice";
+import MainSchedule from "./MainSchedule";
 
 const LoginUserStyle = styled.div`
+  position: relative;
   /* border: 1px solid black; */
   /* display: flex;
   justify-content: center; */
   /* width: inherit; */
   /* margin: 0 40px; */
+
+  .chat-btn {
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+  }
+
   .main-inner {
     border-radius: 0 0 10px 10px;
   }
@@ -80,6 +89,16 @@ const LoginUserStyle = styled.div`
   & .access-login-main {
     border-radius: 0px 10px 10px 10px;
   }
+`;
+
+const ChatWarp = styled.div`
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  /* display: none; */
 `;
 
 const LoginUser = () => {
@@ -150,6 +169,7 @@ const LoginUser = () => {
       setAge(myChildList[num].age);
       setTeacherName(myChildList[num].teacherName);
       setStudentPic(myChildList[num].pic);
+      setCookie("studentPk", myChildList[num].studentPk);
     }
   }, [getCookie("selectChildNum")]);
 
@@ -218,6 +238,7 @@ const LoginUser = () => {
     removeCookie("userIdPk");
     removeCookie("userRole");
     removeCookie("selectChildNum");
+    removeCookie("studentPk");
 
     window.location.reload("/");
   };
@@ -228,11 +249,17 @@ const LoginUser = () => {
     setCookie("selectChildNum", idx);
   };
 
+  const [isChat, setIsChat] = useState(false);
+  const openChat = () => {
+    setIsChat(!isChat);
+  };
+
   return (
     <LoginUserStyle>
       {/* <ChatWarp> */}
       {/* <Chat /> */}
       {/* </ChatWarp> */}
+
       <div className="main-core">
         <div className="user-info-wrap">
           <div className="user-info-tap">
@@ -269,14 +296,22 @@ const LoginUser = () => {
           <h1 className="access-login-title">{className}</h1>
           <div className="main-inner">
             <div className="main-inner-class login-user-view">
-              <div className="main-schedule main-class-schedule">
+              {/* <div className="main-schedule main-class-schedule">
                 <div className="main-schedule-title main-contents-title">
                   <div className="main-schedule-title-text ">우리반 시간표</div>
                 </div>
                 <div className="main-title-dwon-contents main-schedule-calendar">
                   <ClassSchedule />
                 </div>
+              </div> */}
+
+              <div className="main-schedule-title main-contents-title">
+                <div className="main-schedule-title-text ">학교 일정</div>
               </div>
+              <div className="main-title-dwon-contents main-schedule-calendar">
+                <MainSchedule />
+              </div>
+
               <div className="main-notice">
                 <div className="main-schedule-title main-contents-title">
                   <div className="main-schedule-title-text ">알림장</div>
@@ -310,7 +345,7 @@ const LoginUser = () => {
                             <div className="login-user-info-label">
                               학생 이름
                             </div>
-                            <div className="login-user-info-label">나이</div>
+                            <div className="login-user-info-label">생일</div>
                             <div className="login-user-info-label">학급</div>
                             <div className="login-user-info-label">
                               선생님 성함
@@ -319,12 +354,20 @@ const LoginUser = () => {
                           <div className="login-user-info-label-box">
                             <div className="login-user-info-text">{name}</div>
                             <div className="login-user-info-text">
-                              {age === "" || age === null || age === 0 ? (
+                              {/* {age === "" || age === null || age === 0 ? (
                                 <div className="home-my-info-no-style">
                                   미등록
                                 </div>
                               ) : (
                                 age
+                              )} */}
+
+                              {birth === "" || birth === null || birth === 0 ? (
+                                <div className="home-my-info-no-style">
+                                  미등록
+                                </div>
+                              ) : (
+                                birth
                               )}
                             </div>
                             <div className="login-user-info-text">
@@ -379,7 +422,9 @@ const LoginUser = () => {
                     </div>
 
                     {/* 채팅방 시작 */}
-
+                    {/* <div>
+                      <Chat />
+                    </div> */}
                     {/* 채팅방 끝 */}
                   </div>
                 </div>

@@ -167,8 +167,6 @@ const Grade = () => {
   const [studentInfo, setStudentInfo] = useState({});
   const [studentName, setStudentName] = useState("");
   const [studentClass, setStudentClass] = useState("");
-  const [grade, setGrade] = useState("1"); // 선택된 학년 상태
-  const [semester, setSemester] = useState("1"); // 선택된 학기 상태
 
   const [nowYear, setNowYear] = useState(new Date().getFullYear());
   const [yearOptions, setYearOptions] = useState([]);
@@ -624,6 +622,7 @@ const Grade = () => {
   //   setDateSelectBox();
   // }, []);
 
+
   return (
     <div className="main-core">
       <div className="student-list-title">
@@ -724,6 +723,7 @@ const Grade = () => {
                       //     ? item.mark
                       //     : "-"
                       // }
+
                       onChange={e => {
                         handleChangeOne({ ...item, mark: e.target.value });
                       }}
@@ -806,6 +806,7 @@ const Grade = () => {
                     <p>반/전체 등수</p>
                     <input
                       value={`${item.subjectClassRank || "-"} / ${item.subjectGradeRank || "-"}`}
+
                     />
                     등
                   </div>

@@ -24,7 +24,7 @@ const FindPass = () => {
   const [randomCode, setRandomCode] = useState("");
   const [inputType, setinputType] = useState("password");
   const [showPass, setShowPass] = useState(false);
-
+  // console.log(randomCode);
   const handleOnChange = e => {
     // 전화번호 자동 `-` 삽입
     setUserNum(PhoneNumber(e));

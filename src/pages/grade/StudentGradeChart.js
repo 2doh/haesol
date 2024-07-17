@@ -1,4 +1,9 @@
-import { getStudentInfo } from "api/student/studentapi";
+import {
+  getScore,
+  getStudentGrade1,
+  getStudentGrade2,
+  getStudentInfo,
+} from "api/student/studentapi";
 import Chart from "components/chart/Chart";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
@@ -7,15 +12,33 @@ const StudentGradeChart = () => {
   // 네비게이트
   const navigate = useNavigate();
   const { studentPk } = useParams();
-  console.log(studentPk);
+  const [studentClass, setStudentClass] = useState("");
+  const [studentName, setStudentName] = useState("");
+  const [grade, setGrade] = useState("");
+  const [semester, setSemester] = useState("");
+  const [recentExam, setRecentExam] = useState({});
 
   const handleOnGrade = () => {
     navigate(`/grade/${studentPk}`);
   };
 
-  const [studentClass, setStudentClass] = useState("");
-  const [studentInfo, setStudentInfo] = useState({});
-  const [studentName, setStudentName] = useState("");
+  const handleGradeChange = e => {
+    setGrade(e.target.value);
+  };
+  const handleSemesterChange = e => {
+    setSemester(e.target.value);
+  };
+
+  const getScoreList = async () => {
+    const reqData = {
+      studentPk: studentPk,
+    };
+    const result = await getScore(reqData);
+    setRecentExam(result);
+  };
+  useEffect(() => {
+    getScoreList();
+  }, []);
 
   return (
     <div className="main-core">
@@ -49,7 +72,13 @@ const StudentGradeChart = () => {
             <div className="info-title" id="info-grade-select">
               <span>학기 선택</span>
               <div className="select-grade">
-                <select name="grade">
+                <select
+                  name="grade"
+                  onChange={e => {
+                    handleGradeChange(e);
+                  }}
+                  value={grade}
+                >
                   <option value="1">1학년</option>
                   <option value="2">2학년</option>
                   <option value="3">3학년</option>
@@ -57,7 +86,13 @@ const StudentGradeChart = () => {
                   <option value="5">5학년</option>
                   <option value="6">6학년</option>
                 </select>
-                <select name="semester">
+                <select
+                  name="semester"
+                  onChange={e => {
+                    handleSemesterChange(e);
+                  }}
+                  value={semester}
+                >
                   <option value="1">1학기</option>
                   <option value="2">2학기</option>
                 </select>

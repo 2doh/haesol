@@ -14,6 +14,7 @@ import "../../scss/main/home.css";
 import LoginUser from "./LoginUser";
 import MainSchedule from "./MainSchedule";
 import LoginTeahcer from "./LoginTeahcer";
+import { ActivityPhotos } from "./ActivityPhotos";
 
 const Home = () => {
   const HomeStyle = styled.div`
@@ -111,18 +112,24 @@ const Home = () => {
         <div className="main-inner">
           <div className="main-inner-class">
             <div className="main-schedule">
-              <div className="main-schedule-title main-contents-title">
-                <div className="main-schedule-title-text ">학교 일정</div>
-              </div>
-              <div className="main-title-dwon-contents main-schedule-calendar">
-                <MainSchedule />
-              </div>
+              {loginUserType === "ROLE_PARENTS" ? null : (
+                <>
+                  <div className="main-schedule-title main-contents-title">
+                    <div className="main-schedule-title-text ">학교 일정</div>
+                  </div>
+                  <div className="main-title-dwon-contents main-schedule-calendar">
+                    <MainSchedule />
+                  </div>
+                </>
+              )}
             </div>
             <div className="main-activity">
               <div className="main-activity-title main-contents-title">
                 <div className="main-schedule-title-text">우리들 활동</div>
               </div>
-              <div className="main-title-dwon-contents main-activity-slide"></div>
+              <div className="main-title-dwon-contents main-activity-slide">
+                <ActivityPhotos />
+              </div>
             </div>
           </div>
           {/* 메인 오른쪽 영역 - start */}

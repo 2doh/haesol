@@ -1,19 +1,24 @@
 import {
-  Avatar,
-  ChatContainer,
-  MainContainer,
-  Message,
-  MessageInput,
-  MessageList,
+    Avatar,
+    ChatContainer,
+    MainContainer,
+    Message,
+    MessageInput,
+    MessageList,
 } from "@chatscope/chat-ui-kit-react";
 
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import styled from "@emotion/styled";
-import { useState } from "react";
+import { allowScroll, preventScroll } from "components/common/ScrollManagement";
+import { useEffect, useState } from "react";
 
 const ChatWrap = styled.div`
-  height: 400px;
-  /* position: absolute; */
+  height: 350px;
+  width: 300px;
+  bottom: 80px;
+  right: 110px;
+  position: absolute;
+
   /* z-index: 1; */
 `;
 
@@ -21,6 +26,15 @@ const Chat = () => {
   // 임시 이미지
   const AVATAR_IMAGE =
     "https://img1.daumcdn.net/thumb/C428x428/?scode=mtistory2&fname=https%3A%2F%2Ftistory3.daumcdn.net%2Ftistory%2F4431109%2Fattach%2F3af65be1d8b64ece859b8f6d07fafadc";
+
+  useEffect(() => {
+    /** 모달 생성시 스크롤 금지 */
+    const prevScrollY = preventScroll();
+
+    return () => {
+      allowScroll(prevScrollY);
+    };
+  }, []);
 
   /** 디폴트 메세지 */
   const defaultMessage = [
