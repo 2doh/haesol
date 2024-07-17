@@ -21,7 +21,6 @@ import Chat from "./Chat";
 import ClassNotice from "./ClassNotice";
 import MainSchedule from "./MainSchedule";
 
-
 const LoginUserStyle = styled.div`
   position: relative;
   /* border: 1px solid black; */
@@ -204,8 +203,6 @@ const LoginUser = () => {
       setAge(res[num].age);
       setTeacherName(res[num].teacherName);
       setStudentPic(res[num].pic);
-      setCookie("studentPk", res[num].studentPk);
-
 
       setOffUseEffect(true);
     }
@@ -259,21 +256,9 @@ const LoginUser = () => {
 
   return (
     <LoginUserStyle>
-      {isChat ? (
-        <ChatWarp>
-          <Chat />
-        </ChatWarp>
-      ) : null}
-
-      <button
-        className="chat-btn"
-        onClick={e => {
-          openChat();
-        }}
-      >
-        {" "}
-        채팅창{" "}
-      </button>
+      {/* <ChatWarp> */}
+      {/* <Chat /> */}
+      {/* </ChatWarp> */}
 
       <div className="main-core">
         <div className="user-info-wrap">

@@ -1,6 +1,7 @@
 import {
   getStudentGrade1,
   getStudentGrade2,
+  getStudentGradeSelect1,
   getStudentGradeSelect2,
   getStudentInfo,
   postStudentGradeScore,
@@ -12,7 +13,7 @@ import { useNavigate, useParams } from "react-router";
 import "../../scss/student/grade.css";
 import "../../scss/student/studentEdit.css";
 
-const intiData = [
+const initData = [
   {
     name: "국어",
     mark: 0,
@@ -168,8 +169,8 @@ const Grade = () => {
   const [studentClass, setStudentClass] = useState("");
 
   const [nowYear, setNowYear] = useState(new Date().getFullYear());
-  const [year, setYear] = useState([]);
-  const [selectedYear, setSelectedYear] = useState(""); // 추가된 부분
+  const [yearOptions, setYearOptions] = useState([]);
+  // const [selectedYear, setSelectedYear] = useState(""); // 추가된 부분
 
   const [classStudentCount, setClassStudentCount] = useState("-");
   const [gradeStudentCount, setGradeStudentCount] = useState("-");
@@ -235,11 +236,11 @@ const Grade = () => {
   }, [studentPk]);
 
   // 최초 조회 시 성적 불러오기 중간고사
-  const [examListOne, setExamListOne] = useState(intiData);
-  const [examListTwo, setExamListTwo] = useState(intiData);
+  const [examListOne, setExamListOne] = useState(initData);
+  const [examListTwo, setExamListTwo] = useState(initData);
   const [latestGrade, setLatestGrade] = useState(1); // 최종학년
   const [latestSemester, setLatestSemester] = useState(1); // 최종학기
-  const [latestYear, setLatestYear] = useState(""); // 최종년도
+  const [latestYear, setLatestYear] = useState("2023"); // 최종년도
 
   // useEffect(() => {
   //   console.log(latestGrade, latestSemester, latestYear);
@@ -325,7 +326,6 @@ const Grade = () => {
   // 내용 변경 처리 중간
   const handleChangeOne = item => {
     // 전달된 객체의 name 속성을 비교하고 같으면 업데이트를 해줌.
-    // console.log("item : ", item);
     const updatedData = examListOne.map(subject => {
       const update = item.name === subject.name;
       if (update) {
@@ -367,7 +367,7 @@ const Grade = () => {
       return subject;
     });
 
-    setExamListOne(updatedData);
+    setExamListTwo(updatedData);
   };
 
   const handleSaveOne = async _item => {
@@ -396,25 +396,75 @@ const Grade = () => {
     studentGrade2();
   }, [studentPk]);
 
-  const handleGradeChange = e => {
-    setGrade(e.target.value);
+  const handleGradeChange = async e => {
+    const newGrade = e.target.value;
+    setLatestGrade(newGrade);
+    await studentGradeSelect1(newGrade, latestSemester, latestYear);
+    await studentGradeSelect2(newGrade, latestSemester, latestYear);
   };
-  const handleSemesterChange = e => {
-    setSemester(e.target.value);
+  const handleSemesterChange = async e => {
+    const newSemester = e.target.value;
+    setLatestSemester(newSemester);
+    await studentGradeSelect1(latestGrade, newSemester, latestYear);
+    await studentGradeSelect2(latestGrade, newSemester, latestYear);
   };
 
-  const handleYearChange = e => {
-    setSelectedYear(e.target.value);
+  const handleYearChange = async e => {
+    const newLatestYear = e.target.value;
+    setLatestYear(newLatestYear);
+    await studentGradeSelect1(latestGrade, latestSemester, newLatestYear);
+    await studentGradeSelect2(latestGrade, latestSemester, newLatestYear);
   };
 
   // 학기, 학년 선택 성적 출력 중간고사
-  const studentGradeSelect1 = async () => {
+  const studentGradeSelect1 = async (grade, semester, year) => {
+    try {
+      // 중간고사
+      const response = await getStudentGradeSelect1(
+        studentPk,
+        grade,
+        semester,
+        year,
+      );
+      const err = response.data;
+      if (err.code < 0) {
+        alert("선택한 학기의 중간고사 성적이 없습니다.");
+        setExamListOne(initData);
+        return;
+      }
+
+      const result = response.data.data.list || [];
+      const updatedData = examListOne.map(subject => {
+        const update = result.find(data => data.name === subject.name);
+        if (update) {
+          return {
+            ...subject,
+            mark: update.mark,
+            classAvg: update.classAvg,
+            classRank: update.classRank,
+            gradeAvg: update.gradeAvg,
+            gradeRank: update.gradeRank,
+            subjectClassRank: update.subjectClassRank,
+            subjectGradeRank: update.subjectGradeRank,
+            exam: update.exam,
+            semester: semester,
+            year: year,
+            grade: grade,
+          };
+        }
+        return subject;
+      });
+      setExamListOne(updatedData);
+    } catch (error) {
+      console.log(error);
+    }
+
     // try {
     //   const response = await getStudentGradeSelect1(studentPk, grade, semester);
     //   const err = response.data;
     //   if (err.code < 0) {
     //     alert("선택한 학기의 중간고사 성적이 없습니다.");
-    //     setMidGrades({});
+    //     // setMidGrades({});
     //     return;
     //   }
     //   const result = response.data.data.list || [];
@@ -444,94 +494,100 @@ const Grade = () => {
     //         subjectGradeRank,
     //       };
     //     });
-    //     setMidGrades(midgradeMap);
-    //     setMidGrades({}); // 기말고사 데이터를 초기화
+
+    //     // setExamListOne({});
+    //     // setMidGrades(midgradeMap);
+    //     // setMidGrades({}); // 기말고사 데이터를 초기화
     //   }
     // } catch (error) {
     //   console.log(error);
     // }
   };
-  useEffect(() => {
-    studentGradeSelect1();
-  }, [studentPk]);
+  // useEffect(() => {
+  //   studentGradeSelect1();
+  // }, [studentPk]);
 
   // 학기, 학년 선택 성적 출력 기말고사
-  const studentGradeSelect2 = async () => {
+  const studentGradeSelect2 = async (grade, semester, year) => {
     try {
-      const response = await getStudentGradeSelect2(studentPk, grade, semester);
+      const response = await getStudentGradeSelect2(
+        studentPk,
+        grade,
+        semester,
+        year,
+      );
 
       const err = response.data;
       if (err.code < 0) {
         alert("선택한 학기의 기말고사 성적이 없습니다.");
-        setfinalGrades({});
+        setExamListTwo(initData);
         return;
       }
       const result = response.data.data.list || [];
-
-      //list = result.list;
-
-      const finalgradeMap = {};
-
-      if (result.length > 0) {
-        setClassStudentCount(result[0].classStudentCount || "-");
-        setGradeStudentCount(result[0].gradeStudentCount || "-");
-        setClassRank(result[0].classRank || "-");
-        setGradeRank(result[0].gradeRank || "-");
-
-        result.forEach(subject => {
-          const {
-            name,
-            mark,
-            classAvg,
-            classRank,
-            gradeAvg,
-            gradeRank,
-            subjectClassRank,
-            subjectGradeRank,
-          } = subject;
-          finalgradeMap[name] = {
-            mark,
-            classAvg,
-            classRank,
-            gradeAvg,
-            gradeRank,
-            subjectClassRank,
-            subjectGradeRank,
+      const updatedData = examListTwo.map(subject => {
+        const update = result.find(data => data.name === subject.name);
+        if (update) {
+          return {
+            ...subject,
+            mark: update.mark,
+            classAvg: update.classAvg,
+            classRank: update.classRank,
+            gradeAvg: update.gradeAvg,
+            gradeRank: update.gradeRank,
+            subjectClassRank: update.subjectClassRank,
+            subjectGradeRank: update.subjectGradeRank,
+            exam: update.exam,
+            semester: semester,
+            year: year,
+            grade: grade,
           };
-        });
-
-        // setMidGrades({});
-        setfinalGrades(finalgradeMap);
-      }
+        }
+        return subject;
+      });
+      setExamListTwo(updatedData);
     } catch (error) {
       console.log(error);
     }
   };
+
   useEffect(() => {
-    studentGrade2();
-  }, [studentPk]);
+    const generateYearOptions = () => {
+      const currentYear = new Date().getFullYear();
+      const startYear = currentYear - 10;
+      const options = [];
+      for (let year = currentYear; year >= startYear; year--) {
+        options.push(year.toString());
+      }
+      setYearOptions(options);
+    };
+    generateYearOptions();
+  }, []);
 
-  const handleMidGradeChange = (e, subject) => {
-    const value = e.target.value;
-    setMidGrades(prevGrades => ({
-      ...prevGrades,
-      [subject]: {
-        ...(prevGrades[subject] || {}),
-        mark: value,
-      },
-    }));
-  };
+  // useEffect(() => {
+  //   studentGrade2();
+  // }, [studentPk]);
 
-  const handleFinalGradeChange = (e, subject) => {
-    const value = e.target.value;
-    setfinalGrades(prevGrades => ({
-      ...prevGrades,
-      [subject]: {
-        ...(prevGrades[subject] || {}),
-        mark: value,
-      },
-    }));
-  };
+  // const handleMidGradeChange = (e, subject) => {
+  //   const value = e.target.value;
+  //   setMidGrades(prevGrades => ({
+  //     ...prevGrades,
+  //     [subject]: {
+  //       ...(prevGrades[subject] || {}),
+  //       mark: value,
+  //     },
+  //   }));
+  // };
+
+  // const handleFinalGradeChange = (e, subject) => {
+  //   const value = e.target.value;
+  //   setfinalGrades(prevGrades => ({
+  //     ...prevGrades,
+  //     [subject]: {
+  //       ...(prevGrades[subject] || {}),
+  //       mark: value,
+  //     },
+  //   }));
+  // };
 
   // const handleSave = async () => {
   //   const scoreData = {
@@ -550,21 +606,22 @@ const Grade = () => {
   //   }
   // };
 
-  const setDateSelectBox = () => {
-    let yearsArray = [];
-    // 2005년부터 현재 연도까지 옵션을 추가합니다.
-    for (let i = nowYear; i >= 2005; i--) {
-      yearsArray.push(
-        <option key={i} value={i}>
-          {i}
-        </option>,
-      );
-    }
-    setYear(yearsArray);
-  };
-  useEffect(() => {
-    setDateSelectBox();
-  }, []);
+  // const setDateSelectBox = () => {
+  //   let yearsArray = [];
+  //   // 2005년부터 현재 연도까지 옵션을 추가합니다.
+  //   for (let i = nowYear; i >= 2005; i--) {
+  //     yearsArray.push(
+  //       <option key={i} value={i}>
+  //         {i}
+  //       </option>,
+  //     );
+  //   }
+  //   setYear(yearsArray);
+  // };
+  // useEffect(() => {
+  //   setDateSelectBox();
+  // }, []);
+
 
   return (
     <div className="main-core">
@@ -592,15 +649,6 @@ const Grade = () => {
               <div className="info-subtitle">차트</div>
             </div>
           </div>
-          <div className="info-button">
-            <button
-              onClick={() => {
-                studentGradeSelect1();
-              }}
-            >
-              조회
-            </button>
-          </div>
         </div>
         <div className="info-contain-top">
           <div className="info-item-top">
@@ -612,7 +660,7 @@ const Grade = () => {
                   onChange={e => {
                     handleGradeChange(e);
                   }}
-                  value={grade}
+                  value={latestGrade}
                 >
                   <option value="1">1학년</option>
                   <option value="2">2학년</option>
@@ -626,7 +674,7 @@ const Grade = () => {
                   onChange={e => {
                     handleSemesterChange(e);
                   }}
-                  value={semester}
+                  value={latestSemester}
                 >
                   <option value="1">1학기</option>
                   <option value="2">2학기</option>
@@ -635,10 +683,18 @@ const Grade = () => {
               <div className="total-student">
                 {/* <p>반/학년 전체 인원</p> */}
                 <p>년도 선택</p>
-                {/* <input value={`${classStudentCount} / ${gradeStudentCount}`} /> */}
-                <select id="year">
-                  <option value="">해당하는 해를 선택하세요.</option>
-                  {year}
+                <select
+                  id="year"
+                  value={latestYear}
+                  onChange={e => {
+                    handleYearChange(e);
+                  }}
+                >
+                  {yearOptions.map((year, index) => (
+                    <option key={index} value={year}>
+                      {year}년
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>
@@ -661,7 +717,13 @@ const Grade = () => {
                     <p>원점수</p>
                     <input
                       placeholder="-"
-                      value={item.mark || "-"}
+                      value={item.mark || ""}
+                      // value={
+                      //   item.mark !== undefined && item.mark !== null
+                      //     ? item.mark
+                      //     : "-"
+                      // }
+
                       onChange={e => {
                         handleChangeOne({ ...item, mark: e.target.value });
                       }}
@@ -671,15 +733,16 @@ const Grade = () => {
                   <div className="grade-info">
                     <p>반/전체 평균</p>
                     <input
-                      // placeholder="-"
-                      value={`${item.classAvg || "-"} / ${item.gradeAvg || "-"}`}
+                      placeholder="-"
+                      value={`${item.classAvg || ""} / ${item.gradeAvg || ""}`}
                     />
                     점
                   </div>
                   <div className="grade-info">
                     <p>반/전체 등수</p>
                     <input
-                      value={`${item.subjectClassRank || "-"} / ${item.subjectGradeRank || "-"}`}
+                      placeholder="-"
+                      value={`${item.subjectClassRank || ""} / ${item.subjectGradeRank || ""}`}
                     />
                     등
                   </div>
@@ -713,15 +776,6 @@ const Grade = () => {
               <div className="text-wrapper">기말고사</div>
             </div>
           </div>
-          <div className="info-button">
-            <button
-              onClick={() => {
-                studentGradeSelect2();
-              }}
-            >
-              조회
-            </button>
-          </div>
         </div>
 
         <div className="info-contain-top">
@@ -734,7 +788,7 @@ const Grade = () => {
                     <p>원점수</p>
                     <input
                       placeholder="-"
-                      value={item.mark}
+                      value={item.mark || ""}
                       onChange={e => {
                         handleChangeTwo({ ...item, mark: e.target.value });
                       }}
@@ -744,8 +798,6 @@ const Grade = () => {
                   <div className="grade-info">
                     <p>반/전체 평균</p>
                     <input
-                      // placeholder="-"
-
                       value={`${item.classAvg || "-"} / ${item.gradeAvg || "-"}`}
                     />
                     점
@@ -753,9 +805,19 @@ const Grade = () => {
                   <div className="grade-info">
                     <p>반/전체 등수</p>
                     <input
-                      value={`${item.classRank || "-"} / ${item.subjectGradeRank || "-"}`}
+                      value={`${item.subjectClassRank || "-"} / ${item.subjectGradeRank || "-"}`}
+
                     />
                     등
+                  </div>
+                  <div className="info-button">
+                    <button
+                      onClick={() => {
+                        handleSaveOne(item);
+                      }}
+                    >
+                      저장
+                    </button>
                   </div>
                 </div>
               </div>
@@ -764,10 +826,12 @@ const Grade = () => {
         </div>
         <div className="all-grade">
           <div className="grade-rank">
-            학년 전체 등수 <input value={gradeRank} /> / {gradeStudentCount} 등
+            학년 전체 등수 <input value={classRank.gradeRank} /> /{" "}
+            {classRank.gradeStudentCount} 등
           </div>
           <div className="grade-rank">
-            반 등수 <input value={classRank} /> / {classStudentCount} 등
+            반 등수 <input value={classRank.classRank} /> /{" "}
+            {classRank.classStudentCount} 등
           </div>
         </div>
         <Signature />
