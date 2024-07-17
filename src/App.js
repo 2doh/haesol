@@ -34,6 +34,7 @@ import Grade from "pages/grade/Grade";
 import GradeChart from "pages/grade/GradeChart";
 import NotFound from "components/notfound/NotFound";
 import { AuthenticatedRedirect } from "components/common/AuthenticatedRedirect";
+import StudentEdit from "pages/student/StudentEdit";
 
 const ModalStyle = styled.div`
   position: absolute;
@@ -126,7 +127,7 @@ function App() {
           <Route index element={<Home />}></Route>
 
           {/* 로그인 & 회원가입 : 이후 진입시 Home으로 강제 이동 */}
-          {accessToken ? (
+          {/* {accessToken ? (
             <>
               <Route path="/login" element={<AuthenticatedRedirect />}></Route>
               <Route
@@ -148,7 +149,12 @@ function App() {
               <Route path="/findid" element={<FindId />}></Route>
               <Route path="/findpass" element={<FindPass />}></Route>
             </>
-          )}
+          )} */}
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/students" element={<Students />}></Route>
+          <Route path="/signup" element={<Signup />}></Route>
+          <Route path="/findid" element={<FindId />}></Route>
+          <Route path="/findpass" element={<FindPass />}></Route>
 
           {/* 어드민 */}
           {loginUserType === "ROLE_ADMIN" ? (
@@ -188,12 +194,17 @@ function App() {
             element={<GradeChart />}
           ></Route>
           {/* 임시 경로 */}
-          {/* <Route path="/students/edit" element={<StudentEdit />}></Route> */}
-          {/* 학생 본인 정보 수정 페이지 임시 경로 */}
-          <Route
-            path="/students/edit/:studentPk"
-            element={<StudentInfoView />}
-          ></Route>
+          {loginUserType === "ROLE_TEAHCER" ? (
+            <Route
+              path="/students/edit/:studentPk"
+              element={<StudentEdit />}
+            ></Route>
+          ) : (
+            <Route
+              path="/students/edit/:studentPk"
+              element={<StudentInfoView />}
+            ></Route>
+          )}
 
           {/* 교직원 : 정보 수정 페이지 */}
           <Route path="/teacherinfo" element={<TeacherEdit />}></Route>

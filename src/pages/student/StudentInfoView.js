@@ -161,7 +161,12 @@ const StudentInfoView = () => {
             >
               <div className="info-subtitle">성적 입력</div>
             </div>
-            <div className="div-wrapper">
+            <div
+              className="div-wrapper"
+              onClick={() => {
+                handleChart();
+              }}
+            >
               <div className="info-subtitle">차트</div>
             </div>
           </div>
@@ -269,6 +274,7 @@ const StudentInfoView = () => {
             </div>
           </div>
           <div className="info-img">
+            {/* 이미지 수정 필요 */}
             <StudentImg
               studentPic={studentPic}
               setStudentPic={setStudentPic}
@@ -286,13 +292,12 @@ const StudentInfoView = () => {
                     type="text"
                     name="text"
                     placeholder={postCode}
-                    readOnly
                     value={studentZoneCode}
                   ></input>
                   <button
                     type="button"
-                    onClick={() => {
-                      handleAddClick();
+                    onClick={e => {
+                      handleAddClick(e);
                     }}
                   >
                     우편번호 찾기
