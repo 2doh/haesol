@@ -20,7 +20,6 @@ import ClassSchedule from "./ClassSchedule";
 import Chat from "./Chat";
 import ClassNotice from "./ClassNotice";
 
-
 const LoginUserStyle = styled.div`
   /* border: 1px solid black; */
   /* display: flex;
@@ -166,47 +165,26 @@ const LoginUser = () => {
 
     const num = getCookie("selectChildNum");
     if (res) {
-      console.log("자녀 있음.");
+      // console.log("자녀 있음.");
       setMyChildList(res);
-      console.log(res);
+      // console.log(res);
 
       /** 선택되어 있는 학생의 정보 저장 */
       setBirth(res[num].birth);
-      setClassId(res[selectNum].classId);
-      setClassName(res[selectNum].classId);
-      setGender(res[selectNum].gender);
-      setName(res[selectNum].name);
-      setParentName(res[selectNum].parentName);
-      setParentPhone(res[selectNum].parentPhone);
-      setParentsPK(res[selectNum].parentsPK);
-      setPhone(res[selectNum].phone);
-      setStudentPk(res[selectNum].studentPk);
-      setAge(res[selectNum].age);
-      setTeacherName(res[selectNum].teacherName);
-      setStudentPic(res[selectNum].pic);
+      setClassId(res[num].classId);
+      setClassName(res[num].classId);
+      setGender(res[num].gender);
+      setName(res[num].name);
+      setParentName(res[num].parentName);
+      setParentPhone(res[num].parentPhone);
+      setParentsPK(res[num].parentsPK);
+      setPhone(res[num].phone);
+      setStudentPk(res[num].studentPk);
+      setAge(res[num].age);
+      setTeacherName(res[num].teacherName);
+      setStudentPic(res[num].pic);
 
-    }
-    // else {
-      // setMyChildList(res);
-      // console.log("정보 저장 : ", res);
-
-      /** 선택되어 있는 학생의 정보 저장 */
-//       setBirth(res[num].birth);
-//       setClassId(res[num].classId);
-//       setClassName(res[num].classId);
-//       setGender(res[num].gender);
-//       setName(res[num].name);
-//       setParentName(res[num].parentName);
-//       setParentPhone(res[num].parentPhone);
-//       setParentsPK(res[num].parentsPK);
-//       setPhone(res[num].phone);
-//       setStudentPk(res[num].studentPk);
-//       setAge(res[num].age);
-//       setTeacherName(res[num].teacherName);
-//       setStudentPic(res[num].pic);
-
-//       setOffUseEffect(true);
-
+      setOffUseEffect(true);
     }
   };
 
@@ -244,13 +222,6 @@ const LoginUser = () => {
     window.location.reload("/");
   };
 
-  const onChangeClcikMemu = e => {
-    // if (e.target.id === num) {
-    console.log("여기");
-
-    // }
-  };
-
   /** 메뉴 선택시 selectChildNum 변경 */
   const handleOnClick = (e, idx) => {
     setCountIndex(idx);
@@ -259,6 +230,9 @@ const LoginUser = () => {
 
   return (
     <LoginUserStyle>
+      {/* <ChatWarp> */}
+      {/* <Chat /> */}
+      {/* </ChatWarp> */}
       <div className="main-core">
         <div className="user-info-wrap">
           <div className="user-info-tap">
@@ -285,25 +259,6 @@ const LoginUser = () => {
                   </div>
                 );
               })}
-
-              {/* <div
-                ref={refStudentMenu1}
-                className="frame f-div selecenu"t-m
-                onClick={() => {
-                  onClickNameMemu(1);
-                }}
-              >
-                <div className="text-wrapper">{name}</div>
-              </div>
-              <div
-                ref={refStudentMenu2}
-                className="div-wrapper s-div"
-                onClick={() => {
-                  onClickNameMemu(2);
-                }}
-              >
-                <div className="info-subtitle">김나래</div>
-              </div> */}
             </div>
           </div>
         </div>
@@ -349,17 +304,6 @@ const LoginUser = () => {
                           setStudentPic={setStudentPic}
                           studentPk={studentPk}
                         /> */}
-
-//                       </div>
-//                       <div className="login-user-info-div">
-//                         <div className="login-user-info-label-box">
-//                           <div className="login-user-info-label">학생 이름</div>
-//                           <div className="login-user-info-label">나이</div>
-//                           <div className="login-user-info-label">학급</div>
-//                           <div className="login-user-info-label">
-//                             선생님 성함
-//                           </div>
-
                         </div>
                         <div className="login-user-info-div">
                           <div className="login-user-info-label-box">
@@ -440,9 +384,7 @@ const LoginUser = () => {
                   </div>
                 </div>
               </div>
-              <div>
-                <Chat />
-              </div>
+              <div>{/* <Chat /> */}</div>
             </div>
           </div>
         </div>
