@@ -70,9 +70,11 @@ export const getRecentNoticeInfo = async noticeState => {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    console.log("알림장 불러오기 : ", response);
-    return response;
+    console.log("알림장 불러오기 : ", response.data.result);
+    return response.data.result;
   } catch (error) {
+    console.log("알림장 불러오기 : ", response.data.result);
+
     console.log(error);
   }
 };

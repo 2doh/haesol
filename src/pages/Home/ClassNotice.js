@@ -1,7 +1,10 @@
 import styled from "@emotion/styled";
+import { getRecentNoticeInfo } from "api/teacher/teacherapi";
+import moment from "moment";
 import { useEffect, useRef, useState } from "react";
 import { BsPencilFill } from "react-icons/bs";
 import { useNavigate } from "react-router";
+import { getCookie } from "utils/cookie";
 
 const ClassNoticeStyle = styled.div`
   /* 추후 삭제 */
@@ -9,26 +12,16 @@ const ClassNoticeStyle = styled.div`
   height: 100%; */
   margin-bottom: 50px;
 `;
-const ClassNotice = () => {
+const ClassNotice = ({ setCreatedAt }) => {
   const navigate = useNavigate();
+  const [noticeMenuNum, setNoticeMenuNum] = useState(2);
+  const [content, setContent] = useState("");
+  const [loginUserType, setLoginUserType] = useState(getCookie("userRole"));
 
   /** (교직원) 우리 학급 알림장 리스트 페이지로 이동 */
   const moveMyPage = () => {
     navigate("/notice/list/classid");
   };
-
-  // const [selelctNoticeMenu, setSelelctNoticeMenu] = useState(1);
-  // const [suppliesMenu, setSuppliesMenu] = useState("");
-
-  // useEffect(() => {
-  //   if (selelctNoticeMenu === 1) {
-  //   }
-
-  //   if (selelctNoticeMenu === 2) {
-  //   }
-
-  //   console.log("시작");
-  // }, [selelctNoticeMenu]);
 
   const suppliesMenuClassName = useRef();
   const noticeMenuClassName = useRef();
@@ -50,6 +43,21 @@ const ClassNotice = () => {
     }
   };
 
+  const getNotice = async noticeMenuNum => {
+    // 알림 : 1, 준비물 : 2
+    const res = await getRecentNoticeInfo(noticeMenuNum);
+
+    // 작성일 : createdAt, 내용 : content
+    setContent(res.content);
+    setCreatedAt(moment(res.createdAt).format("YYYY-MM-DD"));
+    console.log("결과값 : ", res);
+  };
+
+  /** 최초 랜더링 : 알림장 불러오기 */
+  useEffect(() => {
+    getNotice(noticeMenuNum);
+  }, [noticeMenuNum]);
+
   return (
     <ClassNoticeStyle>
       <div className="class-notice-inner">
@@ -59,6 +67,7 @@ const ClassNotice = () => {
             className="supplies-menu"
             onClick={e => {
               changeNoticeMenu(e);
+              setNoticeMenuNum(2);
             }}
           >
             준비물
@@ -68,6 +77,7 @@ const ClassNotice = () => {
             className="notice-list-menu no-select-menu"
             onClick={e => {
               changeNoticeMenu(e);
+              setNoticeMenuNum(1);
             }}
           >
             알림
@@ -76,26 +86,31 @@ const ClassNotice = () => {
         </div>
         <div className="notice-inner">
           <div ref={suppliesTextClassName} className="school-supplies">
-            <ul>
+            {content}
+            {/* <ul>
               <li>1. 줄넘기</li>
               <li>2. 가위, 풀</li>
               <li>3. 색종이</li>
-            </ul>
+            </ul> */}
           </div>
           <div ref={noticeTextClassName} className="notice-text no-display">
-            <ul>
+            {content}
+
+            {/* <ul>
               <li>1. 수학 익힘책 15p 숙제가 있습니다.</li>
               <li>2. 내일 받아쓰기 시험이 있습니다.</li>
-            </ul>
+            </ul> */}
           </div>
-          <div
-            className="notice-write-icon"
-            onClick={() => {
-              moveMyPage();
-            }}
-          >
-            <BsPencilFill />
-          </div>
+          {loginUserType === "ROLE_TEAHCER" ? (
+            <div
+              className="notice-write-icon"
+              onClick={() => {
+                moveMyPage();
+              }}
+            >
+              <BsPencilFill />
+            </div>
+          ) : null}
         </div>
       </div>
     </ClassNoticeStyle>

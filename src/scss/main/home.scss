@@ -84,6 +84,18 @@
 }
 
 // 메인 오른쪽 영역
+.main-right-wrap {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 200px;
+
+  .user-main-inner-info {
+    height: auto;
+  }
+}
+
+// 메인 - 내정보
 .main-inner-info {
   width: 340px;
   height: 100%;
@@ -163,6 +175,8 @@
       }
     }
   }
+
+  // 학부모 & 교직원
 
   .main-info-lunch {
     // margin-top: 110px;
