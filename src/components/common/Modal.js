@@ -12,6 +12,7 @@ import { getCookie } from "utils/cookie";
 import { deleteNotice } from "api/student/studentapi";
 import NoticeList from "pages/notice/NoticeList";
 import { useNavigate } from "react-router";
+import { putChildInfo, putParentsPwChange } from "api/parents/mychildinfo";
 
 const ModalStyle = styled.div`
   position: fixed;
@@ -154,10 +155,19 @@ const Modal = () => {
         dispatch(closeModal());
       }
 
-      // 교직원 : 정보 수정 페이지 처리리
+      // 교직원 : 정보 수정 페이지 처리
       if (modalState.modalRes[0] === 11) {
         console.log("수정처리를 하겠습니다.", modalState.modalRes[1]);
         const res = patchTeacherInfo(modalState.modalRes[1]);
+        if (res) {
+          dispatch(closeModal());
+        }
+      }
+
+      // 학부모 - 학생 : 정보 수정 페이지 처리
+      if (modalState.modalRes[0] === 12) {
+        console.log("수정처리를 하겠습니다.", modalState.modalRes[1]);
+        const res = putChildInfo(modalState.modalRes[1]);
         if (res) {
           dispatch(closeModal());
         }
@@ -208,7 +218,12 @@ const Modal = () => {
       ) {
         // console.log("비밀번호 수정 처리 진입");
         // console.log(getCookie("userIdPk"));
-        putTeacherPwChange(newPw, modalState.bodyText);
+        if (getCookie("userRole") === "ROLE_TEAHCER") {
+          putTeacherPwChange(newPw, modalState.bodyText);
+        }
+        if (getCookie("userRole") === "ROLE_PARENTS") {
+          putParentsPwChange(newPw, modalState.bodyText);
+        }
       }
       dispatch(closeModal());
     }

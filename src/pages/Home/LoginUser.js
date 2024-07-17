@@ -203,6 +203,7 @@ const LoginUser = () => {
       setAge(res[num].age);
       setTeacherName(res[num].teacherName);
       setStudentPic(res[num].pic);
+      setCookie("studentPk", res[num].studentPk);
 
       setOffUseEffect(true);
     }
@@ -222,8 +223,7 @@ const LoginUser = () => {
 
   /** 마이페이지 이동 */
   const moveMyPage = () => {
-    if (loginUserType === "ROLE_TEAHCER") navigate("/teacherinfo");
-    if (loginUserType === "ROLE_PARENTS") navigate("/studentinfo");
+    navigate("/studentinfo");
   };
 
   /** 성적 확인 페이지 이동 */
@@ -272,15 +272,12 @@ const LoginUser = () => {
                   <div
                     key={index}
                     id={index}
-                    // className="frame f-div select-menu "
                     className={`div-wrapper ${countIndex === index ? "select-menu" : ""}`}
-                    // value={index}
-                    // className="div-wrapper"
                     onClick={e => handleOnClick(e, index)}
                     // onChange={e => {
                     //   onChangeClcikMemu(e);
                     // }}
-                    style={{ left: `${leftPosition}px` }} // left 스타일 적용
+                    style={{ left: `${leftPosition}px` }}
                   >
                     <div className="text-wrapper">{item.name}</div>
                   </div>
