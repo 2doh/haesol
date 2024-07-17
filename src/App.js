@@ -3,7 +3,7 @@ import Footer from "components/layout/Footer";
 import Header from "components/layout/Header";
 import Home from "pages/Home/Home";
 import Login from "pages/user/Login";
-import NotFound from "pages/NotFound";
+// import NotFound from "pages/NotFound";
 import Signup from "pages/user/Signup";
 import AdminHome from "pages/admin/AdminHome";
 import Notice from "pages/notice/Notice";
@@ -32,6 +32,7 @@ import MyChildInfo from "pages/parents/MyChildInfo";
 import ReturnHomeRoute from "components/common/ReturnHomeRoute";
 import Grade from "pages/grade/Grade";
 import GradeChart from "pages/grade/GradeChart";
+import NotFound from "components/notfound/NotFound";
 
 const ModalStyle = styled.div`
   position: absolute;

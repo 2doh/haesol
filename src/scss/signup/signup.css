@@ -92,19 +92,19 @@
 .signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-section-top {
   display: flex;
   align-items: center;
-  flex-direction: row;
   gap: 10px;
   margin-bottom: 8px;
+  width: 100%;
 }
 .signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-section-top .fields-section-title {
+  display: flex;
   font-size: 20px;
-  width: auto;
   white-space: nowrap;
 }
 .signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-section-top .fields-section-errmsg {
   font-size: 12px;
+  margin-top: 0;
   color: #dd838f;
-  margin-top: 0px;
 }
 .signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-section-bottom-id {
   width: 100%;
@@ -175,6 +175,18 @@
   font-size: 18px;
   gap: 10px;
 }
+.signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-main-fields .fieleds-section-children {
+  border-radius: 5px;
+  border: 1px solid #886348;
+  width: 100%;
+  height: 40px;
+  padding-left: 5px;
+  color: #2a1b07;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  background-color: white;
+}
 .signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-gender {
   width: 20px;
   height: 20px;
@@ -183,6 +195,7 @@
   width: 100%;
   display: flex;
   align-items: center;
+  position: relative;
 }
 .signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-section-bottom .fieleds-section-input {
   border-radius: 5px;
@@ -191,6 +204,22 @@
   height: 40px;
   padding-left: 5px;
   color: #2a1b07;
+}
+.signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-section-bottom .check-duplicate-id-bt {
+  width: 100px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #dd838f;
+  border: 1px solid #a8172a;
+  color: #fff;
+  font-size: 14px;
+  line-height: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  position: absolute;
+  right: 5px;
 }
 .signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-main-fields .signup-main-fields-homeadress {
   width: 100%;
