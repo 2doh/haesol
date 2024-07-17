@@ -1,14 +1,22 @@
+import {
+  Avatar,
+  ChatContainer,
+  MainContainer,
+  Message,
+  MessageInput,
+  MessageList,
+} from "@chatscope/chat-ui-kit-react";
+import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import styled from "@emotion/styled";
 import { getMyChildInfo } from "api/parents/mychildinfo";
-import { getRecentNoticeInfo } from "api/teacher/teacherapi";
 import { useEffect, useRef, useState } from "react";
 import { MdOutlineLogout } from "react-icons/md";
 import { useNavigate } from "react-router";
 import { getCookie, removeCookie, setCookie } from "utils/cookie";
 import "../../scss/main/mainlogin.css";
-import ClassNotice from "./ClassNotice";
 import ClassSchedule from "./ClassSchedule";
-import StudentImg from "pages/student/StudentImg";
+import Chat from "./Chat";
+import ClassNotice from "./ClassNotice";
 
 const LoginUserStyle = styled.div`
   /* border: 1px solid black; */
@@ -51,9 +59,9 @@ const LoginUserStyle = styled.div`
           }
         }
 
-        .s-div {
+        /* .s-div {
           left: 158px;
-        }
+        } */
 
         .select-menu {
           background-color: #e7d9d9;
@@ -77,10 +85,10 @@ const LoginUser = () => {
 
   const navigate = useNavigate();
   const [loginUserType, setLoginUserType] = useState(getCookie("userRole"));
-  const [myChildList, setMyChildList] = useState([]);
+  const [createdAt, setCreatedAt] = useState();
 
-  // 선택한 학생 번호 쿠키에 저장
-  setCookie("selectChildNum", 0);
+  const [myChildList, setMyChildList] = useState([]);
+  const [offUseEffect, setOffUseEffect] = useState(false);
 
   // 선택되어 있는 학생 한 명의 정보
   const [birth, setBirth] = useState("");
@@ -101,10 +109,13 @@ const LoginUser = () => {
   const [studentPic, setStudentPic] = useState(null);
 
   const [selectChildInfo, setSelectChildInfo] = useState([]);
-  const [selectNum, setSelectNum] = useState(0);
+  const [num, setnum] = useState(0);
 
-  const refStudentMenu1 = useRef();
-  const refStudentMenu2 = useRef();
+  /** 메뉴 선택 */
+  const [countIndex, setCountIndex] = useState(0);
+
+  // const refStudentMenu1 = useRef();
+  // const refStudentMenu2 = useRef();
 
   // ROLE_ADMIN = 어드민;
   // ROLE_TEAHCER = 교직원;
@@ -115,39 +126,65 @@ const LoginUser = () => {
   }, []);
 
   /** 아이들 정보 불러오기 */
+
+  useEffect(() => {
+    // console.log("offUseEffect False");
+    if (offUseEffect) {
+      const num = getCookie("selectChildNum");
+      // console.log("offUseEffect True");
+      // console.log("정보 확인 : ", myChildList[num].name);
+
+      /** 선택되어 있는 학생의 정보 저장 */
+      setBirth(myChildList[num].birth);
+      setClassId(myChildList[num].classId);
+      setClassName(myChildList[num].classId);
+      setGender(myChildList[num].gender);
+      setName(myChildList[num].name);
+      setParentName(myChildList[num].parentName);
+      setParentPhone(myChildList[num].parentPhone);
+      setParentsPK(myChildList[num].parentsPK);
+      setPhone(myChildList[num].phone);
+      setStudentPk(myChildList[num].studentPk);
+      setAge(myChildList[num].age);
+      setTeacherName(myChildList[num].teacherName);
+      setStudentPic(myChildList[num].pic);
+    }
+  }, [getCookie("selectChildNum")]);
+
+  const myChildInfoUpdate = async () => {};
+
+  /** 아이들 정보 불러오기 */
   const myChildInfo = async () => {
     const res = await getMyChildInfo();
 
     if (res === false) {
       console.log("자녀 없음.");
-    }
-
-    const num = getCookie("selectChildNum");
-    if (res) {
-      console.log("자녀 있음.");
+    } else {
       setMyChildList(res);
-      console.log(res);
+      // console.log("정보 저장 : ", res);
 
       /** 선택되어 있는 학생의 정보 저장 */
       setBirth(res[num].birth);
-      setClassId(res[selectNum].classId);
-      setClassName(res[selectNum].classId);
-      setGender(res[selectNum].gender);
-      setName(res[selectNum].name);
-      setParentName(res[selectNum].parentName);
-      setParentPhone(res[selectNum].parentPhone);
-      setParentsPK(res[selectNum].parentsPK);
-      setPhone(res[selectNum].phone);
-      setStudentPk(res[selectNum].studentPk);
-      setAge(res[selectNum].age);
-      setTeacherName(res[selectNum].teacherName);
-      setStudentPic(res[selectNum].pic);
+      setClassId(res[num].classId);
+      setClassName(res[num].classId);
+      setGender(res[num].gender);
+      setName(res[num].name);
+      setParentName(res[num].parentName);
+      setParentPhone(res[num].parentPhone);
+      setParentsPK(res[num].parentsPK);
+      setPhone(res[num].phone);
+      setStudentPk(res[num].studentPk);
+      setAge(res[num].age);
+      setTeacherName(res[num].teacherName);
+      setStudentPic(res[num].pic);
+
+      setOffUseEffect(true);
     }
   };
 
   useEffect(() => {
     myChildInfo();
-  }, [getCookie("selectChildNum")]);
+  }, []);
 
   /** 알림장 최초 실행 */
   useEffect(() => {
@@ -179,16 +216,17 @@ const LoginUser = () => {
     window.location.reload("/");
   };
 
-  /** 메뉴 선택 */
-  const onClickNameMemu = selectNum => {
-    if (selectNum === 1) {
-      refStudentMenu1.current.classList = "frame f-div select-menu";
-      refStudentMenu2.current.classList = "div-wrapper s-div";
-    }
-    if (selectNum === 2) {
-      refStudentMenu1.current.classList = "div-wrapper f-div";
-      refStudentMenu2.current.classList = "frame s-div select-menu";
-    }
+  const onChangeClcikMemu = e => {
+    // if (e.target.id === num) {
+    console.log("여기");
+
+    // }
+  };
+
+  /** 메뉴 선택시 selectChildNum 변경 */
+  const handleOnClick = (e, idx) => {
+    setCountIndex(idx);
+    setCookie("selectChildNum", idx);
   };
 
   return (
@@ -197,9 +235,32 @@ const LoginUser = () => {
         <div className="user-info-wrap">
           <div className="user-info-tap">
             <div className="property">
-              <div
+              {myChildList.map((item, index) => {
+                // console.log("자녀의 수 : ", item);
+                const leftPosition = index * 158; // 인덱스에 따라 left 위치 계산
+
+                return (
+                  <div
+                    key={index}
+                    id={index}
+                    // className="frame f-div select-menu "
+                    className={`div-wrapper ${countIndex === index ? "select-menu" : ""}`}
+                    // value={index}
+                    // className="div-wrapper"
+                    onClick={e => handleOnClick(e, index)}
+                    // onChange={e => {
+                    //   onChangeClcikMemu(e);
+                    // }}
+                    style={{ left: `${leftPosition}px` }} // left 스타일 적용
+                  >
+                    <div className="text-wrapper">{item.name}</div>
+                  </div>
+                );
+              })}
+
+              {/* <div
                 ref={refStudentMenu1}
-                className="frame f-div select-menu"
+                className="frame f-div selecenu"t-m
                 onClick={() => {
                   onClickNameMemu(1);
                 }}
@@ -214,11 +275,12 @@ const LoginUser = () => {
                 }}
               >
                 <div className="info-subtitle">김나래</div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
       </div>
+      {/* <LoginParents /> */}
       <div className="access-login-main main">
         <div className="access-login-main-inner">
           <h1 className="access-login-title">{className}</h1>
@@ -235,100 +297,111 @@ const LoginUser = () => {
               <div className="main-notice">
                 <div className="main-schedule-title main-contents-title">
                   <div className="main-schedule-title-text ">알림장</div>
-                  {/* 알림장 날짜 받아오는 것으로 추후 수정 */}
-                  <div className="main-notice-day">000</div>
+                  <div className="main-notice-day">{createdAt}</div>
                 </div>
                 <div className="main-title-dwon-contents">
-                  <ClassNotice />
+                  {/* <ClassNotice setCreatedAt={setCreatedAt} /> */}
                 </div>
               </div>
             </div>
-            <div className="main-inner-info">
-              <div className="main-login-user-info">
-                {/* <div className="main-schedule-title main-contents-title">
+
+            <div className="main-right-wrap">
+              <div className="main-inner-info user-main-inner-info">
+                <div className="main-login-user-info">
+                  {/* <div className="main-schedule-title main-contents-title">
                 <div className="main-schedule-title-text">학교 일정</div>
               </div> */}
-                <div className="main-inner-info-login">
-                  <div className="login-inner">
-                    <div className="login-user-info">
-                      <div className="login-user-pic">
-                        {/* <StudentImg
+                  <div className="main-inner-info-login">
+                    <div className="login-inner">
+                      <div className="login-user-info">
+                        <div className="login-user-pic">
+                          {/* <StudentImg
                           studentPic={studentPic}
                           setStudentPic={setStudentPic}
                           studentPk={studentPk}
                         /> */}
-                      </div>
-                      <div className="login-user-info-div">
-                        <div className="login-user-info-label-box">
-                          <div className="login-user-info-label">학생 이름</div>
-                          <div className="login-user-info-label">나이</div>
-                          <div className="login-user-info-label">학급</div>
-                          <div className="login-user-info-label">
-                            선생님 성함
+                        </div>
+                        <div className="login-user-info-div">
+                          <div className="login-user-info-label-box">
+                            <div className="login-user-info-label">
+                              학생 이름
+                            </div>
+                            <div className="login-user-info-label">나이</div>
+                            <div className="login-user-info-label">학급</div>
+                            <div className="login-user-info-label">
+                              선생님 성함
+                            </div>
+                          </div>
+                          <div className="login-user-info-label-box">
+                            <div className="login-user-info-text">{name}</div>
+                            <div className="login-user-info-text">
+                              {age === "" || age === null || age === 0 ? (
+                                <div className="home-my-info-no-style">
+                                  미등록
+                                </div>
+                              ) : (
+                                age
+                              )}
+                            </div>
+                            <div className="login-user-info-text">
+                              {className === "" || className === null ? (
+                                <div className="home-my-info-no-style">
+                                  미등록
+                                </div>
+                              ) : (
+                                className
+                              )}
+                            </div>
+                            <div className="login-user-info-text">
+                              {teacherName === "" || teacherName === null ? (
+                                <div className="home-my-info-no-style">
+                                  미등록
+                                </div>
+                              ) : (
+                                teacherName
+                              )}
+                            </div>
                           </div>
                         </div>
-                        <div className="login-user-info-label-box">
-                          <div className="login-user-info-text">{name}</div>
-                          <div className="login-user-info-text">
-                            {age === "" || age === null || age === 0 ? (
-                              <div className="home-my-info-no-style">
-                                미등록
-                              </div>
-                            ) : (
-                              age
-                            )}
-                          </div>
-                          <div className="login-user-info-text">
-                            {className === "" || className === null ? (
-                              <div className="home-my-info-no-style">
-                                미등록
-                              </div>
-                            ) : (
-                              className
-                            )}
-                          </div>
-                          <div className="login-user-info-text">
-                            {teacherName === "" || teacherName === null ? (
-                              <div className="home-my-info-no-style">
-                                미등록
-                              </div>
-                            ) : (
-                              teacherName
-                            )}
-                          </div>
+                        <div
+                          className="logout-icon"
+                          onClick={() => {
+                            logout();
+                          }}
+                        >
+                          <MdOutlineLogout size="100%" title="로그아웃" />
                         </div>
                       </div>
-                      <div
-                        className="logout-icon"
-                        onClick={() => {
-                          logout();
-                        }}
-                      >
-                        <MdOutlineLogout size="100%" title="로그아웃" />
+                      {/* 프로필 버튼 영역 start */}
+                      <div className="login-user-btn">
+                        <button
+                          className="subject-grade-btn"
+                          onClick={() => {
+                            moveMyGradePage();
+                          }}
+                        >
+                          과목별 성적
+                        </button>
+                        <button
+                          className="my-page-btn"
+                          onClick={() => {
+                            moveMyPage();
+                          }}
+                        >
+                          마이페이지
+                        </button>
                       </div>
+                      {/* 프로필 버튼 영역 end */}
                     </div>
-                    {/* 프로필 버튼 영역 start */}
-                    <div className="login-user-btn">
-                      <button
-                        className="subject-grade-btn"
-                        onClick={() => {
-                          moveMyGradePage();
-                        }}
-                      >
-                        과목별 성적
-                      </button>
-                      <button
-                        className="my-page-btn"
-                        onClick={() => {
-                          moveMyPage();
-                        }}
-                      >
-                        마이페이지
-                      </button>
-                    </div>
-                    {/* 프로필 버튼 영역 end */}
+
+                    {/* 채팅방 시작 */}
+
+                    {/* 채팅방 끝 */}
                   </div>
                 </div>
+              </div>
+              <div>
+                <Chat />
               </div>
             </div>
           </div>

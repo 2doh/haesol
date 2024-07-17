@@ -59,6 +59,16 @@
   background-color: #dee8e9;
 }
 
+.main-right-wrap {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 200px;
+}
+.main-right-wrap .user-main-inner-info {
+  height: auto;
+}
+
 .main-inner-info {
   width: 340px;
   height: 100%;
