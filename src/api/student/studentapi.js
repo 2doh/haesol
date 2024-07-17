@@ -34,10 +34,10 @@ export const getStudentInfo = async studentPk => {
 };
 
 // 학생 한 명 정보 수정
-export const modifyStudentInfo = async () => {
+export const modifyStudentInfo = async data => {
   const accessToken = getCookie("accessToken");
   try {
-    const response = await axios.put("/api/student", {
+    const response = await axios.put("/api/student", data, {
       headers: {
         "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${accessToken}`,

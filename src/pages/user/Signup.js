@@ -27,7 +27,13 @@ const Signup = () => {
         <div className="signup-wrap-inner br20">
           <div className="signup-wrap-inner-content">
             <div className="signup-top">
-              <img className="siginup-logo" src={logo}></img>
+              <img
+                className="siginup-logo"
+                src={logo}
+                onClick={() => {
+                  navi("/");
+                }}
+              ></img>
               <UserSelect
                 handleSelect={handleSelect}
                 handleSelectTeacher={handleSelectTeacher}

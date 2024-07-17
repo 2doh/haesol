@@ -1,26 +1,12 @@
 import styled from "@emotion/styled";
 import { useEffect, useRef, useState } from "react";
 import "../../scss/teacher/teacheredit.css";
-
-import { duplicateEmail, getTeacherInfo } from "api/teacher/teacherapi";
-import StudentImg from "pages/student/StudentImg";
+import { getTeacherInfo } from "api/teacher/teacherapi";
+import PhoneInputFields from "pages/student/PhoneInputFields";
 import { useDispatch, useSelector } from "react-redux";
 import { openModal, updateModalDate } from "slices/modalSlice";
-import PhoneInputFields from "pages/student/PhoneInputFields";
 
 const StudentsInfoStyle = styled.div`
-  /* display: flex;
-  justify-content: center;
-  flex-direction: column;
-  margin-top: 120px;
-  width: 100%;
-  height: 100%; */
-
-  /* .re-pw-btn {
-    & button {
-      width: 2000px;
-    }
-  } */
   .Modal {
     position: absolute;
     width: 500px;
@@ -56,7 +42,19 @@ const StudentsInfoStyle = styled.div`
         border-bottom: solid 2px #886348;
       }
       .info-title:last-child {
-        border-bottom: none;
+        /* border-bottom: none; */
+      }
+      input[id="domain-txt"] {
+        margin-left: 0px;
+      }
+
+      .email-warn-msg-div {
+        border-color: #f9957f !important;
+        background-color: #fff0ef !important;
+      }
+
+      .email-warn-msg {
+        color: #f6532b;
       }
     }
   }
@@ -80,41 +78,40 @@ const StudentsInfoStyle = styled.div`
     align-items: center;
     gap: 10px;
   }
+  .no-edit-class {
+    pointer-events: none;
+    background-color: #efece8 !important;
+  }
 `;
 
 const TeacherEdit = () => {
+  const dispatch = useDispatch();
   const modalState = useSelector(state => state.modalSlice);
+
   const emailText = useRef();
   const emailDomain = useRef();
   const emailDomainText = useRef();
-
-  // const [isPwChangeModal, setIsPwChangeModal] = useState(false);
-
-  // 비밀번호 수정 버튼
-  // const [pwChangeModalResult, setPwChangeModalResult] = useState(false);
-  // const [userInfo, setUserInfo] = useState(null);
-  // const phoneNum2 = useRef("");
-  // const addrNum = useRef("");
-  // const addrText = useRef("");
-  // const addrDetailText = useRef("");
 
   // 여기서부터 코드 수정
   const [birth, setBirth] = useState("");
   const [classNum, setClassNum] = useState("");
   const [classGrade, setClassGrade] = useState("");
-  const [email, setEmail] = useState(""); // 수정 정보
   const [gender, setGendar] = useState("");
   const [userId, setUserId] = useState("");
-  const [userName, setUserName] = useState(""); // 수정 정보
-  const [phoneNum, setPhoneNum] = useState(""); // 수정 정보
 
-  // 우편번호
-  const [zoneCode, setZoneCode] = useState(""); // 수정 정보
-  // 주소
-  const [addr, setAddr] = useState(""); // 수정 정보
+  // 업데이트 되는 정보 (5가지)
+  const [email, setEmail] = useState("");
+  const [userName, setUserName] = useState("");
+  const [phoneNum, setPhoneNum] = useState("");
+  const [zoneCode, setZoneCode] = useState("");
+  const [addr, setAddr] = useState("");
+  const [subAddr, setSubAAddr] = useState("");
 
   // 이미지
   const [studentPic, setStudentPic] = useState();
+
+  // 이메일 에러 메세지
+  const [errMsg, setErrMsg] = useState("");
 
   /** 선생님 정보 추출 */
   const nowUserInfo = async () => {
@@ -122,8 +119,13 @@ const TeacherEdit = () => {
       const res = await getTeacherInfo();
 
       setBirth(res.data.birth);
-      setZoneCode(res.data.addr.split(" # ")[0]);
-      setAddr(res.data.addr.split(" # ")[1]);
+
+      if (res.data.addr) {
+        setZoneCode(res.data.addr.split(" # ")[0]);
+        setAddr(res.data.addr.split(" # ")[1]);
+        setSubAAddr(res.data.addr.split(" # ")[2]);
+      }
+
       setGendar(res.data.gender);
       setUserId(res.data.id);
 
@@ -136,7 +138,6 @@ const TeacherEdit = () => {
         setClassNum(res.data.class.split(" ")[1]);
       }
 
-      // setEmail(res.data.email.split("@"));
       setEmail(res.data.email);
       emailText.current.value = res.data.email.split("@")[0];
       switch (res.data.email.split("@")[1]) {
@@ -168,22 +169,42 @@ const TeacherEdit = () => {
     }
   };
 
+  /** 최초 랜더링 */
+  useEffect(() => {
+    nowUserInfo();
+  }, []);
+
+  /** 모달 종료 후 갱신 */
+  useEffect(() => {
+    if (modalState.modalRes[0] === false) {
+      nowUserInfo();
+    }
+  }, [modalState.modalRes[0]]);
+
   /** 저장 기능 */
   const saveInfo = (selectModalType, newEamil) => {
+    const addAddr = `${addr} # ${subAddr}`;
+
     // 기본 이메일과 중복 확인
     if (email === newEamil) {
       console.log("중복 이메일입니다.");
 
       const data = {
         bodyText: ["정보를 수정하시겠습니까?"],
-        modalRes: [11, { name: userName, phone: phoneNum, zoneCode, addr }],
+        modalRes: [
+          11,
+          { name: userName, phone: phoneNum, zoneCode, addr: addAddr },
+        ],
         buttonText: ["수정", "취소"],
       };
       dispatch(updateModalDate(data));
     } else {
       const data = {
         bodyText: ["정보를 수정하시겠습니까?"],
-        modalRes: [11, { userName, phoneNum, zoneCode, addr, email: newEamil }],
+        modalRes: [
+          11,
+          { userName, phoneNum, zoneCode, addr: addAddr, email: newEamil },
+        ],
         buttonText: ["수정", "취소"],
       };
       dispatch(updateModalDate(data));
@@ -194,10 +215,6 @@ const TeacherEdit = () => {
 
   /** 취소 기능 */
   const modifyCancel = selectModalType => {
-    // e.preventDefault();
-    // const formData = new FormData();
-
-    /** (선택) 들어갈 내용 수정 */
     const data = {
       bodyText: ["수정한 내용을 되돌리겠습니까?"],
       modalRes: [1],
@@ -208,31 +225,15 @@ const TeacherEdit = () => {
     dispatch(openModal(selectModalType));
   };
 
-  useEffect(() => {
-    nowUserInfo();
-  }, []);
-
-  useEffect(() => {
-    if (modalState.modalRes[0] === false) {
-      nowUserInfo();
-    }
-  }, [modalState.modalRes[0]]);
-
-  const dispatch = useDispatch();
-  /** 모달 호출 */
+  /** 비밀번호 수정 모달 호출 */
   const showModal = selectModalType => {
-    /** (선택) 들어갈 내용 수정 */
     const data = { bodyText: [userId] };
-    /** (선택) 위와 아래는 세트 */
     dispatch(updateModalDate(data));
 
-    /**(고정) 모달 활성화 */
     const modalRes = dispatch(openModal(selectModalType));
   };
 
-  const [postCode, setPostCode] = useState("우편번호");
-  const [address, setAddress] = useState("주소");
-  /** 우편번호 찾기 */
+  /** 우편번호 찾기 - 팝업 */
   const handleAddClick = e => {
     e.preventDefault();
     // 주소찾기 팝업
@@ -251,49 +252,47 @@ const TeacherEdit = () => {
           extraRoadAddr = " (" + extraRoadAddr + ")";
         }
         // 우편번호와 주소 정보를 해당 필드에 넣는다.
-        setPostCode(data.zonecode);
-        setAddress(roadAddr);
+        setZoneCode(data.zonecode);
+        setAddr(roadAddr);
       },
     }).open();
   };
 
+  /** 이메일 도메인 select */
   const changeEmailDomain = e => {
     if (e.target.value !== "type") {
-      // 선택한 도메인을 input에 입력하고 disabled
-      // emailText.current.value = e.target.value;
       emailDomainText.current.classList = "box is-none";
     } else {
-      // 직접 입력 시
-      // input 내용 초기화 & 입력 가능하도록 변경
       emailDomainText.current.value = "";
       emailDomainText.current.classList = "box";
-      // emailText.current.disabled = false;
     }
   };
 
-  // const [passEmail, setPassEmail] = useState();
   /** 이메일 체크 */
   const cheackInfo = e => {
     if (emailDomain.current.value === "type") {
       const newEmail = `${emailText.current.value}@${emailDomainText.current.value}`;
       handleOnChange(newEmail);
-      // emailDomainText.current.value;
     } else {
       const newEmail = `${emailText.current.value}@${emailDomain.current.value}`;
       handleOnChange(newEmail);
-      // emailDomain.current.value;
     }
   };
 
-  const [errMsg, setErrMsg] = useState("");
   /** 이메일 유효성 검사 */
   const handleOnChange = newEamil => {
     const regex = /^[^\s@]+@[^\s@]+\.(com|net|co\.kr)$/i;
     if (regex.test(newEamil)) {
       setErrMsg("");
+      emailText.current.classList = "";
+      emailDomainText.current.classList = "";
       saveInfo("BasicModal", newEamil);
     } else {
       setErrMsg("이메일 형식에 맞지 않습니다");
+      emailText.current.classList = "email-warn-msg-div";
+      emailDomainText.current.classList = "email-warn-msg-div";
+      emailText.current.focus();
+      emailDomainText.current.focus();
     }
   };
 
@@ -322,7 +321,6 @@ const TeacherEdit = () => {
                 </button>
               </div>
             </div>
-
             <div className="info-button">
               <button
                 onClick={e => {
@@ -334,7 +332,6 @@ const TeacherEdit = () => {
               <button
                 onClick={e => {
                   modifyCancel("BasicModal");
-                  // nowUserInfo();
                 }}
               >
                 취소
@@ -380,7 +377,8 @@ const TeacherEdit = () => {
                   type="date"
                   name="date"
                   value={birth}
-                  onChange={e => setBirth(e.target.value)}
+                  className="no-edit-class"
+                  // onChange={e => setBirth(e.target.value)}
                 />
               </div>
               <div className="info-title">
@@ -394,13 +392,25 @@ const TeacherEdit = () => {
             </div>
             <div className="info-item-right">
               <div className="info-title">
+                <span>아이디</span>
+                <input
+                  type="text"
+                  name="text"
+                  placeholder=""
+                  value={userId}
+                  className="no-edit-class"
+                  // onChange={e => setClassGrade(e.target.value)}
+                />
+              </div>
+              <div className="info-title">
                 <span>담당 학년</span>
                 <input
                   type="text"
                   name="text"
                   placeholder=""
                   value={classGrade}
-                  onChange={e => setClassGrade(e.target.value)}
+                  className="no-edit-class"
+                  // onChange={e => setClassGrade(e.target.value)}
                 />
               </div>
               <div className="info-title">
@@ -410,15 +420,11 @@ const TeacherEdit = () => {
                   name="text"
                   placeholder=""
                   value={classNum}
-                  onChange={e => setClassNum(e.target.value)}
+                  className="no-edit-class"
+                  // onChange={e => setClassNum(e.target.value)}
                 />
               </div>
-              <div className="info-title">
-                <span></span>
-                {/* <input type="number" name="tel" placeholder="" /> */}
-              </div>
             </div>
-            {/* <div className="info-img"><StudentImg /></div> */}
           </div>
           <div className="info-contain-mid">
             <div className="info-item-mid">
@@ -456,7 +462,7 @@ const TeacherEdit = () => {
                       <option value="nate.com">nate.com</option>
                       <option value="kakao.com">kakao.com</option>
                     </select>
-                    <div>{errMsg}</div>
+                    <div className="email-warn-msg">{errMsg}</div>
                   </div>
                 </div>
               </div>
@@ -491,16 +497,12 @@ const TeacherEdit = () => {
                     name="text"
                     placeholder="상세주소를 입력해주세요."
                     className="info-add"
+                    value={subAddr}
+                    onChange={e => {
+                      setSubAAddr(e.target.value);
+                    }}
                   />
                 </div>
-              </div>
-            </div>
-          </div>
-          <div className="info-contain-top">
-            <div className="info-none-modify" id="info-none-modify-last">
-              <div className="info-title">
-                <span>아이디</span>
-                <div>{userId}</div>
               </div>
             </div>
           </div>

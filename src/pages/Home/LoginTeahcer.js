@@ -1,14 +1,11 @@
 import styled from "@emotion/styled";
-import { getMyChildInfo } from "api/parents/mychildinfo";
-import { getNoticeList } from "api/student/studentapi";
-import { useEffect, useRef, useState } from "react";
+import { getRecentNoticeInfo } from "api/teacher/teacherapi";
+import { useEffect } from "react";
 import { MdOutlineLogout } from "react-icons/md";
 import { useNavigate } from "react-router";
 import { getCookie, removeCookie } from "utils/cookie";
-import "../../scss/main/home.css";
 import ClassNotice from "./ClassNotice";
 import ClassSchedule from "./ClassSchedule";
-import { getRecentNoticeInfo } from "api/teacher/teacherapi";
 
 const LoginTeahcerStyle = styled.div``;
 
@@ -48,9 +45,9 @@ const LoginTeahcer = () => {
 
   return (
     <LoginTeahcerStyle>
-      <div className="access-login-main main">
+      <div className="access-login-main main access-teahcer-main">
         <div className="access-login-main-inner">
-          <h1>우리 학급</h1>
+          <h1 className="access-login-title">우리 학급</h1>
           <div className="main-inner">
             <div className="main-inner-class login-user-view">
               <div className="main-schedule main-class-schedule">
@@ -71,25 +68,21 @@ const LoginTeahcer = () => {
                 </div>
               </div>
             </div>
-            <div className="main-inner-info">
+            <div className="main-inner-info main-inner-info-teahcer">
               <div className="main-login-user-info">
                 {/* <div className="main-schedule-title main-contents-title">
                     <div className="main-schedule-title-text">학교 일정</div>
                      </div> */}
-                <div className="main-inner-info-login">
+                <div className="main-inner-info-login ">
                   <div className="login-inner">
                     <div className="login-user-info">
-                      <div className="login-user-info-div">
-                        <div className="login-user-info-label-box">
+                      <div className="login-user-info-div login-teahcer-info-div">
+                        <div className="login-user-info-label-box login-teahcer-info-label-box">
                           <div className="login-user-info-label">이름</div>
                           <div className="login-user-info-label">담당 학급</div>
-                          <div className="login-user-info-label">
-                            이메일
-                            <br />
-                            <br />
-                          </div>
+                          <div className="login-user-info-label">이메일</div>
                         </div>
-                        <div className="login-user-info-label-box">
+                        <div className="login-user-info-label-box login-teahcer-info-label-box">
                           <div className="login-user-info-text">
                             {getCookie("userName")}
                           </div>
@@ -101,9 +94,7 @@ const LoginTeahcer = () => {
                             )}
                           </div>
                           <div className="login-user-info-text">
-                            {getCookie("userEmail").split("@")[0]}
-                            <br />
-                            {"@" + getCookie("userEmail").split("@")[1]}
+                            {getCookie("userEmail")}
                           </div>
                         </div>
                       </div>

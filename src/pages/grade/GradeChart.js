@@ -1,13 +1,11 @@
-import Chart from "components/chart/Chart";
-import SelectTopMenu from "./SelectTopMenu";
+import StudentGradeChart from "./StudentGradeChart";
 
 const GradeChart = () => {
   const tempObj = () => {};
 
   return (
     <>
-      <SelectTopMenu />
-      <Chart />
+      <StudentGradeChart />
     </>
   );
 };

@@ -11,7 +11,6 @@ import {
   getStudentInfo,
   postStudentGradeScore,
 } from "api/student/studentapi";
-import { sortAndDeduplicateDiagnostics } from "typescript";
 
 const Grade = () => {
   // 네비게이트
@@ -24,7 +23,6 @@ const Grade = () => {
   const [studentInfo, setStudentInfo] = useState({});
   const [studentName, setStudentName] = useState("");
   const [studentClass, setStudentClass] = useState("");
-
   const [grade, setGrade] = useState("1"); // 선택된 학년 상태
   const [semester, setSemester] = useState("1"); // 선택된 학기 상태
 
@@ -37,9 +35,8 @@ const Grade = () => {
   const [classRank, setClassRank] = useState("-");
   const [gradeRank, setGradeRank] = useState("-");
 
-
+  // 점수 입력
   const [score, setScore] = useState("");
-
 
   const [midGrades, setMidGrades] = useState({
     국어: "",
@@ -260,6 +257,7 @@ const Grade = () => {
       }
 
       const result = response.data.data.list || [];
+      list = result.list;
       const finalgradeMap = {};
 
       if (result.length > 0) {
@@ -299,7 +297,6 @@ const Grade = () => {
     studentGrade2();
   }, [studentPk]);
 
-
   const handleMidGradeChange = (e, subject) => {
     const value = e.target.value;
     setMidGrades(prevGrades => ({
@@ -310,7 +307,6 @@ const Grade = () => {
       },
     }));
   };
-
 
   const handleFinalGradeChange = (e, subject) => {
     const value = e.target.value;
@@ -325,7 +321,6 @@ const Grade = () => {
 
   const handleSave = async () => {
     const scoreData = {
-
       studentPk: studentPk,
       grade,
       year: selectedYear,
@@ -341,7 +336,6 @@ const Grade = () => {
       console.log(error);
     }
   };
-
 
   const setDateSelectBox = () => {
     let yearsArray = [];
@@ -361,12 +355,6 @@ const Grade = () => {
 
   return (
     <div className="main-core">
-      <button
-        onClick={e => testClick(e)}
-        style={{ width: "100px", height: "100px" }}
-      >
-        dd
-      </button>
       <div className="student-list-title">
         {/* <!-- 제목 위치 --> */}
         <span>{studentClass}</span>
@@ -469,7 +457,6 @@ const Grade = () => {
                     <input
                       placeholder="-"
                       value={midGrades[subject]?.mark}
-
                       // onChange={e => handleMidGradeChange(e, subject)}
                       onChange={e => {
                         setScore(e.target.value);
@@ -561,14 +548,14 @@ const Grade = () => {
                     <p>반/전체 평균</p>
                     <input
                       // placeholder="-"
-                      value={`${finalGrades[subject]?.classAvg || "-"} / ${finalGrades[subject]?.schoolAvg || "-"}`}
+                      value={`${finalGrades[subject]?.classAvg || "-"} / ${finalGrades[subject]?.gradeAvg || "-"}`}
                     />
                     점
                   </div>
                   <div className="grade-info">
                     <p>반/전체 등수</p>
                     <input
-                      value={`${finalGrades[subject]?.classRank || "-"} / ${finalGrades[subject]?.schoolRank || "-"}`}
+                      value={`${finalGrades[subject]?.classRank || "-"} / ${finalGrades[subject]?.subjectGradeRank || "-"}`}
                     />
                     등
                   </div>

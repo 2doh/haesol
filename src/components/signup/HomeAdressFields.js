@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 
-const HomeAdressFields = ({ children, setZoneCode, setAddr }) => {
+const HomeAdressFields = ({
+  children,
+  setZoneCode,
+  setAddr,
+  setDetail,
+  detail,
+}) => {
   const [postCode, setPostCode] = useState("우편번호");
   const [address, setAddress] = useState("");
   const [detailedAddress, setDetailedAddress] = useState("");
@@ -28,12 +34,12 @@ const HomeAdressFields = ({ children, setZoneCode, setAddr }) => {
       },
     }).open();
   };
-  const addrSet = () => {
-    setAddr(`${address} ${detailedAddress}`);
-  };
-  useEffect(() => {
-    addrSet();
-  }, [detailedAddress]);
+  // const addrSet = () => {
+  //   setAddr(`${address} ${detailedAddress}`);
+  // };
+  // useEffect(() => {
+  //   addrSet();
+  // }, [detailedAddress]);
   return (
     <div className="signup-main-fields">
       <div className="signup-main-fields-section-top">
@@ -55,14 +61,17 @@ const HomeAdressFields = ({ children, setZoneCode, setAddr }) => {
           className="fieleds-homeadress-adress"
           placeholder={"주소"}
           value={address}
+          readOnly
         />
         <input
           className="fieleds-homearess-input"
           type="text"
           placeholder={children}
-          value={detailedAddress}
+          // value={detailedAddress}
+          value={detail}
           onChange={e => {
-            setDetailedAddress(e.target.value);
+            // setDetailedAddress(e.target.value);
+            setDetail(e.target.value);
           }}
         ></input>
       </div>

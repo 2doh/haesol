@@ -27,7 +27,7 @@ const StudentInfoView = () => {
   const [parentPhone, setParentPhone] = useState("");
 
   // 이미지
-  const [studentPic, setStudentPic] = useState();
+  const [studentPic, setStudentPic] = useState(null);
 
   const [studentZoneCode, setStudentZoneCode] = useState("");
   const [studentAddr, setStudentAddr] = useState("");
@@ -37,6 +37,8 @@ const StudentInfoView = () => {
   const [studentCreatedAt, setStudentCreatedAt] = useState("");
   const [parentId, setParentId] = useState("");
   const [studentClass, setStudentClass] = useState("");
+
+  const [prevEtcList, setPrevEtcList] = useState([]);
 
   // 정보 불러오기
   const studentInfoData = async () => {
@@ -59,6 +61,8 @@ const StudentInfoView = () => {
       setStudentCreatedAt(result.studentCreatedAt);
       setParentId(result.parentId);
       setStudentClass(result.studentClass);
+
+      setPrevEtcList(result.prevEtcList);
     } catch (error) {
       console.log(error);
     }
@@ -99,28 +103,6 @@ const StudentInfoView = () => {
     }
   };
 
-  const prvInfo = [
-    {
-      prvClass: "1학년 1반",
-      prvTeacher: "김누구",
-      studentInfoContent: "기록 내용 없음",
-    },
-    {
-      prvClass: "2학년 1반",
-      prvTeacher: "김누구",
-      studentInfoContent: "기록 내용 없음",
-    },
-    {
-      prvClass: "3학년 1반",
-      prvTeacher: "김누구",
-      studentInfoContent: "기록 내용 없음",
-    },
-    {
-      prvClass: "4학년 1반",
-      prvTeacher: "김누구",
-      studentInfoContent: "기록 내용 없음",
-    },
-  ];
   const [postCode, setPostCode] = useState("우편번호");
   const [address, setAddress] = useState("주소");
   const handleAddClick = e => {
@@ -287,7 +269,11 @@ const StudentInfoView = () => {
             </div>
           </div>
           <div className="info-img">
-            <StudentImg studentPic={studentPic} setStudentPic={setStudentPic} />
+            <StudentImg
+              studentPic={studentPic}
+              setStudentPic={setStudentPic}
+              studentPk={studentPk}
+            />
           </div>
         </div>
         <div className="info-contain-mid">
@@ -377,33 +363,57 @@ const StudentInfoView = () => {
             <div className="main-schedule-title-text">학생 기록 정보</div>
           </div>
           <div className="grid-frame">
-            {prvInfo.map((item, index) => (
+            {prevEtcList.length > 0 ? (
+              prevEtcList.map((item, index) => (
+                <>
+                  <div className="item" key={index}>
+                    <div className="grid-inner">
+                      <div className="grid-inner-item">
+                        <div className="grid-inner-item-text">학급</div>
+                      </div>
+                      <div className="grid-inner-item1">
+                        <div className="grid-inner-item-text">
+                          {item.uclass}
+                        </div>
+                      </div>
+                      <div className="grid-inner-item">
+                        <div className="grid-inner-item-text">담당 교직원</div>
+                      </div>
+                      <div className="grid-inner-item1">
+                        <div className="grid-inner-item-text">
+                          {item.teacherName}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="student-info-readonly">
+                    {item.etc || "기록된 정보가 없습니다."}
+                  </div>
+                </>
+              ))
+            ) : (
               <>
-                <div className="item" key={index}>
+                <div className="item">
                   <div className="grid-inner">
                     <div className="grid-inner-item">
                       <div className="grid-inner-item-text">학급</div>
                     </div>
                     <div className="grid-inner-item1">
-                      <div className="grid-inner-item-text">
-                        {item.prvClass}
-                      </div>
+                      <div className="grid-inner-item-text">-</div>
                     </div>
                     <div className="grid-inner-item">
                       <div className="grid-inner-item-text">담당 교직원</div>
                     </div>
                     <div className="grid-inner-item1">
-                      <div className="grid-inner-item-text">
-                        {item.prvTeacher}
-                      </div>
+                      <div className="grid-inner-item-text">-</div>
                     </div>
                   </div>
                 </div>
                 <div className="student-info-readonly">
-                  {item.studentInfoContent}
+                  이전 학기 정보가 없습니다.
                 </div>
               </>
-            ))}
+            )}
           </div>
         </div>
       </StudentsInfoStyle>

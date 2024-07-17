@@ -1,17 +1,13 @@
 import styled from "@emotion/styled";
 import "../../scss/notice/noticeList.css";
 
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
-import {
-  deleteNotice,
-  getNoticeList,
-  getStudentInfo,
-} from "api/student/studentapi";
-import { getCookie } from "utils/cookie";
-import { useDispatch, useSelector } from "react-redux";
-import { openModal, updateModalDate } from "slices/modalSlice";
+import { getNoticeList } from "api/student/studentapi";
+import { useEffect, useState } from "react";
 import { RiDeleteBack2Fill } from "react-icons/ri";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+import { openModal, updateModalDate } from "slices/modalSlice";
+import { getCookie } from "utils/cookie";
 
 const NoticeList = () => {
   const userClass = getCookie("userClass");
@@ -79,11 +75,15 @@ const NoticeList = () => {
     dispatch(updateModalDate(data));
     dispatch(openModal(selectModalType));
   };
-  useEffect(() => {
-    // if (modalState.modalRes[0] === false) {
-    noticeListData();
-    // }
-  }, [modalState.modalRes[0]]);
+  useEffect(
+    () => {
+      // if (modalState.modalRes[0] === false) {
+      noticeListData();
+      // }
+    },
+    [modalState.modalRes[0]],
+    state,
+  );
 
   const NoticeListStyle = styled.div`
     display: flex;

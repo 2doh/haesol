@@ -9,21 +9,17 @@ import FindInfoNavi from "./FindInfoNavi";
 
 const FindPass = () => {
   // 교사 테스트 : xptmxmid1111 / 010-8323-6670 / TESTPASs!!1
-  // 학부모 테스트 : dbwj312 / 010-1591-3573 / USERIDtest1!
+  // 학부모 테스트 : dbwj312 / 010-1591-3573 / USERIDtest1!1
   const navi = useNavigate();
   const [naviState, setNaviState] = useState("parent");
   const [userId, setUserName] = useState("dbwj312");
   const [userNum, setUserNum] = useState("010-1591-3573");
-  //  추후 false로 전환
-  const [tempState, setTempState] = useState(true);
-  // const [tempState, setTempState] = useState(false);
+  const [tempState, setTempState] = useState(false);
   const [showErrMsg, setShowErrMsg] = useState(false);
   const [errMsg, setErrMsg] = useState("");
   const [changePass, setChangePass] = useState("");
   const [confirmChangePass, setConfirmChangePass] = useState("");
-  // 추후 false로 전환
-  // const [certification, setCertification] = useState(false);
-  const [certification, setCertification] = useState(true);
+  const [certification, setCertification] = useState(false);
   const [certCode, setCertCode] = useState("");
   const [randomCode, setRandomCode] = useState("");
   const [inputType, setinputType] = useState("password");
@@ -68,7 +64,9 @@ const FindPass = () => {
       }
       if (naviState === "parent") {
         const result = await findParentPass(tempObj);
-        if (result === "error") {
+        console.log(result);
+        if (result === "err") {
+          setErrMsg("존재하지 않는 정보입니다");
           setShowErrMsg(true);
         }
         if (result.status === 200) {
@@ -78,7 +76,8 @@ const FindPass = () => {
       }
       if (naviState === "teacher") {
         const result = await findTeacherPass(reqData);
-        if (result === "error") {
+        if (result === "err") {
+          setErrMsg("존재하지 않는 정보입니다");
           setShowErrMsg(true);
         }
         if (result.status === 200) {
@@ -107,6 +106,7 @@ const FindPass = () => {
     }
   };
 
+  // 비밀번호 변경
   const changePwd = async e => {
     e.preventDefault();
     if (
@@ -177,6 +177,10 @@ const FindPass = () => {
       setinputType("password");
     }
   }, [showPass]);
+
+  useEffect(() => {
+    setErrMsg("");
+  }, [naviState]);
 
   return (
     <div className="login-inner">
