@@ -57,7 +57,6 @@ export const getStudentGrade1 = async studentPk => {
       `/api/Score/getScore?studentPk=${studentPk}&exam=1`,
       {
         headers: {
-          "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${accessToken}`,
         },
       },
@@ -161,14 +160,15 @@ export const postStudentGradeScore = async ({
 }) => {
   const accessToken = getCookie("accessToken");
   try {
-    const response = await jwtAxios.post(`/api/Score`, {
-      studentPk,
-      year,
-      semester,
-      name,
-      exam,
-      mark,
-    });
+    const response = await jwtAxios.post(
+      `/api/Score`,
+      { studentPk, year, semester, name, exam, mark },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
     return response;
   } catch (error) {
     console.log(error);
