@@ -21,6 +21,7 @@ import Chat from "./Chat";
 import ClassNotice from "./ClassNotice";
 import MainSchedule from "./MainSchedule";
 
+
 const LoginUserStyle = styled.div`
   position: relative;
   /* border: 1px solid black; */
@@ -187,7 +188,7 @@ const LoginUser = () => {
     if (res) {
       // console.log("자녀 있음.");
       setMyChildList(res);
-      console.log(res);
+      // console.log(res);
 
       /** 선택되어 있는 학생의 정보 저장 */
       setBirth(res[num].birth);
@@ -204,6 +205,7 @@ const LoginUser = () => {
       setTeacherName(res[num].teacherName);
       setStudentPic(res[num].pic);
       setCookie("studentPk", res[num].studentPk);
+
 
       setOffUseEffect(true);
     }
@@ -272,6 +274,7 @@ const LoginUser = () => {
         {" "}
         채팅창{" "}
       </button>
+
       <div className="main-core">
         <div className="user-info-wrap">
           <div className="user-info-tap">

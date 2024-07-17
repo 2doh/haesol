@@ -219,3 +219,10 @@ export const deleteNotice = async notice_id => {
     console.log(error);
   }
 };
+
+export const getScore = async data => {
+  const res = await jwtAxios.get(
+    `/api/Score/getScore?studentPk=${data.studentPk}&exam=1`,
+  );
+  return res.data.data;
+};
