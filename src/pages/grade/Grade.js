@@ -155,7 +155,6 @@ const intiData = [
   },
 ];
 
-
 const Grade = () => {
   // 네비게이트
   const navigate = useNavigate();
@@ -167,8 +166,6 @@ const Grade = () => {
   const [studentInfo, setStudentInfo] = useState({});
   const [studentName, setStudentName] = useState("");
   const [studentClass, setStudentClass] = useState("");
-  const [grade, setGrade] = useState("1"); // 선택된 학년 상태
-  const [semester, setSemester] = useState("1"); // 선택된 학기 상태
 
   const [nowYear, setNowYear] = useState(new Date().getFullYear());
   const [year, setYear] = useState([]);
@@ -181,7 +178,6 @@ const Grade = () => {
 
   // 점수 입력
   const [score, setScore] = useState("");
-
 
   // const [midGrades, setMidGrades] = useState({
   //   국어: "",
@@ -220,7 +216,6 @@ const Grade = () => {
   //   "음악",
   //   "미술",
   // ];
-
 
   // 학생 정보 불러오기
   const studentInfoData = async () => {
@@ -538,7 +533,6 @@ const Grade = () => {
     }));
   };
 
-
   // const handleSave = async () => {
   //   const scoreData = {
   //     studentPk: studentPk,
@@ -555,7 +549,6 @@ const Grade = () => {
   //     console.log(error);
   //   }
   // };
-
 
   const setDateSelectBox = () => {
     let yearsArray = [];
@@ -668,9 +661,7 @@ const Grade = () => {
                     <p>원점수</p>
                     <input
                       placeholder="-"
-
                       value={item.mark || "-"}
-
                       onChange={e => {
                         handleChangeOne({ ...item, mark: e.target.value });
                       }}
@@ -756,16 +747,13 @@ const Grade = () => {
                       // placeholder="-"
 
                       value={`${item.classAvg || "-"} / ${item.gradeAvg || "-"}`}
-
                     />
                     점
                   </div>
                   <div className="grade-info">
                     <p>반/전체 등수</p>
                     <input
-
                       value={`${item.classRank || "-"} / ${item.subjectGradeRank || "-"}`}
-
                     />
                     등
                   </div>
