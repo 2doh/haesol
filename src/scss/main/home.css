@@ -41,7 +41,6 @@
 }
 
 .main-activity {
-  margin-top: 60px;
   height: 315px;
   width: 100%;
 }
@@ -55,7 +54,7 @@
 .main-activity-slide {
   margin-top: 20px;
   width: 100%;
-  height: 265px;
+  height: 300px;
   background-color: #dee8e9;
 }
 

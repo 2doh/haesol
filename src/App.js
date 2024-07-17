@@ -33,6 +33,7 @@ import ReturnHomeRoute from "components/common/ReturnHomeRoute";
 import Grade from "pages/grade/Grade";
 import GradeChart from "pages/grade/GradeChart";
 import NotFound from "components/notfound/NotFound";
+import { AuthenticatedRedirect } from "components/common/AuthenticatedRedirect";
 
 const ModalStyle = styled.div`
   position: absolute;
@@ -93,6 +94,7 @@ function App() {
   const [notFoundPage, setNotFoundPage] = useState(false);
   const [loginUserType, setLoginUserType] = useState(getCookie("userRole"));
   const accessToken = getCookie("accessToken");
+  const studentPk = getCookie("studentPk");
 
   useEffect(() => {}, [notFoundPage]);
 
@@ -108,7 +110,6 @@ function App() {
     // console.log("모달 결과 출력 내용 확인 : ", modalRes);
   };
 
-  // console.log("현재 토큰 : ", accessToken);
   return (
     <BrowserRouter>
       {modalState.isOpen ? (
@@ -123,34 +124,51 @@ function App() {
       <Main>
         <Routes>
           <Route index element={<Home />}></Route>
-          <Route path="/students" element={<Students />}></Route>
-          <Route path="/signup" element={<Signup />}></Route>
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/findid" element={<FindId />}></Route>
-          <Route path="/findpass" element={<FindPass />}></Route>
+
+          {/* 로그인 & 회원가입 : 이후 진입시 Home으로 강제 이동 */}
+          {accessToken ? (
+            <>
+              <Route path="/login" element={<AuthenticatedRedirect />}></Route>
+              <Route
+                path="/students"
+                element={<AuthenticatedRedirect />}
+              ></Route>
+              <Route path="/signup" element={<AuthenticatedRedirect />}></Route>
+              <Route path="/findid" element={<AuthenticatedRedirect />}></Route>
+              <Route
+                path="/findpass"
+                element={<AuthenticatedRedirect />}
+              ></Route>
+            </>
+          ) : (
+            <>
+              <Route path="/login" element={<Login />}></Route>
+              <Route path="/students" element={<Students />}></Route>
+              <Route path="/signup" element={<Signup />}></Route>
+              <Route path="/findid" element={<FindId />}></Route>
+              <Route path="/findpass" element={<FindPass />}></Route>
+            </>
+          )}
 
           {/* 어드민 */}
-          {
-            loginUserType === "ROLE_ADMIN" ? (
-              <>
-                <Route
-                  path="*"
-                  element={
-                    <PrivateRoute
-                      component={<AdminHome />}
-                      authenticated={accessToken}
-                    />
-                  }
-                ></Route>
-                <Route path="/admin" element={<AdminHome />}>
-                  <Route index path="home" element={<AdminHome />}></Route>
-                </Route>
-              </>
-            ) : (
-              <Route path="/admin/*" element={<ReturnHomeRoute />}></Route>
-            )
-            // <Route path="/admin" {...alert("권한한 페이지 입니다.")}></Route>
-          }
+          {loginUserType === "ROLE_ADMIN" ? (
+            <>
+              <Route
+                path="*"
+                element={
+                  <PrivateRoute
+                    component={<AdminHome />}
+                    authenticated={accessToken}
+                  />
+                }
+              ></Route>
+              <Route path="/admin" element={<AdminHome />}>
+                <Route index path="home" element={<AdminHome />}></Route>
+              </Route>
+            </>
+          ) : (
+            <Route path="/admin/*" element={<ReturnHomeRoute />}></Route>
+          )}
 
           {/* <Route path="/grade" element={<Navigate to="*" />}>
             <Route
@@ -182,11 +200,6 @@ function App() {
           <Route path="/studentinfo" element={<MyChildInfo />}></Route>
           {/* 학부모 - 학생 : 정보 수정 페이지 */}
           {/* 추가예정 */}
-
-          <Route
-            path="/students/studntinfo"
-            element={<StudentInfoView />}
-          ></Route>
 
           <Route path="/students" element={<Navigate to="*" />}>
             {/* 경로 수정 후 아래로 변경 */}

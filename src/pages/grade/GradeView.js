@@ -15,7 +15,7 @@ const GradeView = () => {
   const navigate = useNavigate();
   const { studentPk } = useParams();
   const handleClick = () => {
-    navigate(`/students/edit/${studentPk}`);
+    navigate(`/studentinfo`);
   };
 
   const [studentInfo, setStudentInfo] = useState({});
@@ -422,7 +422,7 @@ const GradeView = () => {
               <div className="info-subtitle">신상 정보</div>
             </div>
             <div className="frame">
-              <div className="text-wrapper">성적 입력</div>
+              <div className="text-wrapper">성적 확인</div>
             </div>
             {/* <div className="div-wrapper"> */}
             <div className="div-wrapper">
