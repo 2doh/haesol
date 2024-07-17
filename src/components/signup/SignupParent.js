@@ -14,24 +14,27 @@ import SubPhoneInputFields from "./SubPhoneInputFields";
 import ChildInputFields from "./ChildInputFields";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
-import { openModal, updateModalDate } from "slices/modalSlice";
+import { closeModal, openModal, updateModalDate } from "slices/modalSlice";
 
 const SignupParent = ({ handleCancel, setUserType, userType }) => {
   //   "uid": "test1234",
   //   "upw": "String1234!@#$"
 
+  // tempid1 / Temppass1! / 김민지 / 010-4532-8772 / joon12512ads@naver.com
+
   const navi = useNavigate();
-  const [userId, setUserId] = useState("dbwj312");
-  const [userPass, setUserPass] = useState("USERIDtest1!");
-  const [userPassConfirm, setUserPassConfirm] = useState("USERIDtest1!");
-  const [userName, setUserName] = useState("김순수");
+  const [userId, setUserId] = useState("tempid11");
+  const [userPass, setUserPass] = useState("Temppass1!1");
+  const [userPassConfirm, setUserPassConfirm] = useState("Temppass1!1");
+  const [userName, setUserName] = useState("김진성");
   const [userChildrenName, setUserChildrenName] = useState("");
-  const [userChildrenPk, setUserChildrenPk] = useState(30);
-  const [userPhoneNum, setUserPhoneNum] = useState("010-1591-3573");
+  const [userChildrenPk, setUserChildrenPk] = useState("30");
+  const [userPhoneNum, setUserPhoneNum] = useState("010-4532-2778");
   const [userSubPhoneNum, setUserSubPhoneNum] = useState("");
-  const [userEmail, setUserEmail] = useState("soonja1234@naver.com");
-  const [userConnet, setUserConnet] = useState("");
+  const [userEmail, setUserEmail] = useState("joon12512ads11@naver.com");
+  const [userConnet, setUserConnet] = useState("부");
   const [zoneCode, setZoneCode] = useState("");
+  const [detail, setDetail] = useState("");
   const [addr, setAddr] = useState("");
   const [canId, setCanId] = useState(false);
 
@@ -40,23 +43,11 @@ const SignupParent = ({ handleCancel, setUserType, userType }) => {
 
   /** 모달 호출 */
   const showModal = selectModalType => {
-    const data = { bodyText: [modalText], modalRes: [17], buttonCnt: 1 };
+    const data = { bodyText: [modalText], modalRes: [16], buttonCnt: 1 };
     dispatch(updateModalDate(data));
     const modalRes = dispatch(openModal(selectModalType));
   };
 
-  const tempObj = {
-    uid: userId,
-    upw: userPass,
-    nm: userName,
-    userChildrenPk: userChildrenPk,
-    phone: userPhoneNum,
-    subPhone: userSubPhoneNum,
-    email: userEmail,
-    connet: userConnet,
-    zoneCode: zoneCode,
-    addr: addr,
-  };
   // console.log(tempObj)
   // const handleModal = () => {
   //   showModal("BasicModal");
@@ -64,7 +55,19 @@ const SignupParent = ({ handleCancel, setUserType, userType }) => {
 
   const handleOnSubmit = async e => {
     e.preventDefault();
-    const result = await parentSignup(tempObj);
+    const tempObj = {
+      uid: userId,
+      upw: userPass,
+      nm: userName,
+      studentPk: userChildrenPk,
+      phone: userPhoneNum,
+      subPhone: userSubPhoneNum,
+      email: userEmail,
+      connet: userConnet,
+      zoneCode: zoneCode,
+      addr: addr,
+      detail: detail,
+    };
     if (canId === false) {
       setModalText("아이디 중복확인을 해주세요");
       return;
@@ -85,8 +88,15 @@ const SignupParent = ({ handleCancel, setUserType, userType }) => {
         setModalText("필수입력항목을 작성해주세요");
         return;
       }
+      const result = await parentSignup(tempObj);
       if (result.data === 1) {
-        setModalText("회원가입 되었습니다");
+        const data = {
+          bodyText: ["회원가입 되었습니다"],
+          modalRes: [17],
+          buttonCnt: 1,
+        };
+        dispatch(updateModalDate(data));
+        const modalRes = dispatch(openModal("BasicModal"));
         return;
       }
       if (result === "err") {
@@ -147,7 +157,12 @@ const SignupParent = ({ handleCancel, setUserType, userType }) => {
         <SubPhoneInputFields setUserSubPhoneNum={setUserSubPhoneNum}>
           추가연락처(선택)
         </SubPhoneInputFields>
-        <HomeAdressFields setZoneCode={setZoneCode} setAddr={setAddr}>
+        <HomeAdressFields
+          setZoneCode={setZoneCode}
+          setAddr={setAddr}
+          setDetail={setDetail}
+          detail={detail}
+        >
           상세주소
         </HomeAdressFields>
         <div className="btwrap">

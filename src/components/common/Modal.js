@@ -11,6 +11,7 @@ import PhoneInputFields from "pages/student/PhoneInputFields";
 import { getCookie } from "utils/cookie";
 import { deleteNotice } from "api/student/studentapi";
 import NoticeList from "pages/notice/NoticeList";
+import { useNavigate } from "react-router";
 
 const ModalStyle = styled.div`
   position: fixed;
@@ -104,6 +105,7 @@ const Modal = () => {
 
   const modalState = useSelector(state => state.modalSlice);
   const dispatch = useDispatch();
+  const navi = useNavigate();
 
   const [min, setMin] = useState(3);
   const [sec, setSec] = useState(0);
@@ -161,14 +163,14 @@ const Modal = () => {
         }
       }
 
-      // 교직원 : 정보 수정 페이지 처리리
-      if (modalState.modalRes[0] === 17) {
-        console.log("확인중입니다");
+      // 아이디 중복 확인
+      if (modalState.modalRes[0] === 16) {
         dispatch(closeModal());
-        // console.log("res : ", res);
-        // if (res) {
-        //   dispatch(closeModal());
-        // }
+      }
+      // 회원가입
+      if (modalState.modalRes[0] === 17) {
+        dispatch(closeModal());
+        navi("/login");
       }
 
       if (modalState.modalRes[0] === 44) {

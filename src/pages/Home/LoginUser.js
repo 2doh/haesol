@@ -15,8 +15,11 @@ import { useNavigate } from "react-router";
 import { getCookie, removeCookie, setCookie } from "utils/cookie";
 import "../../scss/main/mainlogin.css";
 import ClassSchedule from "./ClassSchedule";
+
+// import StudentImg from "pages/student/StudentImg";
 import Chat from "./Chat";
 import ClassNotice from "./ClassNotice";
+
 
 const LoginUserStyle = styled.div`
   /* border: 1px solid black; */
@@ -159,26 +162,51 @@ const LoginUser = () => {
 
     if (res === false) {
       console.log("자녀 없음.");
-    } else {
+    }
+
+    const num = getCookie("selectChildNum");
+    if (res) {
+      console.log("자녀 있음.");
       setMyChildList(res);
-      // console.log("정보 저장 : ", res);
+      console.log(res);
 
       /** 선택되어 있는 학생의 정보 저장 */
       setBirth(res[num].birth);
-      setClassId(res[num].classId);
-      setClassName(res[num].classId);
-      setGender(res[num].gender);
-      setName(res[num].name);
-      setParentName(res[num].parentName);
-      setParentPhone(res[num].parentPhone);
-      setParentsPK(res[num].parentsPK);
-      setPhone(res[num].phone);
-      setStudentPk(res[num].studentPk);
-      setAge(res[num].age);
-      setTeacherName(res[num].teacherName);
-      setStudentPic(res[num].pic);
+      setClassId(res[selectNum].classId);
+      setClassName(res[selectNum].classId);
+      setGender(res[selectNum].gender);
+      setName(res[selectNum].name);
+      setParentName(res[selectNum].parentName);
+      setParentPhone(res[selectNum].parentPhone);
+      setParentsPK(res[selectNum].parentsPK);
+      setPhone(res[selectNum].phone);
+      setStudentPk(res[selectNum].studentPk);
+      setAge(res[selectNum].age);
+      setTeacherName(res[selectNum].teacherName);
+      setStudentPic(res[selectNum].pic);
 
-      setOffUseEffect(true);
+    }
+    // else {
+      // setMyChildList(res);
+      // console.log("정보 저장 : ", res);
+
+      /** 선택되어 있는 학생의 정보 저장 */
+//       setBirth(res[num].birth);
+//       setClassId(res[num].classId);
+//       setClassName(res[num].classId);
+//       setGender(res[num].gender);
+//       setName(res[num].name);
+//       setParentName(res[num].parentName);
+//       setParentPhone(res[num].parentPhone);
+//       setParentsPK(res[num].parentsPK);
+//       setPhone(res[num].phone);
+//       setStudentPk(res[num].studentPk);
+//       setAge(res[num].age);
+//       setTeacherName(res[num].teacherName);
+//       setStudentPic(res[num].pic);
+
+//       setOffUseEffect(true);
+
     }
   };
 
@@ -311,6 +339,7 @@ const LoginUser = () => {
                   {/* <div className="main-schedule-title main-contents-title">
                 <div className="main-schedule-title-text">학교 일정</div>
               </div> */}
+
                   <div className="main-inner-info-login">
                     <div className="login-inner">
                       <div className="login-user-info">
@@ -320,6 +349,17 @@ const LoginUser = () => {
                           setStudentPic={setStudentPic}
                           studentPk={studentPk}
                         /> */}
+
+//                       </div>
+//                       <div className="login-user-info-div">
+//                         <div className="login-user-info-label-box">
+//                           <div className="login-user-info-label">학생 이름</div>
+//                           <div className="login-user-info-label">나이</div>
+//                           <div className="login-user-info-label">학급</div>
+//                           <div className="login-user-info-label">
+//                             선생님 성함
+//                           </div>
+
                         </div>
                         <div className="login-user-info-div">
                           <div className="login-user-info-label-box">

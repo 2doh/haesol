@@ -5,6 +5,7 @@ import {
   getStudentInfo,
   postStudentGradeScore,
 } from "api/student/studentapi";
+
 import Signature from "pages/grade/Signature";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
@@ -154,6 +155,7 @@ const intiData = [
   },
 ];
 
+
 const Grade = () => {
   // 네비게이트
   const navigate = useNavigate();
@@ -179,6 +181,7 @@ const Grade = () => {
 
   // 점수 입력
   const [score, setScore] = useState("");
+
 
   // const [midGrades, setMidGrades] = useState({
   //   국어: "",
@@ -217,6 +220,7 @@ const Grade = () => {
   //   "음악",
   //   "미술",
   // ];
+
 
   // 학생 정보 불러오기
   const studentInfoData = async () => {
@@ -468,7 +472,9 @@ const Grade = () => {
         return;
       }
       const result = response.data.data.list || [];
+
       //list = result.list;
+
       const finalgradeMap = {};
 
       if (result.length > 0) {
@@ -532,6 +538,7 @@ const Grade = () => {
     }));
   };
 
+
   // const handleSave = async () => {
   //   const scoreData = {
   //     studentPk: studentPk,
@@ -548,6 +555,7 @@ const Grade = () => {
   //     console.log(error);
   //   }
   // };
+
 
   const setDateSelectBox = () => {
     let yearsArray = [];
@@ -660,7 +668,9 @@ const Grade = () => {
                     <p>원점수</p>
                     <input
                       placeholder="-"
+
                       value={item.mark || "-"}
+
                       onChange={e => {
                         handleChangeOne({ ...item, mark: e.target.value });
                       }}
@@ -744,14 +754,18 @@ const Grade = () => {
                     <p>반/전체 평균</p>
                     <input
                       // placeholder="-"
+
                       value={`${item.classAvg || "-"} / ${item.gradeAvg || "-"}`}
+
                     />
                     점
                   </div>
                   <div className="grade-info">
                     <p>반/전체 등수</p>
                     <input
+
                       value={`${item.classRank || "-"} / ${item.subjectGradeRank || "-"}`}
+
                     />
                     등
                   </div>

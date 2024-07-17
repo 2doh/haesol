@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { getRecentNoticeInfo } from "api/teacher/teacherapi";
 import { useEffect, useState } from "react";
+
 import { MdOutlineLogout } from "react-icons/md";
 import { useNavigate } from "react-router";
 import { getCookie, removeCookie } from "utils/cookie";

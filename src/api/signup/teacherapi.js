@@ -11,7 +11,6 @@ export const teacherSignup = async data => {
 };
 
 export const duplicateId = async teacherId => {
-  console.log(teacherId);
   try {
     const res = await axios.get(`/api/teacher/duplicate?id=${teacherId}`);
     return res;

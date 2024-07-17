@@ -11,7 +11,6 @@ export const getMyChildInfo = async () => {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    // console.log("자녀 정보 GET : ", response);
     if (response.data.length === 0) {
       // console.log("자녀 정보가 없습니다.");
       return false;

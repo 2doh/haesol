@@ -6,8 +6,7 @@ export const parentSignup = async data => {
     const response = await axios.post(`/api/user/parents/sign-up`, data);
     return response;
   } catch (error) {
-    const err = "err";
-    return err;
+    console.log(error);
   }
 };
 

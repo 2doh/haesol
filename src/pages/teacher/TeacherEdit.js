@@ -203,6 +203,7 @@ const TeacherEdit = () => {
         bodyText: ["정보를 수정하시겠습니까?"],
         modalRes: [
           11,
+
           {
             name: userName,
             phone: phoneNum,
@@ -210,6 +211,7 @@ const TeacherEdit = () => {
             addr: addAddr,
             email: newEamil,
           },
+
         ],
         buttonText: ["수정", "취소"],
       };

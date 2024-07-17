@@ -13,14 +13,14 @@ import { useDispatch } from "react-redux";
 import { openModal, updateModalDate } from "slices/modalSlice";
 
 const SignupTeacher = ({ handleCancel, userType, setUserType }) => {
-  const [userId, setUserId] = useState("xptmxmid1111");
+  const [userId, setUserId] = useState("tempteacher1");
   const [userPass, setUserPass] = useState("TESTPASs!!1");
   const [userPassConfirm, setUserPassConfirm] = useState("TESTPASs!!1");
-  const [userName, setUserName] = useState("김스미스");
-  const [userPhoneNum, setUserPhoneNum] = useState("010-8323-6670");
-  const [userEmail, setUserEmail] = useState("simeqs1344@naver.com");
-  const [userGender, setUserGender] = useState("남");
-  const [userBirth, setUserBirth] = useState("2024-12-01");
+  const [userName, setUserName] = useState("신선생");
+  const [userPhoneNum, setUserPhoneNum] = useState("010-1114-6534");
+  const [userEmail, setUserEmail] = useState("sin1412@naver.com");
+  const [userGender, setUserGender] = useState("");
+  const [userBirth, setUserBirth] = useState("");
   const [zoneCode, setZoneCode] = useState(0);
   const [addr, setAddr] = useState("");
   const [modalText, setModalText] = useState("");
@@ -40,7 +40,7 @@ const SignupTeacher = ({ handleCancel, userType, setUserType }) => {
   };
 
   const showModal = selectModalType => {
-    const data = { bodyText: [modalText], modalRes: [17], buttonCnt: 1 };
+    const data = { bodyText: [modalText], modalRes: [16], buttonCnt: 1 };
     dispatch(updateModalDate(data));
     const modalRes = dispatch(openModal(selectModalType));
   };
@@ -68,12 +68,18 @@ const SignupTeacher = ({ handleCancel, userType, setUserType }) => {
         return;
       }
       const result = await teacherSignup(tempObj);
-      if (result.data === 1) {
-        setModalText("회원가입 되었습니다");
+      if (result.status === 200) {
+        const data = {
+          bodyText: ["회원가입 되었습니다"],
+          modalRes: [17],
+          buttonCnt: 1,
+        };
+        dispatch(updateModalDate(data));
+        const modalRes = dispatch(openModal("BasicModal"));
         return;
       }
       if (result === "err") {
-        setModalText("이미 존재하는 이메일/전화번호 정보입니다");
+        setModalText("이미 존재하는 정보입니다");
         return;
       }
     }

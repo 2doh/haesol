@@ -1,8 +1,9 @@
 import { getStudentInfo } from "api/student/studentapi";
+import Chart from "components/chart/Chart";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 
-const SelectTopMenu = () => {
+const StudentGradeChart = () => {
   // 네비게이트
   const navigate = useNavigate();
   const { studentPk } = useParams();
@@ -69,8 +70,9 @@ const SelectTopMenu = () => {
           </div>
         </div>
       </div>
+      <Chart />
     </div>
   );
 };
 
-export default SelectTopMenu;
+export default StudentGradeChart;
