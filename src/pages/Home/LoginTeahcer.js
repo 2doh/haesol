@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { getRecentNoticeInfo } from "api/teacher/teacherapi";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+
 import { MdOutlineLogout } from "react-icons/md";
 import { useNavigate } from "react-router";
 import { getCookie, removeCookie } from "utils/cookie";
@@ -13,14 +14,9 @@ const LoginTeahcer = () => {
   // 나중에 : api 수정 후
 
   const navigate = useNavigate();
+  const [createdAt, setCreatedAt] = useState();
 
   /** 반 시간표 */
-
-  // 수정중
-  /** 알림장 불러오기 */
-  useEffect(() => {
-    getRecentNoticeInfo();
-  }, []);
 
   /** 마이페이지 이동 */
   const moveMyPage = () => {
@@ -43,6 +39,18 @@ const LoginTeahcer = () => {
     window.location.reload("/");
   };
 
+  // const getNotice = async noticeMenuNum => {
+  //   const res = await getRecentNoticeInfo(noticeMenuNum);
+
+  //   setCreatedAt(res.createdAt);
+  //   console.log("결과값 : ", res);
+  // };
+
+  // /** 최초 랜더링 : 알림장 불러오기 */
+  // useEffect(() => {
+  //   getNotice(noticeMenuNum);
+  // }, [noticeMenuNum]);
+
   return (
     <LoginTeahcerStyle>
       <div className="access-login-main main access-teahcer-main">
@@ -61,10 +69,10 @@ const LoginTeahcer = () => {
               <div className="main-notice">
                 <div className="main-schedule-title main-contents-title">
                   <div className="main-schedule-title-text ">알림장</div>
-                  <div className="main-notice-day">(날짜넣기)</div>
+                  <div className="main-notice-day">{createdAt}</div>
                 </div>
                 <div className="main-title-dwon-contents">
-                  <ClassNotice />
+                  <ClassNotice setCreatedAt={setCreatedAt} />
                 </div>
               </div>
             </div>
