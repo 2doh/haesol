@@ -61,11 +61,13 @@ export const patchTeacherInfo = async newInfo => {
 };
 
 /** 최신 알림장 정보 불러오기 */
-export const getRecentNoticeInfo = async noticeState => {
+export const getRecentNoticeInfo = async () => {
   const accessToken = getCookie("accessToken");
 
+  // console.log("이게 뭐지? ", getCookie("studentPk"));
+
   try {
-    const response = await axios.get(`/api/notice/main?state=${noticeState}`, {
+    const response = await axios.get(`/api/notice/main`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },

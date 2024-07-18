@@ -2,6 +2,11 @@ import styled from "@emotion/styled";
 import { getReAccessToken } from "api/user";
 import { useEffect, useRef, useState } from "react";
 import { FiClock } from "react-icons/fi";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+import { openModal, updateModalDate } from "slices/modalSlice";
+import { getCookie, removeCookie } from "utils/cookie";
+import { getLocalValue, removeLocalValue, setLocalValue } from "utils/local";
 
 const TimerStyle = styled.div`
   min-width: 80px;
@@ -22,69 +27,131 @@ const TimerStyle = styled.div`
 `;
 
 const ClockStyle = styled.div`
-  /* width: 100%;
-  height: 100%; */
   display: flex;
   align-items: center;
   height: 100%;
 `;
 
 const Timer = () => {
-  // const secondHand = document.querySelector(".second-hand");
-  // const minsHand = document.querySelector(".min-hand");
-  // const hourHand = document.querySelector(".hour-hand");
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const modalState = useSelector(state => state.modalSlice);
 
-  // function setDate() {
-  //   const now = new Date();
-
-  //   const seconds = now.getSeconds();
-  //   const secondsDegrees = (seconds / 60) * 360 + 90;
-  //   secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
-
-  //   const mins = now.getMinutes();
-  //   const minsDegrees = (mins / 60) * 360 + (seconds / 60) * 6 + 90;
-  //   minsHand.style.transform = `rotate(${minsDegrees}deg)`;
-
-  //   const hour = now.getHours();
-  //   const hourDegrees = (hour / 12) * 360 + (mins / 60) * 30 + 90;
-  //   hourHand.style.transform = `rotate(${hourDegrees}deg)`;
-  // }
-
-  // setInterval(setDate, 1000);
-
-  // setDate();
-
-  const [min, setMin] = useState(60);
-  const [sec, setSec] = useState(0);
-  const time = useRef(3600); // 3600초
+  const [min, setMin] = useState(getLocalValue("timerMin") || 60);
+  const [sec, setSec] = useState(getLocalValue("timerSec") || 0);
+  const time = useRef(getLocalValue("timerTime") || 3600); // 3600초
   const timerId = useRef(null);
+  const alertShown = useRef(false); // 이전에 알림을 보여줬는지 여부를 추적하기 위한 useRef
 
   const timerTime = () => {
-    /** 타이머 리셋 : 추후 로그인 연장 기능 추가 예정 */
     clearInterval(timerId.current);
-    clearInterval(time.current);
-    timerId.current = null;
-    time.current = 3600;
-    setMin(60);
-    setSec(0);
 
     timerId.current = setInterval(() => {
+      /** 타임 아웃 : 타이머가 0이 되면 로그아웃  */
+
+      /** 10분 남았을 때 시간 알림. */
+      // 10분 남았을 때 한 번만 알림을 보여줌
+      if (time.current === 599 && !alertShown.current) {
+        displaySessionExpirationAlert("BasicModal");
+        alertShown.current = true; // 알림을 한 번 보였음을 표시
+      }
+
+      if (time.current <= -1) {
+        // time.current <= 0 으로 설정하면 마지막에 00:01에서 정지하기 때문에
+        // time.current <= -1 로 설정
+        clearInterval(timerId.current);
+        // console.log("타임 아웃");
+
+        // 여기서 로그아웃 처리 등 추가 작업 수행 가능
+        notifyLogoutDueToSessionExpired("BasicModal");
+
+        return;
+      }
+
       setMin(parseInt(time.current / 60));
       setSec(time.current % 60);
       time.current -= 1;
+      setLocalValue("timerMin", min); // 로컬스토리지에 저장
+      setLocalValue("timerSec", sec); // 로컬스토리지에 저장
+      setLocalValue("timerTime", time.current); // 로컬스토리지에 저장
     }, 1000);
 
-    return () => clearInterval(timerId.current);
+    // return () => clearInterval(timerId.current);
   };
 
   useEffect(() => {
     timerTime();
+    return () => clearInterval(timerId.current);
   }, []);
 
+  /** 로그인 시간 만료 알림 모달 */
+  const displaySessionExpirationAlert = selectModalType => {
+    const data = {
+      bodyText: ["로그인 시간이 10분 남았습니다."],
+      headerText: "경고",
+      modalRes: [1],
+      buttonText: ["확인"],
+      buttonCnt: 1,
+    };
+
+    dispatch(updateModalDate(data));
+    dispatch(openModal(selectModalType));
+  };
+
+  /** 로그인 시간 만료 알림 모달 */
+  const notifyLogoutDueToSessionExpired = selectModalType => {
+    const data = {
+      bodyText: ["로그인 시간이 만료되었습니다."],
+      headerText: "로그아웃",
+      modalRes: [1],
+      buttonText: ["확인"],
+      buttonCnt: 1,
+    };
+
+    dispatch(updateModalDate(data));
+    dispatch(openModal(selectModalType));
+
+    // (어드민) 공통 데이터 쿠키 삭제
+    removeCookie("accessToken");
+    removeCookie("userIdPk");
+    removeCookie("userRole");
+
+    // (학부모) 공통 데이터 쿠키 삭제
+    removeCookie("selectChildNum");
+    removeCookie("studentPk");
+
+    // (교직원) 공통 데이터 쿠키 삭제
+    removeCookie("userClass");
+    removeCookie("userName");
+    removeCookie("userEmail");
+
+    removeLocalValue("timerMin");
+    removeLocalValue("timerSec");
+    removeLocalValue("timerTime");
+  };
+
+  /** 로그인 시간 만료 알림 모달 종료 후 새로고침 갱신 */
+  useEffect(() => {
+    if (modalState.modalRes[0] === false && time.current <= -1) {
+      window.location.reload("/");
+    }
+  }, [modalState.modalRes[0]]);
+
+  /** 연장 버튼 */
   const reAccessToken = async () => {
-    const res = getReAccessToken();
-    if (res) {
-      timerTime();
+    // 토큰이 없는 경우 홈으로 돌아감.
+    // 토큰이 존재하면 연장 가능.
+    if (!getCookie("accessToken")) {
+      navigate("/");
+    } else {
+      const res = await getReAccessToken();
+      if (res) {
+        clearInterval(timerId.current);
+        time.current = 2; // 재설정하고 싶은 초 단위 시간으로 변경
+        alertShown.current = false;
+        console.log("시간이 연장되었습니다.");
+        timerTime();
+      }
     }
   };
 

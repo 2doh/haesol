@@ -32,7 +32,7 @@
   background-clip: content-box;
 
   & .main-inner {
-    padding: 40px 0;
+    padding: 40px 0 80px 0;
     background-color: $b-color;
   }
 }
@@ -204,8 +204,16 @@
 
         .school-supplies {
         }
-
-        .notice-text {
+        .notice-text-div {
+          position: relative;
+          width: 88%;
+          height: 80%;
+          overflow: hidden;
+          // overflow: hidden;
+          .notice-text {
+            position: absolute;
+            text-overflow: ellipsis;
+          }
         }
 
         .notice-write-icon * {

@@ -35,7 +35,9 @@ import GradeChart from "pages/grade/GradeChart";
 import NotFound from "components/notfound/NotFound";
 import { AuthenticatedRedirect } from "components/common/AuthenticatedRedirect";
 import StudentEdit from "pages/student/StudentEdit";
+import TeacherProtectedRoute from "components/common/TeacherProtectedRoute";
 
+// import jwt from "jsonwebtoken";
 
 const ModalStyle = styled.div`
   position: absolute;
@@ -111,6 +113,25 @@ function App() {
     const modalRes = dispatch(openModal(selectModalType));
     // console.log("모달 결과 출력 내용 확인 : ", modalRes);
   };
+
+  // const jwt = require("jsonwebtoken");
+
+  // const token = accessToken; // 여기에 토큰을 넣어주세요
+
+  // // 토큰 디코딩
+  // const decoded = jwt.decode(token, { complete: true });
+
+  // if (decoded.payload.exp < Date.now() / 1000) {
+  //   console.log("토큰이 만료되었습니다.");
+  // } else {
+  //   console.log("토큰이 유효합니다.");
+  // }
+
+  // useEffect(() => {
+  //   const token = req.header.authorization.split(" ")[1];
+  //   const data = jwt.verify(accessToken, process.env.ACCESS_SECRET);
+  //   console.log("토큰 유효시간 : ", data);
+  // }, []);
 
   return (
     <BrowserRouter>

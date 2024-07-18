@@ -24,7 +24,7 @@
   background-clip: content-box;
 }
 .access-login-main:nth-child(2) .main-inner {
-  padding: 40px 0;
+  padding: 40px 0 80px 0;
   background-color: #f3f9fa;
 }
 
@@ -151,6 +151,16 @@
   flex-direction: column;
   color: #031929;
   gap: 8px;
+}
+.main .main-notice .class-notice-inner .notice-inner .notice-text-div {
+  position: relative;
+  width: 88%;
+  height: 80%;
+  overflow: hidden;
+}
+.main .main-notice .class-notice-inner .notice-inner .notice-text-div .notice-text {
+  position: absolute;
+  text-overflow: ellipsis;
 }
 .main .main-notice .class-notice-inner .notice-inner .notice-write-icon * {
   position: absolute;

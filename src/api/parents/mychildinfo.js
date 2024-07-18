@@ -64,3 +64,26 @@ export const putChildInfo = async newInfo => {
     console.log("정보 수정 실패:", error);
   }
 };
+
+/** 학부모 : 최신 알림장 정보 불러오기 */
+export const getChildRecentNoticeInfo = async () => {
+  const accessToken = getCookie("accessToken");
+  const studentPk = getCookie("studentPk");
+
+  try {
+    const response = await axios.get(
+      `/api/notice/main?studentPk=${studentPk}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+    console.log("알림장 불러오기 : ", response);
+    return response.data.result;
+  } catch (error) {
+    console.log("알림장 불러오기 : ", response);
+
+    console.log(error);
+  }
+};

@@ -7,6 +7,8 @@ import { useNavigate } from "react-router";
 import { getCookie, removeCookie } from "utils/cookie";
 import ClassNotice from "./ClassNotice";
 import ClassSchedule from "./ClassSchedule";
+import { useDispatch } from "react-redux";
+import { removeLocalValue } from "utils/local";
 
 const LoginTeahcerStyle = styled.div``;
 
@@ -36,6 +38,10 @@ const LoginTeahcer = () => {
     removeCookie("userClass");
     removeCookie("userName");
     removeCookie("userEmail");
+
+    removeLocalValue("timerMin");
+    removeLocalValue("timerSec");
+    removeLocalValue("timerTime");
     window.location.reload("/");
   };
 

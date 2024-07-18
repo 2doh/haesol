@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { getChildRecentNoticeInfo } from "api/parents/mychildinfo";
 import { getRecentNoticeInfo } from "api/teacher/teacherapi";
 import moment from "moment";
 import { useEffect, useRef, useState } from "react";
@@ -15,7 +16,14 @@ const ClassNoticeStyle = styled.div`
 const ClassNotice = ({ setCreatedAt }) => {
   const navigate = useNavigate();
   const [noticeMenuNum, setNoticeMenuNum] = useState(2);
-  const [content, setContent] = useState("");
+
+  // 준비물
+  const [contentItem, setContentItem] = useState("");
+  const [contentItemCreatedAt, setContentItemCreatedAt] = useState("");
+  // 알림
+  const [contentNotice, setContentNotice] = useState("");
+  const [contentNoticeCreatedAt, setContentNoticeCreatedAt] = useState("");
+
   const [loginUserType, setLoginUserType] = useState(getCookie("userRole"));
 
   /** (교직원) 우리 학급 알림장 리스트 페이지로 이동 */
@@ -45,17 +53,52 @@ const ClassNotice = ({ setCreatedAt }) => {
 
   const getNotice = async noticeMenuNum => {
     // 알림 : 1, 준비물 : 2
-    const res = await getRecentNoticeInfo(noticeMenuNum);
-
     // 작성일 : createdAt, 내용 : content
-    setContent(res.content);
-    setCreatedAt(moment(res.createdAt).format("YYYY-MM-DD"));
-    console.log("결과값 : ", res);
+
+    // console.log(getCookie("userRole"));
+    if (getCookie("userRole") === "ROLE_TEAHCER") {
+      const res = await getRecentNoticeInfo(noticeMenuNum);
+      setContentItem(res.item.content);
+      setContentItemCreatedAt(moment(res.item.createdAt).format("YYYY-MM-DD"));
+      setContentNotice(res.notice.content);
+      setContentNoticeCreatedAt(
+        moment(res.notice.createdAt).format("YYYY-MM-DD"),
+      );
+    }
+
+    if (getCookie("userRole") === "ROLE_PARENTS") {
+      const res = await getChildRecentNoticeInfo();
+      // setContent(res.content);
+      // setCreatedAt(moment(res.createdAt).format("YYYY-MM-DD"));
+      setContentItem(res.item.content);
+      setContentItemCreatedAt(moment(res.item.createdAt).format("YYYY-MM-DD"));
+      setContentNotice(res.notice.content);
+      setContentNoticeCreatedAt(
+        moment(res.notice.createdAt).format("YYYY-MM-DD"),
+      );
+
+      console.log("학부모 결과값 : ", res.item);
+    }
   };
 
   /** 최초 랜더링 : 알림장 불러오기 */
   useEffect(() => {
-    getNotice(noticeMenuNum);
+    if (getCookie("studentPk")) {
+      getNotice(noticeMenuNum);
+    }
+
+    if (getCookie("userRole") === "ROLE_TEAHCER") {
+      getNotice(noticeMenuNum);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (noticeMenuNum === 2) {
+      setCreatedAt(contentItemCreatedAt);
+    }
+    if (noticeMenuNum === 1) {
+      setCreatedAt(contentNoticeCreatedAt);
+    }
   }, [noticeMenuNum]);
 
   return (
@@ -85,17 +128,21 @@ const ClassNotice = ({ setCreatedAt }) => {
           {/* <div className=""></div> */}
         </div>
         <div className="notice-inner">
-          <div ref={suppliesTextClassName} className="school-supplies">
-            {content}
+          <div
+            ref={suppliesTextClassName}
+            className="notice-text-div school-supplies"
+          >
+            수정중
+            <div className="notice-text">{contentItem}</div>
             {/* <ul>
               <li>1. 줄넘기</li>
               <li>2. 가위, 풀</li>
               <li>3. 색종이</li>
             </ul> */}
           </div>
-          <div ref={noticeTextClassName} className="notice-text no-display">
-            {content}
-
+          <div ref={noticeTextClassName} className="notice-text-div no-display">
+            수정중
+            <div className="notice-text">{contentNotice}</div>
             {/* <ul>
               <li>1. 수학 익힘책 15p 숙제가 있습니다.</li>
               <li>2. 내일 받아쓰기 시험이 있습니다.</li>

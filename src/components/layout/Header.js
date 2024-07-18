@@ -1,9 +1,10 @@
+import React, { useEffect, useState } from "react";
+import { MdOutlineLogout } from "react-icons/md";
 import { useNavigate } from "react-router";
+import { getCookie, removeCookie } from "utils/cookie";
 import "../../scss/header/header.css";
 import Timer from "./Timer";
-import { useEffect, useState } from "react";
-import { getCookie, removeCookie } from "utils/cookie";
-import { MdOutlineLogout } from "react-icons/md";
+import { removeLocalValue } from "utils/local";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -29,8 +30,12 @@ const Header = () => {
     removeCookie("accessToken");
     removeCookie("userIdPk");
     removeCookie("userRole");
-    navigate("/");
-    window.location.reload();
+
+    removeLocalValue("timerMin");
+    removeLocalValue("timerSec");
+    removeLocalValue("timerTime");
+
+    window.location.reload("/");
   };
 
   return (
@@ -124,7 +129,7 @@ const Header = () => {
       <div className="header-right-div">
         {loginUserType !== "ROLE_ADMIN" && loginUserType ? (
           <div className="inner-div">
-            <Timer></Timer>
+            <Timer />
           </div>
         ) : null}
       </div>
