@@ -18,9 +18,9 @@ const Chart = ({ recentExam, children, inquiry }) => {
 
   const [initSubjects, setInitSubjects] = useState(subjects);
   const [selectSubject, setSelectSubject] = useState({});
-  const [initArr, setInitArr] = useState([0]);
+  const [initArr, setInitArr] = useState(initSubjects[0]);
   // console.log(recentExam);
-
+  console.log(initSubjects);
   const onSubjectClick = item => {
     console.log(item);
     setSelectSubject(item);
