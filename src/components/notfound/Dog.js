@@ -1,3 +1,4 @@
+import React from "react";
 import styles from "../../scss/notfound/dog.module.css";
 
 const Dog = () => {
@@ -20,6 +21,7 @@ const Dog = () => {
       <div className={styles.dog__body}>
         <div className={styles.dog__tail}></div>
       </div>
+
       <div className={styles.dog__head}>
         <div className={styles.dog__snout}>
           <div className={styles.dog__nose}></div>
@@ -28,10 +30,11 @@ const Dog = () => {
             <div className={styles.dog__eye_r}></div>
           </div>
         </div>
-        <div className={styles.dog__head_c}>
-          <div className={styles.dog__ear_l}></div>
-          <div className={styles.dog__ear_r}></div>
-        </div>
+      </div>
+      <div className={styles.dog__head}>
+        {/* Place ears inside the head container */}
+        <div className={styles.dog__ear_l}></div>
+        <div className={styles.dog__ear_r}></div>
       </div>
     </div>
   );

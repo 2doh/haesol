@@ -102,6 +102,20 @@
   animation: head 10s cubic-bezier(0.3, 0.41, 0.18, 1.01) infinite;
 }
 
+.dog__head:last-child {
+  position: absolute;
+  left: 1.5vmax;
+  bottom: 0;
+  width: 9.75vmax;
+  height: 8.25vmax;
+  border-top-left-radius: 4.05vmax;
+  border-top-right-radius: 4.05vmax;
+  border-bottom-right-radius: 3.3vmax;
+  border-bottom-left-radius: 3.3vmax;
+  animation: head 10s cubic-bezier(0.3, 0.41, 0.18, 1.01) infinite;
+  z-index: 0;
+}
+
 .dog__snout {
   position: absolute;
   left: -1.5vmax;
@@ -316,6 +330,53 @@
     transform: translateY(0.15vmax);
   }
 }
+.dog__head {
+  position: absolute;
+  left: 1.5vmax;
+  bottom: 0;
+  width: 9.75vmax;
+  height: 8.25vmax;
+  border-top-left-radius: 4.05vmax;
+  border-top-right-radius: 4.05vmax;
+  border-bottom-right-radius: 3.3vmax;
+  border-bottom-left-radius: 3.3vmax;
+  background-color: #ff8147;
+  animation: head 10s cubic-bezier(0.3, 0.41, 0.18, 1.01) infinite;
+  z-index: 1; /* Make sure head is above other parts */
+}
+
+.dog__head_c {
+  position: relative; /* Ensure children are positioned relative to this */
+  z-index: 2; /* Ensure head_c is above other elements but below ears */
+}
+
+.dog__ear_l,
+.dog__ear_r {
+  position: absolute;
+  width: 10.5vmax;
+  height: 3.375vmax;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 3.3vmax;
+  border-bottom-left-radius: 3.3vmax;
+  background-color: #e26538;
+  z-index: -1; /* Make sure ears are behind other elements */
+}
+
+.dog__ear_l {
+  top: 1.5vmax;
+  left: 6vmax;
+  transform-origin: bottom left;
+  transform: rotateZ(-50deg);
+}
+
+.dog__ear_r {
+  top: 1.5vmax;
+  right: 3vmax;
+  transform-origin: bottom right;
+  transform: rotateZ(20deg);
+}
+
 @keyframes ear-l {
   0%, 10%, 20%, 26%, 28%, 82%, 100% {
     transform: rotateZ(-50deg);
