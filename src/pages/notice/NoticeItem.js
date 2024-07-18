@@ -27,10 +27,10 @@ const NoticeItem = () => {
   const noticeListData = async () => {
     try {
       const response = await getNoticeList(state);
-      if (Array.isArray(response.data.result)) {
-        setNoticeList(response.data.result);
+      if (Array.isArray(response.data.result.item)) {
+        setNoticeList(response.data.result.item);
       } else {
-        setNoticeList([response.data.result]);
+        setNoticeList([response.data.result.item]);
       }
     } catch (error) {
       console.log(error);
@@ -48,7 +48,7 @@ const NoticeItem = () => {
       headerText: `준비물 - ${createdAt}`,
       bodyText: [content],
       buttonText: ["전송", "취소"],
-      modalRes: [22, notice_id],
+      modalRes: [22, { to: "010-6792-2898", message: content }],
     };
     /** (선택) 위와 아래는 세트 */
     dispatch(updateModalDate(data));

@@ -10,7 +10,6 @@ const Login = () => {
   const navi = useNavigate();
 
   const [naviState, setNaviState] = useState("signin");
-  console.log(naviState);
   const goHome = () => {
     navi("/");
   };

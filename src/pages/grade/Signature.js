@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { postSign } from "api/student/studentapi";
 import { useRef, useState } from "react";
 import SignatureCanvas from "react-signature-canvas";
 
@@ -49,21 +50,47 @@ const ButtonWrapStyle = styled.div`
   gap: 10px;
 `;
 
-const Signature = () => {
+const Signature = ({ studentPk, latestSemester, latestYear }) => {
   const [showSignature, setShowSignature] = useState(false);
   const [isSigned, setIsSigned] = useState(false);
   const canvasRef = useRef(null);
 
-  const save = () => {
+  const handleSignSave = () => {
     const image = canvasRef.current.getTrimmedCanvas().toDataURL("image/png");
-    const link = document.createElement("a");
-    link.href = image;
-    // 현재 날짜와 시간을 이용하여 파일 이름 생성
     const currentDate = new Date();
     const fileName = `sign_image_${currentDate.getFullYear()}${(currentDate.getMonth() + 1).toString().padStart(2, "0")}${currentDate.getDate().toString().padStart(2, "0")}_${currentDate.getHours().toString().padStart(2, "0")}${currentDate.getMinutes().toString().padStart(2, "0")}${currentDate.getSeconds().toString().padStart(2, "0")}.png`;
 
-    link.download = fileName;
-    link.click();
+    // 데이터 URL을 Blob으로 변환
+    const dataURLToBlob = dataURL => {
+      const byteString = atob(dataURL.split(",")[1]);
+      const mimeString = dataURL.split(",")[0].split(":")[1].split(";")[0];
+      const ab = new ArrayBuffer(byteString.length);
+      const ia = new Uint8Array(ab);
+      for (let i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+      }
+      return new Blob([ab], { type: mimeString });
+    };
+
+    const imageBlob = dataURLToBlob(image);
+
+    // FormData에 추가
+    const formData = new FormData();
+    formData.append("pic", imageBlob, fileName);
+
+    const reqData = JSON.stringify({
+      studentPk: studentPk,
+      year: latestYear,
+      semester: latestSemester,
+      examSign: "1",
+    });
+
+    const reqBlob = new Blob([reqData], { type: "application/json" });
+
+    formData.append("req", reqBlob);
+
+    // Axios로 서버에 전송
+    postSign(formData);
   };
 
   return (
@@ -102,11 +129,8 @@ const Signature = () => {
             >
               서명 초기화
             </button>
-            <button
-              disabled={!isSigned} // 버튼 disabled
-              onClick={() => save()}
-            >
-              다운로드
+            <button disabled={!isSigned} onClick={() => handleSignSave()}>
+              확인
             </button>
           </ButtonWrapStyle>
         </CanvasInnerStyle>
