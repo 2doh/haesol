@@ -235,9 +235,11 @@
 @media screen and (max-width: 1517px) {
   .header .header-right-div .inner-div,
   .header .admin-header-timer-div .inner-div {
-    top: 85px;
-    right: 0px;
-    margin-left: 50px;
-    background-color: red;
+    top: 95px;
+    right: 20px;
+    background-color: green;
+    padding: 0 20px;
+    border-radius: 10px;
+    height: 60px;
   }
 }/*# sourceMappingURL=header.css.map */

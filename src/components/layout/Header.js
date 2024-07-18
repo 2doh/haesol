@@ -128,7 +128,7 @@ const Header = () => {
 
       <div className="header-right-div">
         {loginUserType !== "ROLE_ADMIN" && loginUserType ? (
-          <div className="inner-div">
+          <div className="inner-div speech-bubble">
             <Timer />
           </div>
         ) : null}
