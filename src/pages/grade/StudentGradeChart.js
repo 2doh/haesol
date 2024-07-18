@@ -1,45 +1,82 @@
 import {
   getScore,
+  getScoreDetail,
   getStudentGrade1,
   getStudentGrade2,
   getStudentInfo,
 } from "api/student/studentapi";
 import Chart from "components/chart/Chart";
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router";
+import { openModal, updateModalDate } from "slices/modalSlice";
 
 const StudentGradeChart = () => {
-  // 네비게이트
+  // const initArr = [
+  //   {
+  //     평균: "",
+  //     내점수: 0,
+  //     학급평균: 0,
+  //     학년평균: 0,
+  //   },
+  // ];
+
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const { studentPk } = useParams();
   const [studentClass, setStudentClass] = useState("");
   const [studentName, setStudentName] = useState("");
   const [grade, setGrade] = useState("");
   const [semester, setSemester] = useState("");
-  const [recentExam, setRecentExam] = useState({});
+  const [exam, setExam] = useState("");
+  const [recentExam, setRecentExam] = useState([]);
+  const [showChart, setShowChart] = useState(false);
+  const [count, setCount] = useState("");
+  const [inquiry, setInquiry] = useState(false);
+
+  const showModal = selectModalType => {
+    const data = {
+      bodyText: ["학년,학기,시험을 선택해주세요"],
+      modalRes: [16],
+      buttonCnt: 1,
+    };
+    dispatch(updateModalDate(data));
+    const modalRes = dispatch(openModal(selectModalType));
+  };
 
   const handleOnGrade = () => {
     navigate(`/grade/${studentPk}`);
   };
-
   const handleGradeChange = e => {
     setGrade(e.target.value);
   };
   const handleSemesterChange = e => {
     setSemester(e.target.value);
   };
-
-  const getScoreList = async () => {
-    const reqData = {
-      studentPk: studentPk,
-    };
-    const result = await getScore(reqData);
-    setRecentExam(result);
+  const handleExamChange = e => {
+    setExam(e.target.value);
   };
-  useEffect(() => {
-    getScoreList();
-  }, []);
 
+  const handleClick = async () => {
+    if (!grade || !semester || !exam) {
+      showModal("BasicModal");
+      return;
+    } else {
+      const reqData = {
+        studentPk: studentPk,
+        grade: grade,
+        semester: semester,
+        exam: exam,
+      };
+      const result = await getScoreDetail(reqData);
+      setRecentExam(result);
+      setCount(
+        `${result.classRank.classStudentCount} / ${result.classRank.gradeStudentCount}`,
+      );
+      setShowChart(true);
+    }
+  };
   return (
     <div className="main-core">
       <div className="student-list-title">
@@ -52,11 +89,16 @@ const StudentGradeChart = () => {
         <div className="user-info-tap">
           <div className="property">
             <div className="div-wrapper">
-              <div className="info-subtitle">신상 정보</div>
+              <div
+                className="info-subtitle"
+                onClick={() => navigate("/studentinfo")}
+              >
+                신상 정보
+              </div>
             </div>
             <div className="div-wrapper">
-              <div className="text-wrapper" onClick={e => handleOnGrade(e)}>
-                성적 입력
+              <div className="text-wrapper" onClick={() => handleOnGrade()}>
+                성적 확인
               </div>
             </div>
             <div className="frame">
@@ -64,14 +106,21 @@ const StudentGradeChart = () => {
             </div>
           </div>
           <div className="info-button">
-            <button>조회</button>
+            <button
+              onClick={() => {
+                handleClick();
+                setInquiry(true);
+              }}
+            >
+              조회
+            </button>
           </div>
         </div>
         <div className="info-contain-top">
           <div className="info-item-top">
             <div className="info-title" id="info-grade-select">
-              <span>학기 선택</span>
-              <div className="select-grade">
+              <span style={{ width: "161px" }}>학기 선택</span>
+              <div className="select-grade" style={{ width: "60%" }}>
                 <select
                   name="grade"
                   onChange={e => {
@@ -79,6 +128,9 @@ const StudentGradeChart = () => {
                   }}
                   value={grade}
                 >
+                  <option value="" hidden>
+                    학년
+                  </option>
                   <option value="1">1학년</option>
                   <option value="2">2학년</option>
                   <option value="3">3학년</option>
@@ -93,19 +145,47 @@ const StudentGradeChart = () => {
                   }}
                   value={semester}
                 >
+                  <option value="" hidden>
+                    학기
+                  </option>
                   <option value="1">1학기</option>
                   <option value="2">2학기</option>
                 </select>
+                <select
+                  name="exam"
+                  onChange={e => {
+                    handleExamChange(e);
+                  }}
+                  value={exam}
+                >
+                  <option value="" hidden>
+                    시험
+                  </option>
+                  <option value="1">중간고사</option>
+                  <option value="2">기말고사</option>
+                </select>
               </div>
-              <div className="total-student">
-                <p>반/학년 전체 인원</p>
-                <input />명
+              <div
+                className="total-student"
+                style={{
+                  margin: "0 auto",
+                  justifyContent: "left",
+                }}
+              >
+                <p style={{ height: "100%", width: "auto" }}>
+                  반/학년 전체 인원
+                </p>
+                <input readOnly value={count} />명
               </div>
             </div>
           </div>
         </div>
       </div>
-      <Chart />
+      {showChart ? (
+        <Chart recentExam={recentExam.list} inquiry={inquiry}>
+          평균 성적
+        </Chart>
+      ) : null}
     </div>
   );
 };

@@ -419,9 +419,9 @@ const LoginUser = () => {
                     </div>
 
                     {/* 채팅방 시작 */}
-                    {/* <div>
+                    <div>
                       <Chat />
-                    </div> */}
+                    </div>
                     {/* 채팅방 끝 */}
                   </div>
                 </div>
