@@ -9,7 +9,7 @@ import ViewPw from "./ViewPw";
 import { patchTeacherInfo, putTeacherPwChange } from "api/teacher/teacherapi";
 import PhoneInputFields from "pages/student/PhoneInputFields";
 import { getCookie } from "utils/cookie";
-import { deleteNotice } from "api/student/studentapi";
+import { deleteNotice, sendSmsPost } from "api/student/studentapi";
 import NoticeList from "pages/notice/NoticeList";
 import { useNavigate } from "react-router";
 import { putChildInfo, putParentsPwChange } from "api/parents/mychildinfo";
@@ -183,20 +183,26 @@ const Modal = () => {
         navi("/login");
       }
 
-      if (modalState.modalRes[0] === 44) {
-        console.log("삭제처리를 하겠습니다.");
-        console.log(modalState);
-        deleteNotice(modalState.modalRes[1]);
-        console.log(modalState.modalRes);
+      // 문자 메세지 발송
+      if (modalState.modalRes[0] === 22) {
+        console.log("확인 : ", modalState.modalRes[1]);
+        sendSmsPost(modalState.modalRes[1]);
         const data = {
           modalRes: [false],
         };
         dispatch(updateModalDate(data));
         dispatch(closeModal());
+      }
 
-        // const updateNotice = NoticeList.filter(
-        //   notice => notice.modalState.modalRes[0] !== modalState.modalRes[0],
-        // );
+      if (modalState.modalRes[0] === 44) {
+        // console.log(modalState);
+        deleteNotice(modalState.modalRes[1]);
+        // console.log(modalState.modalRes);
+        const data = {
+          modalRes: [false],
+        };
+        dispatch(updateModalDate(data));
+        dispatch(closeModal());
       }
     }
     if (modalState.modalType === "ArrValueModal") {

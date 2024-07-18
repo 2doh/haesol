@@ -35,7 +35,7 @@ import GradeChart from "pages/grade/GradeChart";
 import NotFound from "components/notfound/NotFound";
 import { AuthenticatedRedirect } from "components/common/AuthenticatedRedirect";
 import StudentEdit from "pages/student/StudentEdit";
-
+import TeacherProtectedRoute from "components/common/TeacherProtectedRoute";
 
 const ModalStyle = styled.div`
   position: absolute;
