@@ -45,8 +45,11 @@
       margin-left: 10px;
       // max-width: 200px;
       display: flex;
-      justify-content: space-around;
+      // justify-content: space-around;
+      gap: 10px;
       align-items: center;
+      position: absolute;
+      z-index: 1;
 
       & button {
         @include mini-bt-style($b200, $font-bc-2, $font-bc-2);
@@ -251,4 +254,20 @@
 .hand.second-hand {
   background: #ff5e5e;
   width: 40%;
+}
+
+// 타이머 위치 이동
+@media screen and (max-width: 1517px) {
+  .header {
+    .header-right-div,
+    .admin-header-timer-div {
+      .inner-div {
+        top: 85px;
+        right: 0px;
+        margin-left: 50px;
+        background-color: red;
+        // 스타일 수정
+      }
+    }
+  }
 }

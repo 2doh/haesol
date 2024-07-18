@@ -132,7 +132,7 @@ const Timer = () => {
 
   /** 로그인 시간 만료 알림 모달 종료 후 새로고침 갱신 */
   useEffect(() => {
-    if (modalState.modalRes[0] === false && time.current <= -1) {
+    if (modalState.modalRes[0] === false && time.current <= 0) {
       window.location.reload("/");
     }
   }, [modalState.modalRes[0]]);
@@ -147,7 +147,7 @@ const Timer = () => {
       const res = await getReAccessToken();
       if (res) {
         clearInterval(timerId.current);
-        time.current = 2; // 재설정하고 싶은 초 단위 시간으로 변경
+        time.current = 3600; // 재설정하고 싶은 초 단위 시간으로 변경
         alertShown.current = false;
         console.log("시간이 연장되었습니다.");
         timerTime();

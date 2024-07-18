@@ -136,9 +136,6 @@ const LoginUser = () => {
   /** 메뉴 선택 */
   const [countIndex, setCountIndex] = useState(0);
 
-  // const refStudentMenu1 = useRef();
-  // const refStudentMenu2 = useRef();
-
   // ROLE_ADMIN = 어드민;
   // ROLE_TEAHCER = 교직원;
   // ROLE_PARENTS = 학부모;
@@ -171,8 +168,6 @@ const LoginUser = () => {
       setTeacherName(myChildList[num].teacherName);
       setStudentPic(myChildList[num].pic);
       setCookie("studentPk", myChildList[num].studentPk);
-
-      // console.log("학생 PK 최초 : ", myChildList[num].studentPk);
     }
   }, [getCookie("selectChildNum")]);
 
@@ -290,7 +285,12 @@ const LoginUser = () => {
       {/* <LoginParents /> */}
       <div className="access-login-main main">
         <div className="access-login-main-inner">
-          <h1 className="access-login-title">{className}</h1>
+          <div className="class-title">
+            <div className="class-title-bg">
+              <h1 className="access-login-title">{className}</h1>
+            </div>
+          </div>
+
           <div className="main-inner">
             <div className="main-inner-class login-user-view">
               {/* <div className="main-schedule main-class-schedule">
@@ -419,9 +419,9 @@ const LoginUser = () => {
                     </div>
 
                     {/* 채팅방 시작 */}
-                    <div>
+                    {/* <div>
                       <Chat />
-                    </div>
+                    </div> */}
                     {/* 채팅방 끝 */}
                   </div>
                 </div>

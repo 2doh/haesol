@@ -15,12 +15,32 @@
   // background-clip: content-box;
 
   .access-login-main-inner {
+    .class-title {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+    }
+    .class-title-bg {
+      width: 50%;
+      height: 100px;
+      // background-image: url("../../images/class_title_blackboard.png");
+      display: flex;
+      justify-content: center;
+
+      height: 100%;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
     .access-login-title {
       display: flex;
       justify-content: center;
+      align-items: center;
       margin-top: 40px;
       // margin: 40px 0px 0px 45px;
-      background-color: #f3f9fa;
+
+      // background-color: #f3f9fa;
     }
   }
 }
