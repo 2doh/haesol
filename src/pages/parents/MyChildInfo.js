@@ -1,12 +1,12 @@
 import styled from "@emotion/styled";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
-import "../../scss/parents/childedit.css";
 import { getStudentInfo } from "api/student/studentapi";
 import PhoneInputFields from "pages/student/PhoneInputFields";
-import { getCookie } from "utils/cookie";
-import { openModal, updateModalDate } from "slices/modalSlice";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+import { openModal, updateModalDate } from "slices/modalSlice";
+import { getCookie } from "utils/cookie";
+import "../../scss/parents/childedit.css";
 
 const MyShildInfo = styled.div`
   .no-data {
@@ -14,9 +14,24 @@ const MyShildInfo = styled.div`
     padding-left: 0px !important;
   }
 
+  .no-padding {
+    padding-left: 0px !important;
+  }
+
   .no-edit-class {
     pointer-events: none;
     background-color: #efece8 !important;
+  }
+
+  .prev-class-item-span {
+    border-right: 0px !important;
+    width: 157px !important;
+    /* border-left: 0px; */
+  }
+
+  .prev-class-item {
+    padding: 10px 0;
+    border-left: solid 3px #886348;
   }
 `;
 
@@ -144,15 +159,14 @@ const MyChildInfo = () => {
     const data = {
       bodyText: ["정보를 수정하시겠습니까?"],
       modalRes: [
-        12,
+        13,
         {
-          stuNm: studentName,
-          connet,
-          phone: parentPhone,
-          stuPhone: studentPhone,
-          zoneCode: studentZoneCode,
-          addr: studentAddr,
-          detail: studentDetail,
+          studentName: studentName,
+          studentPhone: studentPhone,
+          studentZoneCode: studentZoneCode,
+          studentAddr: studentAddr,
+          studentDetail: studentDetail,
+          studentPk: getCookie("studentPk"),
           // stuEtc: studentEtc,
           // nm: "string",
           // email: "string",
@@ -184,6 +198,53 @@ const MyChildInfo = () => {
 
     dispatch(openModal(selectModalType));
   };
+
+  /** API 문제 */
+  // const saveInfo = selectModalType => {
+  //   // 기본 이메일과 중복 확인
+  //   const data = {
+  //     bodyText: ["정보를 수정하시겠습니까?"],
+  //     modalRes: [
+  //       12,
+  //       {
+  //         stuNm: studentName,
+  //         connet,
+  //         phone: parentPhone,
+  //         stuPhone: studentPhone,
+  //         zoneCode: studentZoneCode,
+  //         addr: studentAddr,
+  //         detail: studentDetail,
+  //         // stuEtc: studentEtc,
+  //         // nm: "string",
+  //         // email: "string",
+  //         // stuEngNm: "string",
+  //       },
+  //       //         {
+  //       //           "stuNm": "studentName",
+  //       //           // "nm": "string", ?
+  //       //           "connet": "connet",
+  //       //           "phone": "parentPhone",
+  //       //           // "subPhone": "string",
+  //       //           "stuPhone": "studentPhone",
+  //       //           // "email": "string",
+  //       //           // "stuEngNm": "string",
+  //       //           "addr": "studentAddr",
+  //       //           "detail": "studentDetail",
+  //       //           "stuEtc": "studentEtc",
+  //       //           "zoneCode": "studentZoneCode"
+  //       //         }
+  //       //         const [studentBirth, setStudentBirth] = useState("");
+  //       // const [parentName, setParentName] = useState("");
+  //       // // 추가
+  //       // // const [studentGender, setStudentGender] = useState("");
+  //       // const [studentPic, setStudentPic] = useState("");
+  //     ],
+  //     buttonText: ["수정", "취소"],
+  //   };
+  //   dispatch(updateModalDate(data));
+
+  //   dispatch(openModal(selectModalType));
+  // };
 
   const StudentsInfoStyle = styled.div`
     display: flex;
@@ -434,20 +495,29 @@ const MyChildInfo = () => {
               </div>
             </div>
           </div>
-          <div className="info-contain-top">
+          {/* <div className="info-contain-top">
             <div className="info-none-modify">
               <div className="info-title">
-                <span>이전 학급</span>
-                <div>
-                  {prevEtcList[0] ? (
-                    prevEtcList
+                <span className="prev-class-item-span">이전 학급</span>
+                <div className="prev-class-item">
+                  {prevEtcList.length > 0 ? (
+                    prevEtcList.map((item, index) => (
+                      <>
+                        <div key={index} className="no-padding">
+                          {item.uclass} | 담임 : {item.teacherName}
+                        </div>
+                        <div key={index} className="no-padding">
+                          {item.uclass} | 담임 : {item.teacherName}
+                        </div>
+                      </>
+                    ))
                   ) : (
                     <div className="no-data">정보 없음</div>
                   )}
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="info-contain-top">
             <div className="info-none-modify" id="info-none-modify-last">
               <div className="info-title">

@@ -16,9 +16,11 @@ export const getStudentList = async () => {
     console.log(error);
   }
 };
+
 // 학생 한 명 정보 불러오기
 export const getStudentInfo = async studentPk => {
   const accessToken = getCookie("accessToken");
+
   try {
     const response = await axios.get(`/api/student/detail?pk=${studentPk}`, {
       headers: {
@@ -26,6 +28,7 @@ export const getStudentInfo = async studentPk => {
         Authorization: `Bearer ${accessToken}`,
       },
     });
+
     return response;
   } catch (error) {
     console.error(error);
@@ -36,6 +39,8 @@ export const getStudentInfo = async studentPk => {
 // 학생 한 명 정보 수정
 export const modifyStudentInfo = async data => {
   const accessToken = getCookie("accessToken");
+  // console.log("정보 : ", data);
+
   try {
     const response = await axios.put("/api/student", data, {
       headers: {

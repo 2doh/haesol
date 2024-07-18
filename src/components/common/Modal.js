@@ -9,7 +9,8 @@ import ViewPw from "./ViewPw";
 import { patchTeacherInfo, putTeacherPwChange } from "api/teacher/teacherapi";
 import PhoneInputFields from "pages/student/PhoneInputFields";
 import { getCookie } from "utils/cookie";
-import { deleteNotice, sendSmsPost } from "api/student/studentapi";
+import { deleteNotice, modifyStudentInfo } from "api/student/studentapi";
+
 import NoticeList from "pages/notice/NoticeList";
 import { useNavigate } from "react-router";
 import { putChildInfo, putParentsPwChange } from "api/parents/mychildinfo";
@@ -164,10 +165,19 @@ const Modal = () => {
         }
       }
 
-      // 학부모 - 학생 : 정보 수정 페이지 처리
+      // 학부모 - 학생 : 정보 수정 페이지 처리 : 더미
       if (modalState.modalRes[0] === 12) {
         console.log("수정처리를 하겠습니다.", modalState.modalRes[1]);
         const res = putChildInfo(modalState.modalRes[1]);
+        if (res) {
+          dispatch(closeModal());
+        }
+      }
+
+      // 학부모 - 학생 : 정보 수정 페이지 처리
+      if (modalState.modalRes[0] === 13) {
+        console.log("수정처리를 하겠습니다.", modalState.modalRes[1]);
+        const res = modifyStudentInfo(modalState.modalRes[1]);
         if (res) {
           dispatch(closeModal());
         }

@@ -20,6 +20,7 @@ import ClassSchedule from "./ClassSchedule";
 import Chat from "./Chat";
 import ClassNotice from "./ClassNotice";
 import MainSchedule from "./MainSchedule";
+import { removeLocalValue } from "utils/local";
 
 const LoginUserStyle = styled.div`
   position: relative;
@@ -170,6 +171,8 @@ const LoginUser = () => {
       setTeacherName(myChildList[num].teacherName);
       setStudentPic(myChildList[num].pic);
       setCookie("studentPk", myChildList[num].studentPk);
+
+      // console.log("학생 PK 최초 : ", myChildList[num].studentPk);
     }
   }, [getCookie("selectChildNum")]);
 
@@ -199,10 +202,10 @@ const LoginUser = () => {
       setParentPhone(res[num].parentPhone);
       setParentsPK(res[num].parentsPK);
       setPhone(res[num].phone);
-      setStudentPk(res[num].studentPk);
       setAge(res[num].age);
       setTeacherName(res[num].teacherName);
       setStudentPic(res[num].pic);
+      setStudentPk(res[num].studentPk);
       setCookie("studentPk", res[num].studentPk);
 
       setOffUseEffect(true);
@@ -213,17 +216,11 @@ const LoginUser = () => {
     myChildInfo();
   }, []);
 
-  /** 알림장 최초 실행 */
-  useEffect(() => {
-    // const res = getRecentNoticeInfo(1);
-    // console.log("알림장 : ", res);
-  }, []);
-
   /** 반 시간표 */
 
   /** 마이페이지 이동 */
   const moveMyPage = () => {
-    navigate("/studentinfo");
+    navigate(`/studentinfo`);
   };
 
   /** 성적 확인 페이지 이동 */
@@ -240,6 +237,9 @@ const LoginUser = () => {
     removeCookie("selectChildNum");
     removeCookie("studentPk");
 
+    removeLocalValue("timerMin");
+    removeLocalValue("timerSec");
+    removeLocalValue("timerTime");
     window.location.reload("/");
   };
 

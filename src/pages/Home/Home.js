@@ -15,6 +15,8 @@ import LoginUser from "./LoginUser";
 import MainSchedule from "./MainSchedule";
 import LoginTeahcer from "./LoginTeahcer";
 import { ActivityPhotos } from "./ActivityPhotos";
+import { useDispatch } from "react-redux";
+import { startTimer } from "slices/timerSlice";
 
 const Home = () => {
   const HomeStyle = styled.div`
@@ -59,6 +61,12 @@ const Home = () => {
         setMenuArr(["오늘은 급식이 없습니다."]);
       }
     });
+  }, []);
+
+  useEffect(() => {
+    const accessToken = getCookie("accessToken");
+
+    // console.log("토큰 상태 : ", accessToken);
   }, []);
 
   // /** 학사 일정 */
@@ -106,6 +114,7 @@ const Home = () => {
     <HomeStyle>
       {loginUserType === "ROLE_PARENTS" ? <LoginUser /> : null}
       {loginUserType === "ROLE_TEAHCER" ? <LoginTeahcer /> : null}
+
       <div
         className={getCookie("accessToken") ? "access-login-main main" : "main"}
       >
