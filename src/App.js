@@ -34,6 +34,8 @@ import Grade from "pages/grade/Grade";
 import GradeChart from "pages/grade/GradeChart";
 import NotFound from "components/notfound/NotFound";
 import { AuthenticatedRedirect } from "components/common/AuthenticatedRedirect";
+import StudentEdit from "pages/student/StudentEdit";
+import TeacherProtectedRoute from "components/common/TeacherProtectedRoute";
 
 const ModalStyle = styled.div`
   position: absolute;
@@ -119,20 +121,15 @@ function App() {
       ) : null}
 
       <Header />
-      {/* {loginUserType === "ROLE_ADMIN" ? <AdminHeader /> : <Header />} */}
 
       <Main>
         <Routes>
           <Route index element={<Home />}></Route>
 
           {/* 로그인 & 회원가입 : 이후 진입시 Home으로 강제 이동 */}
-          {accessToken ? (
+          {/* {accessToken ? (
             <>
               <Route path="/login" element={<AuthenticatedRedirect />}></Route>
-              <Route
-                path="/students"
-                element={<AuthenticatedRedirect />}
-              ></Route>
               <Route path="/signup" element={<AuthenticatedRedirect />}></Route>
               <Route path="/findid" element={<AuthenticatedRedirect />}></Route>
               <Route
@@ -143,14 +140,18 @@ function App() {
           ) : (
             <>
               <Route path="/login" element={<Login />}></Route>
-              <Route path="/students" element={<Students />}></Route>
               <Route path="/signup" element={<Signup />}></Route>
               <Route path="/findid" element={<FindId />}></Route>
               <Route path="/findpass" element={<FindPass />}></Route>
             </>
-          )}
+          )} */}
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/students" element={<Students />}></Route>
+          <Route path="/signup" element={<Signup />}></Route>
+          <Route path="/findid" element={<FindId />}></Route>
+          <Route path="/findpass" element={<FindPass />}></Route>
 
-          {/* 어드민 */}
+          {/* Admin 계정의 경우 */}
           {loginUserType === "ROLE_ADMIN" ? (
             <>
               <Route
@@ -170,30 +171,41 @@ function App() {
             <Route path="/admin/*" element={<ReturnHomeRoute />}></Route>
           )}
 
-          {/* <Route path="/grade" element={<Navigate to="*" />}>
-            <Route
-              path="statistics/:userid"
-              element={<GradeStatistics />}
-            ></Route>
-            <Route path=":userid" element={<Grade />}></Route>
-          </Route> */}
+          {/* 교직원 : 학생 리스트 */}
+          <Route
+            path="/students"
+            element={
+              <TeacherProtectedRoute
+                authenticated={accessToken}
+                component={<Students />}
+              />
+            }
+          ></Route>
+
+          {/* 성적 확인/등록 페이지 - 수정중 */}
           {loginUserType === "ROLE_TEAHCER" ? (
             <Route path="/grade/:studentPk" element={<Grade />}></Route>
           ) : (
             // <Route path="/grade/:studentPk" element={<GradeView />}></Route>
             <Route path="/grade/:studentPk" element={<GradeView />}></Route>
           )}
+
           <Route
             path="/grade/chart/:studentPk"
             element={<GradeChart />}
           ></Route>
           {/* 임시 경로 */}
-          {/* <Route path="/students/edit" element={<StudentEdit />}></Route> */}
-          {/* 학생 본인 정보 수정 페이지 임시 경로 */}
-          <Route
-            path="/students/edit/:studentPk"
-            element={<StudentInfoView />}
-          ></Route>
+          {loginUserType === "ROLE_TEAHCER" ? (
+            <Route
+              path="/students/edit/:studentPk"
+              element={<StudentEdit />}
+            ></Route>
+          ) : (
+            <Route
+              path="/students/edit/:studentPk"
+              element={<StudentInfoView />}
+            ></Route>
+          )}
 
           {/* 교직원 : 정보 수정 페이지 */}
           <Route path="/teacherinfo" element={<TeacherEdit />}></Route>
@@ -204,7 +216,7 @@ function App() {
           <Route path="/students" element={<Navigate to="*" />}>
             {/* 경로 수정 후 아래로 변경 */}
             {/* <Route path="edit/:userid" element={<StudentEdit />}></Route> */}
-            {/* <Route path="grade/:studentid" element={<StudentGrade />}></Route> */}
+            {/* <Route path="grade/:studntid" element={<StudentGrade />}></Route> */}
           </Route>
 
           {/* 임시 경로 */}

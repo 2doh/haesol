@@ -30,10 +30,10 @@ const NoticeList = () => {
   const noticeListData = async () => {
     try {
       const response = await getNoticeList(state);
-      if (Array.isArray(response.data.result)) {
-        setNoticeList(response.data.result);
+      if (Array.isArray(response.data.result.notice)) {
+        setNoticeList(response.data.result.notice);
       } else {
-        setNoticeList([response.data.result]);
+        setNoticeList([response.data.result.notice]);
       }
       console.log(noticeList);
     } catch (error) {
@@ -48,11 +48,13 @@ const NoticeList = () => {
   /** 모달 호출 */
   const showModal = (selectModalType, createdAt, title, content, notice_id) => {
     /** (선택) 들어갈 내용 수정 */
+    console.log("내용은 이것이다 : ", content);
+
     const data = {
       headerText: `준비물 - ${createdAt}`,
       bodyText: [content],
       buttonText: ["전송", "취소"],
-      modalRes: [22, notice_id],
+      modalRes: [22, { to: "010-6792-2898", message: content }],
     };
     /** (선택) 위와 아래는 세트 */
     dispatch(updateModalDate(data));
@@ -145,6 +147,7 @@ const NoticeList = () => {
                   item.content,
                   item.notice_id,
                 );
+                console.log("내용 : ", item.content);
               }}
             >
               <div className="grid-inner">

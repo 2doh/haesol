@@ -1,22 +1,30 @@
 import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router";
-import "../../scss/student/studentEdit.css";
-// import PhoneInputFields from "components/signup/PhoneInputFields";
+import { useNavigate } from "react-router";
+import "../../scss/parents/childedit.css";
 import { getStudentInfo } from "api/student/studentapi";
-import { getCookie } from "utils/cookie";
 import PhoneInputFields from "pages/student/PhoneInputFields";
+import { getCookie } from "utils/cookie";
+import { openModal, updateModalDate } from "slices/modalSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const MyShildInfo = styled.div`
   .no-data {
     color: gray;
     padding-left: 0px !important;
   }
+
+  .no-edit-class {
+    pointer-events: none;
+    background-color: #efece8 !important;
+  }
 `;
 
 const MyChildInfo = () => {
   // 네비게이트
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const modalState = useSelector(state => state.modalSlice);
 
   /** 성적 확인 페이지로 이동 */
   const handleClick = () => {
@@ -74,37 +82,9 @@ const MyChildInfo = () => {
   /** 최초 랜더링 */
   useEffect(() => {
     getChildInfo();
+    console.log("권한 : ", getCookie("userRole"));
   }, []);
 
-  // 학생 더미 데이터
-  const readOnlyInfo = {
-    firstSignup: "2024년 06월 24일 오후 4시 45분",
-    userId: "kimgreen010101",
-    currentClass: "5학년 7반 | 담임 : 황준하",
-  };
-
-  const prvInfo = [
-    {
-      prvClass: "1학년 1반",
-      prvTeacher: "김누구",
-      studentInfoContent: "기록 내용 없음",
-    },
-    {
-      prvClass: "2학년 1반",
-      prvTeacher: "김누구",
-      studentInfoContent: "기록 내용 없음",
-    },
-    {
-      prvClass: "3학년 1반",
-      prvTeacher: "김누구",
-      studentInfoContent: "기록 내용 없음",
-    },
-    {
-      prvClass: "4학년 1반",
-      prvTeacher: "김누구",
-      studentInfoContent: "기록 내용 없음",
-    },
-  ];
   const [postCode, setPostCode] = useState("우편번호");
   const [address, setAddress] = useState("주소");
   const handleAddClick = e => {
@@ -131,6 +111,80 @@ const MyChildInfo = () => {
     }).open();
   };
 
+  /** 취소 기능 */
+  const modifyCancel = selectModalType => {
+    const data = {
+      bodyText: ["수정한 내용을 되돌리겠습니까?"],
+      modalRes: [1],
+      buttonText: ["취소", "닫기"],
+    };
+
+    dispatch(updateModalDate(data));
+    dispatch(openModal(selectModalType));
+  };
+
+  /** 모달 종료 후 갱신 */
+  useEffect(() => {
+    if (modalState.modalRes[0] === false) {
+      getChildInfo();
+    }
+  }, [modalState.modalRes[0]]);
+
+  /** 비밀번호 수정 모달 호출 */
+  const showModal = selectModalType => {
+    const data = { bodyText: [parentId] };
+    dispatch(updateModalDate(data));
+
+    dispatch(openModal(selectModalType));
+  };
+
+  /** 저장 기능 */
+  const saveInfo = selectModalType => {
+    // 기본 이메일과 중복 확인
+    const data = {
+      bodyText: ["정보를 수정하시겠습니까?"],
+      modalRes: [
+        12,
+        {
+          stuNm: studentName,
+          connet,
+          phone: parentPhone,
+          stuPhone: studentPhone,
+          zoneCode: studentZoneCode,
+          addr: studentAddr,
+          detail: studentDetail,
+          // stuEtc: studentEtc,
+          // nm: "string",
+          // email: "string",
+          // stuEngNm: "string",
+        },
+        //         {
+        //           "stuNm": "studentName",
+        //           // "nm": "string", ?
+        //           "connet": "connet",
+        //           "phone": "parentPhone",
+        //           // "subPhone": "string",
+        //           "stuPhone": "studentPhone",
+        //           // "email": "string",
+        //           // "stuEngNm": "string",
+        //           "addr": "studentAddr",
+        //           "detail": "studentDetail",
+        //           "stuEtc": "studentEtc",
+        //           "zoneCode": "studentZoneCode"
+        //         }
+        //         const [studentBirth, setStudentBirth] = useState("");
+        // const [parentName, setParentName] = useState("");
+        // // 추가
+        // // const [studentGender, setStudentGender] = useState("");
+        // const [studentPic, setStudentPic] = useState("");
+      ],
+      buttonText: ["수정", "취소"],
+    };
+    dispatch(updateModalDate(data));
+
+    dispatch(openModal(selectModalType));
+  };
+
   const StudentsInfoStyle = styled.div`
     display: flex;
     justify-content: center;
@@ -142,7 +196,7 @@ const MyChildInfo = () => {
 
   return (
     <MyShildInfo>
-      <div className="main-core">
+      <div className="main-core child-edit-wrap">
         <div className="student-list-title">
           <span>개인 정보 수정</span>
         </div>
@@ -170,11 +224,33 @@ const MyChildInfo = () => {
               >
                 <div className="info-subtitle">차트</div>
               </div>
+              <div className="info-button re-pw-btn">
+                <button
+                  onClick={() => {
+                    showModal("PasswordChangeModal");
+                  }}
+                  className="re-pw-btn"
+                >
+                  비밀번호 수정
+                </button>
+              </div>
             </div>
 
             <div className="info-button">
-              <button>저장</button>
-              <button>취소</button>
+              <button
+                onClick={e => {
+                  saveInfo("BasicModal");
+                }}
+              >
+                저장
+              </button>
+              <button
+                onClick={e => {
+                  modifyCancel("BasicModal");
+                }}
+              >
+                취소
+              </button>
             </div>
           </div>
           {/* <!-- 입력 부분 --> */}
@@ -216,9 +292,10 @@ const MyChildInfo = () => {
                   type="date"
                   name="date"
                   value={studentBirth}
-                  onChange={e => {
-                    setStudentBirth(e.target.value);
-                  }}
+                  className="no-edit-class"
+                  // onChange={e => {
+                  //   setStudentBirth(e.target.value);
+                  // }}
                 />
               </div>
               <div className="info-title">
@@ -239,19 +316,21 @@ const MyChildInfo = () => {
                   name="text"
                   placeholder=""
                   value={parentName}
-                  onChange={e => {
-                    setParentName(e.target.value);
-                  }}
+                  className="no-edit-class"
+                  // onChange={e => {
+                  //   setParentName(e.target.value);
+                  // }}
                 />
               </div>
               <div className="info-title">
                 <span>관계</span>
                 <select
+                  className="no-edit-class"
                   name="family-info"
                   value={connet}
-                  onChange={e => {
-                    setConnet(e.target.value);
-                  }}
+                  // onChange={e => {
+                  //   setConnet(e.target.value);
+                  // }}
                 >
                   <option value="none" disabled selected>
                     == 항목을 선택하세요 ==
@@ -266,11 +345,18 @@ const MyChildInfo = () => {
               <div className="info-title">
                 <div className="info-title">
                   <span>학부모 전화번호</span>
-                  <PhoneInputFields
+                  <input
+                    type="text"
+                    name="text"
+                    placeholder=""
+                    value={parentPhone}
+                    className="no-edit-class"
+                  />
+                  {/* <PhoneInputFields
                     placeholder="전화번호를 입력하세요"
                     phoneNum={parentPhone}
                     setPhoneNum={setParentPhone}
-                  />
+                  /> */}
                 </div>
               </div>
             </div>
@@ -367,7 +453,7 @@ const MyChildInfo = () => {
               <div className="info-title">
                 <span>기타사항</span>
                 <div>
-                  {studentEtc === null ? (
+                  {studentEtc === null || studentEtc === "" ? (
                     <div className="no-data">정보 없음</div>
                   ) : (
                     studentEtc

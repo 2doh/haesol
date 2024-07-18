@@ -39,7 +39,6 @@ export const modifyStudentInfo = async data => {
   try {
     const response = await axios.put("/api/student", data, {
       headers: {
-        "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${accessToken}`,
       },
     });
@@ -175,11 +174,31 @@ export const postStudentGradeScore = async ({
   }
 };
 
-// 알림장 데이터 불러오기
-export const getNoticeList = async state => {
+// 전자서명 보내기
+export const postSign = async formData => {
   const accessToken = getCookie("accessToken");
   try {
-    const response = await axios.get(`/api/notice?state=${state}`, {
+    const response = await jwtAxios.post(
+      `/api/user/parents/signature`,
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "multipart/form-data",
+        },
+      },
+    );
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// 알림장 데이터 불러오기
+export const getNoticeList = async studentPk => {
+  const accessToken = getCookie("accessToken");
+  try {
+    const response = await axios.get(`/api/notice?studentPk=${studentPk}`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
@@ -225,4 +244,24 @@ export const getScoreDetail = async data => {
     `/api/Score/getScoreDetail?studentPk=${data.studentPk}&grade=${data.grade}&semester=${data.semester}&exam=${data.exam}`,
   );
   return res.data.data;
+};
+
+// 알림장 문자 메세지 발송
+export const sendSmsPost = async data => {
+  const accessToken = getCookie("accessToken");
+  try {
+    const response = await jwtAxios.post(
+      "/api/sms/send",
+      JSON.stringify(data),
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      },
+    );
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
 };

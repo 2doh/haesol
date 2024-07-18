@@ -22,3 +22,45 @@ export const getMyChildInfo = async () => {
     console.log(error);
   }
 };
+
+/** 학부모 계정 : 비밀번호 변경 */
+export const putParentsPwChange = async (newPw, userId) => {
+  const accessToken = getCookie("accessToken");
+
+  console.log(`New PW : ${newPw}, 선생님 ID : ${userId}`);
+  try {
+    const response = await axios.put(
+      "/api/user/parents/password-update",
+      {
+        uid: `${userId}`,
+        newUpw: `${newPw}`,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+    console.log("비밀번호 수정 완료");
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+/** 학부모 계정 : 정보 수정 */
+export const putChildInfo = async newInfo => {
+  const accessToken = getCookie("accessToken");
+
+  try {
+    const response = await axios.put("/api/user/parents/info-update", newInfo, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    console.log("자녀 정보 수정 완료");
+    return true;
+  } catch (error) {
+    console.log("정보 수정 실패:", error);
+  }
+};

@@ -1,9 +1,10 @@
 import styled from "@emotion/styled";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router";
 import "../../scss/student/studentEdit.css";
 import StudentImg from "./StudentImg";
 import PhoneInputFields from "./PhoneInputFields";
+import { getStudentInfo, modifyStudentInfo } from "api/student/studentapi";
 const StudentEdit = () => {
   // 네비게이트
   const navigate = useNavigate();
@@ -11,45 +12,117 @@ const StudentEdit = () => {
   const handleClick = () => {
     navigate(`/grade/${studentPk}`);
   };
-
+  // 차트 네비게이트
   const handleChart = () => {
     navigate(``);
   };
 
-  // 반 정보 > 추후 데이터 받아와서 처리
-  const gradeClass = "5학년 7반";
+  // 학생 한 명 데이터
+  const [studentInfo, setStudentInfo] = useState({});
+  const [studentName, setStudentName] = useState("");
+  const [studentGender, setStudentGender] = useState("");
+  const [studentBirth, setStudentBirth] = useState("");
+  const [studentPhone, setStudentPhone] = useState("");
 
-  // 학생 더미 데이터
-  const readOnlyInfo = {
-    firstSignup: "2024년 06월 24일 오후 4시 45분",
-    userId: "kimgreen010101",
-    currentClass: "5학년 7반 | 담임 : 황준하",
-  };
+  const [parentName, setParentName] = useState("");
+  const [connet, setConnet] = useState("");
+  const [parentPhone, setParentPhone] = useState("");
 
-  const prvInfo = [
-    {
-      prvClass: "1학년 1반",
-      prvTeacher: "김누구",
-      studentInfoContent: "기록 내용 없음",
-    },
-    {
-      prvClass: "2학년 1반",
-      prvTeacher: "김누구",
-      studentInfoContent: "기록 내용 없음",
-    },
-    {
-      prvClass: "3학년 1반",
-      prvTeacher: "김누구",
-      studentInfoContent: "기록 내용 없음",
-    },
-    {
-      prvClass: "4학년 1반",
-      prvTeacher: "김누구",
-      studentInfoContent: "기록 내용 없음",
-    },
-  ];
+  // 이미지
+  // const [studentPic, setStudentPic] = useState(null);
+
+  // const [studentZoneCode, setStudentZoneCode] = useState("");
+  // const [studentAddr, setStudentAddr] = useState("");
+
   const [postCode, setPostCode] = useState("우편번호");
   const [address, setAddress] = useState("주소");
+  // 주소 상세...
+  const [studentDetail, setStudentDetail] = useState("");
+
+  const [studentEtc, setStudentEtc] = useState("");
+
+  const [studentCreatedAt, setStudentCreatedAt] = useState("");
+  const [parentId, setParentId] = useState("");
+  const [studentClass, setStudentClass] = useState("");
+
+  const [prevEtcList, setPrevEtcList] = useState([]);
+
+  // 정보 불러오기
+  const studentInfoData = async () => {
+    try {
+      const response = await getStudentInfo(studentPk);
+      const result = response.data;
+
+      setStudentInfo(result);
+      setStudentName(result.studentName);
+      setStudentGender(result.studentGender);
+      setStudentBirth(result.studentBirth);
+      setStudentPhone(result.studentPhone);
+      setParentName(result.parentName);
+      setConnet(result.connet);
+      setParentPhone(result.parentPhone);
+      // setStudentPic(result.files);
+      setPostCode(result.studentZoneCode);
+      setAddress(result.studentAddr);
+      setStudentDetail(result.studentDetail);
+      setStudentEtc(result.studentEtc);
+      setStudentCreatedAt(result.studentCreatedAt);
+      setParentId(result.parentId);
+      setStudentClass(result.studentClass);
+
+      setPrevEtcList(result.prevEtcList);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    // 학생 데이터 불러오기
+    studentInfoData();
+  }, [studentPk]);
+
+  // 정보 수정하기
+  const handleModifyInfo = async e => {
+    e.preventDefault();
+
+    const studentInfoData = {
+      studentPk: studentPk,
+      name: studentName,
+      phone: studentPhone,
+      addr: studentAddr,
+      zoneCode: studentZoneCode,
+      detail: studentDetail,
+      etc: studentEtc,
+    };
+    const result = await modifyStudentInfo(studentInfoData);
+    console.log(result);
+    // const formData = new FormData();
+
+    // const infoData = JSON.stringify({
+    //   studentPk,
+    //   studentName,
+    //   studentGender,
+    //   studentBirth,
+    //   studentPhone,
+    //   parentName,
+    //   connet,
+    //   parentPhone,
+    //   studentZoneCode,
+    //   studentAddr,
+    //   studentEtc,
+    // });
+
+    // const dto = new Blob([infoData], { type: "application/json" });
+    // formData.append("files", dto);
+    // // formData.append("studentPic", dto);
+    // // formData.append("files", studentPic);
+    // try {
+    //   await modifyStudentInfo(formData);
+    // } catch (error) {
+    //   console.log(error);
+    // }
+  };
+
   const handleAddClick = e => {
     e.preventDefault();
     // 주소찾기 팝업
@@ -87,7 +160,7 @@ const StudentEdit = () => {
     <div className="main-core">
       <div className="student-list-title">
         {/* <!-- 제목 위치 --> */}
-        <span>{gradeClass}</span>
+        <span>{studentClass}</span>
         <p>학생 정보 관리</p>
       </div>
       {/* <!-- 신상정보 전체 레이아웃 --> */}
@@ -117,7 +190,13 @@ const StudentEdit = () => {
           </div>
 
           <div className="info-button">
-            <button>저장</button>
+            <button
+              onClick={e => {
+                handleModifyInfo(e);
+              }}
+            >
+              저장
+            </button>
             <button>취소</button>
           </div>
         </div>
@@ -130,60 +209,106 @@ const StudentEdit = () => {
                 type="text"
                 name="text"
                 placeholder="이름을 입력해주세요"
+                value={studentName}
+                onChange={e => {
+                  setStudentName(e.target.value);
+                }}
               />
               <div className="form-check">
                 <input
                   className="form-check-gender"
                   type="radio"
                   name="chk_info"
-                  value="남자"
+                  value="남"
+                  checked={studentGender === "남"}
+                  onChange={e => setStudentGender(e.target.value)}
                 />
                 남자
                 <input
                   className="form-check-gender"
                   type="radio"
                   name="chk_info"
-                  value="여자"
+                  value="여"
+                  checked={studentGender === "여"}
+                  onChange={e => setStudentGender(e.target.value)}
                 />
                 여자
               </div>
             </div>
             <div className="info-title">
               <span>생년월일</span>
-              <input type="date" name="date" />
+              <input
+                type="date"
+                name="date"
+                value={studentBirth}
+                onChange={e => setStudentBirth(e.target.value)}
+              />
             </div>
             <div className="info-title">
               <span>전화번호</span>
-              <PhoneInputFields placeholder="전화번호를 입력하세요" />
+              <PhoneInputFields
+                phoneNum={studentPhone}
+                onChange={e => setStudentPhone(e.target.value)}
+              />
             </div>
           </div>
           <div className="info-item-right">
             <div className="info-title">
               <span>학부모명</span>
-              <input type="text" name="text" placeholder="" />
+              <input
+                type="text"
+                name="text"
+                placeholder=""
+                readOnly
+                value={parentName}
+                onChange={e => setParentName(e.target.value)}
+                style={{ background: "#efece8" }}
+              />
             </div>
             <div className="info-title">
               <span>관계</span>
-              <select name="family-info">
-                <option value="none" disabled selected>
-                  == 항목을 선택하세요 ==
+              <select
+                name="family-info"
+                value={connet}
+                readOnly
+                // onChange={e => setConnet(e.target.value)}
+                style={{ background: "#efece8" }}
+              >
+                <option value="부" disabled>
+                  부
                 </option>
-                <option value="부">부</option>
-                <option value="모">모</option>
-                <option value="조부">조부</option>
-                <option value="조모">조모</option>
-                <option value="기타">기타</option>
+                <option value="모" disabled>
+                  모
+                </option>
+                <option value="조부" disabled>
+                  조부
+                </option>
+                <option value="조모" disabled>
+                  조모
+                </option>
+                <option value="기타" disabled>
+                  기타
+                </option>
               </select>
             </div>
             <div className="info-title">
-              <div className="info-title">
-                <span>학부모 전화번호</span>
-                <PhoneInputFields placeholder="전화번호를 입력하세요" />
-              </div>
+              <span>학부모 전화번호</span>
+              <PhoneInputFields
+                placeholder="전화번호를 입력하세요"
+                phoneNum={parentPhone}
+                readOnly
+                style={{ background: "#efece8" }}
+                // onChange={e => setParentPhone(e.target.value)}
+              />
             </div>
           </div>
           <div className="info-img">
-            <StudentImg />
+            {/* 이미지 수정 필요 */}
+            <StudentImg
+              // studentPic={studentPic}
+              // setStudentPic={setStudentPic}
+              studentPk={studentPk}
+            />
           </div>
         </div>
         <div className="info-contain-mid">
@@ -195,41 +320,41 @@ const StudentEdit = () => {
                   <input
                     type="text"
                     name="text"
-                    placeholder={postCode}
+                    value={postCode}
                     readOnly
                   ></input>
-                  <button
-                    type="button"
-                    onClick={e => {
-                      handleAddClick(e);
-                    }}
-                  >
-                    우편번호 찾기
-                  </button>
                 </div>
                 <input
                   type="text"
                   name="text"
-                  placeholder={address}
+                  // placeholder={address}
                   className="info-add"
                   readOnly
+                  value={address}
+                  // onChange={() => setAddress(roadAddr)}
                 />
                 <input
                   type="text"
                   name="text"
                   placeholder="상세주소를 입력해주세요."
                   className="info-add"
+                  value={studentDetail}
+                  readOnly
+                  // onChange={e => setStudentDetail(e.target.value)}
                 />
               </div>
             </div>
-            <div className="info-title"></div>
           </div>
         </div>
         <div className="info-contain-top">
           <div className="info-item-bottom">
             <div className="info-title">
               <span>기타사항</span>
-              <textarea />
+              <textarea
+                // placeholder="기타 특이사항을 입력하세요"
+                value={studentEtc}
+                onChange={e => setStudentEtc(e.target.value)}
+              />
             </div>
             <div className="info-title"></div>
           </div>
@@ -238,7 +363,7 @@ const StudentEdit = () => {
           <div className="info-none-modify">
             <div className="info-title">
               <span>최초 등록일</span>
-              <div>{readOnlyInfo.firstSignup}</div>
+              <div>{studentCreatedAt}</div>
             </div>
           </div>
         </div>
@@ -246,7 +371,7 @@ const StudentEdit = () => {
           <div className="info-none-modify">
             <div className="info-title">
               <span>아이디</span>
-              <div>{readOnlyInfo.userId}</div>
+              <div>{parentId}</div>
             </div>
           </div>
         </div>
@@ -254,7 +379,7 @@ const StudentEdit = () => {
           <div className="info-none-modify" id="info-none-modify-last">
             <div className="info-title">
               <span>현재 학급</span>
-              <div>{readOnlyInfo.currentClass}</div>
+              <div>{studentClass}</div>
             </div>
           </div>
         </div>
@@ -265,33 +390,57 @@ const StudentEdit = () => {
             <div className="main-schedule-title-text">학생 기록 정보</div>
           </div>
           <div className="grid-frame">
-            {prvInfo.map((item, index) => (
+            {prevEtcList.length > 0 ? (
+              prevEtcList.map((item, index) => (
+                <>
+                  <div className="item" key={index}>
+                    <div className="grid-inner">
+                      <div className="grid-inner-item">
+                        <div className="grid-inner-item-text">학급</div>
+                      </div>
+                      <div className="grid-inner-item1">
+                        <div className="grid-inner-item-text">
+                          {item.uclass}
+                        </div>
+                      </div>
+                      <div className="grid-inner-item">
+                        <div className="grid-inner-item-text">담당 교직원</div>
+                      </div>
+                      <div className="grid-inner-item1">
+                        <div className="grid-inner-item-text">
+                          {item.teacherName}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="student-info-readonly">
+                    {item.etc || "기록된 정보가 없습니다."}
+                  </div>
+                </>
+              ))
+            ) : (
               <>
-                <div className="item" key={index}>
+                <div className="item">
                   <div className="grid-inner">
                     <div className="grid-inner-item">
                       <div className="grid-inner-item-text">학급</div>
                     </div>
                     <div className="grid-inner-item1">
-                      <div className="grid-inner-item-text">
-                        {item.prvClass}
-                      </div>
+                      <div className="grid-inner-item-text">-</div>
                     </div>
                     <div className="grid-inner-item">
                       <div className="grid-inner-item-text">담당 교직원</div>
                     </div>
                     <div className="grid-inner-item1">
-                      <div className="grid-inner-item-text">
-                        {item.prvTeacher}
-                      </div>
+                      <div className="grid-inner-item-text">-</div>
                     </div>
                   </div>
                 </div>
                 <div className="student-info-readonly">
-                  {item.studentInfoContent}
+                  이전 학기 정보가 없습니다.
                 </div>
               </>
-            ))}
+            )}
           </div>
         </div>
       </StudentsInfoStyle>
