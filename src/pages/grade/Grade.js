@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import "../../scss/student/grade.css";
 import "../../scss/student/studentEdit.css";
+import styled from "@emotion/styled";
 
 const initData = [
   {
@@ -176,9 +177,6 @@ const Grade = () => {
   const [gradeStudentCount, setGradeStudentCount] = useState("-");
   const [classRank, setClassRank] = useState("-");
   const [gradeRank, setGradeRank] = useState("-");
-
-  // 점수 입력
-  const [score, setScore] = useState("");
 
   // const [midGrades, setMidGrades] = useState({
   //   국어: "",
@@ -504,9 +502,6 @@ const Grade = () => {
     //   console.log(error);
     // }
   };
-  // useEffect(() => {
-  //   studentGradeSelect1();
-  // }, [studentPk]);
 
   // 학기, 학년 선택 성적 출력 기말고사
   const studentGradeSelect2 = async (grade, semester, year) => {
@@ -623,6 +618,22 @@ const Grade = () => {
   //   setDateSelectBox();
   // }, []);
 
+  const ParentCheckStyle = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-end;
+    margin-bottom: 100px;
+    button {
+      cursor: Default;
+      width: 120px;
+      height: 30px;
+      /* background: #fbfaf9; */
+      border: solid 2px #886348;
+      font-size: 18px;
+    }
+  `;
+
   return (
     <div className="main-core">
       <div className="student-list-title">
@@ -681,7 +692,6 @@ const Grade = () => {
                 </select>
               </div>
               <div className="total-student">
-                {/* <p>반/학년 전체 인원</p> */}
                 <p>년도 선택</p>
                 <select
                   id="year"
@@ -760,7 +770,9 @@ const Grade = () => {
             반 등수 <input value={classRank} /> / {classStudentCount} 등
           </div>
         </div>
-        <Signature />
+        <ParentCheckStyle>
+          <button>학부모 확인</button>
+        </ParentCheckStyle>
 
         <div className="exam-table">
           <div className="property">

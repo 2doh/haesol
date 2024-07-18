@@ -315,7 +315,7 @@ const LoginUser = () => {
                   <div className="main-notice-day">{createdAt}</div>
                 </div>
                 <div className="main-title-dwon-contents">
-                  {/* <ClassNotice setCreatedAt={setCreatedAt} /> */}
+                  <ClassNotice setCreatedAt={setCreatedAt} />
                 </div>
               </div>
             </div>

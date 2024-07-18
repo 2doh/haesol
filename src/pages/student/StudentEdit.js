@@ -29,10 +29,13 @@ const StudentEdit = () => {
   const [parentPhone, setParentPhone] = useState("");
 
   // 이미지
-  const [studentPic, setStudentPic] = useState(null);
+  // const [studentPic, setStudentPic] = useState(null);
 
-  const [studentZoneCode, setStudentZoneCode] = useState("");
-  const [studentAddr, setStudentAddr] = useState("");
+  // const [studentZoneCode, setStudentZoneCode] = useState("");
+  // const [studentAddr, setStudentAddr] = useState("");
+
+  const [postCode, setPostCode] = useState("우편번호");
+  const [address, setAddress] = useState("주소");
   // 주소 상세...
   const [studentDetail, setStudentDetail] = useState("");
 
@@ -58,9 +61,9 @@ const StudentEdit = () => {
       setParentName(result.parentName);
       setConnet(result.connet);
       setParentPhone(result.parentPhone);
-      setStudentPic(result.files);
-      setStudentZoneCode(result.studentZoneCode);
-      setStudentAddr(result.studentAddr);
+      // setStudentPic(result.files);
+      setPostCode(result.studentZoneCode);
+      setAddress(result.studentAddr);
       setStudentDetail(result.studentDetail);
       setStudentEtc(result.studentEtc);
       setStudentCreatedAt(result.studentCreatedAt);
@@ -83,9 +86,9 @@ const StudentEdit = () => {
     e.preventDefault();
 
     const studentInfoData = {
-      studentPk,
+      studentPk: studentPk,
       name: studentName,
-      phone: studentPhone, // 전화번호 학생인지 학부모인지 설정 안 되어있음.
+      phone: studentPhone,
       addr: studentAddr,
       zoneCode: studentZoneCode,
       detail: studentDetail,
@@ -120,8 +123,6 @@ const StudentEdit = () => {
     // }
   };
 
-  const [postCode, setPostCode] = useState("우편번호");
-  const [address, setAddress] = useState("주소");
   const handleAddClick = e => {
     e.preventDefault();
     // 주소찾기 팝업
@@ -190,7 +191,7 @@ const StudentEdit = () => {
 
           <div className="info-button">
             <button
-              onSubmit={e => {
+              onClick={e => {
                 handleModifyInfo(e);
               }}
             >
@@ -258,8 +259,10 @@ const StudentEdit = () => {
                 type="text"
                 name="text"
                 placeholder=""
+                readOnly
                 value={parentName}
                 onChange={e => setParentName(e.target.value)}
+                style={{ background: "#efece8" }}
               />
             </div>
             <div className="info-title">
@@ -267,34 +270,43 @@ const StudentEdit = () => {
               <select
                 name="family-info"
                 value={connet}
-                onChange={e => setConnet(e.target.value)}
+                readOnly
+                // onChange={e => setConnet(e.target.value)}
+                style={{ background: "#efece8" }}
               >
-                <option value="none" disabled selected>
-                  == 항목을 선택하세요 ==
+                <option value="부" disabled>
+                  부
                 </option>
-                <option value="부">부</option>
-                <option value="모">모</option>
-                <option value="조부">조부</option>
-                <option value="조모">조모</option>
-                <option value="기타">기타</option>
+                <option value="모" disabled>
+                  모
+                </option>
+                <option value="조부" disabled>
+                  조부
+                </option>
+                <option value="조모" disabled>
+                  조모
+                </option>
+                <option value="기타" disabled>
+                  기타
+                </option>
               </select>
             </div>
             <div className="info-title">
-              <div className="info-title">
-                <span>학부모 전화번호</span>
-                <PhoneInputFields
-                  placeholder="전화번호를 입력하세요"
-                  phoneNum={parentPhone}
-                  onChange={e => setParentPhone(e.target.value)}
-                />
-              </div>
+              <span>학부모 전화번호</span>
+              <PhoneInputFields
+                placeholder="전화번호를 입력하세요"
+                phoneNum={parentPhone}
+                readOnly
+                style={{ background: "#efece8" }}
+                // onChange={e => setParentPhone(e.target.value)}
+              />
             </div>
           </div>
           <div className="info-img">
             {/* 이미지 수정 필요 */}
             <StudentImg
-              studentPic={studentPic}
-              setStudentPic={setStudentPic}
+              // studentPic={studentPic}
+              // setStudentPic={setStudentPic}
               studentPk={studentPk}
             />
           </div>
@@ -308,26 +320,18 @@ const StudentEdit = () => {
                   <input
                     type="text"
                     name="text"
-                    placeholder={postCode}
-                    value={studentZoneCode}
+                    value={postCode}
+                    readOnly
                   ></input>
-                  <button
-                    type="button"
-                    onClick={e => {
-                      handleAddClick(e);
-                    }}
-                  >
-                    우편번호 찾기
-                  </button>
                 </div>
                 <input
                   type="text"
                   name="text"
-                  placeholder={address}
+                  // placeholder={address}
                   className="info-add"
                   readOnly
-                  value={studentAddr}
-                  onChange={e => setAddress(e.target.value)}
+                  value={address}
+                  // onChange={() => setAddress(roadAddr)}
                 />
                 <input
                   type="text"
@@ -335,7 +339,8 @@ const StudentEdit = () => {
                   placeholder="상세주소를 입력해주세요."
                   className="info-add"
                   value={studentDetail}
-                  onChange={e => setStudentDetail(e.target.value)}
+                  readOnly
+                  // onChange={e => setStudentDetail(e.target.value)}
                 />
               </div>
             </div>
