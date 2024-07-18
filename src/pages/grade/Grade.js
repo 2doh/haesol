@@ -242,23 +242,20 @@ const Grade = () => {
   const [latestSemester, setLatestSemester] = useState(1); // 최종학기
   const [latestYear, setLatestYear] = useState("2023"); // 최종년도
 
-  // useEffect(() => {
-  //   console.log(latestGrade, latestSemester, latestYear);
-  // }, [latestGrade, latestSemester, latestYear]);
-
-  // useEffect(() => {
-  //   // console.log(examListOne);
-  // }, [examListOne]);
-
   const studentGrade1 = async () => {
     try {
       // 중간고사
       const response = await getStudentGrade1(studentPk);
       const result = response.data.data.list || [];
+      console.log(response);
       // 요것은 조금 위험하다.
       setLatestGrade(response.data.data.latestGrade || 1);
       setLatestSemester(response.data.data.latestSemester || 1);
       setLatestYear(response.data.data.latestYear || "");
+      setClassRank(response.data.data.classRank.classRank);
+      setGradeRank(response.data.data.classRank.gradeRank);
+      setClassStudentCount(response.data.data.classRank.classStudentCount);
+      setGradeStudentCount(response.data.data.classRank.gradeStudentCount);
       // console.log("중간 : ", response.data.data);
       const updatedData = examListOne.map(subject => {
         const update = result.find(data => data.name === subject.name);
@@ -290,12 +287,16 @@ const Grade = () => {
   const studentGrade2 = async () => {
     try {
       const response = await getStudentGrade2(studentPk);
+      console.log(response);
       const result = response.data.data.list || [];
-
       // 요것은 조금 위험하다.
       setLatestGrade(response.data.data.latestGrade || 1);
       setLatestSemester(response.data.data.latestSemester || 1);
       setLatestYear(response.data.data.latestYear || "");
+      setClassRank(response.data.data.classRank.classRank);
+      setGradeRank(response.data.data.classRank.gradeRank);
+      setClassStudentCount(response.data.data.classRank.classStudentCount);
+      setGradeStudentCount(response.data.data.classRank.gradeStudentCount);
 
       // console.log("기말 : ", response.data.data);
       const updatedData = examListTwo.map(subject => {
@@ -622,7 +623,6 @@ const Grade = () => {
   //   setDateSelectBox();
   // }, []);
 
-
   return (
     <div className="main-core">
       <div className="student-list-title">
@@ -718,12 +718,6 @@ const Grade = () => {
                     <input
                       placeholder="-"
                       value={item.mark || ""}
-                      // value={
-                      //   item.mark !== undefined && item.mark !== null
-                      //     ? item.mark
-                      //     : "-"
-                      // }
-
                       onChange={e => {
                         handleChangeOne({ ...item, mark: e.target.value });
                       }}
@@ -733,16 +727,14 @@ const Grade = () => {
                   <div className="grade-info">
                     <p>반/전체 평균</p>
                     <input
-                      placeholder="-"
-                      value={`${item.classAvg || ""} / ${item.gradeAvg || ""}`}
+                      value={`${item.classAvg || "-"} / ${item.gradeAvg || "-"}`}
                     />
                     점
                   </div>
                   <div className="grade-info">
                     <p>반/전체 등수</p>
                     <input
-                      placeholder="-"
-                      value={`${item.subjectClassRank || ""} / ${item.subjectGradeRank || ""}`}
+                      value={`${item.subjectClassRank || "-"} / ${item.subjectGradeRank || "-"}`}
                     />
                     등
                   </div>
@@ -806,7 +798,6 @@ const Grade = () => {
                     <p>반/전체 등수</p>
                     <input
                       value={`${item.subjectClassRank || "-"} / ${item.subjectGradeRank || "-"}`}
-
                     />
                     등
                   </div>
@@ -826,12 +817,10 @@ const Grade = () => {
         </div>
         <div className="all-grade">
           <div className="grade-rank">
-            학년 전체 등수 <input value={classRank.gradeRank} /> /{" "}
-            {classRank.gradeStudentCount} 등
+            학년 전체 등수 <input value={gradeRank} /> / {gradeStudentCount} 등
           </div>
           <div className="grade-rank">
-            반 등수 <input value={classRank.classRank} /> /{" "}
-            {classRank.classStudentCount} 등
+            반 등수 <input value={classRank} /> / {classStudentCount} 등
           </div>
         </div>
         <Signature />
