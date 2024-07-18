@@ -622,7 +622,6 @@ const Grade = () => {
   //   setDateSelectBox();
   // }, []);
 
-
   return (
     <div className="main-core">
       <div className="student-list-title">
@@ -806,7 +805,6 @@ const Grade = () => {
                     <p>반/전체 등수</p>
                     <input
                       value={`${item.subjectClassRank || "-"} / ${item.subjectGradeRank || "-"}`}
-
                     />
                     등
                   </div>

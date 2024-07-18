@@ -220,9 +220,9 @@ export const deleteNotice = async notice_id => {
   }
 };
 
-export const getScore = async data => {
+export const getScoreDetail = async data => {
   const res = await jwtAxios.get(
-    `/api/Score/getScore?studentPk=${data.studentPk}&exam=1`,
+    `/api/Score/getScoreDetail?studentPk=${data.studentPk}&grade=${data.grade}&semester=${data.semester}&exam=${data.exam}`,
   );
   return res.data.data;
 };

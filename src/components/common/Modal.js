@@ -167,6 +167,7 @@ const Modal = () => {
       if (modalState.modalRes[0] === 16) {
         dispatch(closeModal());
       }
+
       // 회원가입
       if (modalState.modalRes[0] === 17) {
         dispatch(closeModal());

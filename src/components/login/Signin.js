@@ -7,8 +7,8 @@ import LoginPassField from "./LoginPassField";
 import SocialSignin from "./SocialSignin";
 
 const Signin = ({ children, naviState, setNaviState }) => {
-  const [userId, setUserId] = useState("");
-  const [userPass, setUserPass] = useState("");
+  const [userId, setUserId] = useState("parent1");
+  const [userPass, setUserPass] = useState("Test1234!@#$");
   const [errMsg, setErrMsg] = useState("");
 
   const login = async e => {
