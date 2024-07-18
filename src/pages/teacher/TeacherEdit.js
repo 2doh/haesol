@@ -211,7 +211,6 @@ const TeacherEdit = () => {
             addr: addAddr,
             email: newEamil,
           },
-
         ],
         buttonText: ["수정", "취소"],
       };
@@ -238,7 +237,7 @@ const TeacherEdit = () => {
     const data = { bodyText: [userId] };
     dispatch(updateModalDate(data));
 
-    const modalRes = dispatch(openModal(selectModalType));
+    dispatch(openModal(selectModalType));
   };
 
   /** 우편번호 찾기 - 팝업 */
@@ -293,7 +292,7 @@ const TeacherEdit = () => {
     if (regex.test(newEamil)) {
       setErrMsg("");
       emailText.current.classList = "";
-      emailDomainText.current.classList = "";
+      // emailDomainText.current.classList = "";
       saveInfo("BasicModal", newEamil);
     } else {
       setErrMsg("이메일 형식에 맞지 않습니다");
