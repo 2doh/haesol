@@ -1,9 +1,11 @@
 import SignupField from "components/signup/SignupField";
 import UserSelect from "components/signup/UserSelect";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import logo from "../../images/logo.png";
 import "../../scss/signup/signup.scss";
+import styled from "@emotion/styled";
+import { preventScroll } from "components/common/ScrollManagement";
 
 const Signup = () => {
   const [userType, setUserType] = useState("parent");
@@ -21,8 +23,19 @@ const Signup = () => {
     navi("/");
   };
 
+  useEffect(() => {
+    /** 모달 생성시 스크롤 금지 */
+    const prevScrollY = preventScroll();
+    return () => {
+      allowScroll(prevScrollY);
+    };
+  }, []);
+
   return (
     <div className="signup">
+      <ModalStyle>
+        <ModalContentStyle></ModalContentStyle>
+      </ModalStyle>
       <div className="signup-wrap">
         <div className="signup-wrap-inner br20">
           <div className="signup-wrap-inner-content">
@@ -53,3 +66,23 @@ const Signup = () => {
 };
 
 export default Signup;
+
+const ModalStyle = styled.div`
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  height: 100vh;
+  height: 100%;
+  width: 100vw;
+  z-index: 999999;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ModalContentStyle = styled.div`
+  width: 100px;
+  height: 100px;
+  background-color: wheat;
+`;
