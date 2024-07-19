@@ -4,7 +4,6 @@ const ChildInputFields = ({
   children,
   setUserChildrenName,
   userChildrenName,
-  setUserChildrenPk,
   setOnModal,
   setIsChild,
   setChildList,
@@ -25,7 +24,6 @@ const ChildInputFields = ({
     if (!userChildrenName) {
       setChildList(result.data);
     }
-    console.log(result);
   };
 
   return (

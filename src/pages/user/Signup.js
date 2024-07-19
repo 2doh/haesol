@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 import logo from "../../images/logo.png";
 import "../../scss/signup/signup.scss";
 import styled from "@emotion/styled";
-import { preventScroll } from "components/common/ScrollManagement";
+import { allowScroll, preventScroll } from "components/common/ScrollManagement";
 
 const Signup = () => {
   const [userType, setUserType] = useState("parent");
