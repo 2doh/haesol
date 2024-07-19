@@ -237,9 +237,12 @@
   .header .admin-header-timer-div .inner-div {
     top: 95px;
     right: 20px;
-    background-color: green;
+    background-color: #8cc1d3;
     padding: 0 20px;
     border-radius: 10px;
+  }
+  .header .header-right-div .inner-div:nth-child(1),
+  .header .admin-header-timer-div .inner-div:nth-child(1) {
     height: 60px;
   }
 }/*# sourceMappingURL=header.css.map */

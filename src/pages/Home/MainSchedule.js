@@ -19,6 +19,15 @@ const ScWrap = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+
+  .dot {
+    height: 8px;
+    width: 8px;
+    background-color: #f87171;
+    border-radius: 50%;
+    display: flex;
+    margin-left: 1px;
+  }
 `;
 
 const nowMonthScheduleStyle = styled.div``;
@@ -29,11 +38,19 @@ const MainSchedule = () => {
   // 클릭한 날짜 (초기값 : 현재 날짜)
   const [value, onChange] = useState(curDate);
   const [activeStartDate, setActiveStartDate] = useState(curDate);
+  // 조회 기간 시작일
   const fromMmd = moment().format("YYYYMM01");
+  // 조회 기간 말일
   const toYmd = moment().format("YYYYMM" + { last });
   var last = new Date(2024, 7, 0).getDate();
-  const [aaArr, setAaArr] = useState([]);
+  const [eventList, setEventList] = useState([]);
+  const [eventDayList, setEventDayList] = useState([]);
 
+  // 마커를 위한 배열
+  const [mark, setMark] = useState([]);
+
+  // 일정 count 수
+  const [eventListTotalCount, setEventListTotalCount] = useState(0);
   // console.log("말일 : ", last);
 
   // console.log("일정 목록 배열 : ", curDate);
@@ -45,24 +62,49 @@ const MainSchedule = () => {
 
     axios.get(url).then(async res => {
       // 급식 데이터가 있는 없는지 확인
-      const resArr = res.data.SchoolSchedule[1].row;
-      resArr.map((item, index) => {
-        // aaArr.push(item.AA_YMD);
-        setAaArr([...aaArr, item.AA_YMD]);
-        // console.log("학사 일정 : ", resArr[index].AA_YMD);
-        // console.log("학사 일정 item : ", item.AA_YMD);
-        // console.log("학사 일정 item : ", aaArr);
-      });
+      const eventNum = res.data.SchoolSchedule[0].head[0].list_total_count;
+      // console.log("이번달 일정 수 : ", eventNum);
+      setEventListTotalCount(eventNum);
+
+      if (eventNum >= 1) {
+        const data = res.data.SchoolSchedule[1].row;
+
+        data.map((item, index) => {
+          // console.log("값 확인 : ", item);
+          // aaArr.push(item.AA_YMD);
+          // setAaArr([...aaArr, item.AA_YMD]);
+          // console.log("aaArr 배열 : ", aaArr);
+          // console.log("resArr 배열 : ", resArr);
+
+          setEventDayList(prevEventDayList => [
+            ...prevEventDayList,
+            moment(item.AA_YMD).format("YYYY-MM-DD"),
+          ]);
+          setEventList(prevEventList => [...prevEventList, item.EVENT_NM]);
+          setMark(prevMark => [...prevMark, item.EVENT_NM]);
+          // console.log("학사 일정 : ", item.AA_YMD);
+          // console.log("행사명 : ", item.EVENT_NM);
+          // console.log("수정일자 : ", item.LOAD_DTM);
+          // console.log("수업 공제일명 : ", item.SBTR_DD_SC_NM);
+          // 공제일명에 따라서 색상 다르게 설정하기
+        });
+      }
     });
   }, []);
 
+  useEffect(() => {
+    console.log("일정 있는 날짜 배열 : ", eventDayList);
+    console.log("일정  배열 : ", eventList);
+    console.log("일정  배열 : ", dayList1);
+  }, [eventDayList, eventList]);
+
   // 일정 목록
-  const dayList = [
-    "2023-07-10",
-    "2023-07-21",
-    "2023-07-02",
-    "2023-07-14",
-    "2023-07-27",
+  const dayList1 = [
+    "2024-07-10",
+    "2024-07-21",
+    "2024-07-02",
+    "2024-07-14",
+    "2024-07-27",
   ];
 
   // 각 날짜 타일에 컨텐츠 추가
@@ -71,20 +113,30 @@ const MainSchedule = () => {
     const contents = [];
 
     // date(각 날짜)가  리스트의 날짜와 일치하면 해당 컨텐츠(이모티콘) 추가
-    // if (dayList.find((day) => day === moment(date).format('YYYY-MM-DD'))) {
-    //   contents.push(
-    //     <>
-    //       {/* <div className="dot"></div> */}
-    //       <Image
-    //         src="emotion/good.svg"
-    //         className="diaryImg"
-    //         width="26"
-    //         height="26"
-    //         alt="today is..."
-    //       />
-    //     </>
-    //   );
-    // }
+    if (dayList1.find(day => day === moment(date).format("YYYY-MM-DD"))) {
+      contents.push(
+        <>
+          {/* <div className="dot"></div> */}
+
+          <div
+            src="../../images/logo_b.png"
+            className="diaryImg"
+            width="26px"
+            height="26px"
+            alt="today is..."
+          >
+            {" "}
+          </div>
+          {/* <Image
+            src="emotion/good.svg"
+            className="diaryImg"
+            width="26"
+            height="26"
+            alt="today is..."
+          /> */}
+        </>,
+      );
+    }
     return <div>{contents}</div>; // 각 날짜마다 해당 요소가 들어감
   };
 
@@ -134,9 +186,28 @@ const MainSchedule = () => {
         value={value}
         next2Label={null}
         prev2Label={null}
-        event={dayList}
+        event={eventDayList}
         formatDay={(locale, date) => moment(date).format("D")}
         // tileContent={addContent}
+        tileContent={({ date, view }) => {
+          // 날짜 타일에 컨텐츠 추가하기 (html 태그)
+          // 추가할 html 태그를 변수 초기화
+          let html = [];
+          // 현재 날짜가 post 작성한 날짜 배열(mark)에 있다면, dot div 추가
+          if (eventDayList.find(x => x === moment(date).format("YYYY-MM-DD"))) {
+            console.log("data : ", date);
+            console.log("eventDayList : ", eventDayList);
+            html.push(<div className="dot"></div>);
+          }
+          // 다른 조건을 주어서 html.push 에 추가적인 html 태그를 적용할 수 있음.
+          return (
+            <>
+              <div className="flex justify-center items-center absoluteDiv">
+                {html}
+              </div>
+            </>
+          );
+        }}
         showNeighboringMonth={false}
         // 오늘 날짜로 돌아오는 기능을 위해 필요한 옵션 설정
         // activeStartDate={activeStartDate === null ? undefined : activeStartDate}

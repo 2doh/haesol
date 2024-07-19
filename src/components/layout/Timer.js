@@ -5,8 +5,7 @@ import { FiClock } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { openModal, updateModalDate } from "slices/modalSlice";
-import { getCookie, removeCookie } from "utils/cookie";
-import { getLocalValue, removeLocalValue, setLocalValue } from "utils/local";
+import { getCookie, removeCookie, setCookie } from "utils/cookie";
 
 const TimerStyle = styled.div`
   min-width: 80px;
@@ -37,9 +36,9 @@ const Timer = () => {
   const dispatch = useDispatch();
   const modalState = useSelector(state => state.modalSlice);
 
-  const [min, setMin] = useState(getLocalValue("timerMin") || 60);
-  const [sec, setSec] = useState(getLocalValue("timerSec") || 0);
-  const time = useRef(getLocalValue("timerTime") || 3600); // 3600초
+  const [min, setMin] = useState(getCookie("timerMin") || 60);
+  const [sec, setSec] = useState(getCookie("timerSec") || 0);
+  const time = useRef(getCookie("timerTime") || 3600); // 3600초
   const timerId = useRef(null);
   const alertShown = useRef(false); // 이전에 알림을 보여줬는지 여부를 추적하기 위한 useRef
 
@@ -71,9 +70,9 @@ const Timer = () => {
       setMin(parseInt(time.current / 60));
       setSec(time.current % 60);
       time.current -= 1;
-      setLocalValue("timerMin", min); // 로컬스토리지에 저장
-      setLocalValue("timerSec", sec); // 로컬스토리지에 저장
-      setLocalValue("timerTime", time.current); // 로컬스토리지에 저장
+      setCookie("timerMin", min); // 로컬스토리지에 저장
+      setCookie("timerSec", sec); // 로컬스토리지에 저장
+      setCookie("timerTime", time.current); // 로컬스토리지에 저장
     }, 1000);
 
     // return () => clearInterval(timerId.current);
@@ -125,9 +124,9 @@ const Timer = () => {
     removeCookie("userName");
     removeCookie("userEmail");
 
-    removeLocalValue("timerMin");
-    removeLocalValue("timerSec");
-    removeLocalValue("timerTime");
+    removeCookie("timerMin");
+    removeCookie("timerSec");
+    removeCookie("timerTime");
   };
 
   /** 로그인 시간 만료 알림 모달 종료 후 새로고침 갱신 */

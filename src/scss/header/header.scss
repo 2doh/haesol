@@ -265,13 +265,15 @@
         top: 95px;
         right: 20px;
         // margin-left: 50px;
-        background-color: green;
+        background-color: #8cc1d3;
         padding: 0 20px;
         border-radius: 10px;
-        height: 60px;
         // 스타일 수정
       }
 
+      .inner-div:nth-child(1) {
+        height: 60px;
+      }
       // .speech-bubble {
       //   // position: relative;
       //   background: #25bdcb;

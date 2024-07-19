@@ -20,7 +20,6 @@ import ClassSchedule from "./ClassSchedule";
 import Chat from "./Chat";
 import ClassNotice from "./ClassNotice";
 import MainSchedule from "./MainSchedule";
-import { removeLocalValue } from "utils/local";
 
 const LoginUserStyle = styled.div`
   position: relative;
@@ -232,9 +231,9 @@ const LoginUser = () => {
     removeCookie("selectChildNum");
     removeCookie("studentPk");
 
-    removeLocalValue("timerMin");
-    removeLocalValue("timerSec");
-    removeLocalValue("timerTime");
+    removeCookie("timerMin");
+    removeCookie("timerSec");
+    removeCookie("timerTime");
     window.location.reload("/");
   };
 
@@ -312,7 +311,8 @@ const LoginUser = () => {
               <div className="main-notice">
                 <div className="main-schedule-title main-contents-title">
                   <div className="main-schedule-title-text ">알림장</div>
-                  <div className="main-notice-day">{createdAt}</div>
+                  {/* <div className="main-notice-day">{createdAt}</div> */}
+                  <div className="main-notice-day"></div>
                 </div>
                 <div className="main-title-dwon-contents">
                   <ClassNotice setCreatedAt={setCreatedAt} />
