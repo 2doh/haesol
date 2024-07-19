@@ -1,3 +1,4 @@
+import styled from "@emotion/styled";
 import { getChildList } from "api/signup/parentapi";
 import { updateModalDate } from "slices/modalSlice";
 
@@ -10,9 +11,9 @@ const ChildInputFields = ({
   const handleonClick = async e => {
     e.preventDefault();
     const result = await getChildList();
-    setUserChildrenName(result.data[0].name);
+    // setUserChildrenName(result.data[0].name);
     // showModal("BasicModal");
-    console.log(result.data[0]);
+    // console.log(result.data[0]);
   };
 
   // const showModal = selectModalType => {
