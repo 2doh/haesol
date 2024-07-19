@@ -296,6 +296,7 @@ const Grade = () => {
         return subject;
       });
       setExamListTwo(updatedData);
+      console.log("updatedData", updatedData);
     } catch (error) {
       console.log(error);
     }
@@ -329,6 +330,9 @@ const Grade = () => {
     const updatedData = examListTwo.map(subject => {
       const update = item.name === subject.name;
       if (update) {
+        // console.log("update.exam", update.exam);
+        // console.log("updatedData", updatedData);
+
         return {
           ...subject,
           mark: parseInt(item.mark),
@@ -355,11 +359,11 @@ const Grade = () => {
       exam: _item.exam,
       mark: _item.mark,
     };
-    console.log(scoreData);
+    console.log("확인중!!!!!!", scoreData);
     try {
       await postStudentGradeScore(scoreData);
       await studentGrade1();
-      await studentGrade2();
+      // await studentGrade2();
     } catch (error) {
       console.log(error);
     }
@@ -367,6 +371,30 @@ const Grade = () => {
 
   useEffect(() => {
     studentGrade1();
+    studentGrade2();
+  }, [studentPk]);
+
+  const handleSaveTwo = async _item => {
+    const scoreData = {
+      studentPk: studentPk,
+      year: latestYear,
+      semester: latestSemester,
+      name: _item.name,
+      exam: _item.exam,
+      mark: _item.mark,
+    };
+    console.log(scoreData);
+    try {
+      await postStudentGradeScore(scoreData);
+      // await studentGrade1();
+      await studentGrade2();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    // studentGrade1();
     studentGrade2();
   }, [studentPk]);
 
@@ -713,7 +741,7 @@ const Grade = () => {
                   <div className="info-button">
                     <button
                       onClick={() => {
-                        handleSaveOne(item);
+                        handleSaveTwo(item);
                       }}
                     >
                       저장
