@@ -232,7 +232,8 @@ const ModalStyle = styled.div`
 `;
 
 const ModalContentStyle = styled.div`
-  width: 500px;
+  width: auto;
   max-height: 50vh;
   background-color: wheat;
+  padding: 100px;
 `;
