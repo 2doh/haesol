@@ -37,8 +37,10 @@ const SignupParent = ({ handleCancel, setUserType, userType }) => {
   const [detail, setDetail] = useState("");
   const [addr, setAddr] = useState("");
   const [canId, setCanId] = useState(false);
-
+  const [isChild, setIsChild] = useState(false);
+  const [onModal, setOnModal] = useState(false);
   const [modalText, setModalText] = useState("");
+  const [childList, setChildList] = useState([]);
   const dispatch = useDispatch();
 
   /** 모달 호출 */
@@ -70,6 +72,10 @@ const SignupParent = ({ handleCancel, setUserType, userType }) => {
     };
     if (canId === false) {
       setModalText("아이디 중복확인을 해주세요");
+      return;
+    }
+    if (isChild === false) {
+      setModalText("자녀 정보를 확인해주세요");
       return;
     }
     if (canId === true) {
@@ -119,6 +125,29 @@ const SignupParent = ({ handleCancel, setUserType, userType }) => {
       }}
     >
       <div className="signup-main">
+        {onModal ? (
+          <ModalStyle>
+            <ModalContentStyle>
+              <div className="signup-parent-modal-wrap">
+                <div className="signup-parent-modal-inner">
+                  <div className="signup-parent-modal-title">자녀정보확인</div>
+                  {childList.map((item, index) => (
+                    <div className="signup-parent-modal-content" key={index}>
+                      <div>{item.name}</div>
+                      <div>{item.grade}</div>
+                    </div>
+                  ))}
+                  <div
+                    className="signup-parent-modal-bt"
+                    onClick={() => setOnModal(false)}
+                  >
+                    버튼
+                  </div>
+                </div>
+              </div>
+            </ModalContentStyle>
+          </ModalStyle>
+        ) : null}
         <IdInputField
           userId={userId}
           userType={userType}
@@ -140,6 +169,9 @@ const SignupParent = ({ handleCancel, setUserType, userType }) => {
             setUserChildrenName={setUserChildrenName}
             userChildrenName={userChildrenName}
             setUserChildrenPk={setUserChildrenPk}
+            setOnModal={setOnModal}
+            setIsChild={setIsChild}
+            setChildList={setChildList}
           >
             자녀이름
           </ChildInputFields>
@@ -183,4 +215,24 @@ export default SignupParent;
 const UserNameStyle = styled.div`
   display: flex;
   gap: 10px;
+`;
+
+const ModalStyle = styled.div`
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  height: 100vh;
+  height: 100%;
+  width: 100vw;
+  z-index: 999999;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ModalContentStyle = styled.div`
+  width: 500px;
+  max-height: 50vh;
+  background-color: wheat;
 `;

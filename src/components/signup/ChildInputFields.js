@@ -1,26 +1,33 @@
-import styled from "@emotion/styled";
 import { getChildList } from "api/signup/parentapi";
-import { updateModalDate } from "slices/modalSlice";
 
 const ChildInputFields = ({
   children,
   setUserChildrenName,
   userChildrenName,
   setUserChildrenPk,
+  setOnModal,
+  setIsChild,
+  setChildList,
 }) => {
+  // const tempArr = [
+  //   pk : 0
+  //   name : "",
+  //   grade : ""
+  // ]
   const handleonClick = async e => {
     e.preventDefault();
     const result = await getChildList();
     // setUserChildrenName(result.data[0].name);
-    // showModal("BasicModal");
-    // console.log(result.data[0]);
+    setOnModal(true);
+    if (userChildrenName) {
+      const aaa = result.data.find(item => item.name === userChildrenName);
+      console.log(aaa);
+      const bbb = [...aaa, aaa];
+      setChildList(bbb);
+      console.log(bbb);
+    }
+    console.log(result);
   };
-
-  // const showModal = selectModalType => {
-  //   const data = { bodyText: ["1"], buttonCnt: 1 };
-  //   dispatch(updateModalDate(data));
-  //   const modalRes = dispatch(openModal(selectModalType));
-  // };
 
   return (
     <div className="signup-main-fields">
@@ -28,7 +35,11 @@ const ChildInputFields = ({
         <div className="fields-section-title">{children}</div>
       </div>
       <div className="signup-main-fields-section-bottom">
-        <div className="fieleds-section-children">{userChildrenName}</div>
+        <input
+          className="fieleds-section-children"
+          value={userChildrenName}
+          onChange={e => setUserChildrenName(e.target.value)}
+        />
         <button
           className="check-duplicate-id-bt"
           onClick={e => {

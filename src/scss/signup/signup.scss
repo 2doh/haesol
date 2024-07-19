@@ -70,6 +70,22 @@
           width: 100%;
           height: 100%;
           margin-top: 30px;
+          .signup-parent-modal-wrap {
+            padding: 10px;
+            font-size: 16px;
+            .signup-parent-modal-inner {
+              @include flex-center;
+              flex-direction: column;
+              .signup-parent-modal-title {
+                font-size: 24px;
+              }
+              .signup-parent-modal-content {
+                margin: 10px auto;
+                display: flex;
+                gap: 10px;
+              }
+            }
+          }
           .signup-main-fields {
             margin-top: 20px;
             width: 100%;
