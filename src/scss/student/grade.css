@@ -1,3 +1,6 @@
+.main-core {
+  width: 1180px;
+}
 .main-core .user-info-wrap .info-contain-top .info-item-top .info-title .select-grade select {
   width: 180px;
   height: 30px;
