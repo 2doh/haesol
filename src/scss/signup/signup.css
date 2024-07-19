@@ -84,6 +84,24 @@
   height: 100%;
   margin-top: 30px;
 }
+.signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-parent-modal-wrap {
+  padding: 10px;
+  font-size: 16px;
+}
+.signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-parent-modal-wrap .signup-parent-modal-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-parent-modal-wrap .signup-parent-modal-inner .signup-parent-modal-title {
+  font-size: 24px;
+}
+.signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-parent-modal-wrap .signup-parent-modal-inner .signup-parent-modal-content {
+  margin: 10px auto;
+  display: flex;
+  gap: 10px;
+}
 .signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-main-fields {
   margin-top: 20px;
   width: 100%;

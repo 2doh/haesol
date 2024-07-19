@@ -33,9 +33,6 @@ const Signup = () => {
 
   return (
     <div className="signup">
-      <ModalStyle>
-        <ModalContentStyle></ModalContentStyle>
-      </ModalStyle>
       <div className="signup-wrap">
         <div className="signup-wrap-inner br20">
           <div className="signup-wrap-inner-content">
@@ -66,23 +63,3 @@ const Signup = () => {
 };
 
 export default Signup;
-
-const ModalStyle = styled.div`
-  position: fixed;
-  left: 0px;
-  top: 0px;
-  height: 100vh;
-  height: 100%;
-  width: 100vw;
-  z-index: 999999;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const ModalContentStyle = styled.div`
-  width: 100px;
-  height: 100px;
-  background-color: wheat;
-`;
