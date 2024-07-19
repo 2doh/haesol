@@ -33,11 +33,11 @@ const StudentGradeChart = () => {
   const [recentExam, setRecentExam] = useState([]);
   const [showChart, setShowChart] = useState(false);
   const [count, setCount] = useState("");
-  const [inquiry, setInquiry] = useState(false);
+  const [modalText, setModalText] = useState("");
 
   const showModal = selectModalType => {
     const data = {
-      bodyText: ["학년,학기,시험을 선택해주세요"],
+      bodyText: [modalText],
       modalRes: [16],
       buttonCnt: 1,
     };
@@ -60,7 +60,7 @@ const StudentGradeChart = () => {
 
   const handleClick = async () => {
     if (!grade || !semester || !exam) {
-      showModal("BasicModal");
+      setModalText("학년,학기,시험을 선택해주세요");
       return;
     } else {
       const reqData = {
@@ -70,13 +70,28 @@ const StudentGradeChart = () => {
         exam: exam,
       };
       const result = await getScoreDetail(reqData);
+      if (!result) {
+        setModalText("해당 학기에 입력된 성적 정보가 없습니다");
+        return;
+      }
       setRecentExam(result);
       setCount(
         `${result.classRank.classStudentCount} / ${result.classRank.gradeStudentCount}`,
       );
       setShowChart(true);
+      // props로 넘기는 데이터
+      // const resultList = result.list;
+      // const defaultValue = resultList.find(item => item.name === "국어");
+      return;
     }
   };
+
+  useEffect(() => {
+    if (modalText) {
+      showModal("BasicModal");
+    }
+  }, [modalText]);
+
   return (
     <div className="main-core">
       <div className="student-list-title">
@@ -109,7 +124,6 @@ const StudentGradeChart = () => {
             <button
               onClick={() => {
                 handleClick();
-                setInquiry(true);
               }}
             >
               조회
@@ -181,11 +195,7 @@ const StudentGradeChart = () => {
           </div>
         </div>
       </div>
-      {showChart ? (
-        <Chart recentExam={recentExam.list} inquiry={inquiry}>
-          평균 성적
-        </Chart>
-      ) : null}
+      {showChart ? <Chart recentExam={recentExam.list}>평균 성적</Chart> : null}
     </div>
   );
 };
