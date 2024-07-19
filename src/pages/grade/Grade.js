@@ -7,12 +7,11 @@ import {
   postStudentGradeScore,
 } from "api/student/studentapi";
 
-import Signature from "pages/grade/Signature";
-import { useEffect, useRef, useState } from "react";
+import styled from "@emotion/styled";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import "../../scss/student/grade.css";
 import "../../scss/student/studentEdit.css";
-import styled from "@emotion/styled";
 
 const initData = [
   {
@@ -326,7 +325,8 @@ const Grade = () => {
   };
 
   // 내용 변경 처리 기말
-  const handleChangeTwo = item => {
+  const handleChangeTwo = (e, item) => {
+    e.preventDefault();
     // 전달된 객체의 name 속성을 비교하고 같으면 업데이트를 해줌.
     const updatedData = examListTwo.map(subject => {
       const update = item.name === subject.name;
@@ -351,7 +351,8 @@ const Grade = () => {
     setExamListTwo(updatedData);
   };
 
-  const handleSaveOne = async _item => {
+  const handleSaveOne = async (e, _item) => {
+    e.preventDefault();
     const scoreData = {
       studentPk: studentPk,
       year: latestYear,
@@ -360,7 +361,6 @@ const Grade = () => {
       exam: _item.exam,
       mark: _item.mark,
     };
-    console.log("확인중!!!!!!", scoreData);
     try {
       await postStudentGradeScore(scoreData);
       await studentGrade1();
@@ -368,7 +368,6 @@ const Grade = () => {
     } catch (error) {
       console.log(error);
     }
-    // 여기 네비게이트
   };
 
   useEffect(() => {
@@ -376,7 +375,8 @@ const Grade = () => {
     studentGrade2();
   }, [studentPk]);
 
-  const handleSaveTwo = async _item => {
+  const handleSaveTwo = async (e, _item) => {
+    e.preventDefault();
     const scoreData = {
       studentPk: studentPk,
       year: latestYear,
@@ -592,6 +592,7 @@ const Grade = () => {
                 <select
                   name="grade"
                   onChange={e => {
+                    console.log("Button clicked"); // 이벤트가 발생했는지 확인
                     handleGradeChange(e);
                   }}
                   value={latestGrade}
@@ -673,8 +674,8 @@ const Grade = () => {
                   </div>
                   <div className="info-button">
                     <button
-                      onClick={() => {
-                        handleSaveOne(item);
+                      onClick={e => {
+                        handleSaveOne(e, item);
                       }}
                     >
                       저장
@@ -742,8 +743,8 @@ const Grade = () => {
                   </div>
                   <div className="info-button">
                     <button
-                      onClick={() => {
-                        handleSaveTwo(item);
+                      onClick={e => {
+                        handleSaveTwo(e, item);
                       }}
                     >
                       저장
