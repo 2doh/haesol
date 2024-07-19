@@ -215,6 +215,16 @@ const Modal = () => {
         dispatch(updateModalDate(data));
         dispatch(closeModal());
       }
+      // 학생 한 명 정보 수정 (선생님)
+      if (modalState.modalRes[0] === 45) {
+        modifyStudentInfo(modalState.modalRes[1]);
+        // console.log(modalState.modalRes);
+        const data = {
+          modalRes: [false],
+        };
+        dispatch(updateModalDate(data));
+        dispatch(closeModal());
+      }
     }
     if (modalState.modalType === "ArrValueModal") {
       if (modalState.headerText.includes("반려")) {

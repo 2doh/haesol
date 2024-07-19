@@ -5,6 +5,7 @@ import "../../scss/student/studentEdit.css";
 import StudentImg from "./StudentImg";
 import PhoneInputFields from "./PhoneInputFields";
 import { getStudentInfo, modifyStudentInfo } from "api/student/studentapi";
+import { useDispatch, useSelector } from "react-redux";
 const StudentEdit = () => {
   // 네비게이트
   const navigate = useNavigate();
@@ -81,6 +82,25 @@ const StudentEdit = () => {
     studentInfoData();
   }, [studentPk]);
 
+  const dispatch = useDispatch();
+  /** 모달 호출 */
+  const showModal = () => {
+    /** (선택) 들어갈 내용 수정 */
+    const data = {
+      headerText: ["학생 정보 관리"],
+      bodyText: ["내용을 수정하시겠습니까?"],
+      buttonText: ["확인", "취소"],
+      modalRes: [45, { to: "010-6792-2898", message: content }],
+    };
+    /** (선택) 위와 아래는 세트 */
+    dispatch(updateModalDate(data));
+
+    dispatch(openModal(selectModalType));
+    // console.log("모달 결과 출력 내용 확인 : ", modalRes);
+  };
+
+  const modalState = useSelector(state => state.modalSlice);
+
   // 정보 수정하기
   const handleModifyInfo = async e => {
     e.preventDefault();
@@ -104,30 +124,6 @@ const StudentEdit = () => {
       console.log(error);
     }
   };
-
-  // const handleAddClick = e => {
-  //   e.preventDefault();
-  //   // 주소찾기 팝업
-  //   new daum.Postcode({
-  //     oncomplete: function (data) {
-  //       var roadAddr = data.roadAddress;
-  //       var extraRoadAddr = "";
-  //       if (data.bname !== "" && /[동|로|가]$/g.test(data.bname)) {
-  //         extraRoadAddr += data.bname;
-  //       }
-  //       if (data.buildingName !== "" && data.apartment === "Y") {
-  //         extraRoadAddr +=
-  //           extraRoadAddr !== "" ? ", " + data.buildingName : data.buildingName;
-  //       }
-  //       if (extraRoadAddr !== "") {
-  //         extraRoadAddr = " (" + extraRoadAddr + ")";
-  //       }
-  //       // 우편번호와 주소 정보를 해당 필드에 넣는다.
-  //       setPostCode(data.zonecode);
-  //       setAddress(roadAddr);
-  //     },
-  //   }).open();
-  // };
 
   const StudentsInfoStyle = styled.div`
     display: flex;
