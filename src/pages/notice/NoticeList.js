@@ -79,9 +79,7 @@ const NoticeList = () => {
   };
   useEffect(
     () => {
-      // if (modalState.modalRes[0] === false) {
       noticeListData();
-      // }
     },
     [modalState.modalRes[0]],
     state,
