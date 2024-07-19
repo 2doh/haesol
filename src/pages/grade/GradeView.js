@@ -164,6 +164,9 @@ const GradeView = () => {
   const handleClick = () => {
     navigate(`/studentinfo`);
   };
+  const handleClickChart = () => {
+    navigate(`/grade/chart/${studentPk}`);
+  };
 
   const [studentInfo, setStudentInfo] = useState({});
   const [studentName, setStudentName] = useState("");
@@ -443,6 +446,26 @@ const GradeView = () => {
     generateYearOptions();
   }, []);
 
+  const ParentCheckStyle = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-end;
+    margin-bottom: 100px;
+    button {
+      cursor: Default;
+      width: 120px;
+      height: 30px;
+      border: solid 2px #886348;
+      font-size: 18px;
+    }
+
+    .is-sign {
+      background-color: #dd838f;
+      color: #fbfaf9;
+    }
+  `;
+
   return (
     <div className="main-core">
       <div className="student-list-title">
@@ -466,7 +489,12 @@ const GradeView = () => {
               <div className="text-wrapper">성적 확인</div>
             </div>
             {/* <div className="div-wrapper"> */}
-            <div className="div-wrapper">
+            <div
+              className="div-wrapper"
+              onClick={() => {
+                handleClickChart();
+              }}
+            >
               <div className="info-subtitle">차트</div>
             </div>
           </div>
@@ -564,13 +592,20 @@ const GradeView = () => {
             반 등수 <input value={classRank} /> / {classStudentCount} 등
           </div>
         </div>
-        <Signature
-          studentPk={studentPk}
-          latestSemester={latestSemester}
-          latestYear={latestYear}
-          // semester={latestSemester}
-          year={nowYear}
-        />
+
+        {signResultPic1 ? (
+          <ParentCheckStyle>
+            <button className="is-sign">학부모 확인</button>
+          </ParentCheckStyle>
+        ) : (
+          <Signature
+            studentPk={studentPk}
+            latestSemester={latestSemester}
+            latestYear={latestYear}
+            // semester={latestSemester}
+            year={nowYear}
+          />
+        )}
 
         <div className="exam-table">
           <div className="property">
@@ -616,7 +651,19 @@ const GradeView = () => {
             반 등수 <input value={classRank} /> / {classStudentCount} 등
           </div>
         </div>
-        <Signature />
+        {signResultPic1 ? (
+          <ParentCheckStyle>
+            <button className="is-sign">학부모 확인</button>
+          </ParentCheckStyle>
+        ) : (
+          <Signature
+            studentPk={studentPk}
+            latestSemester={latestSemester}
+            latestYear={latestYear}
+            // semester={latestSemester}
+            year={nowYear}
+          />
+        )}
       </div>
     </div>
   );

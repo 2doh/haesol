@@ -223,6 +223,7 @@ function App() {
               element={<StudentEdit />}
             ></Route>
           ) : (
+            // 안 쓰는 페이지/경로입니다.
             <Route
               path="/students/edit/:studentPk"
               element={<StudentInfoView />}
