@@ -39,7 +39,6 @@ import TeacherProtectedRoute from "components/common/TeacherProtectedRoute";
 
 // import jwt from "jsonwebtoken";
 
-
 const ModalStyle = styled.div`
   position: absolute;
   left: 0px;
@@ -147,6 +146,7 @@ function App() {
       <Main>
         <Routes>
           <Route index element={<Home />}></Route>
+          <Route path="/" element={<Home />}></Route>
 
           {/* 로그인 & 회원가입 : 이후 진입시 Home으로 강제 이동 */}
           {/* {accessToken ? (
