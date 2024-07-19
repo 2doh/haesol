@@ -42,7 +42,7 @@ export const modifyStudentInfo = async data => {
   // console.log("정보 : ", data);
 
   try {
-    const response = await axios.put("/api/student", data, {
+    const response = await jwtAxios.put("/api/student", data, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },

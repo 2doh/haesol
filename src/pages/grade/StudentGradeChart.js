@@ -111,10 +111,8 @@ const StudentGradeChart = () => {
                 신상 정보
               </div>
             </div>
-            <div className="div-wrapper">
-              <div className="text-wrapper" onClick={() => handleOnGrade()}>
-                성적 확인
-              </div>
+            <div className="div-wrapper" onClick={() => handleOnGrade()}>
+              <div className="text-wrapper">성적 확인</div>
             </div>
             <div className="frame">
               <div className="info-subtitle">차트</div>

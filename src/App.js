@@ -39,7 +39,6 @@ import TeacherProtectedRoute from "components/common/TeacherProtectedRoute";
 
 // import jwt from "jsonwebtoken";
 
-
 const ModalStyle = styled.div`
   position: absolute;
   left: 0px;
@@ -223,6 +222,7 @@ function App() {
               element={<StudentEdit />}
             ></Route>
           ) : (
+            // 안 쓰는 페이지/경로입니다.
             <Route
               path="/students/edit/:studentPk"
               element={<StudentInfoView />}

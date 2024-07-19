@@ -29,13 +29,13 @@ const StudentEdit = () => {
   const [parentPhone, setParentPhone] = useState("");
 
   // 이미지
-  // const [studentPic, setStudentPic] = useState(null);
+  const [studentPic, setStudentPic] = useState(null);
 
-  // const [studentZoneCode, setStudentZoneCode] = useState("");
-  // const [studentAddr, setStudentAddr] = useState("");
+  const [studentZoneCode, setStudentZoneCode] = useState("우편번호");
+  const [studentAddr, setStudentAddr] = useState("주소");
 
-  const [postCode, setPostCode] = useState("우편번호");
-  const [address, setAddress] = useState("주소");
+  // const [postCode, setPostCode] = useState("우편번호");
+  // const [address, setAddress] = useState("주소");
   // 주소 상세...
   const [studentDetail, setStudentDetail] = useState("");
 
@@ -61,9 +61,9 @@ const StudentEdit = () => {
       setParentName(result.parentName);
       setConnet(result.connet);
       setParentPhone(result.parentPhone);
-      // setStudentPic(result.files);
-      setPostCode(result.studentZoneCode);
-      setAddress(result.studentAddr);
+      setStudentPic(result.files);
+      setStudentZoneCode(result.studentZoneCode);
+      setStudentAddr(result.studentAddr);
       setStudentDetail(result.studentDetail);
       setStudentEtc(result.studentEtc);
       setStudentCreatedAt(result.studentCreatedAt);
@@ -87,65 +87,47 @@ const StudentEdit = () => {
 
     const studentInfoData = {
       studentPk: studentPk,
-      name: studentName,
-      phone: studentPhone,
-      addr: studentAddr,
-      zoneCode: studentZoneCode,
-      detail: studentDetail,
-      etc: studentEtc,
+      studentName: studentName,
+      studentPhone: studentPhone,
+      studentAddr: studentAddr,
+      studentZoneCode: studentZoneCode,
+      studentDetail: studentDetail,
+      studentEtc: studentEtc,
+      studentBirth: studentBirth,
     };
     const result = await modifyStudentInfo(studentInfoData);
     console.log(result);
-    // const formData = new FormData();
 
-    // const infoData = JSON.stringify({
-    //   studentPk,
-    //   studentName,
-    //   studentGender,
-    //   studentBirth,
-    //   studentPhone,
-    //   parentName,
-    //   connet,
-    //   parentPhone,
-    //   studentZoneCode,
-    //   studentAddr,
-    //   studentEtc,
-    // });
-
-    // const dto = new Blob([infoData], { type: "application/json" });
-    // formData.append("files", dto);
-    // // formData.append("studentPic", dto);
-    // // formData.append("files", studentPic);
-    // try {
-    //   await modifyStudentInfo(formData);
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    try {
+      // await modifyStudentInfo();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const handleAddClick = e => {
-    e.preventDefault();
-    // 주소찾기 팝업
-    new daum.Postcode({
-      oncomplete: function (data) {
-        var roadAddr = data.roadAddress;
-        var extraRoadAddr = "";
-        if (data.bname !== "" && /[동|로|가]$/g.test(data.bname)) {
-          extraRoadAddr += data.bname;
-        }
-        if (data.buildingName !== "" && data.apartment === "Y") {
-          extraRoadAddr +=
-            extraRoadAddr !== "" ? ", " + data.buildingName : data.buildingName;
-        }
-        if (extraRoadAddr !== "") {
-          extraRoadAddr = " (" + extraRoadAddr + ")";
-        }
-        // 우편번호와 주소 정보를 해당 필드에 넣는다.
-        setPostCode(data.zonecode);
-        setAddress(roadAddr);
-      },
-    }).open();
-  };
+  // const handleAddClick = e => {
+  //   e.preventDefault();
+  //   // 주소찾기 팝업
+  //   new daum.Postcode({
+  //     oncomplete: function (data) {
+  //       var roadAddr = data.roadAddress;
+  //       var extraRoadAddr = "";
+  //       if (data.bname !== "" && /[동|로|가]$/g.test(data.bname)) {
+  //         extraRoadAddr += data.bname;
+  //       }
+  //       if (data.buildingName !== "" && data.apartment === "Y") {
+  //         extraRoadAddr +=
+  //           extraRoadAddr !== "" ? ", " + data.buildingName : data.buildingName;
+  //       }
+  //       if (extraRoadAddr !== "") {
+  //         extraRoadAddr = " (" + extraRoadAddr + ")";
+  //       }
+  //       // 우편번호와 주소 정보를 해당 필드에 넣는다.
+  //       setPostCode(data.zonecode);
+  //       setAddress(roadAddr);
+  //     },
+  //   }).open();
+  // };
 
   const StudentsInfoStyle = styled.div`
     display: flex;
@@ -320,7 +302,7 @@ const StudentEdit = () => {
                   <input
                     type="text"
                     name="text"
-                    value={postCode}
+                    value={studentZoneCode}
                     readOnly
                   ></input>
                 </div>
@@ -330,7 +312,7 @@ const StudentEdit = () => {
                   // placeholder={address}
                   className="info-add"
                   readOnly
-                  value={address}
+                  value={studentAddr}
                   // onChange={() => setAddress(roadAddr)}
                 />
                 <input
