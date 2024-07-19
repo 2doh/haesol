@@ -3,7 +3,7 @@ import { findTeacherId } from "api/findinfo/findinfoteacherapi";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { PhoneNumber } from "utils/helpers";
-import logo from "../../images/logo_b.png";
+import logo from "../../images/logo.png";
 import "../../scss/findinfo/findid.scss";
 import FindInfoNavi from "./FindInfoNavi";
 
