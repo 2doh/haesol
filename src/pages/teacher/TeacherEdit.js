@@ -172,6 +172,7 @@ const TeacherEdit = () => {
   /** 최초 랜더링 */
   useEffect(() => {
     nowUserInfo();
+    window.scrollTo(0, 0);
   }, []);
 
   /** 모달 종료 후 갱신 */

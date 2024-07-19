@@ -4,7 +4,6 @@ import { useNavigate } from "react-router";
 import { getCookie, removeCookie } from "utils/cookie";
 import "../../scss/header/header.css";
 import Timer from "./Timer";
-import { removeLocalValue } from "utils/local";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -31,9 +30,9 @@ const Header = () => {
     removeCookie("userIdPk");
     removeCookie("userRole");
 
-    removeLocalValue("timerMin");
-    removeLocalValue("timerSec");
-    removeLocalValue("timerTime");
+    removeCookie("timerMin");
+    removeCookie("timerSec");
+    removeCookie("timerTime");
 
     window.location.reload("/");
   };

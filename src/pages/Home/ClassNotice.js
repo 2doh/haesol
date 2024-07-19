@@ -132,21 +132,32 @@ const ClassNotice = ({ setCreatedAt }) => {
             ref={suppliesTextClassName}
             className="notice-text-div school-supplies"
           >
-            수정중
-            <div className="notice-text">{contentItem}</div>
-            {/* <ul>
+            <div className="notice-text-flex">
+              <div className="notice-text notice-main-contents">
+                {contentItem}
+              </div>
+              <div className="notice-text">작성일 : {contentItemCreatedAt}</div>
+              {/* <ul>
               <li>1. 줄넘기</li>
               <li>2. 가위, 풀</li>
               <li>3. 색종이</li>
             </ul> */}
+            </div>
           </div>
           <div ref={noticeTextClassName} className="notice-text-div no-display">
-            수정중
-            <div className="notice-text">{contentNotice}</div>
-            {/* <ul>
+            <div className="notice-text-flex">
+              <div className="notice-text  notice-main-contents">
+                {contentNotice}
+              </div>
+              <div className="notice-text">
+                작성일 : {contentNoticeCreatedAt}
+              </div>
+              {/* <ul>
               <li>1. 수학 익힘책 15p 숙제가 있습니다.</li>
               <li>2. 내일 받아쓰기 시험이 있습니다.</li>
+              
             </ul> */}
+            </div>
           </div>
           {loginUserType === "ROLE_TEAHCER" ? (
             <div
