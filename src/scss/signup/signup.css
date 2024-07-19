@@ -1,7 +1,23 @@
+@keyframes shake {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-4deg);
+  }
+  50% {
+    transform: rotate(4deg);
+  }
+  75% {
+    transform: rotate(-4deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
 ::-moz-placeholder {
   color: #2a1b07;
 }
-
 ::placeholder {
   color: #2a1b07;
 }
@@ -85,7 +101,6 @@
   margin-top: 30px;
 }
 .signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-parent-modal-wrap {
-  padding: 10px;
   font-size: 16px;
 }
 .signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-parent-modal-wrap .signup-parent-modal-inner {
@@ -96,11 +111,13 @@
 }
 .signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-parent-modal-wrap .signup-parent-modal-inner .signup-parent-modal-title {
   font-size: 24px;
+  top: 0;
 }
 .signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-parent-modal-wrap .signup-parent-modal-inner .signup-parent-modal-content {
   margin: 10px auto;
   display: flex;
   gap: 10px;
+  overflow-y: auto;
 }
 .signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-main-fields {
   margin-top: 20px;

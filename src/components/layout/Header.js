@@ -90,7 +90,7 @@ const Header = () => {
               </ul>
               <ul>
                 <div
-                  className="logo"
+                  className="logo shake-box"
                   onClick={() => {
                     moveHomePage();
                   }}

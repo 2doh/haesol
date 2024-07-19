@@ -79,7 +79,7 @@ export const getChildRecentNoticeInfo = async () => {
         },
       },
     );
-    console.log("알림장 불러오기 : ", response);
+    // console.log("알림장 불러오기 : ", response);
     return response.data.result;
   } catch (error) {
     console.log("알림장 불러오기 : ", response);

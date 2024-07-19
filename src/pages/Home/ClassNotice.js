@@ -68,16 +68,12 @@ const ClassNotice = ({ setCreatedAt }) => {
 
     if (getCookie("userRole") === "ROLE_PARENTS") {
       const res = await getChildRecentNoticeInfo();
-      // setContent(res.content);
-      // setCreatedAt(moment(res.createdAt).format("YYYY-MM-DD"));
       setContentItem(res.item.content);
       setContentItemCreatedAt(moment(res.item.createdAt).format("YYYY-MM-DD"));
       setContentNotice(res.notice.content);
       setContentNoticeCreatedAt(
         moment(res.notice.createdAt).format("YYYY-MM-DD"),
       );
-
-      console.log("학부모 결과값 : ", res.item);
     }
   };
 
@@ -125,7 +121,6 @@ const ClassNotice = ({ setCreatedAt }) => {
           >
             알림
           </div>
-          {/* <div className=""></div> */}
         </div>
         <div className="notice-inner">
           <div
@@ -134,14 +129,9 @@ const ClassNotice = ({ setCreatedAt }) => {
           >
             <div className="notice-text-flex">
               <div className="notice-text notice-main-contents">
-                {contentItem}
+                <div className="content-item-style">{contentItem}</div>
               </div>
               <div className="notice-text">작성일 : {contentItemCreatedAt}</div>
-              {/* <ul>
-              <li>1. 줄넘기</li>
-              <li>2. 가위, 풀</li>
-              <li>3. 색종이</li>
-            </ul> */}
             </div>
           </div>
           <div ref={noticeTextClassName} className="notice-text-div no-display">
@@ -152,11 +142,6 @@ const ClassNotice = ({ setCreatedAt }) => {
               <div className="notice-text">
                 작성일 : {contentNoticeCreatedAt}
               </div>
-              {/* <ul>
-              <li>1. 수학 익힘책 15p 숙제가 있습니다.</li>
-              <li>2. 내일 받아쓰기 시험이 있습니다.</li>
-              
-            </ul> */}
             </div>
           </div>
           {loginUserType === "ROLE_TEAHCER" ? (

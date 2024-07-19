@@ -63,6 +63,21 @@
   }
 }
 
+// 주말
+/* 일요일에만 빨간 폰트 */
+.react-calendar__month-view__weekdays__weekday abbr[title="일요일"] {
+  /* color: ${props => props.theme.red_1}; */
+  color: $sementic-color-error;
+}
+
+.react-calendar__tile.sunday {
+  color: #ff8349;
+}
+
+.react-calendar__month-view__weekdays__weekday abbr[title="토요일"] {
+  color: #2361a8;
+}
+
 // 요일
 .react-calendar__month-view__weekdays {
   abbr {
@@ -104,74 +119,6 @@
 .react-calendar__tile--now:enabled:focus {
   background: $b100;
   border-radius: 14px;
-}
-
-.calendar-now-month-list-wrap {
-  width: 100%;
-  position: relative;
-  top: -40px;
-  min-height: 300px;
-  // border: 3px solid #625151;
-  // border-radius: 0px 0px 19px 19px;
-
-  // 일정 텍스트
-  input[id*="calendar-day-text-list-check"] {
-    display: none;
-  }
-  input[id*="calendar-day-text-list-check"] + label {
-    display: block;
-    padding: 20px;
-    // border: 1px solid red;
-    border-bottom: 0;
-    color: #fff;
-    font-weight: 900;
-    background-color: lighten($tuesday-c, 8%);
-    cursor: pointer;
-  }
-
-  // https://www.youtube.com/watch?v=5wo7glve9Wc
-  // 버튼
-  input[id*="calendar-day-text-list-check"] + label + em {
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    width: 30px;
-    height: 30px;
-    margin-top: -15px;
-    display: inline-block;
-  }
-
-  input[id*="calendar-day-text-list-check"] + label + div {
-    max-height: 0;
-
-    transition: all 0.35s;
-    position: absolute;
-    overflow: hidden;
-    // background: black;
-    font-size: 11px;
-
-    // background-color: #fbfaf9;
-    background-color: $grid-color-w;
-    border: 3px solid #625151;
-    border-radius: 0px 0px 19px 19px;
-
-    // border: 3px solid #625151;
-    // border-radius: 0px 0px 19px 19px;
-  }
-
-  input[id*="calendar-day-text-list-check"]:checked + label + div {
-    max-height: 300px;
-    height: 100%;
-  }
-  input[id*="calendar-day-text-list-check"]:checked + label em {
-    background-position: 0-30px;
-  }
-
-  .now-schedule-day {
-    width: 100%;
-    height: 40px;
-    // background-color: lighten($tuesday-c, 8%);
-  }
 }
 
 .absoluteDiv {
@@ -223,25 +170,19 @@
   }
 }
 
-.now-month-event-text-wrap {
-  display: flex;
-  width: 100%;
-  height: 275px;
-  overflow: auto;
-  padding: 30px 40px 30px 60px;
-  gap: 10px;
-
+// 캘린더 일정 - 아코디언 영역
+.now-schedule-day {
   &::-webkit-scrollbar {
-    background-color: #ffeae8;
+    background-color: lighten($p300, 3%);
     overflow: hidden;
-    width: 15px;
-    border-radius: 0px 0px 19px 0px;
+    width: 10px;
+    border-radius: 0px 0px 0px 0px;
     // border-bottom: 3px solid #625151;
   }
 
   /* 스크롤바 막대 설정*/
   &::-webkit-scrollbar-thumb {
-    background-color: $p500;
+    background-color: $p400;
     /* 스크롤바 둥글게 설정    */
     border-radius: 10px;
     border: 1px solid #dee8e9;
@@ -253,15 +194,22 @@
   }
 
   .now-month-event-text {
-    font-size: 16px;
+    font-size: 14px;
     display: flex;
     gap: 12px;
     flex-direction: column;
+    padding-top: 10px;
 
     .event-day {
       display: flex;
       flex-direction: row;
-      gap: 20px;
+      gap: 30px;
+      padding-left: 20px;
+
+      &:hover {
+        background-color: #feccd5;
+        // background-color: darken(#ffeae8, 5%);
+      }
 
       .event-day-style {
         background-color: $p300;
@@ -279,12 +227,82 @@
       .event-day-text-style {
         width: 110px;
         height: 50px;
-        font-size: 19px;
+        font-size: 17px;
 
         display: flex;
         align-items: center;
         justify-content: center;
       }
     }
+  }
+}
+
+.arrow-icon {
+  // height: 2.8em;
+  width: 2.8em;
+  display: block;
+  padding: 0.5em;
+  margin: 1em auto;
+  position: relative;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.left-bar {
+  position: absolute;
+  background-color: transparent;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 10px;
+  display: block;
+  transform: rotate(35deg);
+  float: right;
+  border-radius: 2px;
+  &:after {
+    content: "";
+    background-color: rgb(180, 62, 62);
+    width: 40px;
+    height: 10px;
+    display: block;
+    float: right;
+    border-radius: 6px 10px 10px 6px;
+    transition: all $duration $easing;
+    z-index: -1;
+  }
+}
+
+.right-bar {
+  position: absolute;
+  background-color: transparent;
+  top: 0px;
+  left: 26px;
+  width: 40px;
+  height: 10px;
+  display: block;
+  transform: rotate(-35deg);
+  float: right;
+  border-radius: 2px;
+  &:after {
+    content: "";
+    background-color: rgb(180, 62, 62);
+    width: 40px;
+    height: 10px;
+    display: block;
+    float: right;
+    border-radius: 10px 6px 6px 10px;
+    transition: all $duration $easing;
+    z-index: -1;
+  }
+}
+
+.open {
+  .left-bar:after {
+    transform-origin: center center;
+    transform: rotate(-70deg);
+  }
+  .right-bar:after {
+    transform-origin: center center;
+    transform: rotate(70deg);
   }
 }

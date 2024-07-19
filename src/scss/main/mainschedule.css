@@ -1,4 +1,21 @@
 @charset "UTF-8";
+@keyframes shake {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-4deg);
+  }
+  50% {
+    transform: rotate(4deg);
+  }
+  75% {
+    transform: rotate(-4deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
 .react-calendar {
   text-shadow: 0 1.5px 0 rgba(0, 0, 0, 0.15);
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.34) inset, 0 2px 0 -1px rgba(0, 0, 0, 0.13), 0 3px 0 -1px rgba(0, 0, 0, 0.08), 0 3px 13px -1px rgba(0, 0, 0, 0.21);
@@ -49,6 +66,20 @@
   font-weight: 500;
 }
 
+/* 일요일에만 빨간 폰트 */
+.react-calendar__month-view__weekdays__weekday abbr[title=일요일] {
+  /* color: ${props => props.theme.red_1}; */
+  color: #f6532b;
+}
+
+.react-calendar__tile.sunday {
+  color: #ff8349;
+}
+
+.react-calendar__month-view__weekdays__weekday abbr[title=토요일] {
+  color: #2361a8;
+}
+
 .react-calendar__month-view__weekdays {
   margin-bottom: 20px;
   margin-top: 5px;
@@ -86,55 +117,6 @@
 .react-calendar__tile--now:enabled:focus {
   background: #dee8e9;
   border-radius: 14px;
-}
-
-.calendar-now-month-list-wrap {
-  width: 100%;
-  position: relative;
-  top: -40px;
-  min-height: 300px;
-}
-.calendar-now-month-list-wrap input[id*=calendar-day-text-list-check] {
-  display: none;
-}
-.calendar-now-month-list-wrap input[id*=calendar-day-text-list-check] + label {
-  display: block;
-  padding: 20px;
-  border-bottom: 0;
-  color: #fff;
-  font-weight: 900;
-  background-color: #ffeae8;
-  cursor: pointer;
-}
-.calendar-now-month-list-wrap input[id*=calendar-day-text-list-check] + label + em {
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  width: 30px;
-  height: 30px;
-  margin-top: -15px;
-  display: inline-block;
-}
-.calendar-now-month-list-wrap input[id*=calendar-day-text-list-check] + label + div {
-  max-height: 0;
-  transition: all 0.35s;
-  position: absolute;
-  overflow: hidden;
-  font-size: 11px;
-  background-color: #fbfaf9;
-  border: 3px solid #625151;
-  border-radius: 0px 0px 19px 19px;
-}
-.calendar-now-month-list-wrap input[id*=calendar-day-text-list-check]:checked + label + div {
-  max-height: 300px;
-  height: 100%;
-}
-.calendar-now-month-list-wrap input[id*=calendar-day-text-list-check]:checked + label em {
-  background-position: -30px;
-}
-.calendar-now-month-list-wrap .now-schedule-day {
-  width: 100%;
-  height: 40px;
 }
 
 .absoluteDiv {
@@ -178,43 +160,42 @@
   color: #5f909f;
 }
 
-.now-month-event-text-wrap {
-  display: flex;
-  width: 100%;
-  height: 275px;
-  overflow: auto;
-  padding: 30px 40px 30px 60px;
-  gap: 10px;
+.now-schedule-day {
   /* 스크롤바 막대 설정*/
   /* 스크롤바 뒷 배경 설정*/
 }
-.now-month-event-text-wrap::-webkit-scrollbar {
-  background-color: #ffeae8;
+.now-schedule-day::-webkit-scrollbar {
+  background-color: #fedbe1;
   overflow: hidden;
-  width: 15px;
-  border-radius: 0px 0px 19px 0px;
+  width: 10px;
+  border-radius: 0px 0px 0px 0px;
 }
-.now-month-event-text-wrap::-webkit-scrollbar-thumb {
-  background-color: #dd838f;
+.now-schedule-day::-webkit-scrollbar-thumb {
+  background-color: #f4878d;
   /* 스크롤바 둥글게 설정    */
   border-radius: 10px;
   border: 1px solid #dee8e9;
 }
-.now-month-event-text-wrap::-webkit-scrollbar-track {
+.now-schedule-day::-webkit-scrollbar-track {
   background-color: rgba(0, 0, 0, 0);
 }
-.now-month-event-text-wrap .now-month-event-text {
-  font-size: 16px;
+.now-schedule-day .now-month-event-text {
+  font-size: 14px;
   display: flex;
   gap: 12px;
   flex-direction: column;
+  padding-top: 10px;
 }
-.now-month-event-text-wrap .now-month-event-text .event-day {
+.now-schedule-day .now-month-event-text .event-day {
   display: flex;
   flex-direction: row;
-  gap: 20px;
+  gap: 30px;
+  padding-left: 20px;
 }
-.now-month-event-text-wrap .now-month-event-text .event-day .event-day-style {
+.now-schedule-day .now-month-event-text .event-day:hover {
+  background-color: #feccd5;
+}
+.now-schedule-day .now-month-event-text .event-day .event-day-style {
   background-color: #feccd5;
   font-weight: bold;
   color: #dd838f;
@@ -225,11 +206,78 @@
   align-items: center;
   justify-content: center;
 }
-.now-month-event-text-wrap .now-month-event-text .event-day .event-day-text-style {
+.now-schedule-day .now-month-event-text .event-day .event-day-text-style {
   width: 110px;
   height: 50px;
-  font-size: 19px;
+  font-size: 17px;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.arrow-icon {
+  width: 2.8em;
+  display: block;
+  padding: 0.5em;
+  margin: 1em auto;
+  position: relative;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.left-bar {
+  position: absolute;
+  background-color: transparent;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 10px;
+  display: block;
+  transform: rotate(35deg);
+  float: right;
+  border-radius: 2px;
+}
+.left-bar:after {
+  content: "";
+  background-color: rgb(180, 62, 62);
+  width: 40px;
+  height: 10px;
+  display: block;
+  float: right;
+  border-radius: 6px 10px 10px 6px;
+  transition: all 0.5s cubic-bezier(0.25, 1.7, 0.35, 0.8);
+  z-index: -1;
+}
+
+.right-bar {
+  position: absolute;
+  background-color: transparent;
+  top: 0px;
+  left: 26px;
+  width: 40px;
+  height: 10px;
+  display: block;
+  transform: rotate(-35deg);
+  float: right;
+  border-radius: 2px;
+}
+.right-bar:after {
+  content: "";
+  background-color: rgb(180, 62, 62);
+  width: 40px;
+  height: 10px;
+  display: block;
+  float: right;
+  border-radius: 10px 6px 6px 10px;
+  transition: all 0.5s cubic-bezier(0.25, 1.7, 0.35, 0.8);
+  z-index: -1;
+}
+
+.open .left-bar:after {
+  transform-origin: center center;
+  transform: rotate(-70deg);
+}
+.open .right-bar:after {
+  transform-origin: center center;
+  transform: rotate(70deg);
 }/*# sourceMappingURL=mainschedule.css.map */
