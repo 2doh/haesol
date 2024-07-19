@@ -8,7 +8,7 @@ import {
 } from "api/student/studentapi";
 
 import Signature from "pages/grade/Signature";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import "../../scss/student/grade.css";
 import "../../scss/student/studentEdit.css";
@@ -158,6 +158,9 @@ const initData = [
 ];
 
 const Grade = () => {
+  const signResult1 = useRef("");
+  const signResult2 = useRef("");
+
   // 네비게이트
   const navigate = useNavigate();
   const { studentPk } = useParams();
@@ -178,43 +181,8 @@ const Grade = () => {
   const [classRank, setClassRank] = useState("-");
   const [gradeRank, setGradeRank] = useState("-");
 
-  // const [midGrades, setMidGrades] = useState({
-  //   국어: "",
-  //   수학: "",
-  //   "바른 생활": "",
-  //   "사회/도덕": "",
-  //   과학: "",
-  //   영어: "",
-  //   실과: "",
-  //   체육: "",
-  //   음악: "",
-  //   미술: "",
-  // });
-  // const [finalGrades, setfinalGrades] = useState({
-  //   국어: "",
-  //   수학: "",
-  //   "바른 생활": "",
-  //   "사회/도덕": "",
-  //   과학: "",
-  //   영어: "",
-  //   실과: "",
-  //   체육: "",
-  //   음악: "",
-  //   미술: "",
-  // });
-
-  // const subjects = [
-  //   "국어",
-  //   "수학",
-  //   "바른 생활",
-  //   "사회/도덕",
-  //   "과학",
-  //   "영어",
-  //   "실과",
-  //   "체육",
-  //   "음악",
-  //   "미술",
-  // ];
+  // const [data, setData] = useState([]);
+  //   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // 학생 정보 불러오기
   const studentInfoData = async () => {
@@ -240,12 +208,15 @@ const Grade = () => {
   const [latestSemester, setLatestSemester] = useState(1); // 최종학기
   const [latestYear, setLatestYear] = useState("2023"); // 최종년도
 
+  // 싸인 정보
+  const [signResultPic1, setSinResultPic1] = useState(null);
+  const [signResultPic2, setSinResultPic2] = useState(null);
+
   const studentGrade1 = async () => {
     try {
       // 중간고사
       const response = await getStudentGrade1(studentPk);
       const result = response.data.data.list || [];
-      console.log(response);
       // 요것은 조금 위험하다.
       setLatestGrade(response.data.data.latestGrade || 1);
       setLatestSemester(response.data.data.latestSemester || 1);
@@ -254,7 +225,14 @@ const Grade = () => {
       setGradeRank(response.data.data.classRank.gradeRank);
       setClassStudentCount(response.data.data.classRank.classStudentCount);
       setGradeStudentCount(response.data.data.classRank.gradeStudentCount);
-      // console.log("중간 : ", response.data.data);
+      setSinResultPic1(response.data.data.signResult);
+
+      {
+        response.data.data.signResult === null
+          ? setSinResultPic1(null)
+          : setSinResultPic1(response.data.data.signResult.pic);
+      }
+
       const updatedData = examListOne.map(subject => {
         const update = result.find(data => data.name === subject.name);
         if (update) {
@@ -273,6 +251,7 @@ const Grade = () => {
             grade: response.data.data.latestGrade,
           };
         }
+
         return subject;
       });
       setExamListOne(updatedData);
@@ -285,7 +264,6 @@ const Grade = () => {
   const studentGrade2 = async () => {
     try {
       const response = await getStudentGrade2(studentPk);
-      console.log(response);
       const result = response.data.data.list || [];
       // 요것은 조금 위험하다.
       setLatestGrade(response.data.data.latestGrade || 1);
@@ -295,8 +273,19 @@ const Grade = () => {
       setGradeRank(response.data.data.classRank.gradeRank);
       setClassStudentCount(response.data.data.classRank.classStudentCount);
       setGradeStudentCount(response.data.data.classRank.gradeStudentCount);
+      // setSinResultPic2(response.data.data.signResult);
 
-      // console.log("기말 : ", response.data.data);
+      // {
+      //   response.data.data.signResult === null
+      //     ? setSinResultPic2(false)
+      //     : setSinResultPic2(response.data.data.signResult.pic);
+      // }
+      const signResult = response.data.data.signResult;
+
+      // signResult가 null일 경우 null을 설정하고, 그렇지 않으면 pic 값을 설정
+      setSinResultPic2(signResult ? signResult.pic : null);
+      console.log("signResultPic2:", signResultPic2);
+
       const updatedData = examListTwo.map(subject => {
         const update = result.find(data => data.name === subject.name);
         if (update) {
@@ -348,7 +337,6 @@ const Grade = () => {
   // 내용 변경 처리 기말
   const handleChangeTwo = item => {
     // 전달된 객체의 name 속성을 비교하고 같으면 업데이트를 해줌.
-    // console.log("item : ", item);
     const updatedData = examListTwo.map(subject => {
       const update = item.name === subject.name;
       if (update) {
@@ -370,7 +358,6 @@ const Grade = () => {
   };
 
   const handleSaveOne = async _item => {
-    // console.log(_item);
     const scoreData = {
       studentPk: studentPk,
       year: latestYear,
@@ -381,7 +368,6 @@ const Grade = () => {
     };
     console.log(scoreData);
     try {
-      // console.log("데이터 전송중? : ", scoreData);
       await postStudentGradeScore(scoreData);
       await studentGrade1();
       await studentGrade2();
@@ -395,17 +381,34 @@ const Grade = () => {
     studentGrade2();
   }, [studentPk]);
 
+  useEffect(() => {
+    if (signResult1.current) {
+      signResult1.current.classList = "sign-btn";
+    }
+    if (signResult2.current) {
+      signResult2.current.classList = "sign-btn";
+    }
+  }, [signResultPic1, signResultPic2]);
+
   const handleGradeChange = async e => {
     const newGrade = e.target.value;
     setLatestGrade(newGrade);
     await studentGradeSelect1(newGrade, latestSemester, latestYear);
     await studentGradeSelect2(newGrade, latestSemester, latestYear);
+    if (!signResultPic1) signResult1.current.classList = "";
+    if (!signResultPic2) signResult2.current.classList = "";
+
+    // signResult2.current.classList = "";
+    console.log("비웠다.");
   };
   const handleSemesterChange = async e => {
     const newSemester = e.target.value;
     setLatestSemester(newSemester);
     await studentGradeSelect1(latestGrade, newSemester, latestYear);
     await studentGradeSelect2(latestGrade, newSemester, latestYear);
+    if (!signResultPic1) signResult1.current.classList = "";
+    if (!signResultPic2) signResult2.current.classList = "";
+    console.log("비웠다.");
   };
 
   const handleYearChange = async e => {
@@ -413,6 +416,9 @@ const Grade = () => {
     setLatestYear(newLatestYear);
     await studentGradeSelect1(latestGrade, latestSemester, newLatestYear);
     await studentGradeSelect2(latestGrade, latestSemester, newLatestYear);
+    if (!signResultPic1) signResult1.current.classList = "";
+    if (!signResultPic2) signResult2.current.classList = "";
+    console.log("비웠다.");
   };
 
   // 학기, 학년 선택 성적 출력 중간고사
@@ -425,14 +431,22 @@ const Grade = () => {
         semester,
         year,
       );
+
       const err = response.data;
       if (err.code < 0) {
         alert("선택한 학기의 중간고사 성적이 없습니다.");
         setExamListOne(initData);
         return;
       }
-
       const result = response.data.data.list || [];
+      setSinResultPic1(response.data.data.signResult);
+
+      {
+        response.data.data.signResult === null
+          ? setSinResultPic1(null)
+          : setSinResultPic1(response.data.data.signResult.pic);
+      }
+
       const updatedData = examListOne.map(subject => {
         const update = result.find(data => data.name === subject.name);
         if (update) {
@@ -457,50 +471,6 @@ const Grade = () => {
     } catch (error) {
       console.log(error);
     }
-
-    // try {
-    //   const response = await getStudentGradeSelect1(studentPk, grade, semester);
-    //   const err = response.data;
-    //   if (err.code < 0) {
-    //     alert("선택한 학기의 중간고사 성적이 없습니다.");
-    //     // setMidGrades({});
-    //     return;
-    //   }
-    //   const result = response.data.data.list || [];
-    //   const midgradeMap = {};
-    //   console.log(result);
-    //   if (result.length > 0) {
-    //     setClassStudentCount(result[0].classStudentCount || "-");
-    //     setGradeStudentCount(result[0].gradeStudentCount || "-");
-    //     setClassRank(result[0].classRank || "-");
-    //     setGradeRank(result[0].gradeRank || "-");
-    //     result.forEach(subject => {
-    //       const {
-    //         name,
-    //         mark,
-    //         classAvg,
-    //         classRank,
-    //         gradeAvg,
-    //         gradeRank,
-    //         subjectGradeRank,
-    //       } = subject;
-    //       midgradeMap[name] = {
-    //         mark,
-    //         classAvg,
-    //         classRank,
-    //         gradeAvg,
-    //         gradeRank,
-    //         subjectGradeRank,
-    //       };
-    //     });
-
-    //     // setExamListOne({});
-    //     // setMidGrades(midgradeMap);
-    //     // setMidGrades({}); // 기말고사 데이터를 초기화
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // }
   };
 
   // 학기, 학년 선택 성적 출력 기말고사
@@ -520,6 +490,7 @@ const Grade = () => {
         return;
       }
       const result = response.data.data.list || [];
+      // setSinResultPic2(response.data.data.signResult.pic);
       const updatedData = examListTwo.map(subject => {
         const update = result.find(data => data.name === subject.name);
         if (update) {
@@ -559,66 +530,6 @@ const Grade = () => {
     generateYearOptions();
   }, []);
 
-  // useEffect(() => {
-  //   studentGrade2();
-  // }, [studentPk]);
-
-  // const handleMidGradeChange = (e, subject) => {
-  //   const value = e.target.value;
-  //   setMidGrades(prevGrades => ({
-  //     ...prevGrades,
-  //     [subject]: {
-  //       ...(prevGrades[subject] || {}),
-  //       mark: value,
-  //     },
-  //   }));
-  // };
-
-  // const handleFinalGradeChange = (e, subject) => {
-  //   const value = e.target.value;
-  //   setfinalGrades(prevGrades => ({
-  //     ...prevGrades,
-  //     [subject]: {
-  //       ...(prevGrades[subject] || {}),
-  //       mark: value,
-  //     },
-  //   }));
-  // };
-
-  // const handleSave = async () => {
-  //   const scoreData = {
-  //     studentPk: studentPk,
-  //     year: "2023",
-  //     semester,
-  //     name: subjects[0],
-  //     exam: "1",
-  //     mark: score,
-  //   };
-  //   try {
-  //     console.log("데이터 전송중? : ", scoreData);
-  //     await postStudentGradeScore(scoreData);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // const setDateSelectBox = () => {
-  //   let yearsArray = [];
-  //   // 2005년부터 현재 연도까지 옵션을 추가합니다.
-  //   for (let i = nowYear; i >= 2005; i--) {
-  //     yearsArray.push(
-  //       <option key={i} value={i}>
-  //         {i}
-  //       </option>,
-  //     );
-  //   }
-  //   setYear(yearsArray);
-  // };
-  // useEffect(() => {
-  //   setDateSelectBox();
-  // }, []);
-
-
   const ParentCheckStyle = styled.div`
     display: flex;
     flex-direction: column;
@@ -632,6 +543,11 @@ const Grade = () => {
       /* background: #fbfaf9; */
       border: solid 2px #886348;
       font-size: 18px;
+    }
+
+    .sign-btn {
+      background-color: #dd838f;
+      color: #fbfaf9;
     }
   `;
 
@@ -772,7 +688,7 @@ const Grade = () => {
           </div>
         </div>
         <ParentCheckStyle>
-          <button>학부모 확인</button>
+          <button ref={signResult1}>학부모 확인</button>
         </ParentCheckStyle>
 
         <div className="exam-table">
@@ -836,7 +752,9 @@ const Grade = () => {
             반 등수 <input value={classRank} /> / {classStudentCount} 등
           </div>
         </div>
-        <Signature />
+        <ParentCheckStyle>
+          <button ref={signResult2}>학부모 확인</button>
+        </ParentCheckStyle>
       </div>
     </div>
   );
