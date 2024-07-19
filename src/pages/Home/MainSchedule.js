@@ -214,22 +214,28 @@ const MainSchedule = () => {
         // }
       />
       <div className="calendar-now-month-list-wrap">
-        <div className="now-schedule-day"></div>
-        {/* <div className="now-schedule-day">{today}</div> */}
-        <div className="now-month-event-text-wrap">
-          <div className="now-month-event-text">
-            {eventList.map((item, index) => {
-              return (
-                <div className="event-day" key={index}>
-                  <div className="event-day-style">
-                    {moment(eventDayList[index]).format("M월 DD일")}
+        <input type="checkbox" id="calendar-day-text-list-check" />
+        <label htmlFor="calendar-day-text-list-check"></label>
+        <div className="now-schedule-day">
+          <em></em>
+          {/* 컨텐츠 제목 부분 */}
+
+          <div className="now-month-event-text-wrap">
+            <div className="now-month-event-text">
+              {eventList.map((item, index) => {
+                return (
+                  <div className="event-day" key={index}>
+                    <div className="event-day-style">
+                      {moment(eventDayList[index]).format("M월 DD일")}
+                    </div>
+                    <div className="event-day-text-style">{item}</div>
                   </div>
-                  <div className="event-day-text-style">{item}</div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
+        {/* <div className="now-schedule-day">{today}</div> */}
       </div>
     </ScWrap>
   );

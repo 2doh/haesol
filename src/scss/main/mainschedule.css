@@ -93,14 +93,48 @@
   position: relative;
   top: -40px;
   min-height: 300px;
+}
+.calendar-now-month-list-wrap input[id*=calendar-day-text-list-check] {
+  display: none;
+}
+.calendar-now-month-list-wrap input[id*=calendar-day-text-list-check] + label {
+  display: block;
+  padding: 20px;
+  border-bottom: 0;
+  color: #fff;
+  font-weight: 900;
+  background-color: #ffeae8;
+  cursor: pointer;
+}
+.calendar-now-month-list-wrap input[id*=calendar-day-text-list-check] + label + em {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  margin-top: -15px;
+  display: inline-block;
+}
+.calendar-now-month-list-wrap input[id*=calendar-day-text-list-check] + label + div {
+  max-height: 0;
+  transition: all 0.35s;
+  position: absolute;
+  overflow: hidden;
+  font-size: 11px;
   background-color: #fbfaf9;
   border: 3px solid #625151;
   border-radius: 0px 0px 19px 19px;
 }
+.calendar-now-month-list-wrap input[id*=calendar-day-text-list-check]:checked + label + div {
+  max-height: 300px;
+  height: 100%;
+}
+.calendar-now-month-list-wrap input[id*=calendar-day-text-list-check]:checked + label em {
+  background-position: -30px;
+}
 .calendar-now-month-list-wrap .now-schedule-day {
   width: 100%;
   height: 40px;
-  background-color: #ffeae8;
 }
 
 .absoluteDiv {
