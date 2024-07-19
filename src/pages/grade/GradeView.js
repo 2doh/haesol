@@ -177,6 +177,10 @@ const GradeView = () => {
   const [classRank, setClassRank] = useState("-");
   const [gradeRank, setGradeRank] = useState("-");
 
+  // 싸인 정보
+  const [signResultPic1, setSignResultPic1] = useState(null);
+  const [signResultPic2, setSignResultPic2] = useState(null);
+
   // 학생 정보 불러오기
   const studentInfoData = async () => {
     try {
@@ -215,7 +219,14 @@ const GradeView = () => {
       setGradeRank(response.data.data.classRank.gradeRank);
       setClassStudentCount(response.data.data.classRank.classStudentCount);
       setGradeStudentCount(response.data.data.classRank.gradeStudentCount);
-      // console.log("중간 : ", response.data.data);
+      setSignResultPic1(response.data.data.signResult);
+
+      {
+        response.data.data.signResult === null
+          ? setSignResultPic1(null)
+          : setSignResultPic1(response.data.data.signResult);
+      }
+
       const updatedData = examListOne.map(subject => {
         const update = result.find(data => data.name === subject.name);
         if (update) {
@@ -256,8 +267,14 @@ const GradeView = () => {
       setGradeRank(response.data.data.classRank.gradeRank);
       setClassStudentCount(response.data.data.classRank.classStudentCount);
       setGradeStudentCount(response.data.data.classRank.gradeStudentCount);
+      setSignResultPic2(response.data.data.signResult);
 
-      // console.log("기말 : ", response.data.data);
+      {
+        response.data.data.signResult === null
+          ? setSignResultPic2(null)
+          : setSignResultPic2(response.data.data.signResult);
+      }
+
       const updatedData = examListTwo.map(subject => {
         const update = result.find(data => data.name === subject.name);
         if (update) {
@@ -324,10 +341,18 @@ const GradeView = () => {
       if (err.code < 0) {
         alert("선택한 학기의 중간고사 성적이 없습니다.");
         setExamListOne(initData);
+        setSignResultPic1(null);
         return;
       }
 
       const result = response.data.data.list || [];
+      setSignResultPic1(response.data.data.signResult);
+
+      {
+        response.data.data.signResult === null
+          ? setSignResultPic1(null)
+          : setSignResultPic1(response.data.data.signResult);
+      }
       const updatedData = examListOne.map(subject => {
         const update = result.find(data => data.name === subject.name);
         if (update) {
@@ -368,9 +393,17 @@ const GradeView = () => {
       if (err.code < 0) {
         alert("선택한 학기의 기말고사 성적이 없습니다.");
         setExamListTwo(initData);
+        setSignResultPic2(null);
         return;
       }
       const result = response.data.data.list || [];
+      setSignResultPic2(response.data.data.signResult);
+
+      {
+        response.data.data.signResult === null
+          ? setSignResultPic2(null)
+          : setSignResultPic2(response.data.data.signResult);
+      }
       const updatedData = examListTwo.map(subject => {
         const update = result.find(data => data.name === subject.name);
         if (update) {
