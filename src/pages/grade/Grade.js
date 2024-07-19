@@ -249,6 +249,7 @@ const Grade = () => {
         return subject;
       });
       setExamListOne(updatedData);
+      console.log("중간고사", updatedData);
     } catch (error) {
       console.log(error);
     }
@@ -287,7 +288,7 @@ const Grade = () => {
             gradeRank: update.gradeRank,
             subjectClassRank: update.subjectClassRank,
             subjectGradeRank: update.subjectGradeRank,
-            exam: update.exam,
+            exam: 2,
             semester: response.data.data.latestSemester,
             year: response.data.data.latestYear,
             grade: response.data.data.latestGrade,
@@ -296,7 +297,7 @@ const Grade = () => {
         return subject;
       });
       setExamListTwo(updatedData);
-      console.log("updatedData", updatedData);
+      console.log("기말고사", updatedData);
     } catch (error) {
       console.log(error);
     }
@@ -367,6 +368,7 @@ const Grade = () => {
     } catch (error) {
       console.log(error);
     }
+    // 여기 네비게이트
   };
 
   useEffect(() => {
