@@ -158,9 +158,6 @@ const initData = [
 ];
 
 const Grade = () => {
-  const signResult1 = useRef("");
-  const signResult2 = useRef("");
-
   // 네비게이트
   const navigate = useNavigate();
   const { studentPk } = useParams();
@@ -180,9 +177,6 @@ const Grade = () => {
   const [gradeStudentCount, setGradeStudentCount] = useState("-");
   const [classRank, setClassRank] = useState("-");
   const [gradeRank, setGradeRank] = useState("-");
-
-  // const [data, setData] = useState([]);
-  //   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // 학생 정보 불러오기
   const studentInfoData = async () => {
@@ -209,8 +203,8 @@ const Grade = () => {
   const [latestYear, setLatestYear] = useState("2023"); // 최종년도
 
   // 싸인 정보
-  const [signResultPic1, setSinResultPic1] = useState(null);
-  const [signResultPic2, setSinResultPic2] = useState(null);
+  const [signResultPic1, setSignResultPic1] = useState(null);
+  const [signResultPic2, setSignResultPic2] = useState(null);
 
   const studentGrade1 = async () => {
     try {
@@ -225,12 +219,12 @@ const Grade = () => {
       setGradeRank(response.data.data.classRank.gradeRank);
       setClassStudentCount(response.data.data.classRank.classStudentCount);
       setGradeStudentCount(response.data.data.classRank.gradeStudentCount);
-      setSinResultPic1(response.data.data.signResult);
+      setSignResultPic1(response.data.data.signResult);
 
       {
         response.data.data.signResult === null
-          ? setSinResultPic1(null)
-          : setSinResultPic1(response.data.data.signResult.pic);
+          ? setSignResultPic1(null)
+          : setSignResultPic1(response.data.data.signResult);
       }
 
       const updatedData = examListOne.map(subject => {
@@ -273,18 +267,13 @@ const Grade = () => {
       setGradeRank(response.data.data.classRank.gradeRank);
       setClassStudentCount(response.data.data.classRank.classStudentCount);
       setGradeStudentCount(response.data.data.classRank.gradeStudentCount);
-      // setSinResultPic2(response.data.data.signResult);
+      setSignResultPic2(response.data.data.signResult);
 
-      // {
-      //   response.data.data.signResult === null
-      //     ? setSinResultPic2(false)
-      //     : setSinResultPic2(response.data.data.signResult.pic);
-      // }
-      const signResult = response.data.data.signResult;
-
-      // signResult가 null일 경우 null을 설정하고, 그렇지 않으면 pic 값을 설정
-      setSinResultPic2(signResult ? signResult.pic : null);
-      console.log("signResultPic2:", signResultPic2);
+      {
+        response.data.data.signResult === null
+          ? setSignResultPic2(null)
+          : setSignResultPic2(response.data.data.signResult);
+      }
 
       const updatedData = examListTwo.map(subject => {
         const update = result.find(data => data.name === subject.name);
@@ -381,46 +370,6 @@ const Grade = () => {
     studentGrade2();
   }, [studentPk]);
 
-  useEffect(() => {
-    if (signResult1.current) {
-      signResult1.current.classList = "sign-btn";
-    }
-    if (signResult2.current) {
-      signResult2.current.classList = "sign-btn";
-    }
-  }, [signResultPic1, signResultPic2]);
-
-  const handleGradeChange = async e => {
-    const newGrade = e.target.value;
-    setLatestGrade(newGrade);
-    await studentGradeSelect1(newGrade, latestSemester, latestYear);
-    await studentGradeSelect2(newGrade, latestSemester, latestYear);
-    if (!signResultPic1) signResult1.current.classList = "";
-    if (!signResultPic2) signResult2.current.classList = "";
-
-    // signResult2.current.classList = "";
-    console.log("비웠다.");
-  };
-  const handleSemesterChange = async e => {
-    const newSemester = e.target.value;
-    setLatestSemester(newSemester);
-    await studentGradeSelect1(latestGrade, newSemester, latestYear);
-    await studentGradeSelect2(latestGrade, newSemester, latestYear);
-    if (!signResultPic1) signResult1.current.classList = "";
-    if (!signResultPic2) signResult2.current.classList = "";
-    console.log("비웠다.");
-  };
-
-  const handleYearChange = async e => {
-    const newLatestYear = e.target.value;
-    setLatestYear(newLatestYear);
-    await studentGradeSelect1(latestGrade, latestSemester, newLatestYear);
-    await studentGradeSelect2(latestGrade, latestSemester, newLatestYear);
-    if (!signResultPic1) signResult1.current.classList = "";
-    if (!signResultPic2) signResult2.current.classList = "";
-    console.log("비웠다.");
-  };
-
   // 학기, 학년 선택 성적 출력 중간고사
   const studentGradeSelect1 = async (grade, semester, year) => {
     try {
@@ -436,15 +385,16 @@ const Grade = () => {
       if (err.code < 0) {
         alert("선택한 학기의 중간고사 성적이 없습니다.");
         setExamListOne(initData);
+        setSignResultPic1(null);
         return;
       }
       const result = response.data.data.list || [];
-      setSinResultPic1(response.data.data.signResult);
+      setSignResultPic1(response.data.data.signResult);
 
       {
         response.data.data.signResult === null
-          ? setSinResultPic1(null)
-          : setSinResultPic1(response.data.data.signResult.pic);
+          ? setSignResultPic1(null)
+          : setSignResultPic1(response.data.data.signResult);
       }
 
       const updatedData = examListOne.map(subject => {
@@ -487,10 +437,17 @@ const Grade = () => {
       if (err.code < 0) {
         alert("선택한 학기의 기말고사 성적이 없습니다.");
         setExamListTwo(initData);
+        setSignResultPic2(null);
         return;
       }
       const result = response.data.data.list || [];
-      // setSinResultPic2(response.data.data.signResult.pic);
+      setSignResultPic2(response.data.data.signResult);
+
+      {
+        response.data.data.signResult === null
+          ? setSignResultPic2(null)
+          : setSignResultPic2(response.data.data.signResult);
+      }
       const updatedData = examListTwo.map(subject => {
         const update = result.find(data => data.name === subject.name);
         if (update) {
@@ -517,6 +474,26 @@ const Grade = () => {
     }
   };
 
+  const handleGradeChange = async e => {
+    const newGrade = e.target.value;
+    setLatestGrade(newGrade);
+    await studentGradeSelect1(newGrade, latestSemester, latestYear);
+    await studentGradeSelect2(newGrade, latestSemester, latestYear);
+  };
+  const handleSemesterChange = async e => {
+    const newSemester = e.target.value;
+    setLatestSemester(newSemester);
+    await studentGradeSelect1(latestGrade, newSemester, latestYear);
+    await studentGradeSelect2(latestGrade, newSemester, latestYear);
+  };
+
+  const handleYearChange = async e => {
+    const newLatestYear = e.target.value;
+    setLatestYear(newLatestYear);
+    await studentGradeSelect1(latestGrade, latestSemester, newLatestYear);
+    await studentGradeSelect2(latestGrade, latestSemester, newLatestYear);
+  };
+
   useEffect(() => {
     const generateYearOptions = () => {
       const currentYear = new Date().getFullYear();
@@ -540,12 +517,11 @@ const Grade = () => {
       cursor: Default;
       width: 120px;
       height: 30px;
-      /* background: #fbfaf9; */
       border: solid 2px #886348;
       font-size: 18px;
     }
 
-    .sign-btn {
+    .is-sign {
       background-color: #dd838f;
       color: #fbfaf9;
     }
@@ -688,7 +664,11 @@ const Grade = () => {
           </div>
         </div>
         <ParentCheckStyle>
-          <button ref={signResult1}>학부모 확인</button>
+          {signResultPic1 ? (
+            <button className="is-sign">학부모 확인</button>
+          ) : (
+            <button className="null-sign">학부모 확인</button>
+          )}
         </ParentCheckStyle>
 
         <div className="exam-table">
@@ -753,7 +733,11 @@ const Grade = () => {
           </div>
         </div>
         <ParentCheckStyle>
-          <button ref={signResult2}>학부모 확인</button>
+          {signResultPic2 ? (
+            <button className="is-sign">학부모 확인</button>
+          ) : (
+            <button className="null-sign">학부모 확인</button>
+          )}
         </ParentCheckStyle>
       </div>
     </div>
