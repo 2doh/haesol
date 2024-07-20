@@ -6,6 +6,7 @@ import StudentImg from "./StudentImg";
 import PhoneInputFields from "./PhoneInputFields";
 import { getStudentInfo, modifyStudentInfo } from "api/student/studentapi";
 import { useDispatch, useSelector } from "react-redux";
+import { openModal, updateModalDate } from "slices/modalSlice";
 const StudentEdit = () => {
   // 네비게이트
   const navigate = useNavigate();
@@ -82,29 +83,8 @@ const StudentEdit = () => {
     studentInfoData();
   }, [studentPk]);
 
-  const dispatch = useDispatch();
-  /** 모달 호출 */
-  const showModal = () => {
-    /** (선택) 들어갈 내용 수정 */
-    const data = {
-      headerText: ["학생 정보 관리"],
-      bodyText: ["내용을 수정하시겠습니까?"],
-      buttonText: ["확인", "취소"],
-      modalRes: [45, { to: "010-6792-2898", message: content }],
-    };
-    /** (선택) 위와 아래는 세트 */
-    dispatch(updateModalDate(data));
-
-    dispatch(openModal(selectModalType));
-    // console.log("모달 결과 출력 내용 확인 : ", modalRes);
-  };
-
-  const modalState = useSelector(state => state.modalSlice);
-
   // 정보 수정하기
-  const handleModifyInfo = async e => {
-    e.preventDefault();
-
+  const modifyInfo = async () => {
     const studentInfoData = {
       studentPk: studentPk,
       studentName: studentName,
@@ -116,7 +96,7 @@ const StudentEdit = () => {
       studentBirth: studentBirth,
     };
     const result = await modifyStudentInfo(studentInfoData);
-    console.log(result);
+    // console.log(result);
 
     try {
       // await modifyStudentInfo();
@@ -124,6 +104,29 @@ const StudentEdit = () => {
       console.log(error);
     }
   };
+
+  const dispatch = useDispatch();
+  /** 모달 호출 */
+  const showModal = selectModalType => {
+    /** (선택) 들어갈 내용 수정 */
+    const data = {
+      headerText: ["학생 정보 관리"],
+      bodyText: ["내용을 수정하시겠습니까?"],
+      buttonText: ["확인", "취소"],
+      modalRes: [45],
+    };
+    /** (선택) 위와 아래는 세트 */
+    dispatch(updateModalDate(data));
+
+    dispatch(openModal(selectModalType));
+    // console.log("모달 결과 출력 내용 확인 : ", modalRes);
+  };
+
+  const modalState = useSelector(state => state.modalSlice);
+
+  useEffect(() => {
+    modifyInfo();
+  }, [modalState.modalRes[0]]);
 
   const StudentsInfoStyle = styled.div`
     display: flex;
@@ -169,8 +172,8 @@ const StudentEdit = () => {
 
           <div className="info-button">
             <button
-              onClick={e => {
-                handleModifyInfo(e);
+              onClick={() => {
+                showModal("BasicModal");
               }}
             >
               저장

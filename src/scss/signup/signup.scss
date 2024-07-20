@@ -72,19 +72,37 @@
           margin-top: 30px;
           .signup-parent-modal-wrap {
             font-size: 16px;
-            .signup-parent-modal-inner {
+            @include flex-center;
+            flex-direction: column;
+            .signup-parent-modal-title {
+              font-size: 24px;
+              margin: 10px auto;
               @include flex-center;
+            }
+            .signup-parent-modal-inner {
+              margin-top: 20px;
+              display: flex;
               flex-direction: column;
-              .signup-parent-modal-title {
-                font-size: 24px;
-                top: 0;
-              }
-              .signup-parent-modal-content {
-                margin: 10px auto;
-                display: flex;
-                gap: 10px;
-                overflow-y: auto;
-              }
+              width: 100%;
+              height: 100px;
+              overflow-y: auto;
+            }
+            .signup-parent-modal-content {
+              margin: 10px auto;
+              color: #2a1b07;
+              display: flex;
+              gap: 10px;
+            }
+            .signup-parent-modal-bt {
+              margin-top: 20px;
+              background-color: #747474;
+              color: #ffffff;
+              height: 35px;
+              width: 55px;
+              font-size: 15px;
+              border: 1px solid #747474;
+              border-radius: 6px;
+              @include flex-center;
             }
           }
           .signup-main-fields {

@@ -2,7 +2,11 @@ import styled from "@emotion/styled";
 import { parentSignup } from "api/signup/parentapi";
 import { useEffect, useState } from "react";
 
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
+import { openModal, updateModalDate } from "slices/modalSlice";
 import "../../scss/signup/signup.scss";
+import ChildInputFields from "./ChildInputFields";
 import DropFields from "./DropFields";
 import EmailInputField from "./EmailInputField";
 import HomeAdressFields from "./HomeAdressFields";
@@ -11,10 +15,6 @@ import ParentInputFields from "./ParentInputFields";
 import PassInputField from "./PassInputField";
 import PhoneInputFields from "./PhoneInputFields";
 import SubPhoneInputFields from "./SubPhoneInputFields";
-import ChildInputFields from "./ChildInputFields";
-import { useNavigate } from "react-router";
-import { useDispatch } from "react-redux";
-import { closeModal, openModal, updateModalDate } from "slices/modalSlice";
 
 const SignupParent = ({ handleCancel, setUserType, userType }) => {
   //   "uid": "test1234",
@@ -129,20 +129,31 @@ const SignupParent = ({ handleCancel, setUserType, userType }) => {
           <ModalStyle>
             <ModalContentStyle>
               <div className="signup-parent-modal-wrap">
+                <div className="signup-parent-modal-title">자녀정보확인</div>
                 <div className="signup-parent-modal-inner">
-                  <div className="signup-parent-modal-title">자녀정보확인</div>
                   {childList.map((item, index) => (
-                    <div className="signup-parent-modal-content" key={index}>
+                    <div
+                      className="signup-parent-modal-content"
+                      key={index}
+                      onClick={() => {
+                        // console.log(item);
+                        setUserChildrenPk(item.pk);
+                        setUserChildrenName(item.name);
+                        setOnModal(false);
+                      }}
+                    >
                       <div>{item.name}</div>
                       <div>{item.grade}</div>
                     </div>
                   ))}
-                  <div
-                    className="signup-parent-modal-bt"
-                    onClick={() => setOnModal(false)}
-                  >
-                    버튼
-                  </div>
+                </div>
+                <div
+                  className="signup-parent-modal-bt"
+                  onClick={() => {
+                    setOnModal(false);
+                  }}
+                >
+                  취소
                 </div>
               </div>
             </ModalContentStyle>
@@ -232,8 +243,10 @@ const ModalStyle = styled.div`
 `;
 
 const ModalContentStyle = styled.div`
-  width: auto;
-  max-height: 50vh;
-  background-color: wheat;
-  padding: 100px;
+  width: 500px;
+  max-height: 400vh;
+  background-color: #ffffff;
+  border-radius: 10px;
+  border: 1px solid #cccccc;
+  padding: 50px;
 `;
