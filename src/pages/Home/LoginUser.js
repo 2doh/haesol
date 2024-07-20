@@ -60,6 +60,8 @@ const LoginUserStyle = styled.div`
         }
 
         .div-wrapper {
+          transition: all 0.3s ease-in-out;
+
           background-color: #fbfaf9;
 
           position: absolute;

@@ -1,7 +1,23 @@
+@keyframes shake {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-4deg);
+  }
+  50% {
+    transform: rotate(4deg);
+  }
+  75% {
+    transform: rotate(-4deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
 ::-moz-placeholder {
   color: #2a1b07;
 }
-
 ::placeholder {
   color: #2a1b07;
 }
@@ -93,10 +109,14 @@
 }
 .signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-parent-modal-wrap .signup-parent-modal-title {
   font-size: 24px;
-  margin: 10px auto;
+
+  top: 0;
+
+/*   margin: 10px auto;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: center; */
+
 }
 .signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-parent-modal-wrap .signup-parent-modal-inner {
   margin-top: 20px;
@@ -111,6 +131,7 @@
   color: #2a1b07;
   display: flex;
   gap: 10px;
+  overflow-y: auto;
 }
 .signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-parent-modal-wrap .signup-parent-modal-bt {
   margin-top: 20px;
