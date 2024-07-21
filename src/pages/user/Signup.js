@@ -23,14 +23,6 @@ const Signup = () => {
     navi("/");
   };
 
-  useEffect(() => {
-    /** 모달 생성시 스크롤 금지 */
-    const prevScrollY = preventScroll();
-    return () => {
-      allowScroll(prevScrollY);
-    };
-  }, []);
-
   return (
     <div className="signup">
       <div className="signup-wrap">

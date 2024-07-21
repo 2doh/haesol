@@ -15,6 +15,7 @@ import ParentInputFields from "./ParentInputFields";
 import PassInputField from "./PassInputField";
 import PhoneInputFields from "./PhoneInputFields";
 import SubPhoneInputFields from "./SubPhoneInputFields";
+import { allowScroll, preventScroll } from "components/common/ScrollManagement";
 
 const SignupParent = ({ handleCancel, setUserType, userType }) => {
   //   "uid": "test1234",
@@ -118,6 +119,16 @@ const SignupParent = ({ handleCancel, setUserType, userType }) => {
     }
   }, [modalText]);
 
+  useEffect(() => {
+    /** 모달 생성시 스크롤 금지 */
+    if (onModal) {
+      const prevScrollY = preventScroll();
+      return () => {
+        allowScroll(prevScrollY);
+      };
+    }
+  }, [onModal]);
+
   return (
     <form
       onSubmit={e => {
@@ -181,7 +192,6 @@ const SignupParent = ({ handleCancel, setUserType, userType }) => {
             userChildrenName={userChildrenName}
             setUserChildrenPk={setUserChildrenPk}
             setOnModal={setOnModal}
-            setIsChild={setIsChild}
             setChildList={setChildList}
           >
             자녀이름
