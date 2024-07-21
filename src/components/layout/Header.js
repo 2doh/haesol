@@ -19,11 +19,6 @@ const Header = () => {
     navigate("/");
   };
 
-  /** 회원가입 승인 리스트 페이지로 이동 */
-  const moveAdminHomePage = () => {
-    navigate("/admin");
-  };
-
   /** 로그아웃 기능 */
   const logout = () => {
     removeCookie("accessToken");
@@ -97,13 +92,7 @@ const Header = () => {
                 ></div>
               </ul>
               <ul>
-                <a
-                  href=""
-                  className="menu-main-title"
-                  onClick={() => {
-                    moveAdminHomePage();
-                  }}
-                >
+                <a href="" className="menu-main-title">
                   선생님 마당
                 </a>
 

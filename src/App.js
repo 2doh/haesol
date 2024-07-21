@@ -224,7 +224,7 @@ function App() {
             element={
               <TeacherProtectedRoute
                 authenticated={accessToken}
-                component={<Students />}
+                component={<StudentEdit />}
               />
             }
           ></Route>

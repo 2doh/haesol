@@ -13,7 +13,7 @@ const ClassNoticeStyle = styled.div`
   height: 100%; */
   margin-bottom: 50px;
 `;
-const ClassNotice = ({ setCreatedAt }) => {
+const ClassNotice = () => {
   const navigate = useNavigate();
   const [noticeMenuNum, setNoticeMenuNum] = useState(2);
 
@@ -87,15 +87,6 @@ const ClassNotice = ({ setCreatedAt }) => {
       getNotice(noticeMenuNum);
     }
   }, []);
-
-  useEffect(() => {
-    if (noticeMenuNum === 2) {
-      setCreatedAt(contentItemCreatedAt);
-    }
-    if (noticeMenuNum === 1) {
-      setCreatedAt(contentNoticeCreatedAt);
-    }
-  }, [noticeMenuNum]);
 
   return (
     <ClassNoticeStyle>
