@@ -56,7 +56,7 @@
 
 // 흔들리는 애니메이션
 @mixin shake-animation {
-  animation: $shake 1s;
+  animation: shake 1s;
 }
 @keyframes shake {
   0% {
