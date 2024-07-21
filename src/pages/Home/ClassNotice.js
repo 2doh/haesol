@@ -137,7 +137,7 @@ const ClassNotice = ({ setCreatedAt }) => {
           <div ref={noticeTextClassName} className="notice-text-div no-display">
             <div className="notice-text-flex">
               <div className="notice-text  notice-main-contents">
-                {contentNotice}
+                <div className="content-item-style">{contentNotice}</div>
               </div>
               <div className="notice-text">
                 작성일 : {contentNoticeCreatedAt}

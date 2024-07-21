@@ -59,6 +59,10 @@
 .modal-wrap .modal-inner .modal-body .modal-body-text-div:nth-child(2) {
   margin: 0px 10px;
 }
+.modal-wrap .modal-inner .modal-body .basic-modal-div {
+  padding: 0px 25px;
+  word-break: keep-all;
+}
 .modal-wrap .modal-inner .modal-body .pw-modal-body-text-div {
   display: flex;
   flex-direction: column;

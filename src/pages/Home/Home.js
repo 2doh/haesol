@@ -14,9 +14,11 @@ import "../../scss/main/home.css";
 import LoginUser from "./LoginUser";
 import MainSchedule from "./MainSchedule";
 import LoginTeahcer from "./LoginTeahcer";
-import { ActivityPhotos } from "./ActivityPhotos";
+// import { ActivityPhotos } from "./ActivityPhotos";
 import { useDispatch } from "react-redux";
 import { startTimer } from "slices/timerSlice";
+import RandomAdZone from "./RandomAdZone";
+import { ActivityPhotos } from "./ActivityPhotos";
 
 const Home = () => {
   const HomeStyle = styled.div`
@@ -69,24 +71,6 @@ const Home = () => {
     // console.log("토큰 상태 : ", accessToken);
   }, []);
 
-  // /** 학사 일정 */
-  // useEffect(() => {
-  //   const url = `${AA_SERVER_URL}?ATPT_OFCDC_SC_CODE=${ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${SD_SCHUL_CODE}&KEY=${KEY}&AA_FROM_YMD=${fromMmd}&AA_TO_YMD=${toYmd}&TYPE=JSON`;
-  //   // const url = `${AA_SERVER_URL}?ATPT_OFCDC_SC_CODE=${ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${SD_SCHUL_CODE}&KEY=${KEY}&TYPE=JSON`;
-
-  //   axios.get(url).then(async res => {
-  //     // 급식 데이터가 있는 없는지 확인
-  //     const resArr = res.data.SchoolSchedule[1].row;
-  //     resArr.map((item, index) => {
-  //       // aaArr.push(item.AA_YMD);
-  //       setAaArr([...aaArr, item.AA_YMD]);
-  //       // console.log("학사 일정 : ", resArr[index].AA_YMD);
-  //       // console.log("학사 일정 item : ", item.AA_YMD);
-  //       // console.log("학사 일정 item : ", aaArr);
-  //     });
-  //   });
-  // }, []);
-
   // 어드민의 경우
   const [loginUserType, setLoginUserType] = useState(getCookie("userRole"));
   useEffect(() => {
@@ -120,8 +104,8 @@ const Home = () => {
       >
         <div className="main-inner">
           <div className="main-inner-class">
-            <div className="main-schedule">
-              {loginUserType === "ROLE_PARENTS" ? null : (
+            {loginUserType === "ROLE_PARENTS" ? null : (
+              <div className="main-schedule">
                 <>
                   <div className="main-schedule-title main-contents-title">
                     <div className="main-schedule-title-text ">학교 일정</div>
@@ -130,16 +114,10 @@ const Home = () => {
                     <MainSchedule />
                   </div>
                 </>
-              )}
-            </div>
-            <div className="main-activity">
-              <div className="main-activity-title main-contents-title">
-                <div className="main-schedule-title-text">우리들 활동</div>
               </div>
-              <div className="main-title-dwon-contents main-activity-slide">
-                <ActivityPhotos />
-              </div>
-            </div>
+            )}
+            {/*우리들의 활동 영역 */}
+            <ActivityPhotos />
           </div>
           {/* 메인 오른쪽 영역 - start */}
           <div className="main-inner-info">
@@ -191,8 +169,8 @@ const Home = () => {
             ) : null}
             {/* <div className="main-login-user-info no-display "> */}
 
-            {/* 추후 수정 */}
-            <div className="main-info-lunch ">
+            {/* 급식 영역 start */}
+            <div className="main-info-lunch">
               <div className="main-activity-title main-contents-title main-info-lunch-title ">
                 <div className="main-schedule-title-text">오늘의 급식</div>
               </div>
@@ -216,6 +194,10 @@ const Home = () => {
                 </div>
               </div>
             </div>
+            {/* 급식 영역 end */}
+
+            {/* 랜덤 영역 */}
+            <RandomAdZone />
           </div>
           {/* 메인 오른쪽 영역 - end */}
         </div>

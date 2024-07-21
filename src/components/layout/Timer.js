@@ -100,33 +100,15 @@ const Timer = () => {
   /** 로그인 시간 만료 알림 모달 */
   const notifyLogoutDueToSessionExpired = selectModalType => {
     const data = {
-      bodyText: ["로그인 시간이 만료되었습니다."],
+      bodyText: ["로그인 시간이 만료되어 로그아웃 되었습니다."],
       headerText: "로그아웃",
-      modalRes: [1],
+      modalRes: [2],
       buttonText: ["확인"],
       buttonCnt: 1,
     };
 
     dispatch(updateModalDate(data));
     dispatch(openModal(selectModalType));
-
-    // (어드민) 공통 데이터 쿠키 삭제
-    removeCookie("accessToken");
-    removeCookie("userIdPk");
-    removeCookie("userRole");
-
-    // (학부모) 공통 데이터 쿠키 삭제
-    removeCookie("selectChildNum");
-    removeCookie("studentPk");
-
-    // (교직원) 공통 데이터 쿠키 삭제
-    removeCookie("userClass");
-    removeCookie("userName");
-    removeCookie("userEmail");
-
-    removeCookie("timerMin");
-    removeCookie("timerSec");
-    removeCookie("timerTime");
   };
 
   /** 로그인 시간 만료 알림 모달 종료 후 새로고침 갱신 */

@@ -4,8 +4,8 @@ import { Navigate } from "react-router";
 import { getCookie } from "utils/cookie";
 
 const PrivateRoute = ({ authenticated, component: Component }) => {
-  const [loginUserType, setLoginUserType] = useState(getCookie("userRole"));
-  console.log("권한 : ", loginUserType);
+  // const [loginUserType, setLoginUserType] = useState(getCookie("userRole"));
+  // console.log("권한 : ", loginUserType);
 
   return authenticated ? (
     getCookie("userRole") === "ROLE_ADMIN" ? (
