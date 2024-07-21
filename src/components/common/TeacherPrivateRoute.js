@@ -1,8 +1,7 @@
-import React from "react";
 import { Navigate } from "react-router";
 import { getCookie } from "utils/cookie";
 
-const TeacherProtectedRoute = ({ authenticated, component: Component }) => {
+const TeacherPrivateRoute = ({ authenticated, component: Component }) => {
   return authenticated ? (
     getCookie("userRole") === "ROLE_TEAHCER" ? (
       Component
@@ -14,4 +13,4 @@ const TeacherProtectedRoute = ({ authenticated, component: Component }) => {
   );
 };
 
-export default TeacherProtectedRoute;
+export default TeacherPrivateRoute;

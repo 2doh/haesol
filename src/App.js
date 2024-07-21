@@ -4,38 +4,39 @@ import Header from "components/layout/Header";
 import Home from "pages/Home/Home";
 import Login from "pages/user/Login";
 // import NotFound from "pages/NotFound";
-import Signup from "pages/user/Signup";
 import AdminHome from "pages/admin/AdminHome";
 import Notice from "pages/notice/Notice";
 import NoticeEdit from "pages/notice/NoticeEdit";
 import NoticeModify from "pages/notice/NoticeModify";
 import StudentInfoView from "pages/student/StudentInfoView";
 import Students from "pages/student/StudentsList";
+import Signup from "pages/user/Signup";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "../src/scss/common.scss";
 import "./App.css";
 import "./css/reset.css";
 
+import { AuthenticatedRedirect } from "components/common/AuthenticatedRedirect";
 import Modal from "components/common/Modal";
+import PrivateRoute from "components/common/PrivateRoute";
+import SecureRoute from "components/common/SecureRoute";
+import TeacherProtectedRoute from "components/common/TeacherProtectedRoute";
 import FindId from "components/login/FindId";
 import FindPass from "components/login/FindPass";
+import NotFound from "components/notfound/NotFound";
+import Grade from "pages/grade/Grade";
+import GradeChart from "pages/grade/GradeChart";
 import GradeView from "pages/grade/GradeView";
 import NoticeItem from "pages/notice/NoticeItem";
 import NoticeList from "pages/notice/NoticeList";
+import MyChildInfo from "pages/parents/MyChildInfo";
+import StudentEdit from "pages/student/StudentEdit";
 import TeacherEdit from "pages/teacher/TeacherEdit";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCookie } from "utils/cookie";
 import { openModal } from "slices/modalSlice";
-import PrivateRoute from "components/common/PrivateRoute";
-import MyChildInfo from "pages/parents/MyChildInfo";
-import ReturnHomeRoute from "components/common/ReturnHomeRoute";
-import Grade from "pages/grade/Grade";
-import GradeChart from "pages/grade/GradeChart";
-import NotFound from "components/notfound/NotFound";
-import { AuthenticatedRedirect } from "components/common/AuthenticatedRedirect";
-import StudentEdit from "pages/student/StudentEdit";
-import TeacherProtectedRoute from "components/common/TeacherProtectedRoute";
+import { getCookie } from "utils/cookie";
+import ParentsPrivateRoute from "components/common/ParentsPrivateRoute";
 
 // import jwt from "jsonwebtoken";
 
@@ -104,20 +105,7 @@ function App() {
 
   /** 모달 상태 관리 */
   const modalState = useSelector(state => state.modalSlice);
-
-  const dispatch = useDispatch();
-
-  /** 모달 호출 */
-  const showModal = selectModalType => {
-    /**(고정) 모달 활성화 */
-    const modalRes = dispatch(openModal(selectModalType));
-    // console.log("모달 결과 출력 내용 확인 : ", modalRes);
-  };
-
-  // const jwt = require("jsonwebtoken");
-
-  // const token = accessToken; // 여기에 토큰을 넣어주세요
-
+  // console.log("권한 : ", loginUserType);
   // // 토큰 디코딩
   // const decoded = jwt.decode(token, { complete: true });
 
@@ -146,10 +134,8 @@ function App() {
       <Main>
         <Routes>
           <Route index element={<Home />}></Route>
-          <Route path="/" element={<Home />}></Route>
-
           {/* 로그인 & 회원가입 : 이후 진입시 Home으로 강제 이동 */}
-          {/* {accessToken ? (
+          {accessToken ? (
             <>
               <Route path="/login" element={<AuthenticatedRedirect />}></Route>
               <Route path="/signup" element={<AuthenticatedRedirect />}></Route>
@@ -166,12 +152,7 @@ function App() {
               <Route path="/findid" element={<FindId />}></Route>
               <Route path="/findpass" element={<FindPass />}></Route>
             </>
-          )} */}
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/students" element={<Students />}></Route>
-          <Route path="/signup" element={<Signup />}></Route>
-          <Route path="/findid" element={<FindId />}></Route>
-          <Route path="/findpass" element={<FindPass />}></Route>
+          )}
 
           {/* Admin 계정의 경우 */}
           {loginUserType === "ROLE_ADMIN" ? (
@@ -190,7 +171,7 @@ function App() {
               </Route>
             </>
           ) : (
-            <Route path="/admin/*" element={<ReturnHomeRoute />}></Route>
+            <Route path="/admin/*" element={<SecureRoute />}></Route>
           )}
 
           {/* 교직원 : 학생 리스트 */}
@@ -204,59 +185,125 @@ function App() {
             }
           ></Route>
 
-          {/* 성적 확인/등록 페이지 - 수정중 */}
+          {/* 학부모 : 성적 확인 페이지 - grade 페이지 진입시 세션에 중복 저장되는 오류 발생 */}
+          {/* {accessToken ? (
+            // 교직원 : 성적 등록 페이지
+            loginUserType === "ROLE_TEAHCER" ? (
+              <Route path="/grade/:studentPk" element={<Grade />}></Route>
+            ) : (
+              <Route path="/grade/:studentPk" element={<GradeView />}></Route>
+            )
+          ) : (
+            <Route
+              path="/grade/:studentPk"
+              element={
+                <Navigate
+                  to="/grade/:studentPk"
+                  {...alert("로그인이 필요합니다.")}
+                />
+              }
+            ></Route>
+          )} */}
+
+          {/* 성적 확인/입력 페이지 - 세션 확인 바람 */}
+          {/* 학부모 : 성적 확인 페이지 */}
           {loginUserType === "ROLE_TEAHCER" ? (
             <Route path="/grade/:studentPk" element={<Grade />}></Route>
           ) : (
             // <Route path="/grade/:studentPk" element={<GradeView />}></Route>
             <Route path="/grade/:studentPk" element={<GradeView />}></Route>
           )}
-
           <Route
             path="/grade/chart/:studentPk"
             element={<GradeChart />}
           ></Route>
-          {/* 임시 경로 */}
-          {loginUserType === "ROLE_TEAHCER" ? (
-            <Route
-              path="/students/edit/:studentPk"
-              element={<StudentEdit />}
-            ></Route>
-          ) : (
-            // 안 쓰는 페이지/경로입니다.
-            <Route
-              path="/students/edit/:studentPk"
-              element={<StudentInfoView />}
-            ></Route>
-          )}
+
+          {/* 교직원 : 학급 학생 정보 수정 */}
+          <Route
+            path="/students/edit/:studentPk"
+            element={
+              <TeacherProtectedRoute
+                authenticated={accessToken}
+                component={<Students />}
+              />
+            }
+          ></Route>
 
           {/* 교직원 : 정보 수정 페이지 */}
-          <Route path="/teacherinfo" element={<TeacherEdit />}></Route>
-          <Route path="/studentinfo" element={<MyChildInfo />}></Route>
+          <Route
+            path="/teacherinfo"
+            element={
+              <TeacherProtectedRoute
+                component={<TeacherEdit />}
+                authenticated={accessToken}
+              />
+            }
+          ></Route>
           {/* 학부모 - 학생 : 정보 수정 페이지 */}
-          {/* 추가예정 */}
+          <Route
+            path="/studentinfo"
+            element={
+              <ParentsPrivateRoute
+                component={<MyChildInfo />}
+                authenticated={accessToken}
+              />
+            }
+          ></Route>
 
+          {/* 3차는 아래로 추가 예정 (추측) */}
           <Route path="/students" element={<Navigate to="*" />}>
             {/* 경로 수정 후 아래로 변경 */}
             {/* <Route path="edit/:userid" element={<StudentEdit />}></Route> */}
             {/* <Route path="grade/:studntid" element={<StudentGrade />}></Route> */}
           </Route>
 
-          {/* 임시 경로 */}
-          <Route
-            path="/notice/list/:userClass"
-            element={<NoticeList />}
-          ></Route>
-          <Route
-            path="/notice/item/:userClass"
-            element={<NoticeItem />}
-          ></Route>
-          <Route path="/notice/edit" element={<NoticeEdit />}></Route>
-          <Route path="/notice" element={<Notice />}>
-            {/* <Route path="list/classid" element={<NoticeList />}></Route>
-            <Route path="item/classid" element={<NoticeItem />}></Route> */}
-            {/* <Route path="edit" element={<NoticeEdit />}></Route> */}
-            <Route path="modify/:noticeid" element={<NoticeModify />}></Route>
+          {/* 교직원 : 알림장 리스트 */}
+          <Route path="/notice">
+            <Route
+              index
+              element={
+                <TeacherProtectedRoute
+                  component={<NoticeList />}
+                  authenticated={accessToken}
+                />
+              }
+            ></Route>
+            <Route
+              path="list/:userClass"
+              element={
+                <TeacherProtectedRoute
+                  authenticated={accessToken}
+                  component={<NoticeList />}
+                />
+              }
+            />
+            <Route
+              path="item/:userClass"
+              element={
+                <TeacherProtectedRoute
+                  authenticated={accessToken}
+                  component={<NoticeItem />}
+                />
+              }
+            />
+            <Route
+              path="edit"
+              element={
+                <TeacherProtectedRoute
+                  authenticated={accessToken}
+                  component={<NoticeEdit />}
+                />
+              }
+            />
+            <Route
+              path="modify/:noticeid"
+              element={
+                <TeacherProtectedRoute
+                  authenticated={accessToken}
+                  component={<NoticeModify />}
+                />
+              }
+            />
           </Route>
 
           <Route

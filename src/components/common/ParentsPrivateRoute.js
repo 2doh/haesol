@@ -2,9 +2,9 @@ import React from "react";
 import { Navigate } from "react-router";
 import { getCookie } from "utils/cookie";
 
-const TeacherProtectedRoute = ({ authenticated, component: Component }) => {
+const ParentsPrivateRoute = ({ authenticated, component: Component }) => {
   return authenticated ? (
-    getCookie("userRole") === "ROLE_TEAHCER" ? (
+    getCookie("userRole") === "ROLE_PARENTS" ? (
       Component
     ) : (
       <Navigate to="/" {...alert("권한이 없습니다.")}></Navigate>
@@ -14,4 +14,4 @@ const TeacherProtectedRoute = ({ authenticated, component: Component }) => {
   );
 };
 
-export default TeacherProtectedRoute;
+export default ParentsPrivateRoute;

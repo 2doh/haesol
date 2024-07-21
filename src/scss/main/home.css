@@ -62,19 +62,6 @@
   width: 100%;
 }
 
-.main-activity-title {
-  /* height: 30px;
-      width: 100%; */
-  /* background-color: maroon; */
-}
-
-.main-activity-slide {
-  margin-top: 20px;
-  width: 100%;
-  height: 500px;
-  background-color: #dee8e9;
-}
-
 .main-right-wrap {
   height: 100%;
   display: flex;
@@ -201,4 +188,153 @@
 }
 .main-inner-info .main-info-lunch .main-info-lunch-menu .lunch-today-menu .sub-menu {
   font-size: 15px;
+}
+
+.main-activity-wrap .main-activity-slide-zone {
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  border-radius: 10px;
+  width: 100%;
+  padding: 15px 49px 30px 49px;
+  background-image: url("../../images/home/school_blackboard.png");
+  background-size: cover;
+}
+.main-activity-wrap .main-activity-slide-zone::after {
+  background-color: #dee8e9;
+}
+.main-activity-wrap * {
+  box-sizing: border-box;
+}
+.main-activity-wrap img {
+  max-width: 100%;
+  height: auto;
+}
+.main-activity-wrap .wrapper {
+  width: 100%;
+  padding: 0 2rem;
+  text-align: center;
+}
+.main-activity-wrap .polaroid {
+  background: #fff;
+  padding: 1rem;
+  box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.2);
+}
+.main-activity-wrap .caption {
+  font-size: 2rem;
+  text-align: center;
+  line-height: 2em;
+}
+.main-activity-wrap .item {
+  display: inline-block;
+  margin-top: 2rem;
+}
+.main-activity-wrap .item .polaroid:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  transition: all 0.35s;
+}
+.main-activity-wrap .swiper-slide:nth-of-type(4n + 1) .item {
+  transform: scale(0.8, 0.8) rotate(5deg);
+  transition: all 0.35s;
+}
+.main-activity-wrap .swiper-slide:nth-of-type(4n + 1) .item .polaroid:before {
+  transform: rotate(6deg);
+  height: 20%;
+  width: 47%;
+  bottom: 30px;
+  right: 12px;
+  box-shadow: 0 2.1rem 2rem rgba(0, 0, 0, 0.4);
+}
+.main-activity-wrap .swiper-slide:nth-of-type(4n + 2) .item {
+  transform: scale(0.8, 0.8) rotate(-5deg);
+  transition: all 0.35s;
+}
+.main-activity-wrap .swiper-slide:nth-of-type(4n + 2) .item .polaroid:before {
+  transform: rotate(-6deg);
+  height: 20%;
+  width: 47%;
+  bottom: 30px;
+  left: 12px;
+  box-shadow: 0 2.1rem 2rem rgba(0, 0, 0, 0.4);
+}
+.main-activity-wrap .swiper-slide:nth-of-type(4n + 4) .item {
+  transform: scale(0.8, 0.8) rotate(3deg);
+  transition: all 0.35s;
+}
+.main-activity-wrap .swiper-slide:nth-of-type(4n + 4) .item .polaroid:before {
+  transform: rotate(4deg);
+  height: 20%;
+  width: 47%;
+  bottom: 30px;
+  right: 12px;
+  box-shadow: 0 2.1rem 2rem rgba(0, 0, 0, 0.3);
+}
+.main-activity-wrap .swiper-slide:nth-of-type(4n + 3) .item {
+  transform: scale(0.8, 0.8) rotate(-3deg);
+  transition: all 0.35s;
+}
+.main-activity-wrap .swiper-slide:nth-of-type(4n + 3) .item .polaroid:before {
+  transform: rotate(-4deg);
+  height: 20%;
+  width: 47%;
+  bottom: 30px;
+  left: 12px;
+  box-shadow: 0 2.1rem 2rem rgba(0, 0, 0, 0.3);
+}
+.main-activity-wrap .item:hover {
+  filter: none;
+  transform: scale(1, 1) rotate(0deg) !important;
+  transition: all 0.35s;
+}
+.main-activity-wrap .item:hover .polaroid:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  transform: rotate(0deg);
+  height: 90%;
+  width: 90%;
+  bottom: 0%;
+  right: 5%;
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.2);
+  transition: all 0.35s;
+}
+
+.main-contents-title-div {
+  text-shadow: 0 1.5px 0 rgba(0, 0, 0, 0.15);
+  border-left: #5f909f solid 5px;
+  font-size: 24px;
+  height: 30px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  color: #031929;
+  margin-bottom: 20px;
+}
+.main-contents-title-div .main-contents-title-text {
+  margin-left: 10px;
+}
+
+.random-ad-zone {
+  border-radius: 0px 20px;
+  overflow: hidden;
+  width: 100%;
+  height: 225px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.random-ad-zone .random-info-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.random-ad-zone .random-info-wrap .random-pic {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  max-height: 450px;
+  background-color: red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: no-repeat center;
+  background-size: cover;
 }/*# sourceMappingURL=home.css.map */

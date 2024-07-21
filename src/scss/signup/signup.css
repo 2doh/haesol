@@ -109,14 +109,10 @@
 }
 .signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-parent-modal-wrap .signup-parent-modal-title {
   font-size: 24px;
-
-  top: 0;
-
-/*   margin: 10px auto;
+  margin: 10px auto;
   display: flex;
   align-items: center;
-  justify-content: center; */
-
+  justify-content: center;
 }
 .signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-parent-modal-wrap .signup-parent-modal-inner {
   margin-top: 20px;
@@ -131,7 +127,6 @@
   color: #2a1b07;
   display: flex;
   gap: 10px;
-  overflow-y: auto;
 }
 .signup .signup-wrap .signup-wrap-inner .signup-wrap-inner-content .signup-main .signup-parent-modal-wrap .signup-parent-modal-bt {
   margin-top: 20px;

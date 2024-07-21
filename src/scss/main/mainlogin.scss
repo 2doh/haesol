@@ -243,10 +243,6 @@
             gap: 15px;
             .notice-text {
               text-overflow: ellipsis;
-
-              .content-item-style {
-                overflow-y: auto;
-              }
             }
 
             .notice-main-contents {
@@ -256,22 +252,37 @@
 
               align-items: center;
               justify-content: center;
-              overflow: hidden;
+              overflow: auto;
             }
 
             .notice-main-contents {
+              width: 100%; /* 원하는 너비 설정 */
+              height: 125px; /* 원하는 높이 설정 */
+              position: relative;
+              overflow-y: auto;
+
+              .content-item-style {
+                position: absolute;
+                width: 100%;
+                max-height: 125px;
+                padding-right: 10px;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                text-align: center;
+              }
               // display: inline-block;
               // overflow-y: scroll;
               // box-sizing: border-box;
             }
 
             /* 스크롤바 설정*/
-            .content-item-style::-webkit-scrollbar {
+            .notice-main-contents::-webkit-scrollbar {
               width: 10px;
             }
 
             /* 스크롤바 막대 설정*/
-            .content-item-style::-webkit-scrollbar-thumb {
+            .notice-main-contents::-webkit-scrollbar-thumb {
               background-color: #92adb6;
               /* 스크롤바 둥글게 설정    */
               border-radius: 10px;
@@ -279,7 +290,7 @@
             }
 
             /* 스크롤바 뒷 배경 설정*/
-            .content-item-style::-webkit-scrollbar-track {
+            .notice-main-contents::-webkit-scrollbar-track {
               background-color: rgba(0, 0, 0, 0);
             }
           }
