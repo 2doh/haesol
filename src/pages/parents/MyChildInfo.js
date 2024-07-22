@@ -148,7 +148,7 @@ const MyChildInfo = () => {
 
   /** 비밀번호 수정 모달 호출 */
   const showModal = selectModalType => {
-    const data = { bodyText: [parentId] };
+    const data = { bodyText: [parentId], buttonText: ["수정", "취소"] };
     dispatch(updateModalDate(data));
 
     dispatch(openModal(selectModalType));
