@@ -82,6 +82,13 @@ const StudentsInfoStyle = styled.div`
     pointer-events: none;
     background-color: #efece8 !important;
   }
+  .gender-style {
+    margin-left: 0px !important;
+    input {
+      width: 25px !important;
+    }
+    /* width: auto; */
+  }
 `;
 
 const TeacherEdit = () => {
@@ -368,23 +375,13 @@ const TeacherEdit = () => {
                   }}
                 />
                 {/* 고정값 */}
-                <div className="form-check">
+                <div className="form-check gender-style">
                   <input
-                    checked={gender === "남"}
-                    className="form-check-gender"
-                    type="radio"
-                    name="chk_info"
-                    value="남"
+                    className="no-edit-class"
+                    type="text"
+                    name="text"
+                    value={gender}
                   />
-                  남자
-                  <input
-                    checked={gender === "여"}
-                    className="form-check-gender"
-                    type="radio"
-                    name="chk_info"
-                    value="여"
-                  />
-                  여자
                 </div>
               </div>
               <div className="info-title">

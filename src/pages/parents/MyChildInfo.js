@@ -24,6 +24,14 @@ const MyShildInfo = styled.div`
     background-color: #efece8 !important;
   }
 
+  .gender-style {
+    margin-left: 0px !important;
+    input {
+      width: 25px !important;
+    }
+    /* width: auto; */
+  }
+
   .prev-class-item-span {
     border-right: 0px !important;
     width: 157px !important;
@@ -345,23 +353,13 @@ const MyChildInfo = () => {
                     setStudentName(e.target.value);
                   }}
                 />
-                <div className="form-check">
+                <div className="form-check gender-style ">
                   <input
-                    checked={studentGender === "남"}
-                    className="form-check-gender"
-                    type="radio"
-                    name="chk_info"
-                    value="남자"
+                    className="no-edit-class"
+                    type="text"
+                    name="text"
+                    value={studentGender}
                   />
-                  남자
-                  <input
-                    checked={studentGender === "여"}
-                    className="form-check-gender"
-                    type="radio"
-                    name="chk_info"
-                    value="여자"
-                  />
-                  여자
                 </div>
               </div>
               <div className="info-title">
