@@ -490,14 +490,14 @@ const GradeView = () => {
               <div className="text-wrapper">성적 확인</div>
             </div>
             {/* <div className="div-wrapper"> */}
-            <div
+            {/* <div
               className="div-wrapper"
               onClick={() => {
                 handleClickChart();
               }}
             >
               <div className="info-subtitle">차트</div>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="info-contain-top">

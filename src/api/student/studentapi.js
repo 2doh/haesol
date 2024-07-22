@@ -248,6 +248,7 @@ export const getScoreDetail = async data => {
   const res = await jwtAxios.get(
     `/api/Score/getScoreDetail?studentPk=${data.studentPk}&grade=${data.grade}&semester=${data.semester}&exam=${data.exam}`,
   );
+  console.log(res);
   return res.data.data;
 };
 
