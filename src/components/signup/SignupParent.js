@@ -151,6 +151,7 @@ const SignupParent = ({ handleCancel, setUserType, userType }) => {
                         setUserChildrenPk(item.pk);
                         setUserChildrenName(item.name);
                         setOnModal(false);
+                        setIsChild(true);
                       }}
                     >
                       <div>{item.name}</div>
@@ -193,6 +194,7 @@ const SignupParent = ({ handleCancel, setUserType, userType }) => {
             setUserChildrenPk={setUserChildrenPk}
             setOnModal={setOnModal}
             setChildList={setChildList}
+            setIsChild={setIsChild}
           >
             자녀이름
           </ChildInputFields>
