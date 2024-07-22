@@ -31,6 +31,23 @@ const Login = ({ setOnHeader, onHedaer }) => {
     setOnHeader(false);
   }, []);
 
+  useEffect(() => {
+    // 뒤로가기를 눌렀을 때 호출될 함수
+    const handlePopState = event => {
+      console.log("뒤로가기를 눌렀습니다.", event);
+      setOnHeader(true);
+      // 원하는 상태로 변경
+    };
+
+    // popstate 이벤트 리스너 추가
+    window.addEventListener("popstate", handlePopState);
+
+    // 컴포넌트 언마운트 시 이벤트 리스너 제거
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, [setOnHeader]);
+
   return (
     <main className="login">
       <div className="login-inner">

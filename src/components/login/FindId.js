@@ -8,8 +8,6 @@ import "../../scss/findinfo/findid.scss";
 import FindInfoNavi from "./FindInfoNavi";
 
 const FindId = ({ setOnHeader }) => {
-  // 교사 테스트 : 김스미스 / 010-8323-6670
-  // 학부모 테스트 : 김순수 / 010-1591-3573
   const navi = useNavigate();
   const [naviState, setNaviState] = useState("parent");
   const [userName, setUserName] = useState("");

@@ -1,4 +1,4 @@
-import { getScoreDetail } from "api/student/studentapi";
+import { getScoreDetail, getStudentInfo } from "api/student/studentapi";
 import Chart from "components/chart/Chart";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -74,11 +74,23 @@ const StudentGradeChart = () => {
       );
       setShowChart(true);
       // props로 넘기는 데이터
+      // console.log(result);
       // const resultList = result.list;
       // const defaultValue = resultList.find(item => item.name === "국어");
       return;
     }
   };
+
+  const getStudent = async () => {
+    const result = await getStudentInfo(studentPk);
+    // console.log(result);
+    setStudentClass(result.data.studentClass);
+    setStudentName(result.data.studentName);
+  };
+
+  useEffect(() => {
+    getStudent();
+  }, []);
 
   useEffect(() => {
     if (modalText) {
@@ -91,7 +103,7 @@ const StudentGradeChart = () => {
       <div className="student-list-title">
         {/* <!-- 제목 위치 --> */}
         <span>{studentClass}</span>
-        <p>{studentName} 여기 페이지 이름</p>
+        <p>{studentName} 성적확인</p>
       </div>
       <div className="user-info-wrap">
         {/* <!-- 탭 선택 부분 --> */}
