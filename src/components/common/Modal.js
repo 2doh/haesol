@@ -155,17 +155,6 @@ const Modal = () => {
         dispatch(updateModalDate(data));
         dispatch(closeModal());
       }
-      // 알림장 작성 취소용
-      if (modalState.modalRes[0] === 2) {
-        navi(-1);
-
-        console.log("네비게이트 적용하기");
-        const data = {
-          modalRes: [false],
-        };
-        dispatch(updateModalDate(data));
-        dispatch(closeModal());
-      }
 
       // 헤더 : 로그인 시간 만료시 로그아웃 처리
       if (modalState.modalRes[0] === 2) {
@@ -219,6 +208,18 @@ const Modal = () => {
       if (modalState.modalRes[0] === 22) {
         console.log("확인 : ", modalState.modalRes[1]);
         sendSmsPost(modalState.modalRes[1]);
+        const data = {
+          modalRes: [false],
+        };
+        dispatch(updateModalDate(data));
+        dispatch(closeModal());
+      }
+
+      // 알림장 작성 취소용
+      if (modalState.modalRes[0] === 43) {
+        navi(-1);
+
+        console.log("네비게이트 적용하기");
         const data = {
           modalRes: [false],
         };

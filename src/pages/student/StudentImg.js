@@ -11,10 +11,10 @@ const StudentImg = ({ studentPk, studentPic }) => {
   const [imgFile, setImgFile] = useState(null);
 
   const handleFileChange = e => {
-    console.log(e.target.files[0]);
+    // console.log(e.target.files[0]);
     const tempFile = e.target.files[0];
     const tempUrl = URL.createObjectURL(tempFile);
-    console.log(tempUrl);
+    // console.log(tempUrl);
     setPreviewPreImg(tempUrl);
 
     // 전송할 파일 변경(주의. 파일을 넣어주자.)
@@ -38,7 +38,7 @@ const StudentImg = ({ studentPk, studentPic }) => {
   // file 추가하기
   // formData.append("petImage", imgFile); 처럼 백에서 요구한 값 넣기
   formData.append("file", imgFile);
-  console.log("formData 데이터 전송");
+  // console.log("formData 데이터 전송");
 
   // api 쓰는 거 앞에 넣기...
   // postFileTest(formData);

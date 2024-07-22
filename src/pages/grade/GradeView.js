@@ -13,6 +13,7 @@ import { useNavigate, useParams } from "react-router";
 import "../../scss/student/grade.css";
 import "../../scss/student/studentEdit.css";
 import styled from "@emotion/styled";
+import Signature2 from "./Signature2";
 
 const initData = [
   {
@@ -213,7 +214,7 @@ const GradeView = () => {
       // 중간고사
       const response = await getStudentGrade1(studentPk);
       const result = response.data.data.list || [];
-      console.log(response);
+      // console.log(response);
       // 요것은 조금 위험하다.
       setLatestGrade(response.data.data.latestGrade || 1);
       setLatestSemester(response.data.data.latestSemester || 1);
@@ -260,7 +261,7 @@ const GradeView = () => {
   const studentGrade2 = async () => {
     try {
       const response = await getStudentGrade2(studentPk);
-      console.log(response);
+      // console.log(response);
       const result = response.data.data.list || [];
       // 요것은 조금 위험하다.
       setLatestGrade(response.data.data.latestGrade || 1);
@@ -324,7 +325,7 @@ const GradeView = () => {
 
   const handleYearChange = async e => {
     const newLatestYear = e.target.value;
-    console.log(newLatestYear);
+    // console.log(newLatestYear);
     setLatestYear(newLatestYear);
     await studentGradeSelect1(latestGrade, latestSemester, newLatestYear);
     await studentGradeSelect2(latestGrade, latestSemester, newLatestYear);
@@ -651,12 +652,12 @@ const GradeView = () => {
             반 등수 <input value={classRank} /> / {classStudentCount} 등
           </div>
         </div>
-        {signResultPic1 ? (
+        {signResultPic2 ? (
           <ParentCheckStyle>
             <button className="is-sign">학부모 확인</button>
           </ParentCheckStyle>
         ) : (
-          <Signature
+          <Signature2
             studentPk={studentPk}
             latestSemester={latestSemester}
             latestYear={latestYear}

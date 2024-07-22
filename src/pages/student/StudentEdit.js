@@ -69,7 +69,7 @@ const StudentEdit = () => {
       setParentName(result.parentName);
       setConnet(result.connet);
       setParentPhone(result.parentPhone);
-      setStudentPic(result.files);
+      setStudentPic(result.studentPic);
       setStudentZoneCode(result.studentZoneCode);
       setStudentAddr(result.studentAddr);
       setStudentDetail(result.studentDetail);
@@ -115,7 +115,7 @@ const StudentEdit = () => {
   const modifyCancel = selectModalType => {
     const data = {
       bodyText: ["정보 수정을 취소하시겠습니까?"],
-      modalRes: [2],
+      modalRes: [43],
       buttonText: ["확인", "닫기"],
     };
 
@@ -153,6 +153,11 @@ const StudentEdit = () => {
       height: 100%;
       object-fit: cover;
     }
+  `;
+
+  const PhoneInfoStyle = styled.input`
+    pointer-events: none;
+    background-color: #efece8 !important;
   `;
 
   return (
@@ -251,9 +256,15 @@ const StudentEdit = () => {
             </div>
             <div className="info-title">
               <span>전화번호</span>
-              <PhoneInputFields
+              {/* <PhoneInputFields
                 phoneNum={studentPhone}
                 onChange={e => setStudentPhone(e.target.value)}
+              /> */}
+              <PhoneInfoStyle
+                type="text"
+                name="text"
+                placeholder=""
+                value={studentPhone}
               />
             </div>
           </div>
@@ -298,11 +309,17 @@ const StudentEdit = () => {
             </div>
             <div className="info-title">
               <span>학부모 전화번호</span>
-              <PhoneInputFields
+              {/* <PhoneInputFields
                 placeholder="전화번호를 입력하세요"
                 phoneNum={parentPhone}
                 readOnly
                 // onChange={e => setParentPhone(e.target.value)}
+              /> */}
+              <PhoneInfoStyle
+                type="text"
+                name="text"
+                placeholder=""
+                value={parentPhone}
               />
             </div>
           </div>
