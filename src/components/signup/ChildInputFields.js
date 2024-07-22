@@ -22,6 +22,11 @@ const ChildInputFields = ({
       const tempArr = result.data.filter(
         item => (item.name === userChildrenName) === true,
       );
+      if (tempArr.length === 0) {
+        alert("자녀 이름을 확인해주세요");
+        setOnModal(false);
+        return;
+      }
       // console.log(tempArr);
       // const selectChild = Array.from(tempArr);
       // console.log(selectChild);
