@@ -25,6 +25,10 @@ const Header = () => {
     removeCookie("userIdPk");
     removeCookie("userRole");
 
+    removeCookie("userClass");
+    removeCookie("userEmail");
+    removeCookie("userName");
+
     removeCookie("timerMin");
     removeCookie("timerSec");
     removeCookie("timerTime");

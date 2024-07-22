@@ -35,7 +35,7 @@ export const singupAccept = async (selectUserPk, userListType) => {
         },
       },
     );
-    // console.log("승인 처리 완료");
+
     return true;
     // return true;
   } catch (error) {
@@ -70,7 +70,7 @@ export const singupAccept = async (selectUserPk, userListType) => {
 export const delectAwaitAccept = async (selectUserPk, userListType) => {
   const accessToken = getCookie("accessToken");
   // console.log(
-  //   // `선택한 유저 PK : ${selectUserPk}, 선택한 유저 타입 : ${userListType}`,
+
   //   `선택한 유저 PK : ${selectUserPk}, 선택한 유저 타입 : ${userListType}`,
   // );
   try {
@@ -82,7 +82,7 @@ export const delectAwaitAccept = async (selectUserPk, userListType) => {
         },
       },
     );
-    // console.log("반려 처리 완료");
+
     return true;
   } catch (error) {
     // console.log(error);

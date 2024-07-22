@@ -5,6 +5,7 @@ import cleanupBt from "../../images/tabler_circle-x-filled.svg";
 import LoginIdField from "./LoginIdField";
 import LoginPassField from "./LoginPassField";
 import SocialSignin from "./SocialSignin";
+import { getCookie } from "utils/cookie";
 
 const Signin = ({ children, naviState, setNaviState }) => {
   const [userId, setUserId] = useState("");
@@ -36,7 +37,10 @@ const Signin = ({ children, naviState, setNaviState }) => {
     }
     if (naviState === "teacherlogin") {
       const result = await postTeacherSignin(reqData);
-      if (result.status === 200) {
+      if (result.status === 200 && getCookie("userRole") === "ROLE_ADMIN") {
+        window.location.replace("/admin");
+      }
+      if (result.status === 200 && getCookie("userRole") === "ROLE_TEAHCER") {
         window.location.replace("/");
       }
       if (result === "error") {
