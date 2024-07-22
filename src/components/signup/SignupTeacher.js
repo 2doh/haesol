@@ -13,12 +13,12 @@ import { useDispatch } from "react-redux";
 import { openModal, updateModalDate } from "slices/modalSlice";
 
 const SignupTeacher = ({ handleCancel, userType, setUserType }) => {
-  const [userId, setUserId] = useState("tempteacher1");
-  const [userPass, setUserPass] = useState("TESTPASs!!1");
-  const [userPassConfirm, setUserPassConfirm] = useState("TESTPASs!!1");
-  const [userName, setUserName] = useState("신선생");
-  const [userPhoneNum, setUserPhoneNum] = useState("010-1114-6534");
-  const [userEmail, setUserEmail] = useState("sin1412@naver.com");
+  const [userId, setUserId] = useState("");
+  const [userPass, setUserPass] = useState("");
+  const [userPassConfirm, setUserPassConfirm] = useState("");
+  const [userName, setUserName] = useState("");
+  const [userPhoneNum, setUserPhoneNum] = useState("");
+  const [userEmail, setUserEmail] = useState("");
   const [userGender, setUserGender] = useState("");
   const [userBirth, setUserBirth] = useState("");
   const [zoneCode, setZoneCode] = useState(0);
@@ -46,7 +46,7 @@ const SignupTeacher = ({ handleCancel, userType, setUserType }) => {
   };
 
   const signupTeacher = async e => {
-    console.log(canId);
+    // console.log(canId);
     e.preventDefault();
     if (canId === false) {
       setModalText("아이디 중복확인을 해주세요");

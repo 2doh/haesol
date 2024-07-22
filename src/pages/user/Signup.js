@@ -4,10 +4,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import logo from "../../images/logo.png";
 import "../../scss/signup/signup.scss";
-import styled from "@emotion/styled";
-import { allowScroll, preventScroll } from "components/common/ScrollManagement";
 
-const Signup = () => {
+const Signup = ({ setOnHeader }) => {
   const [userType, setUserType] = useState("parent");
 
   const handleSelect = e => {
@@ -20,8 +18,13 @@ const Signup = () => {
   };
   const navi = useNavigate();
   const handleCancel = () => {
+    setOnHeader(true);
     navi("/");
   };
+
+  useEffect(() => {
+    setOnHeader(false);
+  }, []);
 
   return (
     <div className="signup">
@@ -33,6 +36,7 @@ const Signup = () => {
                 className="siginup-logo"
                 src={logo}
                 onClick={() => {
+                  setOnHeader(true);
                   navi("/");
                 }}
               ></img>

@@ -23,7 +23,7 @@ const RandomAdZone = () => {
       setRandomImg(initArr[imgNum]);
     };
     showImg();
-    const intervalId = setInterval(showImg, 10000);
+    const intervalId = setInterval(showImg, 5000);
     return () => clearInterval(intervalId);
   }, [initArr]);
 

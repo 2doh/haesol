@@ -22,7 +22,7 @@ const ChildInputFields = ({
       const tempArr = result.data.filter(
         item => (item.name === userChildrenName) === true,
       );
-      console.log(tempArr);
+      // console.log(tempArr);
       // const selectChild = Array.from(tempArr);
       // console.log(selectChild);
       setChildList(tempArr);

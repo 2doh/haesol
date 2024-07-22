@@ -24,16 +24,16 @@ const SignupParent = ({ handleCancel, setUserType, userType }) => {
   // tempid1 / Temppass1! / 김민지 / 010-4532-8772 / joon12512ads@naver.com
 
   const navi = useNavigate();
-  const [userId, setUserId] = useState("tempid11");
-  const [userPass, setUserPass] = useState("Temppass1!1");
-  const [userPassConfirm, setUserPassConfirm] = useState("Temppass1!1");
-  const [userName, setUserName] = useState("김진성");
+  const [userId, setUserId] = useState("");
+  const [userPass, setUserPass] = useState("");
+  const [userPassConfirm, setUserPassConfirm] = useState("");
+  const [userName, setUserName] = useState("");
   const [userChildrenName, setUserChildrenName] = useState("");
-  const [userChildrenPk, setUserChildrenPk] = useState("30");
-  const [userPhoneNum, setUserPhoneNum] = useState("010-4532-2778");
+  const [userChildrenPk, setUserChildrenPk] = useState("");
+  const [userPhoneNum, setUserPhoneNum] = useState("");
   const [userSubPhoneNum, setUserSubPhoneNum] = useState("");
-  const [userEmail, setUserEmail] = useState("joon12512ads11@naver.com");
-  const [userConnet, setUserConnet] = useState("부");
+  const [userEmail, setUserEmail] = useState("");
+  const [userConnet, setUserConnet] = useState("");
   const [zoneCode, setZoneCode] = useState("");
   const [detail, setDetail] = useState("");
   const [addr, setAddr] = useState("");

@@ -11,7 +11,7 @@ export const getTeacherInfo = async () => {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    console.log("선생님 정보 확인 : ", response);
+    // console.log("선생님 정보 확인 : ", response);
     return response;
   } catch (error) {
     console.log(error);
@@ -22,7 +22,7 @@ export const getTeacherInfo = async () => {
 export const putTeacherPwChange = async (newPw, userId) => {
   const accessToken = getCookie("accessToken");
 
-  console.log(`New PW : ${newPw}, 선생님 ID : ${userId}`);
+  // console.log(`New PW : ${newPw}, 선생님 ID : ${userId}`);
   try {
     const response = await axios.put(
       "/api/teacher/put_pwd",
@@ -36,7 +36,7 @@ export const putTeacherPwChange = async (newPw, userId) => {
         },
       },
     );
-    console.log("비밀번호 수정 완료");
+    // console.log("비밀번호 수정 완료");
     return response;
   } catch (error) {
     console.log(error);
@@ -53,7 +53,7 @@ export const patchTeacherInfo = async newInfo => {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    console.log("정보 수정 완료");
+    // console.log("정보 수정 완료");
     return true;
   } catch (error) {
     console.log("정보 수정 실패:", error);
@@ -83,10 +83,10 @@ export const getRecentNoticeInfo = async () => {
 
 /** 교직원 정보 수정 - 이메일 중복 체크 */
 export const duplicateEmail = async teacherEmail => {
-  console.log(teacherEmail);
+  // console.log(teacherEmail);
   try {
     const res = await axios.get(`/api/teacher/duplicate?email=${teacherEmail}`);
-    console.log("이메일이 중복되지 않습니다.");
+    // console.log("이메일이 중복되지 않습니다.");
     return true;
   } catch (error) {
     console.log(error);

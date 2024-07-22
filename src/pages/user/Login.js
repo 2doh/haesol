@@ -1,12 +1,12 @@
 import LoginNavi from "components/login/LoginNavi";
 import Signin from "components/login/Signin";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import logo from "../../images/logo.png";
 import "../../scss/login/login.scss";
 import "../../scss/login/loginnavi.scss";
 
-const Login = () => {
+const Login = ({ setOnHeader, onHedaer }) => {
   const navi = useNavigate();
 
   const [naviState, setNaviState] = useState("signin");
@@ -27,6 +27,10 @@ const Login = () => {
     navi("/signup");
   };
 
+  useEffect(() => {
+    setOnHeader(false);
+  }, []);
+
   return (
     <main className="login">
       <div className="login-inner">
@@ -35,6 +39,7 @@ const Login = () => {
             className="login-logo"
             src={logo}
             onClick={() => {
+              setOnHeader(true);
               goHome();
             }}
           />

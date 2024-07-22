@@ -7,7 +7,7 @@ import logo from "../../images/logo.png";
 import "../../scss/findinfo/findid.scss";
 import FindInfoNavi from "./FindInfoNavi";
 
-const FindId = () => {
+const FindId = ({ setOnHeader }) => {
   // 교사 테스트 : 김스미스 / 010-8323-6670
   // 학부모 테스트 : 김순수 / 010-1591-3573
   const navi = useNavigate();
@@ -51,7 +51,7 @@ const FindId = () => {
     }
     if (naviState === "teacher") {
       const result = await findTeacherId(reqData);
-      console.log(result);
+      // console.log(result);
       if (result === "err") {
         setErrMsg("없는 정보입니다 다시 확인해주세요");
         setShowErrMsg(true);
@@ -66,6 +66,10 @@ const FindId = () => {
   };
 
   useEffect(() => {
+    setOnHeader(false);
+  }, []);
+
+  useEffect(() => {
     setUserName("");
     setUserNum("");
     setErrMsg("");
@@ -78,6 +82,7 @@ const FindId = () => {
           className="login-logo"
           src={logo}
           onClick={() => {
+            setOnHeader(true);
             navi("/");
           }}
         />
@@ -138,6 +143,7 @@ const FindId = () => {
               <button
                 className="login-wrap-panel-loginbt"
                 onClick={() => {
+                  setOnHeader(true);
                   navi("/login");
                 }}
               >

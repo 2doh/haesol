@@ -1,12 +1,6 @@
-import {
-  getScore,
-  getScoreDetail,
-  getStudentGrade1,
-  getStudentGrade2,
-  getStudentInfo,
-} from "api/student/studentapi";
+import { getScoreDetail } from "api/student/studentapi";
 import Chart from "components/chart/Chart";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import { openModal, updateModalDate } from "slices/modalSlice";
