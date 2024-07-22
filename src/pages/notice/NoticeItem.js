@@ -48,7 +48,7 @@ const NoticeItem = () => {
       headerText: `준비물 - ${createdAt}`,
       bodyText: [content],
       buttonText: ["전송", "취소"],
-      modalRes: [22, { to: "010-6792-2898", message: content }],
+      modalRes: [22, { to: "010-3024-9887", message: content }],
     };
     /** (선택) 위와 아래는 세트 */
     dispatch(updateModalDate(data));
