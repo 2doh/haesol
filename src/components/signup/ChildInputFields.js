@@ -1,25 +1,31 @@
 import { getChildList } from "api/signup/parentapi";
+import { allowScroll, preventScroll } from "components/common/ScrollManagement";
+import { useEffect } from "react";
 
 const ChildInputFields = ({
   children,
   setUserChildrenName,
   userChildrenName,
   setOnModal,
-  setIsChild,
   setChildList,
 }) => {
   const handleonClick = async e => {
     e.preventDefault();
     const result = await getChildList();
-    // setUserChildrenName(result.data[0].name);
+    // console.log(result.data);
     setOnModal(true);
     if (userChildrenName) {
-      const findChild = result.data.find(
-        item => item.name === userChildrenName,
+      // const findChild = find(
+      //   item => item.name === userChildrenName,
+      // );
+      // console.log(findChild);
+      const tempArr = result.data.filter(
+        item => (item.name === userChildrenName) === true,
       );
-      const tempArr = [findChild];
-      const selectChild = Array.from(tempArr);
-      setChildList(selectChild);
+      console.log(tempArr);
+      // const selectChild = Array.from(tempArr);
+      // console.log(selectChild);
+      setChildList(tempArr);
     }
     if (!userChildrenName) {
       setChildList(result.data);

@@ -3,7 +3,7 @@
 @import "../valiables";
 
 .logo {
-  background-image: url("../../images/logo_w.png");
+  background-image: url("../../images/logo.png");
 
   width: 124px;
   height: 48px;
@@ -11,6 +11,10 @@
   background-size: cover;
 
   cursor: pointer;
+
+  &:hover {
+    @include shake-animation;
+  }
 }
 
 .header * {

@@ -53,3 +53,25 @@
   width: 20px;
   height: 20px;
 }
+
+// 흔들리는 애니메이션
+@mixin shake-animation {
+  animation: shake 1s;
+}
+@keyframes shake {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-4deg);
+  }
+  50% {
+    transform: rotate(4deg);
+  }
+  75% {
+    transform: rotate(-4deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}

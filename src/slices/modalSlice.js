@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { removeCookie } from "utils/cookie";
 
 const initialState = {
   // 모달 상태 관리
@@ -31,13 +32,37 @@ export const modalSlice = createSlice({
     closeModal: state => {
       state.isOpen = false;
     },
+    logoutModal: state => {
+      state.isOpen = false;
+
+      window.location.replace("/");
+
+      // (어드민) 공통 데이터 쿠키 삭제
+      removeCookie("accessToken");
+      removeCookie("userIdPk");
+      removeCookie("userRole");
+
+      // (학부모) 공통 데이터 쿠키 삭제
+      removeCookie("selectChildNum");
+      removeCookie("studentPk");
+
+      // (교직원) 공통 데이터 쿠키 삭제
+      removeCookie("userClass");
+      removeCookie("userName");
+      removeCookie("userEmail");
+
+      removeCookie("timerMin");
+      removeCookie("timerSec");
+      removeCookie("timerTime");
+    },
     updateModalDate: (state, actions) => {
       return { ...state, ...actions.payload };
     },
   },
 });
 
-export const { openModal, closeModal, updateModalDate } = modalSlice.actions;
+export const { openModal, closeModal, logoutModal, updateModalDate } =
+  modalSlice.actions;
 export const selectModal = state => state.modal;
 
 export default modalSlice.reducer;

@@ -2,13 +2,13 @@ import styled from "@emotion/styled";
 import { delectAwaitAccept, singupAccept } from "api/admin/adminapi";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { closeModal, updateModalDate } from "slices/modalSlice";
+import { closeModal, logoutModal, updateModalDate } from "slices/modalSlice";
 import "../../scss/modal/modal.css";
 import { allowScroll, preventScroll } from "./ScrollManagement";
 import ViewPw from "./ViewPw";
 import { patchTeacherInfo, putTeacherPwChange } from "api/teacher/teacherapi";
 import PhoneInputFields from "pages/student/PhoneInputFields";
-import { getCookie } from "utils/cookie";
+import { getCookie, removeCookie } from "utils/cookie";
 import { deleteNotice, modifyStudentInfo } from "api/student/studentapi";
 
 import NoticeList from "pages/notice/NoticeList";
@@ -165,6 +165,16 @@ const Modal = () => {
         };
         dispatch(updateModalDate(data));
         dispatch(closeModal());
+      }
+
+      // 헤더 : 로그인 시간 만료시 로그아웃 처리
+      if (modalState.modalRes[0] === 2) {
+        // console.log("true 를 리턴합니다.");
+        const data = {
+          modalRes: [false],
+        };
+        dispatch(updateModalDate(data));
+        dispatch(logoutModal());
       }
 
       // 교직원 : 정보 수정 페이지 처리
@@ -401,7 +411,7 @@ const Modal = () => {
           {/* BasicModal */}
           {modalState.modalType === "BasicModal" ? (
             <div className="modal-body basic-modal-body">
-              <div className="modal-body-text-div">
+              <div className="modal-body-text-div basic-modal-div">
                 <div className="modal-text">{modalState.bodyText[0]}</div>
               </div>
             </div>

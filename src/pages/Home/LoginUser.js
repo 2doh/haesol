@@ -60,6 +60,8 @@ const LoginUserStyle = styled.div`
         }
 
         .div-wrapper {
+          transition: all 0.3s ease-in-out;
+
           background-color: #fbfaf9;
 
           position: absolute;
@@ -106,7 +108,6 @@ const LoginUser = () => {
 
   const navigate = useNavigate();
   const [loginUserType, setLoginUserType] = useState(getCookie("userRole"));
-  const [createdAt, setCreatedAt] = useState();
 
   const [myChildList, setMyChildList] = useState([]);
   const [offUseEffect, setOffUseEffect] = useState(false);
@@ -311,11 +312,9 @@ const LoginUser = () => {
               <div className="main-notice">
                 <div className="main-schedule-title main-contents-title">
                   <div className="main-schedule-title-text ">알림장</div>
-                  {/* <div className="main-notice-day">{createdAt}</div> */}
-                  <div className="main-notice-day"></div>
                 </div>
                 <div className="main-title-dwon-contents">
-                  <ClassNotice setCreatedAt={setCreatedAt} />
+                  <ClassNotice />
                 </div>
               </div>
             </div>

@@ -24,6 +24,92 @@ const ScWrap = styled.div`
 
 const nowMonthScheduleStyle = styled.div``;
 
+const CalendarAccordionWrap = styled.div`
+  position: relative;
+  top: -40px;
+
+  .calendar-accordion {
+    .now-schedule-day {
+      max-height: 275px;
+      overflow-y: auto;
+    }
+  }
+
+  /* https://www.youtube.com/watch?v=5wo7glve9Wc */
+  /* 체크박스 숨김 */
+  input[id="view-box"] {
+    display: none;
+  }
+
+  /* label */
+  input[id="view-box"] + label {
+    padding: 10px 20px 20px 20px;
+    height: 70px;
+    color: #fff;
+    font-size: 19px;
+    font-weight: 900;
+    text-align: center;
+    background-color: #ffeae8;
+    cursor: pointer;
+
+    border: 3px solid #625151;
+    border-top: 0px;
+    border-radius: 0 0 19px 19px;
+
+    position: relative;
+
+    transition: all 0.5s ease-in-out;
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+  }
+
+  input[id="view-box"] + label span {
+    /* position: absolute; */
+    /* right: 0; */
+    /* padding-bottom: 19px; */
+  }
+
+  /* icon */
+  input[id="view-box"] + label + em {
+    /* position: absolute; */
+    /* right: 0; */
+    padding: 40px;
+  }
+
+  /* 일정 리스트 영역 */
+  .now-schedule-day {
+    border-top: 1px solid #feccd5;
+
+    max-height: 0;
+    transition: all 0.35s;
+    overflow: hidden;
+    font-size: 11px;
+
+    /* background-color: #fbfaf9; */
+    /* border: 3px solid #625151; */
+    /* border-radius: 0px 0px 19px 19px; */
+  }
+  /* 내부 요소 */
+
+  /* 클릭 했을 때 */
+  input[id="view-box"]:checked + label {
+    height: 300px;
+    transition: all 0.5s ease-in-out;
+    /* max-height: 300px; */
+    /* height: 100%; */
+  }
+
+  input[id="view-box"]:checked + label .now-schedule-day {
+    max-height: 300px;
+    /* height: 100%; */
+  }
+
+  input[id="view-box"] + label + div {
+  }
+`;
+
 const MainSchedule = () => {
   const curDate = new Date(); // 현재 날짜
   const today = moment(curDate).format("YYYY-MM-DD"); // 출력용
@@ -38,6 +124,8 @@ const MainSchedule = () => {
 
   const [eventList, setEventList] = useState([]);
   const [eventDayList, setEventDayList] = useState([]);
+
+  const [currentActive, setCurrentActive] = useState(false);
 
   // 공제일 리스트
   const [closedDayList, setClosedDayList] = useState([]);
@@ -54,14 +142,8 @@ const MainSchedule = () => {
     "2024-07-17",
   ]);
 
-  // 마커를 위한 배열
-  const [mark, setMark] = useState([]);
-
-  const [eventListTotalCount, setEventListTotalCount] = useState(0);
   // 일정 count 수
-  // console.log("말일 : ", last);
-
-  // console.log("일정 목록 배열 : ", curDate);
+  const [eventListTotalCount, setEventListTotalCount] = useState(0);
 
   /** 학사 일정 */
   useEffect(() => {
@@ -78,14 +160,13 @@ const MainSchedule = () => {
         const data = res.data.SchoolSchedule[1].row;
 
         data.map((item, index) => {
-          console.log("값 확인 : ", item);
+          // console.log("값 확인 : ", item);
 
           setEventDayList(prevEventDayList => [
             ...prevEventDayList,
             moment(item.AA_YMD).format("YYYY-MM-DD"),
           ]);
           setEventList(prevEventList => [...prevEventList, item.EVENT_NM]);
-          setMark(prevMark => [...prevMark, item.EVENT_NM]);
 
           switch (item.SBTR_DD_SC_NM) {
             case "휴업일":
@@ -109,8 +190,8 @@ const MainSchedule = () => {
   }, []);
 
   useEffect(() => {
-    console.log("일정 있는 날짜 배열 : ", eventDayList);
-    console.log("일정  배열 : ", eventList);
+    // console.log("일정 있는 날짜 배열 : ", eventDayList);
+    // console.log("일정  배열 : ", eventList);
   }, [eventDayList, eventList]);
 
   // 클릭한 날짜 (년-월-일)
@@ -163,6 +244,9 @@ const MainSchedule = () => {
         event={eventDayList}
         formatDay={(locale, date) => moment(date).format("D")}
         tileContent={({ date, view }) => {
+          // console.log("캘린더 날짜 : ", date.getDay());
+          // 0 일요일, 6 토요일
+
           // 마커 삽입
           // 날짜 타일에 컨텐츠 추가하기 (html 태그)
           // 추가할 html 태그를 변수 초기화
@@ -171,16 +255,26 @@ const MainSchedule = () => {
           if (
             closedDayList.find(x => x === moment(date).format("YYYY-MM-DD"))
           ) {
-            html.push(<div className="dot closed-day-mark"></div>);
+            html.push(
+              <div
+                key={`${date}-closed`}
+                className="dot closed-day-mark"
+              ></div>,
+            );
           }
           if (testDayList.find(x => x === moment(date).format("YYYY-MM-DD"))) {
-            html.push(<div className="dot test-day-mark"></div>);
+            html.push(
+              <div key={`${date}-test`} className="dot test-day-mark"></div>,
+            );
           }
           if (
             noLeftoversDay.find(x => x === moment(date).format("YYYY-MM-DD"))
           ) {
             html.push(
-              <div className="dot no-leftovers-day-mark">
+              <div
+                key={`${date}-no-leftovers`}
+                className="dot no-leftovers-day-mark"
+              >
                 {/* <FaUtensilSpoon /> */}
                 <ImSpoonKnife />
               </div>,
@@ -189,12 +283,9 @@ const MainSchedule = () => {
 
           // 다른 조건을 주어서 html.push 에 추가적인 html 태그를 적용할 수 있음.
           return (
-            <>
-              <div className="flex justify-center items-center absoluteDiv">
-                {html}
-                {console.log(html)}
-              </div>
-            </>
+            <div className="flex justify-center items-center absoluteDiv">
+              {html}
+            </div>
           );
         }}
         showNeighboringMonth={false}
@@ -213,30 +304,46 @@ const MainSchedule = () => {
         //   getActiveMonth(activeStartDate)
         // }
       />
-      <div className="calendar-now-month-list-wrap">
-        <input type="checkbox" id="calendar-day-text-list-check" />
-        <label htmlFor="calendar-day-text-list-check"></label>
-        <div className="now-schedule-day">
-          <em></em>
-          {/* 컨텐츠 제목 부분 */}
 
-          <div className="now-month-event-text-wrap">
-            <div className="now-month-event-text">
-              {eventList.map((item, index) => {
-                return (
-                  <div className="event-day" key={index}>
-                    <div className="event-day-style">
-                      {moment(eventDayList[index]).format("M월 DD일")}
-                    </div>
-                    <div className="event-day-text-style">{item}</div>
-                  </div>
-                );
-              })}
+      <CalendarAccordionWrap>
+        <div className="calendar-accordion">
+          <input type="checkbox" id="view-box"></input>
+          <label
+            htmlFor="view-box"
+            onClick={e => {
+              setCurrentActive(!currentActive);
+            }}
+          >
+            <span>
+              <a
+                className={currentActive ? "arrow-icon" : "arrow-icon open"}
+                onClick={e => {
+                  setCurrentActive(!currentActive);
+                }}
+              >
+                <span className="left-bar"></span>
+                <span className="right-bar"></span>
+              </a>
+            </span>
+            <div className="now-schedule-day">
+              <div className="now-month-event-text-wrap">
+                <div className="now-month-event-text">
+                  {eventList.map((item, index) => {
+                    return (
+                      <div className="event-day" key={index}>
+                        <div className="event-day-style">
+                          {moment(eventDayList[index]).format("M월 DD일")}
+                        </div>
+                        <div className="event-day-text-style">{item}</div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
-          </div>
+          </label>
         </div>
-        {/* <div className="now-schedule-day">{today}</div> */}
-      </div>
+      </CalendarAccordionWrap>
     </ScWrap>
   );
 };
