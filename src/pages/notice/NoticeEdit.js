@@ -63,7 +63,7 @@ const NoticeEdit = () => {
   const modifyCancel = selectModalType => {
     const data = {
       bodyText: ["알림장 작성을 취소하시겠습니까?"],
-      modalRes: [2],
+      modalRes: [43],
       buttonText: ["확인", "닫기"],
     };
 

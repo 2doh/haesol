@@ -70,7 +70,7 @@ const StudentInfoView = () => {
 
   useEffect(() => {
     // 학생 데이터 불러오기
-    console.log("studentInfoData 확인중 : ", studentInfo);
+    // console.log("studentInfoData 확인중 : ", studentInfo);
     studentInfoData();
   }, [studentPk]);
 

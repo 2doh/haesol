@@ -35,7 +35,7 @@ const NoticeList = () => {
       } else {
         setNoticeList([response.data.result.notice]);
       }
-      console.log(noticeList);
+      // console.log(noticeList);
     } catch (error) {
       console.log(error);
     }

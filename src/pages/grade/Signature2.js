@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { postSign } from "api/student/studentapi";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import SignatureCanvas from "react-signature-canvas";
 
 const ParentCheckStyle = styled.div`
@@ -50,19 +50,10 @@ const ButtonWrapStyle = styled.div`
   gap: 10px;
 `;
 
-const Signature = ({ studentPk, latestSemester, latestYear }) => {
+const Signature2 = ({ studentPk, latestSemester, latestYear }) => {
   const [showSignature, setShowSignature] = useState(false);
   const [isSigned, setIsSigned] = useState(false);
   const canvasRef = useRef(null);
-
-  useEffect(() => {
-    // Canvas context에 성능 최적화 적용
-    const canvas = canvasRef.current?.getCanvas();
-    if (canvas) {
-      const context = canvas.getContext("2d", { willReadFrequently: true });
-      canvasRef.current.setContext(context);
-    }
-  }, []);
 
   const handleSignSave = () => {
     const image = canvasRef.current.getTrimmedCanvas().toDataURL("image/png");
@@ -91,7 +82,7 @@ const Signature = ({ studentPk, latestSemester, latestYear }) => {
       studentPk: studentPk,
       year: latestYear,
       semester: latestSemester,
-      examSign: 1,
+      examSign: 2,
     });
 
     const reqBlob = new Blob([reqData], { type: "application/json" });
@@ -150,4 +141,4 @@ const Signature = ({ studentPk, latestSemester, latestYear }) => {
   );
 };
 
-export default Signature;
+export default Signature2;
