@@ -50,7 +50,6 @@ const AdminHome = () => {
   /** 리스트 출력 함수 */
   const getAwaitList = async ({ userListType }) => {
     const res = await getAwaitAcceptList(userListType);
-    console.log("axios 결과값 : ", res);
     setAcceptUserList(res);
   };
 
@@ -64,12 +63,12 @@ const AdminHome = () => {
     if (menuNum === 1) {
       parentsRef.current.className = "frame";
       teacherRef.current.className = "div-wrapper";
-      console.log("학부모입니다 : ", menuNum);
+      // console.log("학부모입니다 : ", menuNum);
     }
     if (menuNum === 2) {
       parentsRef.current.className = "div-wrapper";
       teacherRef.current.className = "frame";
-      console.log("교직원입니다 : ", menuNum);
+      // console.log("교직원입니다 : ", menuNum);
     }
     setUserListType(menuNum);
   };
@@ -87,8 +86,7 @@ const AdminHome = () => {
     /** (선택) 위와 아래는 세트 */
     dispatch(updateModalDate(data));
     /**(고정) 모달 활성화 */
-    const modalRes = dispatch(openModal("ArrValueModal"));
-    console.log("모달 결과 출력 내용 확인 : ", modalRes);
+    dispatch(openModal("ArrValueModal"));
   };
 
   return (
@@ -147,7 +145,6 @@ const AdminHome = () => {
             </div>
 
             {acceptUserList.map((item, index) => {
-              // console.log(item);
               return (
                 <div className="item" key={index}>
                   <div className="grid-inner">

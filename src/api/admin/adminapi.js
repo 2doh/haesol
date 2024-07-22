@@ -22,9 +22,9 @@ export const getAwaitAcceptList = async userListType => {
 /** 회원가입 신청 승인 */
 export const singupAccept = async (selectUserPk, userListType) => {
   const accessToken = getCookie("accessToken");
-  console.log(
-    `선택한 유저 PK : ${selectUserPk}, 선택한 유저 타입 : ${userListType}`,
-  );
+  // console.log(
+  //   `선택한 유저 PK : ${selectUserPk}, 선택한 유저 타입 : ${userListType}`,
+  // );
   try {
     const res = await axios.put(
       `/api/admin?p=${userListType}&pk=${selectUserPk}`,
@@ -35,7 +35,6 @@ export const singupAccept = async (selectUserPk, userListType) => {
         },
       },
     );
-    console.log("승인 처리 완료");
     return true;
     // return true;
   } catch (error) {
@@ -69,10 +68,9 @@ export const singupAccept = async (selectUserPk, userListType) => {
 /** 회원가입 신청 반려 */
 export const delectAwaitAccept = async (selectUserPk, userListType) => {
   const accessToken = getCookie("accessToken");
-  console.log(
-    // `선택한 유저 PK : ${selectUserPk}, 선택한 유저 타입 : ${userListType}`,
-    `선택한 유저 PK : ${selectUserPk}, 선택한 유저 타입 : ${userListType}`,
-  );
+  // console.log(
+  //   `선택한 유저 PK : ${selectUserPk}, 선택한 유저 타입 : ${userListType}`,
+  // );
   try {
     const response = await axios.delete(
       `/api/admin?p=${userListType}&pk=${selectUserPk}`,
@@ -82,7 +80,6 @@ export const delectAwaitAccept = async (selectUserPk, userListType) => {
         },
       },
     );
-    console.log("반려 처리 완료");
     return true;
   } catch (error) {
     console.log(error);

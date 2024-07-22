@@ -130,7 +130,6 @@ const Timer = () => {
         clearInterval(timerId.current);
         time.current = 3600; // 재설정하고 싶은 초 단위 시간으로 변경
         alertShown.current = false;
-        console.log("시간이 연장되었습니다.");
         timerTime();
       }
     }
