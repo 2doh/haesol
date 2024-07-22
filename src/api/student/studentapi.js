@@ -39,7 +39,7 @@ export const getStudentInfo = async studentPk => {
 // 학생 한 명 정보 수정
 export const modifyStudentInfo = async data => {
   const accessToken = getCookie("accessToken");
-  console.log("정보 : ", data);
+  // console.log("정보 : ", data);
 
   try {
     const response = await jwtAxios.put("/api/student", data, {
@@ -67,7 +67,7 @@ export const getStudentGrade1 = async studentPk => {
     );
     return response;
   } catch (error) {
-    console.log("에러입니다. 데모데이터입니다. ", error);
+    // console.log("에러입니다. 데모데이터입니다. ", error);
     return {
       statusCode: null,
       resultMsg: null,

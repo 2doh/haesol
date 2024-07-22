@@ -8,8 +8,8 @@ import SocialSignin from "./SocialSignin";
 import { getCookie } from "utils/cookie";
 
 const Signin = ({ children, naviState, setNaviState }) => {
-  const [userId, setUserId] = useState("parent1");
-  const [userPass, setUserPass] = useState("Test1234!@#$");
+  const [userId, setUserId] = useState("");
+  const [userPass, setUserPass] = useState("");
   const [errMsg, setErrMsg] = useState("");
 
   const login = async e => {

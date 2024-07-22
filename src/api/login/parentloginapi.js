@@ -11,7 +11,7 @@ export const postParentSignin = async data => {
     // ROLE_TEAHCER = 교직원;
     // ROLE_PARENTS = 학부모;
     let acTken = res.data.accessToken;
-    console.log("토큰 획득 : ", res);
+    // console.log("토큰 획득 : ", res);
 
     const payload = JSON.parse(base64.decode(acTken.split(".")[1])).signedUser;
     const signedUser = JSON.parse(payload);
@@ -23,7 +23,7 @@ export const postParentSignin = async data => {
     // console.log("유저 PK :", signedUser.userId);
     return res;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return "error";
   }
 };

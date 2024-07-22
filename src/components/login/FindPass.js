@@ -7,13 +7,13 @@ import logo from "../../images/logo.png";
 import cleanupBt from "../../images/tabler_circle-x-filled.svg";
 import FindInfoNavi from "./FindInfoNavi";
 
-const FindPass = () => {
+const FindPass = ({ setOnHeader }) => {
   // 교사 테스트 : xptmxmid1111 / 010-8323-6670 / TESTPASs!!1
   // 학부모 테스트 : dbwj312 / 010-1591-3573 / USERIDtest1!1
   const navi = useNavigate();
   const [naviState, setNaviState] = useState("parent");
-  const [userId, setUserName] = useState("dbwj312");
-  const [userNum, setUserNum] = useState("010-1591-3573");
+  const [userId, setUserName] = useState("");
+  const [userNum, setUserNum] = useState("");
   const [tempState, setTempState] = useState(false);
   const [showErrMsg, setShowErrMsg] = useState(false);
   const [errMsg, setErrMsg] = useState("");
@@ -22,7 +22,7 @@ const FindPass = () => {
   const [certification, setCertification] = useState(false);
   const [certCode, setCertCode] = useState("");
   const [randomCode, setRandomCode] = useState("");
-  const [inputType, setinputType] = useState("password");
+  const [inputType, setinputType] = useState("");
   const [showPass, setShowPass] = useState(false);
   // console.log(randomCode);
   const handleOnChange = e => {
@@ -64,13 +64,14 @@ const FindPass = () => {
       }
       if (naviState === "parent") {
         const result = await findParentPass(tempObj);
-        console.log(result);
+        // console.log(result.data);
         if (result === "err") {
           setErrMsg("존재하지 않는 정보입니다");
           setShowErrMsg(true);
         }
         if (result.status === 200) {
           setTempState(true);
+          setRandomCode(result.data.RANDOM_CODE);
           return;
         }
       }
@@ -82,7 +83,7 @@ const FindPass = () => {
         }
         if (result.status === 200) {
           setTempState(true);
-          setRandomCode(result.data.randomCode);
+          setRandomCode(result.data.RANDOM_CODE);
           return;
         }
       }
@@ -105,7 +106,8 @@ const FindPass = () => {
       setShowErrMsg(true);
     }
   };
-
+  // console.log(certCode);
+  // console.log(randomCode);
   // 비밀번호 변경
   const changePwd = async e => {
     e.preventDefault();
@@ -135,15 +137,17 @@ const FindPass = () => {
       if (naviState === "teacher") {
         const result = await putPwd(tempObj);
         if (result.status === 200) {
-          console.log("교사 비밀번호 변경");
+          // console.log("교사 비밀번호 변경");
+          setOnHeader(true);
           navi("/login");
         }
       }
       if (naviState === "parent") {
-        console.log(temp);
+        // console.log(temp);
         const result = await putPwdParent(temp);
         if (result.status === 200) {
-          console.log("학부모 비밀번호 변경");
+          // console.log("학부모 비밀번호 변경");
+          setOnHeader(true);
           navi("/login");
         }
       }
@@ -182,6 +186,10 @@ const FindPass = () => {
     setErrMsg("");
   }, [naviState]);
 
+  useEffect(() => {
+    setOnHeader(false);
+  }, []);
+
   return (
     <div className="login-inner">
       <div className="login-inner-logowrap">
@@ -189,6 +197,7 @@ const FindPass = () => {
           className="login-logo"
           src={logo}
           onClick={() => {
+            setOnHeader(true);
             navi("/");
           }}
         />
@@ -257,6 +266,7 @@ const FindPass = () => {
               <button
                 className="login-wrap-panel-loginbt"
                 onClick={e => handleCert(e)}
+                style={{ cursor: "pointer" }}
               >
                 인증하기
               </button>

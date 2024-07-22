@@ -23,9 +23,8 @@ export const findParentPass = async data => {
 };
 
 export const putPwdParent = async data => {
-  console.log(data);
+  // console.log(data);
   try {
-    console.log("aa");
     const resp = await axios.put(`/api/user/parents/password-update`, data);
     return resp;
   } catch (error) {

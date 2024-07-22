@@ -11,10 +11,11 @@ export const getReAccessToken = async () => {
         Authorization: `Bearer ${accessToken}`,
       },
     });
+
     setCookie("accessToken", response.data.accessToken);
     return true;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return false;
   }
 };

@@ -19,7 +19,7 @@ export const getMyChildInfo = async () => {
       return response.data;
     }
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 
@@ -27,7 +27,7 @@ export const getMyChildInfo = async () => {
 export const putParentsPwChange = async (newPw, userId) => {
   const accessToken = getCookie("accessToken");
 
-  console.log(`New PW : ${newPw}, 선생님 ID : ${userId}`);
+  // console.log(`New PW : ${newPw}, 선생님 ID : ${userId}`);
   try {
     const response = await axios.put(
       "/api/user/parents/password-update",
@@ -41,10 +41,10 @@ export const putParentsPwChange = async (newPw, userId) => {
         },
       },
     );
-    console.log("비밀번호 수정 완료");
+    // console.log("비밀번호 수정 완료");
     return response;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 
@@ -58,10 +58,10 @@ export const putChildInfo = async newInfo => {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    console.log("자녀 정보 수정 완료");
+    // console.log("자녀 정보 수정 완료");
     return true;
   } catch (error) {
-    console.log("정보 수정 실패:", error);
+    // console.log("정보 수정 실패:", error);
   }
 };
 
@@ -82,8 +82,7 @@ export const getChildRecentNoticeInfo = async () => {
     // console.log("알림장 불러오기 : ", response);
     return response.data.result;
   } catch (error) {
-    console.log("알림장 불러오기 : ", response);
-
+    // console.log("알림장 불러오기 : ", response);
     console.log(error);
   }
 };

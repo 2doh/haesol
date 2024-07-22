@@ -15,7 +15,7 @@ export const getAwaitAcceptList = async userListType => {
     // console.log("api 결과 : ", response.data);
     return response.data.userList;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 
@@ -35,10 +35,11 @@ export const singupAccept = async (selectUserPk, userListType) => {
         },
       },
     );
+
     return true;
     // return true;
   } catch (error) {
-    console.error("에러 발생:", error);
+    // console.error("에러 발생:", error);
   }
 };
 
@@ -69,6 +70,7 @@ export const singupAccept = async (selectUserPk, userListType) => {
 export const delectAwaitAccept = async (selectUserPk, userListType) => {
   const accessToken = getCookie("accessToken");
   // console.log(
+
   //   `선택한 유저 PK : ${selectUserPk}, 선택한 유저 타입 : ${userListType}`,
   // );
   try {
@@ -80,9 +82,10 @@ export const delectAwaitAccept = async (selectUserPk, userListType) => {
         },
       },
     );
+
     return true;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 

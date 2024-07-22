@@ -23,7 +23,7 @@ export const postTeacherSignin = async data => {
     // console.log("유저 PK :", signedUser.userId);
     return res;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return "error";
   }
 };

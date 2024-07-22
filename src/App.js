@@ -98,6 +98,7 @@ const Main = styled.div`
 function App() {
   const [notFoundPage, setNotFoundPage] = useState(false);
   const [loginUserType, setLoginUserType] = useState(getCookie("userRole"));
+  const [onHedaer, setOnHeader] = useState(true);
   const accessToken = getCookie("accessToken");
   const studentPk = getCookie("studentPk");
 
@@ -129,7 +130,7 @@ function App() {
         </ModalStyle>
       ) : null}
 
-      <Header />
+      {onHedaer ? <Header /> : null}
 
       <Main>
         <Routes>
@@ -147,10 +148,30 @@ function App() {
             </>
           ) : (
             <>
-              <Route path="/login" element={<Login />}></Route>
-              <Route path="/signup" element={<Signup />}></Route>
-              <Route path="/findid" element={<FindId />}></Route>
-              <Route path="/findpass" element={<FindPass />}></Route>
+              <Route
+                path="/login"
+                element={
+                  <Login onHedaer={onHedaer} setOnHeader={setOnHeader} />
+                }
+              ></Route>
+              <Route
+                path="/signup"
+                element={
+                  <Signup onHedaer={onHedaer} setOnHeader={setOnHeader} />
+                }
+              ></Route>
+              <Route
+                path="/findid"
+                element={
+                  <FindId onHedaer={onHedaer} setOnHeader={setOnHeader} />
+                }
+              ></Route>
+              <Route
+                path="/findpass"
+                element={
+                  <FindPass onHedaer={onHedaer} setOnHeader={setOnHeader} />
+                }
+              ></Route>
             </>
           )}
 
