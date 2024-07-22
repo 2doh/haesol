@@ -155,6 +155,17 @@ const Modal = () => {
         dispatch(updateModalDate(data));
         dispatch(closeModal());
       }
+      // 알림장 작성 취소용
+      if (modalState.modalRes[0] === 2) {
+        navi(-1);
+
+        console.log("네비게이트 적용하기");
+        const data = {
+          modalRes: [false],
+        };
+        dispatch(updateModalDate(data));
+        dispatch(closeModal());
+      }
 
       // 헤더 : 로그인 시간 만료시 로그아웃 처리
       if (modalState.modalRes[0] === 2) {
@@ -215,10 +226,10 @@ const Modal = () => {
         dispatch(closeModal());
       }
 
+      // 알림장 삭제
       if (modalState.modalRes[0] === 44) {
         // console.log(modalState);
         deleteNotice(modalState.modalRes[1]);
-        // console.log(modalState.modalRes);
         const data = {
           modalRes: [false],
         };
@@ -227,15 +238,14 @@ const Modal = () => {
       }
       // 학생 한 명 정보 수정 (선생님)
       if (modalState.modalRes[0] === 45) {
-        modifyStudentInfo(modalState.modalRes[1]);
-        // console.log(modalState.modalRes);
-        const data = {
-          modalRes: [false],
-        };
-        dispatch(updateModalDate(data));
-        dispatch(closeModal());
+        console.log("수정처리를 하겠습니다.", modalState.modalRes[1]);
+        const res = modifyStudentInfo(modalState.modalRes[1]);
+        if (res) {
+          dispatch(closeModal());
+        }
       }
     }
+
     if (modalState.modalType === "ArrValueModal") {
       if (modalState.headerText.includes("반려")) {
         delectAwaitAcceptFc();

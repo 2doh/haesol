@@ -7,6 +7,7 @@ import { useNavigate } from "react-router";
 import { openModal, updateModalDate } from "slices/modalSlice";
 import { getCookie } from "utils/cookie";
 import "../../scss/parents/childedit.css";
+import catPicture from "../../images/box-cat.jpg";
 
 const MyShildInfo = styled.div`
   .no-data {
@@ -255,6 +256,22 @@ const MyChildInfo = () => {
     height: 100%;
   `;
 
+  const StudentsImeStyle = styled.div`
+    width: 100%;
+    height: 100%;
+    .img-contain {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  `;
+
   return (
     <MyShildInfo>
       <div className="main-core child-edit-wrap">
@@ -421,7 +438,17 @@ const MyChildInfo = () => {
                 </div>
               </div>
             </div>
-            <div className="info-img">{/* <StudentImg /> */}</div>
+            <div className="info-img">
+              {studentPic !== null ? (
+                <StudentsImeStyle>
+                  <img src={studentPic} alt={studentPic} />
+                </StudentsImeStyle>
+              ) : (
+                <StudentsImeStyle>
+                  <img src={catPicture} alt="귀야운 고양이"></img>
+                </StudentsImeStyle>
+              )}
+            </div>
           </div>
           <div className="info-contain-mid">
             <div className="info-item-mid">

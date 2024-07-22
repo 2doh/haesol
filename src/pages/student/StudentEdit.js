@@ -2,11 +2,13 @@ import styled from "@emotion/styled";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router";
 import "../../scss/student/studentEdit.css";
-import StudentImg from "./StudentImg";
 import PhoneInputFields from "./PhoneInputFields";
 import { getStudentInfo, modifyStudentInfo } from "api/student/studentapi";
 import { useDispatch, useSelector } from "react-redux";
 import { openModal, updateModalDate } from "slices/modalSlice";
+
+import catPicture from "../../images/box-cat.jpg";
+
 const StudentEdit = () => {
   // 네비게이트
   const navigate = useNavigate();
@@ -18,6 +20,8 @@ const StudentEdit = () => {
   const handleChart = () => {
     navigate(``);
   };
+  const modalState = useSelector(state => state.modalSlice);
+  const dispatch = useDispatch();
 
   // 학생 한 명 데이터
   const [studentInfo, setStudentInfo] = useState({});
@@ -30,8 +34,10 @@ const StudentEdit = () => {
   const [connet, setConnet] = useState("");
   const [parentPhone, setParentPhone] = useState("");
 
-  // 이미지
-  const [studentPic, setStudentPic] = useState(null);
+  // 이미지 미리보기
+  const [studentPic, setStudentPic] = useState("");
+  // 서버에 POSt 할 파일을 관리할 변수
+  const [imgFile, setImgFile] = useState(null);
 
   const [studentZoneCode, setStudentZoneCode] = useState("우편번호");
   const [studentAddr, setStudentAddr] = useState("주소");
@@ -83,49 +89,45 @@ const StudentEdit = () => {
     studentInfoData();
   }, [studentPk]);
 
-  // 정보 수정하기
-  const modifyInfo = async () => {
-    const studentInfoData = {
-      studentPk: studentPk,
-      studentName: studentName,
-      studentPhone: studentPhone,
-      studentAddr: studentAddr,
-      studentZoneCode: studentZoneCode,
-      studentDetail: studentDetail,
-      studentEtc: studentEtc,
-      studentBirth: studentBirth,
-    };
-    const result = await modifyStudentInfo(studentInfoData);
-    // console.log(result);
-
-    try {
-      // await modifyStudentInfo();
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const dispatch = useDispatch();
   /** 모달 호출 */
-  const showModal = selectModalType => {
+  const saveModifyInfo = selectModalType => {
     /** (선택) 들어갈 내용 수정 */
     const data = {
       headerText: ["학생 정보 관리"],
       bodyText: ["내용을 수정하시겠습니까?"],
+      modalRes: [
+        45,
+        {
+          studentPk: studentPk,
+          studentName: studentName,
+          studentPhone: studentPhone,
+          studentEtc: studentEtc,
+          studentBirth: studentBirth,
+        },
+      ],
       buttonText: ["확인", "취소"],
-      modalRes: [45],
     };
-    /** (선택) 위와 아래는 세트 */
     dispatch(updateModalDate(data));
-
     dispatch(openModal(selectModalType));
-    // console.log("모달 결과 출력 내용 확인 : ", modalRes);
   };
 
-  const modalState = useSelector(state => state.modalSlice);
+  /** 취소 기능 */
+  const modifyCancel = selectModalType => {
+    const data = {
+      bodyText: ["정보 수정을 취소하시겠습니까?"],
+      modalRes: [2],
+      buttonText: ["확인", "닫기"],
+    };
 
+    dispatch(updateModalDate(data));
+    dispatch(openModal(selectModalType));
+  };
+
+  /** 모달 종료 후 갱신 */
   useEffect(() => {
-    modifyInfo();
+    if (modalState.modalRes[0] === false) {
+      // console.log("완료.");
+    }
   }, [modalState.modalRes[0]]);
 
   const StudentsInfoStyle = styled.div`
@@ -135,6 +137,22 @@ const StudentEdit = () => {
     margin-top: 120px;
     width: 100%;
     height: 100%;
+  `;
+
+  const StudentsImeStyle = styled.div`
+    width: 100%;
+    height: 100%;
+    .img-contain {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   `;
 
   return (
@@ -160,25 +178,31 @@ const StudentEdit = () => {
             >
               <div className="info-subtitle">성적 입력</div>
             </div>
-            <div
+            {/* <div
               className="div-wrapper"
               onClick={() => {
                 handleChart();
               }}
             >
               <div className="info-subtitle">차트</div>
-            </div>
+            </div> */}
           </div>
 
           <div className="info-button">
             <button
               onClick={() => {
-                showModal("BasicModal");
+                saveModifyInfo("BasicModal");
               }}
             >
               저장
             </button>
-            <button>취소</button>
+            <button
+              onClick={() => {
+                modifyCancel("BasicModal");
+              }}
+            >
+              취소
+            </button>
           </div>
         </div>
         {/* <!-- 입력 부분 --> */}
@@ -202,7 +226,7 @@ const StudentEdit = () => {
                   name="chk_info"
                   value="남"
                   checked={studentGender === "남"}
-                  onChange={e => setStudentGender(e.target.value)}
+                  // onChange={e => setStudentGender(e.target.value)}
                 />
                 남자
                 <input
@@ -211,7 +235,7 @@ const StudentEdit = () => {
                   name="chk_info"
                   value="여"
                   checked={studentGender === "여"}
-                  onChange={e => setStudentGender(e.target.value)}
+                  // onChange={e => setStudentGender(e.target.value)}
                 />
                 여자
               </div>
@@ -278,18 +302,21 @@ const StudentEdit = () => {
                 placeholder="전화번호를 입력하세요"
                 phoneNum={parentPhone}
                 readOnly
-                style={{ background: "#efece8" }}
                 // onChange={e => setParentPhone(e.target.value)}
               />
             </div>
           </div>
           <div className="info-img">
             {/* 이미지 수정 필요 */}
-            <StudentImg
-              // studentPic={studentPic}
-              // setStudentPic={setStudentPic}
-              studentPk={studentPk}
-            />
+            {studentPic !== null ? (
+              <StudentsImeStyle>
+                <img src={studentPic} alt={studentPic} />
+              </StudentsImeStyle>
+            ) : (
+              <StudentsImeStyle>
+                <img src={catPicture} alt="귀야운 고양이"></img>
+              </StudentsImeStyle>
+            )}
           </div>
         </div>
         <div className="info-contain-mid">

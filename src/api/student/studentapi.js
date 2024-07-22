@@ -39,7 +39,7 @@ export const getStudentInfo = async studentPk => {
 // 학생 한 명 정보 수정
 export const modifyStudentInfo = async data => {
   const accessToken = getCookie("accessToken");
-  // console.log("정보 : ", data);
+  console.log("정보 : ", data);
 
   try {
     const response = await jwtAxios.put("/api/student", data, {

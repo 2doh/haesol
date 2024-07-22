@@ -4,10 +4,14 @@ import { createNotice, getStudentInfo } from "api/student/studentapi";
 import { postTeacherSignin } from "api/login/teacherloginapi";
 import { getCookie } from "utils/cookie";
 import { useNavigate } from "react-router";
+import { openModal, updateModalDate } from "slices/modalSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const NoticeEdit = () => {
   const userClass = getCookie("userClass");
   const navigate = useNavigate();
+  const modalState = useSelector(state => state.modalSlice);
+  const dispatch = useDispatch();
 
   // 상태 설정
   const [state, setState] = useState(2);
@@ -25,10 +29,6 @@ const NoticeEdit = () => {
     }
   };
 
-  // // Date 변경 핸들러
-  // const handleDateChange = e => {
-  //   setDate(e.target.value);
-  // };
   // Title 변경 핸들러
   const handleTitleChange = e => {
     setTitle(e.target.value);
@@ -58,6 +58,25 @@ const NoticeEdit = () => {
       navigate(`/notice/item/${userClass}`);
     }
   };
+
+  /** 취소 기능 */
+  const modifyCancel = selectModalType => {
+    const data = {
+      bodyText: ["알림장 작성을 취소하시겠습니까?"],
+      modalRes: [2],
+      buttonText: ["확인", "닫기"],
+    };
+
+    dispatch(updateModalDate(data));
+    dispatch(openModal(selectModalType));
+  };
+
+  /** 모달 종료 후 갱신 */
+  useEffect(() => {
+    if (modalState.modalRes[0] === false) {
+      // console.log("완료.");
+    }
+  }, [modalState.modalRes[0]]);
 
   return (
     <div className="main-core">
@@ -94,7 +113,13 @@ const NoticeEdit = () => {
             >
               저장
             </button>
-            <button>취소</button>
+            <button
+              onClick={() => {
+                modifyCancel("BasicModal");
+              }}
+            >
+              취소
+            </button>
           </div>
         </div>
         <div className="write-notice-section">

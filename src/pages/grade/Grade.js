@@ -248,7 +248,6 @@ const Grade = () => {
         return subject;
       });
       setExamListOne(updatedData);
-      console.log("중간고사", updatedData);
     } catch (error) {
       console.log(error);
     }
@@ -296,11 +295,16 @@ const Grade = () => {
         return subject;
       });
       setExamListTwo(updatedData);
-      console.log("기말고사", updatedData);
     } catch (error) {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    studentGrade1();
+    studentGrade2();
+  }, []);
+
   // 내용 변경 처리 중간
   const handleChangeOne = item => {
     // 전달된 객체의 name 속성을 비교하고 같으면 업데이트를 해줌.
@@ -363,17 +367,11 @@ const Grade = () => {
     };
     try {
       await postStudentGradeScore(scoreData);
-      await studentGrade1();
-      // await studentGrade2();
+      alert("성공적으로 저장되었습니다.");
     } catch (error) {
       console.log(error);
     }
   };
-
-  useEffect(() => {
-    studentGrade1();
-    studentGrade2();
-  }, [studentPk]);
 
   const handleSaveTwo = async (e, _item) => {
     e.preventDefault();
@@ -388,15 +386,13 @@ const Grade = () => {
     console.log(scoreData);
     try {
       await postStudentGradeScore(scoreData);
-      // await studentGrade1();
-      await studentGrade2();
+      alert("성공적으로 저장되었습니다.");
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    // studentGrade1();
     studentGrade2();
   }, [studentPk]);
 
