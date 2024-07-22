@@ -179,6 +179,13 @@ const TeacherEdit = () => {
   useEffect(() => {
     if (modalState.modalRes[0] === false) {
       nowUserInfo();
+
+      // if (emailDomain.current.value !== "type") {
+      //   emailDomainText.current.classList = "box is-none";
+      // } else {
+      //   emailDomainText.current.value = "";
+      //   emailDomainText.current.classList = "box";
+      // }
     }
   }, [modalState.modalRes[0]]);
 
@@ -235,7 +242,8 @@ const TeacherEdit = () => {
 
   /** 비밀번호 수정 모달 호출 */
   const showModal = selectModalType => {
-    const data = { bodyText: [userId] };
+    const data = { bodyText: [userId], buttonText: ["수정", "취소"] };
+
     dispatch(updateModalDate(data));
 
     dispatch(openModal(selectModalType));
