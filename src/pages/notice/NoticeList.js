@@ -48,7 +48,6 @@ const NoticeList = () => {
   /** 모달 호출 */
   const showModal = (selectModalType, createdAt, title, content, notice_id) => {
     /** (선택) 들어갈 내용 수정 */
-    console.log("내용은 이것이다 : ", content);
 
     const data = {
       headerText: `준비물 - ${createdAt}`,
@@ -145,7 +144,6 @@ const NoticeList = () => {
                   item.content,
                   item.notice_id,
                 );
-                console.log("내용 : ", item.content);
               }}
             >
               <div className="grid-inner">
