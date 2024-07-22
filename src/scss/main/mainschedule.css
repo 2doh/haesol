@@ -219,7 +219,7 @@
   width: 2.8em;
   display: block;
   padding: 0.5em;
-  margin: 1em auto;
+  margin: 0.5em 2em 1.3em 0.8em;
   position: relative;
   cursor: pointer;
   border-radius: 4px;
@@ -228,7 +228,7 @@
 .left-bar {
   position: absolute;
   background-color: transparent;
-  top: 0;
+  top: -3px;
   left: 0;
   width: 40px;
   height: 10px;
@@ -240,7 +240,7 @@
 .left-bar:after {
   content: "";
   background-color: rgb(180, 62, 62);
-  width: 40px;
+  width: 30px;
   height: 10px;
   display: block;
   float: right;
@@ -252,8 +252,8 @@
 .right-bar {
   position: absolute;
   background-color: transparent;
-  top: 0px;
-  left: 26px;
+  top: 3px;
+  left: 18px;
   width: 40px;
   height: 10px;
   display: block;
@@ -264,7 +264,7 @@
 .right-bar:after {
   content: "";
   background-color: rgb(180, 62, 62);
-  width: 40px;
+  width: 30px;
   height: 10px;
   display: block;
   float: right;
