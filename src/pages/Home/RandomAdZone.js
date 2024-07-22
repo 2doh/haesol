@@ -10,12 +10,28 @@ const RandomAdZoneStyle = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
+
+  .random-pic {
+    cursor: pointer;
+  }
 `;
 
 const RandomAdZone = () => {
   const initArr = [pic1, pic2, pic3];
 
   const [randomImg, setRandomImg] = useState(initArr[0]);
+
+  const movePage = () => {
+    if (randomImg === pic1) {
+      window.location.replace("https://www.129.go.kr/counsel/counsel01.do");
+    }
+    if (randomImg === pic2) {
+      window.location.replace("https://www.parents.go.kr/index.do");
+    }
+    if (randomImg === pic3) {
+      window.location.replace("https://www.privacy.go.kr/front/main/main.do#");
+    }
+  };
 
   useEffect(() => {
     const showImg = () => {
@@ -38,6 +54,9 @@ const RandomAdZone = () => {
             <div
               className="random-pic"
               style={{ backgroundImage: `url(${randomImg})` }}
+              onClick={() => {
+                movePage();
+              }}
             ></div>
           </div>
         </div>

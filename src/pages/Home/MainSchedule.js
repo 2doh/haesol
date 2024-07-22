@@ -28,6 +28,10 @@ const CalendarAccordionWrap = styled.div`
   position: relative;
   top: -40px;
 
+  .arrow-text {
+    margin: 10px 0;
+  }
+
   .calendar-accordion {
     .now-schedule-day {
       max-height: 275px;
@@ -315,7 +319,7 @@ const MainSchedule = () => {
             }}
           >
             <span>
-              <a
+              {/* <a
                 className={currentActive ? "arrow-icon" : "arrow-icon open"}
                 onClick={e => {
                   setCurrentActive(!currentActive);
@@ -323,7 +327,13 @@ const MainSchedule = () => {
               >
                 <span className="left-bar"></span>
                 <span className="right-bar"></span>
-              </a>
+              </a> */}
+
+              {currentActive ? (
+                <span className="arrow-text">상세 일정 목록 접기</span>
+              ) : (
+                <span className="arrow-text">상세 일정 목록 펼치기</span>
+              )}
             </span>
             <div className="now-schedule-day">
               <div className="now-month-event-text-wrap">
