@@ -11,7 +11,6 @@ export const getReAccessToken = async () => {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    console.log("액세스 토큰 재발생 결과 : ", response.data.accessToken);
     setCookie("accessToken", response.data.accessToken);
     return true;
   } catch (error) {

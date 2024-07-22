@@ -306,7 +306,6 @@ const Modal = () => {
         modalState.bodyText[2],
         modalState.bodyText[3],
       );
-      console.log("승인 후 들어오는 값은?", res);
       if (res) {
         const data = {
           modalRes: [!modalState.modalRes],
@@ -325,7 +324,6 @@ const Modal = () => {
         modalState.bodyText[2],
         modalState.bodyText[3],
       );
-      console.log("승인 후 들어오는 값은?", res);
       if (res) {
         const data = {
           modalRes: [!modalState.modalRes],
