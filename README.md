@@ -46,6 +46,9 @@
 
 <h4>👩‍💻 멤버구성</h4>
 
+![image](https://github.com/user-attachments/assets/572fc4dd-9fda-4a3d-b455-6497ec6a4f10)
+
+
 - 이도현 : 깃허브 관리 / 로그인, 회원가입 / 차트
 - 김현주 : 문서 관리(노션, 회의록 etc.) / 메인 페이지 / 관리자 승인 / 내 정보 수정
 - 김수민 : 피그마 관리 / 성적 등록 등 교사 측 action 전반
