@@ -45,11 +45,11 @@
 </div>
 
 <h4>📌 사전 기획</h4>
-
+</br>
 <p>린캔버스</p>
 https://github.com/user-attachments/assets/572fc4dd-9fda-4a3d-b455-6497ec6a4f10
 
-<p>📌 노션</p>
+<p>노션</p>
 https://www.notion.so/HAESOL-613a41f133324a2fa3f7a342110f0cfe
 
 <h4>👩‍💻 멤버구성</h4>
