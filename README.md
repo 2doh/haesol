@@ -44,11 +44,14 @@
         <img src="https://img.shields.io/badge/Redux-764ABC?style=for-the-badge&logo=Redux&logoColor=white">
 </div>
 
-<h4>👩‍💻 멤버구성</h4>
-
+<h4>📌 사전 기획</h4>
+<p>린캔버스</p>
 ![image](https://github.com/user-attachments/assets/572fc4dd-9fda-4a3d-b455-6497ec6a4f10)
 
+<p>📌 노션</p>
+https://www.notion.so/HAESOL-613a41f133324a2fa3f7a342110f0cfe
 
+<h4>👩‍💻 멤버구성</h4>
 - 이도현 : 깃허브 관리 / 로그인, 회원가입 / 차트
 - 김현주 : 문서 관리(노션, 회의록 etc.) / 메인 페이지 / 관리자 승인 / 내 정보 수정
 - 김수민 : 피그마 관리 / 성적 등록 등 교사 측 action 전반
