@@ -82,6 +82,13 @@ const StudentsInfoStyle = styled.div`
     pointer-events: none;
     background-color: #efece8 !important;
   }
+  .gender-style {
+    margin-left: 0px !important;
+    input {
+      width: 25px !important;
+    }
+    /* width: auto; */
+  }
 `;
 
 const TeacherEdit = () => {
@@ -179,6 +186,13 @@ const TeacherEdit = () => {
   useEffect(() => {
     if (modalState.modalRes[0] === false) {
       nowUserInfo();
+
+      // if (emailDomain.current.value !== "type") {
+      //   emailDomainText.current.classList = "box is-none";
+      // } else {
+      //   emailDomainText.current.value = "";
+      //   emailDomainText.current.classList = "box";
+      // }
     }
   }, [modalState.modalRes[0]]);
 
@@ -235,7 +249,8 @@ const TeacherEdit = () => {
 
   /** 비밀번호 수정 모달 호출 */
   const showModal = selectModalType => {
-    const data = { bodyText: [userId] };
+    const data = { bodyText: [userId], buttonText: ["수정", "취소"] };
+
     dispatch(updateModalDate(data));
 
     dispatch(openModal(selectModalType));
@@ -360,23 +375,13 @@ const TeacherEdit = () => {
                   }}
                 />
                 {/* 고정값 */}
-                <div className="form-check">
+                <div className="form-check gender-style">
                   <input
-                    checked={gender === "남"}
-                    className="form-check-gender"
-                    type="radio"
-                    name="chk_info"
-                    value="남"
+                    className="no-edit-class"
+                    type="text"
+                    name="text"
+                    value={gender}
                   />
-                  남자
-                  <input
-                    checked={gender === "여"}
-                    className="form-check-gender"
-                    type="radio"
-                    name="chk_info"
-                    value="여"
-                  />
-                  여자
                 </div>
               </div>
               <div className="info-title">

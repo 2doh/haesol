@@ -102,6 +102,12 @@ const ModalStyle = styled.div`
       }
     }
   }
+
+  & .pw-error-msg {
+    color: red;
+    width: 100%;
+    text-align: center !important;
+  }
 `;
 
 const Modal = () => {
@@ -262,13 +268,19 @@ const Modal = () => {
       }
     }
     if (modalState.modalType === "PasswordChangeModal") {
-      // console.log(`신규 비밀번호 : ${newPw}, 재입력 : ${newPwRe}`);
+      console.log(`신규 비밀번호 : ${newPw}, 재입력 : ${newPwRe}`);
+
+      const pwOk = pwCheck();
+
+      if (pwOk === true) {
+        console.log("일치");
+      }
       if (
         newPwWarningCheck === true ||
         newPwReWarningCheck === true ||
-        pwCheck === true
+        pwOk === true
       ) {
-        // console.log("비밀번호 수정 처리 진입");
+        console.log("비밀번호 수정 처리 진입");
         // console.log(getCookie("userIdPk"));
         if (getCookie("userRole") === "ROLE_TEAHCER") {
           putTeacherPwChange(newPw, modalState.bodyText);
@@ -276,8 +288,8 @@ const Modal = () => {
         if (getCookie("userRole") === "ROLE_PARENTS") {
           putParentsPwChange(newPw, modalState.bodyText);
         }
+        dispatch(closeModal());
       }
-      dispatch(closeModal());
     }
 
     // 전화번호 인증 코드를 받는 경우

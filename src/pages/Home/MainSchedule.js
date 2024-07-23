@@ -28,10 +28,38 @@ const CalendarAccordionWrap = styled.div`
   position: relative;
   top: -40px;
 
+  .arrow-text {
+    margin: 10px 0;
+  }
+
   .calendar-accordion {
     .now-schedule-day {
       max-height: 275px;
       overflow-y: auto;
+    }
+  }
+
+  .arrow-span {
+    width: 100%;
+    display: flex;
+
+    .calendar-menu-text {
+      height: 100%;
+      width: 100%;
+      display: flex;
+
+      font-size: 18px;
+      color: rgb(180, 62, 62);
+      font-weight: 900;
+      /* color: darken(rgb(180, 62, 62), 20%); */
+
+      /* align-items: center; */
+      justify-content: center;
+      position: relative;
+      /* top: 10px; */
+      padding-top: 5px;
+      padding-left: 60px;
+      height: 100%;
     }
   }
 
@@ -43,7 +71,7 @@ const CalendarAccordionWrap = styled.div`
 
   /* label */
   input[id="view-box"] + label {
-    padding: 10px 20px 20px 20px;
+    padding: 20px 20px 20px 20px;
     height: 70px;
     color: #fff;
     font-size: 19px;
@@ -81,6 +109,7 @@ const CalendarAccordionWrap = styled.div`
   /* 일정 리스트 영역 */
   .now-schedule-day {
     border-top: 1px solid #feccd5;
+    padding-top: 15px;
 
     max-height: 0;
     transition: all 0.35s;
@@ -314,9 +343,15 @@ const MainSchedule = () => {
               setCurrentActive(!currentActive);
             }}
           >
-            <span>
+            <span className="arrow-span">
+              {currentActive ? (
+                <a className="calendar-menu-text">상세 일정 목록 접기</a>
+              ) : (
+                <a className="calendar-menu-text">상세 일정 목록 열기</a>
+              )}
+
               <a
-                className={currentActive ? "arrow-icon" : "arrow-icon open"}
+                className={currentActive ? "arrow-icon open" : "arrow-icon"}
                 onClick={e => {
                   setCurrentActive(!currentActive);
                 }}
@@ -324,6 +359,11 @@ const MainSchedule = () => {
                 <span className="left-bar"></span>
                 <span className="right-bar"></span>
               </a>
+              {/* {currentActive ? (
+                <span className="arrow-text">상세 일정 목록 접기</span>
+              ) : (
+                <span className="arrow-text">상세 일정</span>
+              )} */}
             </span>
             <div className="now-schedule-day">
               <div className="now-month-event-text-wrap">
