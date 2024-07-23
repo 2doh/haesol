@@ -45,6 +45,7 @@
 </div>
 
 <h4>📌 사전 기획</h4>
+
 <p>린캔버스</p>
 ![image](https://github.com/user-attachments/assets/572fc4dd-9fda-4a3d-b455-6497ec6a4f10)
 
