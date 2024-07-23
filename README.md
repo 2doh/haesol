@@ -47,7 +47,7 @@
 <h4>📌 사전 기획</h4>
 </br>
 <p>린캔버스</p>
-![image](https://github.com/user-attachments/assets/c3c9f9c7-2d5d-4cba-b858-ec22ea36f1ed)
+<image src="https://github.com/user-attachments/assets/c3c9f9c7-2d5d-4cba-b858-ec22ea36f1ed"/>
 
 
 <p>노션</p>
