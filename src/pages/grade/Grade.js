@@ -238,7 +238,7 @@ const Grade = () => {
             gradeRank: update.gradeRank,
             subjectClassRank: update.subjectClassRank,
             subjectGradeRank: update.subjectGradeRank,
-            exam: update.exam,
+            exam: 1,
             semester: response.data.data.latestSemester,
             year: response.data.data.latestYear,
             grade: response.data.data.latestGrade,
@@ -329,15 +329,11 @@ const Grade = () => {
   };
 
   // 내용 변경 처리 기말
-  const handleChangeTwo = (e, item) => {
-    e.preventDefault();
+  const handleChangeTwo = item => {
     // 전달된 객체의 name 속성을 비교하고 같으면 업데이트를 해줌.
     const updatedData = examListTwo.map(subject => {
       const update = item.name === subject.name;
       if (update) {
-        // console.log("update.exam", update.exam);
-        // console.log("updatedData", updatedData);
-
         return {
           ...subject,
           mark: parseInt(item.mark),
@@ -362,7 +358,7 @@ const Grade = () => {
       year: latestYear,
       semester: latestSemester,
       name: _item.name,
-      exam: _item.exam,
+      exam: 1,
       mark: _item.mark,
     };
     try {
@@ -380,7 +376,7 @@ const Grade = () => {
       year: latestYear,
       semester: latestSemester,
       name: _item.name,
-      exam: _item.exam,
+      exam: 2,
       mark: _item.mark,
     };
     console.log(scoreData);
@@ -393,7 +389,7 @@ const Grade = () => {
   };
 
   useEffect(() => {
-    studentGrade2();
+    // studentGrade2();
   }, [studentPk]);
 
   // 학기, 학년 선택 성적 출력 중간고사
@@ -575,9 +571,6 @@ const Grade = () => {
             <div className="frame">
               <div className="text-wrapper">성적 입력</div>
             </div>
-            <div className="div-wrapper">
-              <div className="info-subtitle">차트</div>
-            </div>
           </div>
         </div>
         <div className="info-contain-top">
@@ -588,7 +581,7 @@ const Grade = () => {
                 <select
                   name="grade"
                   onChange={e => {
-                    console.log("Button clicked"); // 이벤트가 발생했는지 확인
+                    // console.log("Button clicked"); // 이벤트가 발생했는지 확인
                     handleGradeChange(e);
                   }}
                   value={latestGrade}
@@ -657,7 +650,7 @@ const Grade = () => {
                   <div className="grade-info">
                     <p>반/전체 평균</p>
                     <input
-                      value={`${item.classAvg || "-"} / ${item.gradeAvg || "-"}`}
+                      value={`${Math.trunc(item.classAvg) || "-"} / ${Math.trunc(item.gradeAvg) || "-"}`}
                     />
                     점
                   </div>
@@ -726,7 +719,7 @@ const Grade = () => {
                   <div className="grade-info">
                     <p>반/전체 평균</p>
                     <input
-                      value={`${item.classAvg || "-"} / ${item.gradeAvg || "-"}`}
+                      value={`${Math.trunc(item.classAvg) || "-"} / ${Math.trunc(item.gradeAvg) || "-"}`}
                     />
                     점
                   </div>

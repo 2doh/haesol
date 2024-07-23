@@ -243,7 +243,7 @@ const GradeView = () => {
             gradeRank: update.gradeRank,
             subjectClassRank: update.subjectClassRank,
             subjectGradeRank: update.subjectGradeRank,
-            exam: update.exam,
+            exam: 1,
             semester: response.data.data.latestSemester,
             year: response.data.data.latestYear,
             grade: response.data.data.latestGrade,
@@ -291,7 +291,7 @@ const GradeView = () => {
             gradeRank: update.gradeRank,
             subjectClassRank: update.subjectClassRank,
             subjectGradeRank: update.subjectGradeRank,
-            exam: update.exam,
+            exam: 2,
             semester: response.data.data.latestSemester,
             year: response.data.data.latestYear,
             grade: response.data.data.latestGrade,
@@ -369,7 +369,7 @@ const GradeView = () => {
             gradeRank: update.gradeRank,
             subjectClassRank: update.subjectClassRank,
             subjectGradeRank: update.subjectGradeRank,
-            exam: update.exam,
+            exam: 1,
             semester: semester,
             year: year,
             grade: grade,
@@ -420,7 +420,7 @@ const GradeView = () => {
             gradeRank: update.gradeRank,
             subjectClassRank: update.subjectClassRank,
             subjectGradeRank: update.subjectGradeRank,
-            exam: update.exam,
+            exam: 2,
             semester: semester,
             year: year,
             grade: grade,
@@ -569,7 +569,7 @@ const GradeView = () => {
                   <div className="grade-info">
                     <p>반/전체 평균</p>
                     <input
-                      value={`${item.classAvg || "-"} / ${item.gradeAvg || "-"}`}
+                      value={`${Math.trunc(item.classAvg) || "-"} / ${Math.trunc(item.gradeAvg) || "-"}`}
                     />
                     점
                   </div>
@@ -628,7 +628,7 @@ const GradeView = () => {
                   <div className="grade-info">
                     <p>반/전체 평균</p>
                     <input
-                      value={`${item.classAvg || "-"} / ${item.gradeAvg || "-"}`}
+                      value={`${Math.trunc(item.classAvg) || "-"} / ${Math.trunc(item.gradeAvg) || "-"}`}
                     />
                     점
                   </div>
