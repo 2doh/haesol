@@ -9,11 +9,7 @@ import ViewPw from "./ViewPw";
 import { patchTeacherInfo, putTeacherPwChange } from "api/teacher/teacherapi";
 import PhoneInputFields from "pages/student/PhoneInputFields";
 import { getCookie, removeCookie } from "utils/cookie";
-import {
-  deleteNotice,
-  modifyStudentInfo,
-  sendSmsPost,
-} from "api/student/studentapi";
+import { deleteNotice, modifyStudentInfo } from "api/student/studentapi";
 
 import NoticeList from "pages/notice/NoticeList";
 import { useNavigate } from "react-router";
@@ -216,7 +212,7 @@ const Modal = () => {
 
       // 문자 메세지 발송
       if (modalState.modalRes[0] === 22) {
-        // console.log("확인 : ", modalState.modalRes[1]);
+        console.log("확인 : ", modalState.modalRes[1]);
         sendSmsPost(modalState.modalRes[1]);
         const data = {
           modalRes: [false],
