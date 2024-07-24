@@ -5,10 +5,8 @@ import Home from "pages/Home/Home";
 import Login from "pages/user/Login";
 // import NotFound from "pages/NotFound";
 import AdminHome from "pages/admin/AdminHome";
-import Notice from "pages/notice/Notice";
 import NoticeEdit from "pages/notice/NoticeEdit";
 import NoticeModify from "pages/notice/NoticeModify";
-import StudentInfoView from "pages/student/StudentInfoView";
 import Students from "pages/student/StudentsList";
 import Signup from "pages/user/Signup";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
@@ -18,11 +16,10 @@ import "./css/reset.css";
 
 import { AuthenticatedRedirect } from "components/common/AuthenticatedRedirect";
 import Modal from "components/common/Modal";
+import ParentsPrivateRoute from "components/common/ParentsPrivateRoute";
 import PrivateRoute from "components/common/PrivateRoute";
 import SecureRoute from "components/common/SecureRoute";
 import TeacherProtectedRoute from "components/common/TeacherProtectedRoute";
-import FindId from "pages/user/login/FindId";
-import FindPass from "pages/user/login/FindPass";
 import NotFound from "components/notfound/NotFound";
 import Grade from "pages/grade/Grade";
 import GradeChart from "pages/grade/GradeChart";
@@ -32,11 +29,12 @@ import NoticeList from "pages/notice/NoticeList";
 import MyChildInfo from "pages/parents/MyChildInfo";
 import StudentEdit from "pages/student/StudentEdit";
 import TeacherEdit from "pages/teacher/TeacherEdit";
+import FindId from "pages/user/login/FindId";
+import FindPass from "pages/user/login/FindPass";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { openModal } from "slices/modalSlice";
+import { useSelector } from "react-redux";
 import { getCookie } from "utils/cookie";
-import ParentsPrivateRoute from "components/common/ParentsPrivateRoute";
+import Test from "Test";
 
 // import jwt from "jsonwebtoken";
 
@@ -134,6 +132,8 @@ function App() {
 
       <Main>
         <Routes>
+          <Route path="/test" element={<Test />}></Route>
+
           <Route index element={<Home />}></Route>
           {/* 로그인 & 회원가입 : 이후 진입시 Home으로 강제 이동 */}
           {accessToken ? (
