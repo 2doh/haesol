@@ -1,5 +1,5 @@
-import SignupField from "components/signup/SignupField";
-import UserSelect from "components/signup/UserSelect";
+import SignupField from "pages/user/signup/SignupField";
+import UserSelect from "pages/user/signup/UserSelect";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import logo from "../../images/logo.png";

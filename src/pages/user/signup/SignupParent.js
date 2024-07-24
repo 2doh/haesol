@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { openModal, updateModalDate } from "slices/modalSlice";
-import "../../scss/signup/signup.scss";
+import "../../../scss/signup/signup.scss";
 import ChildInputFields from "./ChildInputFields";
 import DropFields from "./DropFields";
 import EmailInputField from "./EmailInputField";

@@ -3,8 +3,8 @@ import { findTeacherPass, putPwd } from "api/findinfo/findinfoteacherapi";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { PhoneNumber } from "utils/helpers";
-import logo from "../../images/logo.png";
-import cleanupBt from "../../images/tabler_circle-x-filled.svg";
+import logo from "../../../images/logo.png";
+import cleanupBt from "../../../images/tabler_circle-x-filled.svg";
 import FindInfoNavi from "./FindInfoNavi";
 
 const FindPass = ({ setOnHeader }) => {

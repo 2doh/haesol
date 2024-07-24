@@ -1,6 +1,6 @@
-import google from "../../images/devicon_google.svg";
-import kakao from "../../images/ri_kakao-talk-fill.svg";
-import naver from "../../images/simple-icons_naver.svg";
+import google from "../../../images/devicon_google.svg";
+import kakao from "../../../images/ri_kakao-talk-fill.svg";
+import naver from "../../../images/simple-icons_naver.svg";
 
 const SocialSignin = () => {
   return (
