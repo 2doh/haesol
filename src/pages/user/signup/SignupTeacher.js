@@ -1,6 +1,6 @@
 import { teacherSignup } from "api/signup/teacherapi";
 import { useEffect, useState } from "react";
-import "../../scss/signup/signup.scss";
+import "../../../scss/signup/signup.scss";
 import DropDate from "./DropDate";
 import EmailInputField from "./EmailInputField";
 import GenderSelect from "./GenderSelect";

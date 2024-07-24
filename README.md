@@ -49,7 +49,6 @@
 <p>린캔버스</p>
 <image src="https://github.com/user-attachments/assets/c3c9f9c7-2d5d-4cba-b858-ec22ea36f1ed"/>
 
-
 <p>노션</p>
 https://www.notion.so/HAESOL-613a41f133324a2fa3f7a342110f0cfe
 
@@ -58,4 +57,4 @@ https://www.notion.so/HAESOL-613a41f133324a2fa3f7a342110f0cfe
 - 김현주 : 문서 관리(노션, 회의록 etc.) / 메인 페이지 / 관리자 승인 / 내 정보 수정
 - 김수민 : 피그마 관리 / 성적 등록 등 교사 측 action 전반
 
-001
+3차 프로젝트 시작

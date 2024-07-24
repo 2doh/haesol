@@ -11,3 +11,14 @@ export const PhoneNumber = e => {
   }
   return formattedNumber;
 };
+
+// 비밀번호 유효성 검사
+export const PassValidation = e => {
+  const regex =
+    /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*])(?=.*[A-Z])[a-zA-Z0-9!@#$%^&*]{8,20}$/;
+  if (regex.test(e.target.value)) {
+    return "";
+  } else {
+    return "비밀번호 형식에 맞지 않습니다";
+  }
+};

@@ -1,11 +1,11 @@
 import { postParentSignin } from "api/login/parentloginapi";
 import { postTeacherSignin } from "api/login/teacherloginapi";
+import PasswordField from "components/user/PasswordField";
 import { useEffect, useState } from "react";
-import cleanupBt from "../../images/tabler_circle-x-filled.svg";
-import LoginIdField from "./LoginIdField";
-import LoginPassField from "./LoginPassField";
-import SocialSignin from "./SocialSignin";
 import { getCookie } from "utils/cookie";
+import cleanupBt from "../../../images/tabler_circle-x-filled.svg";
+import LoginIdField from "./LoginIdField";
+import SocialSignin from "./SocialSignin";
 
 const Signin = ({ children, naviState, setNaviState }) => {
   const [userId, setUserId] = useState("");
@@ -65,6 +65,8 @@ const Signin = ({ children, naviState, setNaviState }) => {
     }
   }, [userPass, userId]);
 
+  console.log(PasswordField);
+
   return (
     <>
       <form
@@ -80,13 +82,7 @@ const Signin = ({ children, naviState, setNaviState }) => {
         >
           아이디
         </LoginIdField>
-        <LoginPassField
-          cleanupBt={cleanupBt}
-          userPass={userPass}
-          setUserPass={setUserPass}
-        >
-          비밀번호
-        </LoginPassField>
+        <PasswordField>비밀번호</PasswordField>
         <div className="fields-section-errmsg">{errMsg}</div>
         <button className="login-wrap-panel-loginbt">로그인</button>
         {naviState === "signin" ? <SocialSignin /> : null}

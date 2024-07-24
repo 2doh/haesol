@@ -1,5 +1,5 @@
-import LoginNavi from "components/login/LoginNavi";
-import Signin from "components/login/Signin";
+import LoginNavi from "pages/user/login/LoginNavi";
+import Signin from "pages/user/login/Signin";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import logo from "../../images/logo.png";
