@@ -65,8 +65,6 @@ const Signin = ({ children, naviState, setNaviState }) => {
     }
   }, [userPass, userId]);
 
-  console.log(PasswordField);
-
   return (
     <>
       <form
