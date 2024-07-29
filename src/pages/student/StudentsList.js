@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import styled from "@emotion/styled";
 import { getStudentList } from "api/student/studentapi";
 import { getCookie } from "utils/cookie";
+import { FaAngleDown } from "react-icons/fa6";
 const StudentsList = () => {
   const userClass = getCookie("userClass");
 
@@ -104,6 +105,11 @@ const StudentsList = () => {
                 </div>
                 <div className="grid-inner-item">
                   <div className="grid-inner-item-text">{item.parentPhone}</div>
+                </div>
+                <div className="grid-inner-item">
+                  <div className="grid-inner-item-text">
+                    <FaAngleDown className="downIcon" />
+                  </div>
                 </div>
               </div>
             </div>
