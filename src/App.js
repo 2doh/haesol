@@ -14,6 +14,7 @@ import "../src/scss/common.scss";
 import "./App.css";
 import "./css/reset.css";
 
+import Test from "Test";
 import { AuthenticatedRedirect } from "components/common/AuthenticatedRedirect";
 import Modal from "components/common/Modal";
 import ParentsPrivateRoute from "components/common/ParentsPrivateRoute";
@@ -34,8 +35,6 @@ import FindPass from "pages/user/login/FindPass";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { getCookie } from "utils/cookie";
-import Test from "Test";
-import HeaderTop from "components/layout/header/HeaderTop";
 
 // import jwt from "jsonwebtoken";
 
@@ -130,7 +129,7 @@ function App() {
       ) : null}
 
       {onHedaer ? <Header /> : null}
-      <HeaderTop />
+      {/* <HeaderTop /> */}
       <Main>
         <Routes>
           <Route path="/test" element={<Test />}></Route>

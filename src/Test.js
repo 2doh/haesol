@@ -59,8 +59,8 @@ const Test = () => {
   //     ></button>
   //     <button
   //       onClick={() => {
-  //         SpeechRecognition.startListening({ language: "en-US" });
-  //         // SpeechRecognition.startListening({ language: "ko" });
+  //         // SpeechRecognition.startListening({ language: "en-US" });
+  //         SpeechRecognition.startListening({ language: "ko" });
   //       }}
   //     >
   //       Start
