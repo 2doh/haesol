@@ -1,12 +1,15 @@
-$wide-screen: 2028px;
-$pc-screen: 1280px;
-$notebook-screen: 1020px;
-$tablet-screen: 960px;
-$mobile-screen: 760px;
-$min-mobile-screen: 480px;
+// $wide-screen: 2028px;
+// $pc-screen: 1280px;
+// $notebook-screen: 1020px;
+// $min-mobile-screen: 480px;
+
+// Tablet : 1023px ~ 768px
+$tablet-screen: 1023px;
+// Mobile : 768px ~ 360px
+$mobile-screen: 768px;
 
 // Primary Color
-$pc-font: #2a1b07;
+$pc-font: #5c554c;
 $pc-line-p: #886348;
 $pc-base-p: #fbfaf9;
 // Gray scale

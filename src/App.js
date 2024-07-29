@@ -35,6 +35,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { getCookie } from "utils/cookie";
 import Test from "Test";
+import HeaderTop from "components/layout/header/HeaderTop";
 
 // import jwt from "jsonwebtoken";
 
@@ -77,7 +78,7 @@ const Main = styled.div`
 
   /* background-color: #f3f9fa; */
   background-color: ${getCookie("accessToken") ? "#FBFAF9" : "#f3f9fa"};
-  width: 1180px;
+  /* width: 1180px; */
   min-height: calc(100vh - 260px);
   height: 100%;
   margin: 0 auto;
@@ -129,7 +130,7 @@ function App() {
       ) : null}
 
       {onHedaer ? <Header /> : null}
-
+      <HeaderTop />
       <Main>
         <Routes>
           <Route path="/test" element={<Test />}></Route>
@@ -196,7 +197,7 @@ function App() {
           )}
 
           {/* 교직원 : 학생 리스트 */}
-          <Route
+          {/* <Route
             path="/students"
             element={
               <TeacherProtectedRoute
@@ -204,7 +205,8 @@ function App() {
                 component={<Students />}
               />
             }
-          ></Route>
+          ></Route> */}
+          <Route path="/students" component={<Students />}></Route>
 
           {/* 학부모 : 성적 확인 페이지 - grade 페이지 진입시 세션에 중복 저장되는 오류 발생 */}
           {/* {accessToken ? (
@@ -335,6 +337,8 @@ function App() {
         </Routes>
       </Main>
       {/* <Footer /> */}
+
+      <Footer />
     </BrowserRouter>
   );
 }

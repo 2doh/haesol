@@ -280,11 +280,11 @@
   gap: 8px;
 }
 .main-core .info-contain-top .info-item-mid .info-title .add-form div input::-moz-placeholder, .main-core .info-contain-mid .info-item-mid .info-title .add-form div input::-moz-placeholder {
-  color: #2a1b07;
+  color: #5c554c;
 }
 .main-core .info-contain-top .info-item-mid .info-title .add-form div input::placeholder,
 .main-core .info-contain-mid .info-item-mid .info-title .add-form div input::placeholder {
-  color: #2a1b07;
+  color: #5c554c;
 }
 .main-core .info-contain-top .info-item-mid .info-title .add-form .info-add,
 .main-core .info-contain-mid .info-item-mid .info-title .add-form .info-add {
