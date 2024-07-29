@@ -334,7 +334,7 @@ function App() {
           ></Route>
         </Routes>
       </Main>
-      <Footer />
+      {/* <Footer /> */}
     </BrowserRouter>
   );
 }
