@@ -1,17 +1,15 @@
 import styled from "@emotion/styled";
 import "../../scss/main/footer.css";
-import { getCookie } from "utils/cookie";
 const FooterStyle = styled.div`
   background-color: #dee8e9;
-  height: 180px;
+
+  min-height: 180px;
   width: 100%;
 `;
 const Footer = () => {
   return (
     <FooterStyle>
-      {getCookie("userRole") === "ROLE_ADMIN" ? (
-        <div className="footer-inner"></div>
-      ) : (
+      <div className="footer-wrap">
         <div className="footer-inner">
           <div className="footer-info-nav">
             <div className="nav-text">개인정보 처리 방침</div>
@@ -36,7 +34,17 @@ const Footer = () => {
             </div>
           </div>
         </div>
-      )}
+        <div className="footer-cnt">
+          <div className="today-users">
+            <p>오늘 방문객</p>
+            <p>2명</p>
+          </div>
+          <div className="total-users">
+            <p>전체 방문객</p>
+            <p>3,572,658명</p>
+          </div>
+        </div>
+      </div>
     </FooterStyle>
   );
 };

@@ -1,10 +1,15 @@
 @import "../valiables";
 
+.footer-wrap {
+  display: flex;
+  flex-direction: row;
+}
+
 .footer-inner {
-  padding: 40px;
+  padding: 40px 0px 40px 40px;
 
   width: 100%;
-  min-width: 940px;
+  min-width: 900px;
   height: 100%;
   font-size: 17px;
 
@@ -24,20 +29,27 @@
   .footer-info-nav {
     display: flex;
     flex-direction: row;
-    // gap: 10px;
+    width: 100%;
+    max-height: 160px;
 
     .nav-text {
       padding: 0px 30px;
-
       border-right: 1px solid $b200;
     }
 
     .nav-text:first-child {
+      white-space: nowrap;
+
       padding-left: 0px;
       font-weight: bold;
     }
     .nav-text:last-child {
       border: none;
+    }
+
+    .nav-text:nth-child(2),
+    .nav-text:nth-child(3) {
+      white-space: nowrap;
     }
   }
 
@@ -55,6 +67,85 @@
 
     .footer-tel-info {
       gap: 35px;
+    }
+  }
+}
+
+.footer-cnt {
+  min-width: 768px;
+  padding-right: 40px;
+  padding-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  & > div {
+    width: 250px;
+    height: 50px;
+    background-color: $b300;
+    border-radius: 50px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0px 20px;
+
+    p {
+      font-size: 17px;
+      color: white;
+    }
+  }
+}
+
+@media screen and (max-width: 1135px) {
+  .footer-wrap {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .footer-inner {
+    padding-bottom: 0px;
+
+    .footer-info-nav {
+    }
+  }
+
+  .footer-cnt {
+    width: 100%;
+    padding: 40px;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 30px;
+
+    transition: all 0.2s;
+
+    & > div {
+    }
+  }
+}
+
+@media screen and (max-width: 865px) {
+  .footer-inner {
+    .footer-info-nav {
+      width: 510px;
+      flex-wrap: wrap;
+      gap: 15px 0px;
+
+      transition: all 0.2s;
+
+      .nav-text:nth-child(4),
+      .nav-text:nth-child(5) {
+        // visibility: hidden;
+      }
+
+      .nav-text:nth-child(4) {
+        padding-left: 0px;
+        padding-right: 36px;
+      }
     }
   }
 }
