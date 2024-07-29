@@ -80,7 +80,9 @@ const Signin = ({ children, naviState, setNaviState }) => {
         >
           아이디
         </LoginIdField>
-        <PasswordField>비밀번호</PasswordField>
+        <PasswordField userPass={userPass} setUserPass={setUserPass}>
+          비밀번호
+        </PasswordField>
         <div className="fields-section-errmsg">{errMsg}</div>
         <button className="login-wrap-panel-loginbt">로그인</button>
         {naviState === "signin" ? <SocialSignin /> : null}
