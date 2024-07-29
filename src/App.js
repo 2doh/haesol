@@ -35,7 +35,10 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { getCookie } from "utils/cookie";
 import Test from "Test";
-import HeaderTop from "components/layout/header/HeaderTop";
+import HeaderTopPublic from "components/layout/header/HeaderTopPublic";
+import HeaderMemu from "components/layout/header/HeaderMenu";
+import HeaderProfile from "components/layout/header/HeaderProfile";
+import MainPage from "pages/Home/MainPage";
 
 // import jwt from "jsonwebtoken";
 
@@ -129,8 +132,12 @@ function App() {
         </ModalStyle>
       ) : null}
 
-      {onHedaer ? <Header /> : null}
-      <HeaderTop />
+      {/* {onHedaer ? <Header /> : null} */}
+      {/* <HeaderTop /> */}
+      <HeaderTopPublic />
+      <HeaderMemu />
+      <HeaderProfile />
+      {/* <MainPage/> */}
       <Main>
         <Routes>
           <Route path="/test" element={<Test />}></Route>
