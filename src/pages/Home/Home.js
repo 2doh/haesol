@@ -22,12 +22,13 @@ import { ActivityPhotos } from "./ActivityPhotos";
 
 const Home = () => {
   const HomeStyle = styled.div`
-    width: 1180px;
+    /* width: 1180px; */
+    /* width: 100vw; */
     min-height: calc(100vh - 281px);
     position: relative;
-    left: -40px;
-    display: flex;
-    flex-direction: column;
+    /* left: -40px; */
+    /* display: flex; */
+    /* flex-direction: column; */
     gap: 60px;
     top: -40px;
     background-color: ${getCookie("accessToken") ? "#FBFAF9" : "#fbfaf9"};

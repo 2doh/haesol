@@ -125,7 +125,7 @@
   width: 100%;
   justify-content: space-around;
   font-size: 13px;
-  color: #2a1b07;
+  color: #5c554c;
 }
 .main-inner-info .main-login-user-info .main-inner-info-login .login-inner .main-info-login-menu > div {
   cursor: pointer;
@@ -337,4 +337,10 @@
   justify-content: center;
   background: no-repeat center;
   background-size: cover;
+}
+
+@media screen and (max-width: 1023px) {
+  .main-inner {
+    flex-direction: column;
+  }
 }/*# sourceMappingURL=home.css.map */
