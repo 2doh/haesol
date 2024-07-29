@@ -10,7 +10,7 @@ const PasswordField = ({ children, userPass, setUserPass }) => {
   const [showPass, setShowPass] = useState(false);
 
   const cleanupPass = e => {
-    e.preventDefault();
+    e.preventDefault(e);
     setUserPass("");
   };
   const handleShowPass = () => {
@@ -50,13 +50,15 @@ const PasswordField = ({ children, userPass, setUserPass }) => {
           <div
             className={!showPass ? "showpass" : "hidepass"}
             onClick={e => {
-              handleShowPass(e);
+              {
+                handleShowPass(e);
+              }
             }}
           />
           <img
             className="cleanupbt"
             src={cleanupBt}
-            onClick={() => cleanupPass()}
+            onClick={e => cleanupPass(e)}
           />
         </>
       ) : null}
