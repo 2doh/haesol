@@ -34,6 +34,7 @@
     "react-scripts": "5.0.1",
     "react-signature-canvas": "^1.0.6",
     "react-speech-recognition": "^3.10.0",
+    "react-spinners": "^0.14.1",
     "redux": "^5.0.1",
     "sass": "^1.77.6",
     "socket.io-client": "^4.7.5",

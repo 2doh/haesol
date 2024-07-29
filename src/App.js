@@ -35,6 +35,9 @@ import FindPass from "pages/user/login/FindPass";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { getCookie } from "utils/cookie";
+import Test from "Test";
+// import HeaderTop from "components/layout/header/HeaderTop";
+
 
 // import jwt from "jsonwebtoken";
 
@@ -196,7 +199,7 @@ function App() {
           )}
 
           {/* 교직원 : 학생 리스트 */}
-          {/* <Route
+          <Route
             path="/students"
             element={
               <TeacherProtectedRoute
@@ -204,7 +207,7 @@ function App() {
                 component={<Students />}
               />
             }
-          ></Route> */}
+          ></Route>
           <Route path="/students" component={<Students />}></Route>
 
           {/* 학부모 : 성적 확인 페이지 - grade 페이지 진입시 세션에 중복 저장되는 오류 발생 */}
