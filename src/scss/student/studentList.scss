@@ -38,7 +38,7 @@
     .grid-inner {
       height: 100%;
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr 1.5fr 1fr 1.5fr;
+      grid-template-columns: 1fr 1fr 1fr 1fr 1.5fr 1fr 1.5fr 0fr;
 
       & > div {
         height: 100%;
@@ -52,16 +52,36 @@
         border-right: none;
       }
 
+      .downIcon {
+        display: none;
+      }
+
       .sign-off-on-buttons {
         display: flex;
         justify-content: center;
         gap: 30px;
+      }
+      @media screen and (max-width: $tablet-screen) {
+        .grid-inner-item:nth-child(3),
+        .grid-inner-item:nth-child(5) {
+          display: none;
+        }
+        .grid-inner-item:last-child {
+        }
+        .downIcon {
+          display: block;
+        }
       }
     }
     #grid-content {
       cursor: pointer;
       &:hover {
         background: #c6dbda;
+      }
+    }
+    @media screen and (max-width: $tablet-screen) {
+      .grid-inner {
+        grid-template-columns: 1fr 1fr 1.5fr 1fr 1.5fr 0.5fr;
       }
     }
   }

@@ -14,6 +14,7 @@ import "../src/scss/common.scss";
 import "./App.css";
 import "./css/reset.css";
 
+import Test from "Test";
 import { AuthenticatedRedirect } from "components/common/AuthenticatedRedirect";
 import Modal from "components/common/Modal";
 import ParentsPrivateRoute from "components/common/ParentsPrivateRoute";
@@ -39,6 +40,7 @@ import HeaderTopPublic from "components/layout/header/HeaderTopPublic";
 import HeaderMemu from "components/layout/header/HeaderMenu";
 import HeaderProfile from "components/layout/header/HeaderProfile";
 import MainPage from "pages/Home/MainPage";
+
 
 // import jwt from "jsonwebtoken";
 
@@ -138,6 +140,7 @@ function App() {
       <HeaderMemu />
       <HeaderProfile />
       {/* <MainPage/> */}
+
       <Main>
         <Routes>
           <Route path="/test" element={<Test />}></Route>
@@ -204,7 +207,7 @@ function App() {
           )}
 
           {/* 교직원 : 학생 리스트 */}
-          {/* <Route
+          <Route
             path="/students"
             element={
               <TeacherProtectedRoute
@@ -212,7 +215,7 @@ function App() {
                 component={<Students />}
               />
             }
-          ></Route> */}
+          ></Route>
           <Route path="/students" component={<Students />}></Route>
 
           {/* 학부모 : 성적 확인 페이지 - grade 페이지 진입시 세션에 중복 저장되는 오류 발생 */}
