@@ -6,7 +6,7 @@ import pic3 from "../../images/home/ad_zone_img_03.png";
 
 const RandomAdZoneStyle = styled.div`
   width: 100%;
-  margin-top: 40px;
+  margin-top: 35px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -46,9 +46,6 @@ const RandomAdZone = () => {
   return (
     <RandomAdZoneStyle>
       <div className="main-random-ad-zone-wrap">
-        <div className="main-contents-title-div">
-          <div className="main-contents-title-text">팝업존</div>
-        </div>
         <div className="random-ad-zone">
           <div className="random-info-wrap">
             <div

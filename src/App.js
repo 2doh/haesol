@@ -35,12 +35,10 @@ import FindPass from "pages/user/login/FindPass";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { getCookie } from "utils/cookie";
-import Test from "Test";
 import HeaderTopPublic from "components/layout/header/HeaderTopPublic";
 import HeaderMemu from "components/layout/header/HeaderMenu";
 import HeaderProfile from "components/layout/header/HeaderProfile";
 import MainPage from "pages/Home/MainPage";
-
 
 // import jwt from "jsonwebtoken";
 
@@ -82,20 +80,20 @@ const Main = styled.div`
   padding-bottom: 80px; */
 
   /* background-color: #f3f9fa; */
-  background-color: ${getCookie("accessToken") ? "#FBFAF9" : "#f3f9fa"};
+  /* background-color: ${getCookie("accessToken") ? "#FBFAF9" : "#f3f9fa"}; */
   /* width: 1180px; */
-  min-height: calc(100vh - 260px);
-  height: 100%;
-  margin: 0 auto;
-  padding: 40px;
-  padding-bottom: 0;
-  margin-bottom: -40px;
+  /* min-height: calc(100vh - 260px); */
+  /* height: 100%; */
+  /* margin: 0 auto; */
+  /* padding: 40px; */
+  /* padding-bottom: 0; */
+  /* margin-bottom: -40px; */
 
   /* 내부 스타일 */
   & > div,
   main {
-    min-height: calc(100vh - 260px);
-    padding-bottom: 120px;
+    /* min-height: calc(100vh - 260px); */
+    /* padding-bottom: 120px; */
   }
 `;
 
@@ -139,13 +137,14 @@ function App() {
       <HeaderTopPublic />
       <HeaderMemu />
       <HeaderProfile />
-      {/* <MainPage/> */}
+      {/* <MainPage /> */}
 
       <Main>
         <Routes>
           <Route path="/test" element={<Test />}></Route>
 
-          <Route index element={<Home />}></Route>
+          {/* <Route index element={<Home />}></Route> */}
+          <Route index element={<MainPage />}></Route>
           {/* 로그인 & 회원가입 : 이후 진입시 Home으로 강제 이동 */}
           {accessToken ? (
             <>
@@ -346,8 +345,6 @@ function App() {
           ></Route>
         </Routes>
       </Main>
-      {/* <Footer /> */}
-
       <Footer />
     </BrowserRouter>
   );
