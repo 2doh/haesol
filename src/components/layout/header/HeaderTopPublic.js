@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { useNavigate } from "react-router";
 
 const HeaderTopStyle = styled.div`
   font-size: 17px;
@@ -50,6 +51,7 @@ const HeaderTopStyle = styled.div`
 `;
 
 const HeaderTopPublic = () => {
+  const navigate = useNavigate();
   /** 메인 페이지로 이동 */
   const moveHomePage = () => {
     navigate("/");

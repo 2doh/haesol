@@ -39,6 +39,8 @@ import HeaderTopPublic from "components/layout/header/HeaderTopPublic";
 import HeaderMemu from "components/layout/header/HeaderMenu";
 import HeaderProfile from "components/layout/header/HeaderProfile";
 import MainPage from "pages/Home/MainPage";
+import CreateTest from "pages/online/CreateTest";
+
 
 // import jwt from "jsonwebtoken";
 
@@ -337,6 +339,9 @@ function App() {
               }
             />
           </Route>
+
+          {/* 온라인 학습 라우터 */}
+          <Route path="/online/test/create" element={<CreateTest />}></Route>
 
           <Route
             path="*"
