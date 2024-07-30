@@ -13,8 +13,6 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "../src/scss/common.scss";
 import "./App.css";
 import "./css/reset.css";
-
-import Test from "Test";
 import { AuthenticatedRedirect } from "components/common/AuthenticatedRedirect";
 import Modal from "components/common/Modal";
 import ParentsPrivateRoute from "components/common/ParentsPrivateRoute";
@@ -40,7 +38,6 @@ import HeaderTopPublic from "components/layout/header/HeaderTopPublic";
 import HeaderMemu from "components/layout/header/HeaderMenu";
 import HeaderProfile from "components/layout/header/HeaderProfile";
 import MainPage from "pages/Home/MainPage";
-
 
 // import jwt from "jsonwebtoken";
 
