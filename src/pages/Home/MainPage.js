@@ -1,10 +1,15 @@
 import styled from "@emotion/styled";
-import React from "react";
-import MainSchedule from "./MainSchedule";
-import MainScheduleView from "./MainScheduleView";
+import MainScheduleView from "./calendar/MainScheduleView";
+import LunchView from "./lunch/LunchView";
+import PopUpView from "./popup/PopUpView";
+import PotoView from "./poto/PotoView";
+import ParentsProfile from "./profile/ParentsProfile";
+import LoginUser from "./LoginUser";
+import LoginTeahcer from "./LoginTeahcer";
 
 const MainPageStyle = styled.div`
   width: 100%;
+  padding-bottom: 100px;
 
   .main-page-fill-space {
     position: relative;
@@ -40,23 +45,46 @@ const MainPageContents = styled.div`
   flex-direction: column;
   width: 100%;
 
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  height: 100%;
+
   .calendar-and-meals-wrap {
     width: 100%;
     display: flex;
     flex-direction: row;
     gap: 20px;
+    max-height: 450px;
 
     .calendar-wrap {
       min-width: 810px;
       background-color: #dee8e9;
       border-radius: 30px;
-
       padding: 30px;
     }
 
-    .meals-wrap {
+    .lunch-wrap {
       width: 100%;
-      background-color: green;
+    }
+  }
+
+  .poto-and-pop-up-wrap {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    height: 375px;
+
+    background-color: #bed7dc;
+    padding: 5px;
+
+    .poto-wrap {
+      min-width: 780px;
+    }
+
+    .pop-up-wrap {
+      width: 100%;
     }
   }
 `;
@@ -76,9 +104,19 @@ const MainPage = () => {
             <div className="calendar-wrap">
               <MainScheduleView />
             </div>
-            <div className="meals-wrap">{/* <MainScheduleView /> */}</div>
+            <div className="lunch-wrap">
+              <LunchView />
+            </div>
           </div>
-          MainPage
+
+          <div className="poto-and-pop-up-wrap">
+            <div className="poto-wrap">
+              <PotoView />
+            </div>
+            <div className="pop-up-wrap">
+              <PopUpView />
+            </div>
+          </div>
         </MainPageContents>
       </div>
     </MainPageStyle>

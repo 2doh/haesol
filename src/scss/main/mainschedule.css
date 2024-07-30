@@ -26,17 +26,14 @@
   overflow: hidden;
   background-color: #fbfaf9;
 }
-.react-calendar button {
-  margin-bottom: 10px;
-}
-
 .react-calendar__navigation {
   background: #ffc5bf;
   border-bottom: 3px solid #625151;
-  height: 90px;
+  height: 50px;
+  margin-bottom: 0px;
 }
 .react-calendar__navigation span {
-  font-size: 24px;
+  font-size: 18px;
   font-weight: 600;
   color: #886348;
 }
@@ -81,7 +78,7 @@
 }
 
 .react-calendar__month-view__weekdays {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   margin-top: 5px;
 }
 .react-calendar__month-view__weekdays abbr {
@@ -92,7 +89,7 @@
 
 .react-calendar__tile {
   text-align: center;
-  height: 60px;
+  height: 45px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -160,71 +157,6 @@
   color: #5f909f;
 }
 
-.now-schedule-day {
-  /* 스크롤바 막대 설정*/
-  /* 스크롤바 뒷 배경 설정*/
-}
-.now-schedule-day::-webkit-scrollbar {
-  background-color: #fedbe1;
-  overflow: hidden;
-  width: 10px;
-  border-radius: 0px 0px 0px 0px;
-}
-.now-schedule-day::-webkit-scrollbar-thumb {
-  background-color: #f4878d;
-  /* 스크롤바 둥글게 설정    */
-  border-radius: 10px;
-  border: 1px solid #dee8e9;
-}
-.now-schedule-day::-webkit-scrollbar-track {
-  background-color: rgba(0, 0, 0, 0);
-}
-.now-schedule-day .now-month-event-text {
-  font-size: 14px;
-  display: flex;
-  gap: 12px;
-  flex-direction: column;
-  padding-top: 10px;
-}
-.now-schedule-day .now-month-event-text .event-day {
-  display: flex;
-  flex-direction: row;
-  gap: 30px;
-  padding-left: 20px;
-}
-.now-schedule-day .now-month-event-text .event-day:hover {
-  background-color: #feccd5;
-}
-.now-schedule-day .now-month-event-text .event-day .event-day-style {
-  background-color: #feccd5;
-  font-weight: bold;
-  color: #dd838f;
-  width: 110px;
-  height: 50px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.now-schedule-day .now-month-event-text .event-day .event-day-text-style {
-  width: 110px;
-  height: 50px;
-  font-size: 17px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.arrow-icon {
-  width: 2.8em;
-  display: block;
-  padding: 0.5em;
-  margin: 0.5em 2em 1.3em 0.8em;
-  position: relative;
-  cursor: pointer;
-  border-radius: 4px;
-}
-
 .left-bar {
   position: absolute;
   background-color: transparent;
@@ -280,4 +212,78 @@
 .open .right-bar:after {
   transform-origin: center center;
   transform: rotate(70deg);
+}
+
+.schedule-wrap {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+.schedule-wrap .item {
+  position: relative;
+  flex: 1;
+}
+.schedule-wrap .calendar-list {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: white;
+  border-radius: 20px;
+  padding: 20px;
+}
+.schedule-wrap .calendar-list .now-schedule-day {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  /* 스크롤바 막대 설정*/
+  /* 스크롤바 뒷 배경 설정*/
+}
+.schedule-wrap .calendar-list .now-schedule-day::-webkit-scrollbar {
+  background-color: #fedbe1;
+  overflow: hidden;
+  width: 10px;
+  border-radius: 0px 0px 0px 0px;
+}
+.schedule-wrap .calendar-list .now-schedule-day::-webkit-scrollbar-thumb {
+  background-color: #f4878d;
+  /* 스크롤바 둥글게 설정    */
+  border-radius: 10px;
+  border: 1px solid #dee8e9;
+}
+.schedule-wrap .calendar-list .now-schedule-day::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0);
+}
+.schedule-wrap .calendar-list .now-schedule-day .now-month-event-text {
+  font-size: 14px;
+  display: flex;
+  gap: 12px;
+  flex-direction: column;
+  padding-top: 10px;
+}
+.schedule-wrap .calendar-list .now-schedule-day .now-month-event-text .event-day {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  padding-left: 20px;
+}
+.schedule-wrap .calendar-list .now-schedule-day .now-month-event-text .event-day:hover {
+  background-color: #feccd5;
+}
+.schedule-wrap .calendar-list .now-schedule-day .now-month-event-text .event-day .event-day-style {
+  background-color: #feccd5;
+  font-weight: bold;
+  color: #dd838f;
+  min-width: 85px;
+  padding: 10px 14px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.schedule-wrap .calendar-list .now-schedule-day .now-month-event-text .event-day .event-day-text-style {
+  font-size: 17px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }/*# sourceMappingURL=mainschedule.css.map */

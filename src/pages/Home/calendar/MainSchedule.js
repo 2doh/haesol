@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { ImSpoonKnife } from "react-icons/im";
-import "../../scss/main/mainschedule.css";
+import "../../../scss/main/mainschedule.css";
 
 const ScWrap = styled.div`
   width: 100%;
@@ -333,57 +333,6 @@ const MainSchedule = () => {
         //   getActiveMonth(activeStartDate)
         // }
       />
-
-      <CalendarAccordionWrap>
-        <div className="calendar-accordion">
-          <input type="checkbox" id="view-box"></input>
-          <label
-            htmlFor="view-box"
-            onClick={e => {
-              setCurrentActive(!currentActive);
-            }}
-          >
-            <span className="arrow-span">
-              {currentActive ? (
-                <a className="calendar-menu-text">상세 일정 목록 접기</a>
-              ) : (
-                <a className="calendar-menu-text">상세 일정 목록 열기</a>
-              )}
-
-              <a
-                className={currentActive ? "arrow-icon open" : "arrow-icon"}
-                onClick={e => {
-                  setCurrentActive(!currentActive);
-                }}
-              >
-                <span className="left-bar"></span>
-                <span className="right-bar"></span>
-              </a>
-              {/* {currentActive ? (
-                <span className="arrow-text">상세 일정 목록 접기</span>
-              ) : (
-                <span className="arrow-text">상세 일정</span>
-              )} */}
-            </span>
-            <div className="now-schedule-day">
-              <div className="now-month-event-text-wrap">
-                <div className="now-month-event-text">
-                  {eventList.map((item, index) => {
-                    return (
-                      <div className="event-day" key={index}>
-                        <div className="event-day-style">
-                          {moment(eventDayList[index]).format("M월 DD일")}
-                        </div>
-                        <div className="event-day-text-style">{item}</div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-          </label>
-        </div>
-      </CalendarAccordionWrap>
     </ScWrap>
   );
 };

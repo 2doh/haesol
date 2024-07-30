@@ -19,7 +19,7 @@ import ClassSchedule from "./ClassSchedule";
 // import StudentImg from "pages/student/StudentImg";
 import Chat from "./Chat";
 import ClassNotice from "./ClassNotice";
-import MainSchedule from "./MainSchedule";
+import MainSchedule from "./calendar/MainSchedule";
 
 const LoginUserStyle = styled.div`
   position: relative;

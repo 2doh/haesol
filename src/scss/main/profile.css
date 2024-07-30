@@ -1,0 +1,123 @@
+@charset "UTF-8";
+@keyframes shake {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-4deg);
+  }
+  50% {
+    transform: rotate(4deg);
+  }
+  75% {
+    transform: rotate(-4deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+.user-info-wrap {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
+.user-info-wrap .user-info-inner {
+  text-shadow: 0 1.5px 0 rgba(0, 0, 0, 0.15);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.34) inset, 0 2px 0 -1px rgba(0, 0, 0, 0.13), 0 3px 0 -1px rgba(0, 0, 0, 0.08), 0 3px 13px -1px rgba(0, 0, 0, 0.21);
+  border-radius: 10px;
+  border: 2px solid #1b4957;
+  width: 100%;
+  background-color: #ffffff;
+}
+.user-info-wrap .user-info-inner .user-info {
+  width: 100%;
+  padding: 15px 20px;
+  /* 유저 정보 */
+  /* 버튼 */
+}
+.user-info-wrap .user-info-inner .user-info .top-user-info {
+  font-size: 13px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #dee8e9;
+  position: relative;
+}
+.user-info-wrap .user-info-inner .user-info .top-user-info .user-pic {
+  width: 90px;
+  height: 90px;
+  border-radius: 50px;
+  background-image: url("../../images/default_pic.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.user-info-wrap .user-info-inner .user-info .top-user-info .user-info-div {
+  width: 48%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  line-height: 1.4em;
+  gap: 10px;
+}
+.user-info-wrap .user-info-inner .user-info .top-user-info .user-info-div .user-info-label-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  white-space: nowrap;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+.user-info-wrap .user-info-inner .user-info .top-user-info .user-info-div .user-info-text-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  white-space: nowrap;
+  width: 100%;
+  height: 100%;
+}
+.user-info-wrap .user-info-inner .user-info .top-user-info .user-info-div .user-info-text-box .no-info {
+  color: #9da2b9;
+  font-size: 12px;
+}
+.user-info-wrap .user-info-inner .user-info .top-user-info .logout-icon {
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+}
+.user-info-wrap .user-info-inner .user-info .bottom-user-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 13px;
+  height: 130px;
+}
+.user-info-wrap .user-info-inner .user-info .bottom-user-btn > button {
+  width: 190px;
+  height: 40px;
+  border-radius: 5px;
+  font-size: 20px;
+}
+.user-info-wrap .user-info-inner .user-info .bottom-user-btn .subject-grade-btn {
+  background-color: #ffdfe4;
+  border: 2px solid #ffd0d7;
+}
+.user-info-wrap .user-info-inner .user-info .bottom-user-btn .my-page-btn {
+  background-color: #dee8e9;
+  border: 2px solid #cfdddf;
+}
+
+.teacher-info-div {
+  width: 100%;
+  gap: 25px;
+}
+.teacher-info-div .teacher-info-label-box {
+  gap: 5px;
+}
+.teacher-info-div .teacher-info-label-box > .user-info-label {
+  text-align: right;
+  width: 70px;
+}/*# sourceMappingURL=profile.css.map */
