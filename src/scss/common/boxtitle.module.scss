@@ -1,0 +1,19 @@
+@import "../valiables";
+@import "../button";
+@import "../mixin";
+
+.box_title {
+  @include text-shadow;
+
+  border-left: #5f909f solid 5px;
+  font-size: 24px;
+  height: 30px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  color: $font-d-1;
+
+  .box_title_text {
+    margin-left: 10px;
+  }
+}
