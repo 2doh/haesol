@@ -4,6 +4,8 @@ import SpeechRecognition, {
 } from "react-speech-recognition";
 import wordtest from "./json/ENwordtest.json";
 import Chatting from "components/chat/Chatting";
+import { userRoleState } from "atoms/formState";
+import { useRecoilValue } from "recoil";
 
 // const commands = [
 //   {
@@ -110,6 +112,19 @@ const Test = () => {
   //     <Chatting />
   //   </div>
   // );
+  const userRole = useRecoilValue(userRoleState);
+  const bbb = () => {
+    console.log(userRole);
+    if (userRole === "ROLE_PARENTS") {
+      alert("gg");
+    }
+  };
+  return (
+    <button
+      onClick={() => bbb()}
+      style={{ width: "100px", height: "100px", backgroundColor: "blue" }}
+    ></button>
+  );
 };
 
 export default Test;

@@ -38,6 +38,7 @@ import HeaderMemu from "components/layout/header/HeaderMenu";
 import HeaderProfile from "components/layout/header/HeaderProfile";
 import MainPage from "pages/Home/MainPage";
 import CreateTest from "pages/online/CreateTest";
+import Test from "Test";
 
 // import jwt from "jsonwebtoken";
 

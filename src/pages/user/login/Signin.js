@@ -2,12 +2,18 @@ import { postParentSignin } from "api/login/parentloginapi";
 import { postTeacherSignin } from "api/login/teacherloginapi";
 import PasswordField from "components/user/PasswordField";
 import { useEffect, useState } from "react";
-import { getCookie } from "utils/cookie";
+import { getCookie, setCookie } from "utils/cookie";
 import cleanupBt from "../../../images/tabler_circle-x-filled.svg";
 import LoginIdField from "./LoginIdField";
 import SocialSignin from "./SocialSignin";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { userClassState, userNameState, userRoleState } from "atoms/formState";
+import base64 from "base-64";
 
 const Signin = ({ children, naviState, setNaviState }) => {
+  const setUserName = useSetRecoilState(userNameState);
+  const setUserClass = useSetRecoilState(userClassState);
+  const setUserRole = useSetRecoilState(userRoleState);
   const [userId, setUserId] = useState("");
   const [userPass, setUserPass] = useState("");
   const [errMsg, setErrMsg] = useState("");
@@ -29,7 +35,19 @@ const Signin = ({ children, naviState, setNaviState }) => {
     if (naviState === "signin") {
       const result = await postParentSignin(request);
       if (result.status === 200) {
-        window.location.replace("/");
+        console.log(result);
+        let acTken = result.data.accessToken;
+        const payload = JSON.parse(
+          base64.decode(acTken.split(".")[1]),
+        ).signedUser;
+        const signedUser = JSON.parse(payload);
+        // setCookie("userIdPk", signedUser.userId);
+        // setCookie("userRole", signedUser.role);
+        // setUserName(signedUser.name);
+        // setUserClass(signedUser.role);
+        console.log(signedUser);
+        setUserRole(signedUser.role);
+        // window.location.replace("/");
       }
       if (result === "error") {
         setErrMsg("아이디 혹은 비밀번호를 확인해주세요");
@@ -64,6 +82,10 @@ const Signin = ({ children, naviState, setNaviState }) => {
       setErrMsg("");
     }
   }, [userPass, userId]);
+  const userRole = useRecoilValue(userRoleState);
+  useEffect(() => {
+    console.log(userRole);
+  }, [login]);
 
   return (
     <>

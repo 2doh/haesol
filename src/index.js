@@ -4,12 +4,15 @@ import store from "store/store";
 import App from "./App";
 import "./index.css";
 import Dog from "components/notfound/Dog";
+import { RecoilRoot } from "recoil";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 // root.render(<App />);
 root.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <RecoilRoot>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </RecoilRoot>,
 );
