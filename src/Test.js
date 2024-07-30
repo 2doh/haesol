@@ -105,12 +105,11 @@ const Test = () => {
   //   </div>
   // );
   // const io = new Server(3000);
-
-  return (
-    <div>
-      <Chatting />
-    </div>
-  );
+  // return (
+  //   <div>
+  //     <Chatting />
+  //   </div>
+  // );
 };
 
 export default Test;
