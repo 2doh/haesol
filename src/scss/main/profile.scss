@@ -1,0 +1,131 @@
+@import "../mixin";
+
+// 프로필 공통 start
+.user-info-wrap {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  .user-info-inner {
+    @include text-n-box-shadow;
+
+    border-radius: 10px;
+    border: 2px solid #1b4957;
+    width: 100%;
+    background-color: #ffffff;
+
+    .user-info {
+      width: 100%;
+      padding: 15px 20px;
+
+      /* 유저 정보 */
+      .top-user-info {
+        font-size: 13px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #dee8e9;
+        position: relative;
+
+        .user-pic {
+          width: 90px;
+          height: 90px;
+          border-radius: 50px;
+          background-image: url("../../images/default_pic.png");
+
+          background-repeat: no-repeat;
+          background-size: cover;
+        }
+
+        .user-info-div {
+          width: 48%;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          line-height: 1.4em;
+          gap: 10px;
+
+          .user-info-label-box {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            white-space: nowrap;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+
+            .user-info-label {
+            }
+          }
+          .user-info-text-box {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            white-space: nowrap;
+            width: 100%;
+            height: 100%;
+
+            .no-info {
+              color: #9da2b9;
+              font-size: 12px;
+            }
+          }
+        }
+
+        .logout-icon {
+          cursor: pointer;
+          width: 18px;
+          height: 18px;
+        }
+      }
+
+      /* 버튼 */
+      .bottom-user-btn {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        gap: 13px;
+        height: 130px;
+
+        & > button {
+          width: 190px;
+          height: 40px;
+          border-radius: 5px;
+          font-size: 20px;
+        }
+
+        .subject-grade-btn {
+          background-color: #ffdfe4;
+          border: 2px solid #ffd0d7;
+        }
+        .my-page-btn {
+          background-color: #dee8e9;
+          border: 2px solid #cfdddf;
+        }
+      }
+    }
+  }
+}
+// 프로필 공통 end
+
+// 학부모 프로필 start
+// 학부모 프로필 end
+
+// 교직원 프로필 start
+.teacher-info-div {
+  width: 100%;
+  gap: 25px;
+
+  .teacher-info-label-box {
+    gap: 5px;
+
+    & > .user-info-label {
+      text-align: right;
+      width: 70px;
+    }
+  }
+}
+
+// 교직원 프로필 end

@@ -12,16 +12,16 @@ import "swiper/css/pagination";
 import { Pagination, Autoplay } from "swiper/modules";
 
 const ActivityPhotosZoneStyle = styled.div`
-  width: 100%;
+  position: absolute;
+  top: 18px;
+  right: 35px;
+  width: 570px;
 `;
 
 export const ActivityPhotos = () => {
   return (
     <ActivityPhotosZoneStyle>
       <div className="main-activity-wrap">
-        <div className="main-contents-title-div">
-          <div className="main-contents-title-text">우리들의 활동</div>
-        </div>
         <div className="main-activity-slide-zone">
           <Swiper
             slidesPerView={2}

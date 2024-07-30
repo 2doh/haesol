@@ -12,7 +12,7 @@ import { useNavigate } from "react-router";
 import { getCookie } from "utils/cookie";
 import "../../scss/main/home.css";
 import LoginUser from "./LoginUser";
-import MainSchedule from "./MainSchedule";
+import MainSchedule from "./calendar/MainSchedule";
 import LoginTeahcer from "./LoginTeahcer";
 // import { ActivityPhotos } from "./ActivityPhotos";
 import { useDispatch } from "react-redux";
@@ -39,7 +39,7 @@ const Home = () => {
 
   const navigate = useNavigate();
   const [menuArr, setMenuArr] = useState([""]);
-  const today = moment().format("YYYYMMDD");
+  const today = moment().format("20240701");
   const mlsvDay = moment().format("YY년 M월 D일");
   const week = ["일", "월", "화", "수", "목", "금", "토"];
   const dayOfWeek = week[moment().day()].concat("요일");

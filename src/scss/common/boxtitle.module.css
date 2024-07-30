@@ -1,0 +1,30 @@
+@keyframes shake {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-4deg);
+  }
+  50% {
+    transform: rotate(4deg);
+  }
+  75% {
+    transform: rotate(-4deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+.box_title {
+  text-shadow: 0 1.5px 0 rgba(0, 0, 0, 0.15);
+  border-left: #5f909f solid 5px;
+  font-size: 24px;
+  height: 30px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  color: #031929;
+}
+.box_title .box_title_text {
+  margin-left: 10px;
+}/*# sourceMappingURL=boxtitle.module.css.map */
