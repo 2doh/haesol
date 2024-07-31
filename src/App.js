@@ -45,7 +45,6 @@ import HeaderMemu from "components/layout/header/HeaderMenu";
 import HeaderProfile from "components/layout/header/HeaderProfile";
 import Test from "Test";
 
-
 // import jwt from "jsonwebtoken";
 
 const ModalStyle = styled.div`
@@ -140,9 +139,9 @@ function App() {
 
       {/* {onHedaer ? <Header /> : null} */}
       {/* 헤더 샘플 */}
-      {/* <HeaderTopPublic />
+      <HeaderTopPublic />
       <HeaderMemu />
-      <HeaderProfile /> */}
+      <HeaderProfile />
       {/* <MainPage /> */}
 
       <Main>

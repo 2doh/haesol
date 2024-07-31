@@ -3,13 +3,7 @@ import { Provider } from "react-redux";
 import store from "store/store";
 import App from "./App";
 import "./index.css";
-import Dog from "components/notfound/Dog";
 import { RecoilRoot, useSetRecoilState } from "recoil";
-import { userRoleState } from "atoms/userState";
-import { useEffect } from "react";
-import { getCookie } from "utils/cookie";
-import { RecoilRoot } from "recoil";
-
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 // InitializeUserRole 컴포넌트 정의
@@ -30,7 +24,6 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <RecoilRoot>
     <Provider store={store}>
-
       {/* <InitializeUserRole /> */}
 
       <App />
