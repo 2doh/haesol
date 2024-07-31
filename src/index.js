@@ -3,7 +3,6 @@ import { Provider } from "react-redux";
 import store from "store/store";
 import App from "./App";
 import "./index.css";
-import Dog from "components/notfound/Dog";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 

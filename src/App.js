@@ -2,13 +2,9 @@ import styled from "@emotion/styled";
 import Footer from "components/layout/Footer";
 import Header from "components/layout/Header";
 import Home from "pages/Home/Home";
+
 import Login from "pages/user/Login";
 // import NotFound from "pages/NotFound";
-import AdminHome from "pages/admin/AdminHome";
-import NoticeEdit from "pages/notice/NoticeEdit";
-import NoticeModify from "pages/notice/NoticeModify";
-import Students from "pages/student/StudentsList";
-import Signup from "pages/user/Signup";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import "../src/scss/common.scss";
 import "./App.css";
@@ -20,24 +16,33 @@ import PrivateRoute from "components/common/PrivateRoute";
 import SecureRoute from "components/common/SecureRoute";
 import TeacherProtectedRoute from "components/common/TeacherProtectedRoute";
 import NotFound from "components/notfound/NotFound";
+import MainPage from "pages/Home/MainPage";
+import AdminHome from "pages/admin/AdminHome";
 import Grade from "pages/grade/Grade";
 import GradeChart from "pages/grade/GradeChart";
 import GradeView from "pages/grade/GradeView";
+import NoticeEdit from "pages/notice/NoticeEdit";
 import NoticeItem from "pages/notice/NoticeItem";
 import NoticeList from "pages/notice/NoticeList";
+import NoticeModify from "pages/notice/NoticeModify";
+import CreateTest from "pages/online/CreateTest";
 import MyChildInfo from "pages/parents/MyChildInfo";
 import StudentEdit from "pages/student/StudentEdit";
+import Students from "pages/student/StudentsList";
 import TeacherEdit from "pages/teacher/TeacherEdit";
+import Signup from "pages/user/Signup";
 import FindId from "pages/user/login/FindId";
 import FindPass from "pages/user/login/FindPass";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { getCookie } from "utils/cookie";
+import "../src/scss/common.scss";
+import "./App.css";
+import "./css/reset.css";
+import TestPage from "pages/online/TestPage";
 import HeaderTopPublic from "components/layout/header/HeaderTopPublic";
 import HeaderMemu from "components/layout/header/HeaderMenu";
 import HeaderProfile from "components/layout/header/HeaderProfile";
-import MainPage from "pages/Home/MainPage";
-import CreateTest from "pages/online/CreateTest";
 
 // import jwt from "jsonwebtoken";
 
@@ -132,16 +137,15 @@ function App() {
       ) : null}
 
       {/* {onHedaer ? <Header /> : null} */}
-      {/* <HeaderTop /> */}
-      <HeaderTopPublic />
+      {/* 헤더 샘플 */}
+      {/* <HeaderTopPublic />
       <HeaderMemu />
-      <HeaderProfile />
+      <HeaderProfile /> */}
       {/* <MainPage /> */}
 
       <Main>
         <Routes>
           {/* <Route path="/test" element={<Test />}></Route> */}
-
           {/* <Route index element={<Home />}></Route> */}
           <Route index element={<MainPage />}></Route>
           {/* 로그인 & 회원가입 : 이후 진입시 Home으로 강제 이동 */}
@@ -215,6 +219,8 @@ function App() {
             }
           ></Route>
           <Route path="/students" component={<Students />}></Route>
+
+          <Route path="/selftest" element={<TestPage />}></Route>
 
           {/* 학부모 : 성적 확인 페이지 - grade 페이지 진입시 세션에 중복 저장되는 오류 발생 */}
           {/* {accessToken ? (
@@ -347,7 +353,7 @@ function App() {
           ></Route>
         </Routes>
       </Main>
-      <Footer />
+      {/* <Footer /> */}
     </BrowserRouter>
   );
 }
