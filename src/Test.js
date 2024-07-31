@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
-import wordtest from "./json/ENwordtest.json";
+import wordtest from "./api/json/ENwordtest.json";
 import Chatting from "components/chat/Chatting";
+import Vocabulary from "pages/learn/Vocabulary";
+import Title from "components/Title";
 
 // const commands = [
 //   {
@@ -24,14 +26,15 @@ import Chatting from "components/chat/Chatting";
 // ];
 
 const Test = () => {
-  // 음성 인식 테스트
+  // return <Title></Title>;
+  return <Vocabulary wordtest={wordtest}></Vocabulary>;
+  // //음성 인식 테스트
   // const {
   //   transcript,
   //   listening,
   //   resetTranscript,
   //   browserSupportsSpeechRecognition,
   // } = useSpeechRecognition();
-  // const [correct, setCorrect] = useState(false);
   // const [randomImg, setRandomImg] = useState(0);
   // if (!browserSupportsSpeechRecognition) {
   //   return <span>브라우저가 음성 인식을 지원하지 않습니다.</span>;
@@ -76,7 +79,7 @@ const Test = () => {
   //   </div>
   // );
   //=========================================================
-  // tts 테스트
+  //tts 테스트
   // const [text, setText] = useState("");
   // const handleChange = event => {
   //   setText(event.target.value);
@@ -105,11 +108,12 @@ const Test = () => {
   //   </div>
   // );
   // const io = new Server(3000);
-  // return (
-  //   <div>
-  //     <Chatting />
-  //   </div>
-  // );
+
+  return (
+    <div>
+      <Chatting />
+    </div>
+  );
 };
 
 export default Test;

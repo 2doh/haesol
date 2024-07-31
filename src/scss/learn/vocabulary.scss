@@ -1,0 +1,34 @@
+@import "../mixin";
+
+.voca-wrap {
+  margin: 0 auto;
+  max-width: 650px;
+  width: 100%;
+  height: 100%;
+  .voca-top {
+    width: 100%;
+    height: 40px;
+    background-color: aquamarine;
+    @include flex-between();
+    .voca-top-totalword {
+      font-size: 24px;
+      color: #1b4957;
+    }
+  }
+  .voca-main {
+    width: 100%;
+    height: 400px;
+    background-color: wheat;
+  }
+  .voca-bottom {
+    width: 100%;
+    height: 100%;
+    background-color: bisque;
+    @include flex-between();
+    .voca-bottom-word {
+      color: #1b4957;
+      font-size: 30px;
+      font-weight: 700;
+    }
+  }
+}
