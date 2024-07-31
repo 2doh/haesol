@@ -8,7 +8,7 @@ import styled from "@emotion/styled";
 
 const CreateTest = () => {
   const [content, setContent] = useState("");
-  const [sendFile, setSendFile] = useState(null);
+  const [sendFiles, setSendFiles] = useState([]);
   const fileBt = useRef(null);
 
   const handleFileClick = () => {
@@ -16,9 +16,9 @@ const CreateTest = () => {
   };
 
   const handleFileChange = e => {
-    const file = e.target.files[0];
+    const filesArr = Array.from(e.target.files);
     // 파일 보관
-    setSendFile(file);
+    setSendFiles([...sendFiles, ...filesArr]);
   };
 
   // 모듈 활용
@@ -149,6 +149,7 @@ const CreateTest = () => {
               ref={fileBt}
               type="file"
               accept="image/*"
+              multiple
               onChange={e => handleFileChange(e)}
             />
           </div>
