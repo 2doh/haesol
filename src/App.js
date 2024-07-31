@@ -140,7 +140,7 @@ function App() {
 
       <Main>
         <Routes>
-          <Route path="/test" element={<Test />}></Route>
+          {/* <Route path="/test" element={<Test />}></Route> */}
 
           {/* <Route index element={<Home />}></Route> */}
           <Route index element={<MainPage />}></Route>

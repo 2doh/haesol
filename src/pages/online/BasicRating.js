@@ -1,29 +1,40 @@
+import React, { useState } from "react";
+import { Rate } from "antd";
 import styled from "@emotion/styled";
-import Rating from "@mui/material/Rating";
-import { useState } from "react";
 
-const CustomRating = styled(Rating)({
-  "& .MuiRating-iconFilled": {
-    color: "#ffc107", // 여기에 원하는 색상으로 변경
-  },
-  "& .MuiRating-iconHover": {
-    color: "#ff3d47", // 여기에 원하는 색상으로 변경
-  },
-});
+const StarStyle = styled.div`
+  /* 회색 별 */
+  .ant-rate-star-zero {
+    path {
+      color: rgba(0, 0, 0, 0.3);
+    }
+  }
 
-export default function BasicRating() {
-  const [value, setValue] = useState("");
+  /* 노란 별 */
+  .ant-rate-star-full {
+    path {
+      color: #ffaa00;
+    }
+  }
+`;
 
+const BasicRating = () => {
+  const [value, setValue] = useState(3);
   return (
-    <CustomRating
-      name="size-large"
-      // defaultValue={1}
-      size="large"
-      value={value}
-      onChange={(event, newValue) => {
-        // setValue(event.target.value);
-        setValue(newValue);
-      }}
-    />
+    <StarStyle>
+      <div className="wrapper">
+        <div className="flex">
+          <Rate
+            className="rate-style"
+            // tooltips={desc}
+            onChange={setValue}
+            value={value}
+          />
+          {/* {value ? <span>{desc[value - 1]}</span> : null} */}
+        </div>
+      </div>
+    </StarStyle>
   );
-}
+};
+
+export default BasicRating;
