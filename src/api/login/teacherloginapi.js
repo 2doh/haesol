@@ -1,9 +1,6 @@
 import axios from "axios";
 import { setCookie } from "utils/cookie";
 
-import { useSetRecoilState } from "recoil";
-import { userClassState, userNameState, userRoleState } from "atoms/formState";
-
 export const postTeacherSignin = async data => {
   try {
     const res = await axios.post(`/api/teacher/sign-in`, data);
