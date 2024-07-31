@@ -1,0 +1,82 @@
+@import "../valiables";
+@import "../button";
+@import "../mixin";
+
+.main-core {
+  .online-test-inner {
+    width: 800px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 30px;
+    .online-test-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+      width: 100%;
+      .online-test-title-top {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        .online-test-required-title {
+          font-size: 20px;
+        }
+        input {
+          width: 600px;
+          height: 40px;
+          padding: 10px;
+          border: solid 1px $pc-line-p;
+          background-color: $pc-base-p;
+        }
+        input:focus {
+          outline: none;
+        }
+      }
+
+      .test-rating {
+        display: flex;
+        flex-direction: column;
+        .online-test-required-title {
+          font-size: 20px;
+        }
+      }
+    }
+    .online-test-content {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      .online-test-required-title {
+        font-size: 20px;
+      }
+      textarea {
+        width: 100%;
+        height: 500px;
+        padding: 10px;
+        resize: none;
+        border: solid 1px $pc-line-p;
+        background-color: $pc-base-p;
+      }
+      .online-test-file {
+        width: 100%;
+        height: 40px;
+        background-color: $pc-base-p;
+        display: flex;
+        padding: 10px;
+        border: solid 1px $pc-line-p;
+        background-color: $pc-base-p;
+        button {
+          border: 1px solid black;
+        }
+      }
+      .online-test-select-wrap {
+        .online-test-select {
+          .select-input {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}

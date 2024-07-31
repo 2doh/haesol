@@ -1,15 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "../../scss/chat/chat.scss";
 
-const SendMsg = () => {
-  useEffect(() => {}, []);
-
+const SendMsg = ({ sandingMsg, nowTime }) => {
   return (
-    <div className="sendmsg-wrap">
+    <div className="sendmsg-wrap br5">
       <div className="sendmsg-timewrap">
-        <div className="sendmsg-time">123123</div>
+        <div className="sendmsg-time">{nowTime}</div>
       </div>
-      <div className="sendmsg-msg">123123</div>
+      <div className="sendmsg-msg">{sandingMsg}</div>
     </div>
   );
 };

@@ -1,20 +1,53 @@
 import styled from "@emotion/styled";
-import React from "react";
+import React, { useState } from "react";
 import "../../scss/chat/chat.scss";
 import SendMsg from "./SendMsg";
 
 const Chatting = () => {
+  const [myMsg, setMyMsg] = useState("");
+  const [sandingMsg, setSendingMsg] = useState("");
+  const [nowTime, setNowTime] = useState("");
+
+  const asd = () => {
+    setSendingMsg(myMsg);
+    const now = new Date();
+    const nowhours = String(now.getHours()).padStart(2, "0");
+    const minutes = String(now.getMinutes()).padStart(2, "0");
+    const meridiem = nowhours > 12 ? "오후" : "오전";
+    // console.log(meridiem);
+    if (meridiem === "오후") {
+      const hours = nowhours - 12;
+      // console.log(hours);
+      const formattedTime = `${meridiem} ${hours}:${minutes}`;
+      setNowTime(formattedTime);
+    }
+  };
+
   return (
     <ChatWrapStyle>
       <ChatHeaderStyle></ChatHeaderStyle>
-      <ChatFieldStyle></ChatFieldStyle>
+      <ChatFieldStyle>
+        <SendMsg sandingMsg={sandingMsg} nowTime={nowTime}></SendMsg>
+      </ChatFieldStyle>
       <ChatInputStyle>
         <form className="chat-wrap">
-          <textarea className="chat-input"></textarea>
-          <div className="chat-sendbtn br5">전송</div>
+          <textarea
+            className="chat-input"
+            value={myMsg}
+            onChange={e => {
+              setMyMsg(e.target.value);
+            }}
+          ></textarea>
+          <div
+            className="chat-sendbtn br5"
+            onClick={() => {
+              asd();
+            }}
+          >
+            전송
+          </div>
         </form>
       </ChatInputStyle>
-      <SendMsg></SendMsg>
     </ChatWrapStyle>
   );
 };
@@ -25,6 +58,7 @@ const ChatWrapStyle = styled.div`
   width: 335px;
   height: 550px;
   background-color: green;
+  margin-bottom: 888px;
 `;
 
 const ChatHeaderStyle = styled.div`

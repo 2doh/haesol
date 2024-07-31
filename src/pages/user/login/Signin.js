@@ -2,15 +2,21 @@ import { postParentSignin } from "api/login/parentloginapi";
 import { postTeacherSignin } from "api/login/teacherloginapi";
 import PasswordField from "components/user/PasswordField";
 import { useEffect, useState } from "react";
-import { getCookie } from "utils/cookie";
+import { getCookie, setCookie } from "utils/cookie";
 import cleanupBt from "../../../images/tabler_circle-x-filled.svg";
 import LoginIdField from "./LoginIdField";
 import SocialSignin from "./SocialSignin";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { userRoleState } from "atoms/userState";
+import base64 from "base-64";
+import { useNavigate } from "react-router";
 
 const Signin = ({ children, naviState, setNaviState }) => {
-  const [userId, setUserId] = useState("");
-  const [userPass, setUserPass] = useState("");
+  const [userRole, setUserRole] = useRecoilState(userRoleState);
+  const [userId, setUserId] = useState("parent1");
+  const [userPass, setUserPass] = useState("Test1234!@#$");
   const [errMsg, setErrMsg] = useState("");
+  const navi = useNavigate();
 
   const login = async e => {
     e.preventDefault();
@@ -29,7 +35,14 @@ const Signin = ({ children, naviState, setNaviState }) => {
     if (naviState === "signin") {
       const result = await postParentSignin(request);
       if (result.status === 200) {
-        window.location.replace("/");
+        // let acTken = result.data.accessToken;
+        // const payload = JSON.parse(
+        //   base64.decode(acTken.split(".")[1]),
+        // ).signedUser;
+        // const signedUser = JSON.parse(payload);
+        // setUserRole(signedUser.role);
+        // console.log(userRole);
+        navi("/");
       }
       if (result === "error") {
         setErrMsg("아이디 혹은 비밀번호를 확인해주세요");
