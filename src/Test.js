@@ -28,7 +28,7 @@ import Title from "components/Title";
 const Test = () => {
   // return <Title></Title>;
   return <Vocabulary wordtest={wordtest}></Vocabulary>;
-  // //음성 인식 테스트
+  // 음성인식 테스트
   // const {
   //   transcript,
   //   listening,
@@ -62,7 +62,6 @@ const Test = () => {
   //     ></button>
   //     <button
   //       onClick={() => {
-  //         // SpeechRecognition.startListening({ language: "en-US" });
   //         SpeechRecognition.startListening({ language: "ko" });
   //       }}
   //     >
@@ -108,7 +107,7 @@ const Test = () => {
   //   </div>
   // );
   // const io = new Server(3000);
-
+  // ==========================================
   // return (
   //   <div>
   //     <Chatting />
