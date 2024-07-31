@@ -7,6 +7,7 @@ import LoginTeahcer from "pages/Home/LoginTeahcer";
 import ParentsProfile from "pages/Home/profile/ParentsProfile";
 import "../../../scss/main/profile.css";
 import TeacherProfile from "pages/Home/profile/TeacherProfile";
+import { useNavigate } from "react-router";
 
 const HeaderProfileStyle = styled.div`
   font-size: 17px;
