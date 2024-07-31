@@ -4,14 +4,11 @@ import store from "store/store";
 import App from "./App";
 import "./index.css";
 import Dog from "components/notfound/Dog";
-<<<<<<< HEAD
 import { RecoilRoot, useSetRecoilState } from "recoil";
 import { userRoleState } from "atoms/userState";
 import { useEffect } from "react";
 import { getCookie } from "utils/cookie";
-=======
 import { RecoilRoot } from "recoil";
->>>>>>> b03eba6234f3194e922193ce8463e251ad51c0cd
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -33,10 +30,9 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <RecoilRoot>
     <Provider store={store}>
-<<<<<<< HEAD
+
       {/* <InitializeUserRole /> */}
-=======
->>>>>>> b03eba6234f3194e922193ce8463e251ad51c0cd
+
       <App />
     </Provider>
   </RecoilRoot>,

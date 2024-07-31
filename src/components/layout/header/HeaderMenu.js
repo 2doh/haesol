@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { useNavigate } from "react-router";
 
 const HeaderMemuStyle = styled.div`
   font-size: 17px;
@@ -16,7 +17,7 @@ const HeaderMemuStyle = styled.div`
     position: absolute;
     left: 0;
 
-    max-width: 1400px;
+    max-width: 1500px;
     min-width: 1000px;
 
     border-radius: 0px 50px 50px 0px;
@@ -24,7 +25,7 @@ const HeaderMemuStyle = styled.div`
     width: 100%;
     height: 100%;
     background-color: #5f909f;
-    
+
     margin-right: 60px;
 
     .header-menu-inner {
@@ -59,18 +60,31 @@ const HeaderMemuStyle = styled.div`
         white-space: nowrap;
         font-size: 22px;
         color: white;
+        cursor: pointer;
       }
     }
   }
 `;
 
 const HeaderMemu = () => {
+  const navigate = useNavigate();
+
+  const moveMyPage = () => {
+    navigate("/notice/list/classid");
+  };
+
   return (
     <HeaderMemuStyle>
       <div className="header-menu-wrap">
         <nav className="header-menu-inner">
           <ul>
-            <li>알림 마당</li>
+            <li
+              onClick={() => {
+                moveMyPage();
+              }}
+            >
+              알림 마당
+            </li>
             <li>학생 마당</li>
             <li>학부모 마당</li>
             <li>선생님 마당</li>
