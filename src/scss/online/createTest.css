@@ -99,7 +99,6 @@
   font-size: 18px;
 }
 .main-core .online-test-inner .online-test-content .online-test-select-wrap .online-test-select .select-input {
-
   width: 90%;
   height: 40px;
   padding: 10px;
@@ -137,5 +136,4 @@
 .ql-editor.ql-blank::before {
   color: #2a1b07;
   font-style: normal;
-}/*# sourceMappingURL=createtest.css.map */
-
+}/*# sourceMappingURL=createTest.css.map */
