@@ -145,6 +145,7 @@ function App() {
 
       <Main>
         <Routes>
+          {/* <Route path="/test" element={<Test />}></Route> */}
           {/* <Route index element={<Home />}></Route> */}
           <Route index element={<MainPage />}></Route>
           {/* 로그인 & 회원가입 : 이후 진입시 Home으로 강제 이동 */}

@@ -15,12 +15,17 @@
     transform: rotate(0deg);
   }
 }
+.main-core {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .main-core .online-test-inner {
   width: 800px;
   display: flex;
   flex-direction: column;
   padding: 20px;
-  gap: 30px;
+  gap: 60px;
 }
 .main-core .online-test-inner .online-test-title {
   display: flex;
@@ -32,13 +37,13 @@
 .main-core .online-test-inner .online-test-title .online-test-title-top {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
 }
 .main-core .online-test-inner .online-test-title .online-test-title-top .online-test-required-title {
   font-size: 20px;
 }
 .main-core .online-test-inner .online-test-title .online-test-title-top input {
-  width: 600px;
+  width: 580px;
   height: 40px;
   padding: 10px;
   border: solid 1px #886348;
@@ -50,6 +55,7 @@
 .main-core .online-test-inner .online-test-title .test-rating {
   display: flex;
   flex-direction: column;
+  gap: 10px;
 }
 .main-core .online-test-inner .online-test-title .test-rating .online-test-required-title {
   font-size: 20px;
@@ -58,23 +64,20 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 30px;
 }
 .main-core .online-test-inner .online-test-content .online-test-required-title {
   font-size: 20px;
 }
-.main-core .online-test-inner .online-test-content textarea {
+.main-core .online-test-inner .online-test-content form .test-content-quill {
   width: 100%;
   height: 500px;
-  padding: 10px;
-  resize: none;
   border: solid 1px #886348;
   background-color: #fbfaf9;
 }
 .main-core .online-test-inner .online-test-content .online-test-file {
   width: 100%;
   height: 40px;
-  background-color: #fbfaf9;
   display: flex;
   padding: 10px;
   border: solid 1px #886348;
@@ -83,6 +86,56 @@
 .main-core .online-test-inner .online-test-content .online-test-file button {
   border: 1px solid black;
 }
+.main-core .online-test-inner .online-test-content .online-test-select-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+.main-core .online-test-inner .online-test-content .online-test-select-wrap .online-test-select {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 18px;
+}
 .main-core .online-test-inner .online-test-content .online-test-select-wrap .online-test-select .select-input {
-  width: 100%;
-}/*# sourceMappingURL=createTest.css.map */
+
+  width: 90%;
+  height: 40px;
+  padding: 10px;
+  border: solid 1px #886348;
+  background-color: #fbfaf9;
+}
+.main-core .online-test-inner .button-section {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  justify-content: center;
+  font-size: 18px;
+}
+.main-core .online-test-inner .button-section button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 30px;
+  background: #efece8;
+  border-radius: 5px;
+  border: solid 1px #886348;
+  cursor: pointer;
+}
+.main-core .online-test-inner .button-section button:hover {
+  background: #dd838f;
+  border: solid 2px #a8172a;
+  color: #efece8;
+}
+
+.ql-container.ql-snow {
+  border: none;
+}
+
+.ql-editor.ql-blank::before {
+  color: #2a1b07;
+  font-style: normal;
+}/*# sourceMappingURL=createtest.css.map */
+
