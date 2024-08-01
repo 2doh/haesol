@@ -11,6 +11,7 @@ const TeacherProfileStyle = styled.div`
 `;
 
 const TeacherProfile = () => {
+  const navigate = useNavigate();
   /** 마이페이지 이동 */
   const moveMyPage = () => {
     navigate("/teacherinfo");
@@ -18,8 +19,6 @@ const TeacherProfile = () => {
 
   /** 우리 학급 페이지 이동 */
   const moveMyStudentsPage = () => {
-    const navigate = useNavigate();
-
     navigate("/students");
   };
 

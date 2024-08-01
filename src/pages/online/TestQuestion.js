@@ -27,13 +27,12 @@ const TestQuestionWrap = styled.div`
 const TestQuestion = () => {
   // 모든 시험 문제 저장
   const [questionAll, setQuestionAll] = useState([]);
-  // 문제 출력
-  const [examHtml, setExamHtml] = useState("");
-  // omr 출력
-  const [omrHtml, setOmrHtml] = useState("");
-  // 문제 수
 
+  // 문제 수
   const [remainingQuestions, setRemainingQuestions] = useState(0);
+
+  // 상태 변수 설정
+  const [selectedValue, setSelectedValue] = useState("");
 
   const quizRef = useRef(null);
   const omrRef = useRef(null);
@@ -42,31 +41,21 @@ const TestQuestion = () => {
     dataQuestion();
   }, []);
 
-  useEffect(() => {
-    if (quizRef.current && omrRef.current) {
-      const quizElem = quizRef.current;
-      const omrElem = omrRef.current;
-
-      // 이벤트 핸들러 설정
-      quizElem.addEventListener("change", answerSelect);
-      omrElem.addEventListener("change", answerSelectOmr);
-
-      // 컴포넌트 언마운트 시 이벤트 핸들러 정리
-      return () => {
-        quizElem.removeEventListener("change", answerSelect);
-        omrElem.removeEventListener("change", answerSelectOmr);
-      };
-    }
-  }, [examHtml, omrHtml]);
-
   // 나중에 BE에서 불러오는 데이터로 변경하기(받아와야할 정보 : 문제 번호, 문제 내용, 답안 내용)
+  // 나중에 BE에서 불러오는 데이터로 변경하기(보내야할 정보 : 문제 번호, 문제 내용, 작성한 답안 내용)
+  // 문제 선택지는 정답 이외에는 랜덤이어야한다.(오답 선택지의 값이 랜덤이 아니더라도 최소 순서는 랜덤이어야한다.)
   /** JSON 불러오기 */
   const dataQuestion = () => {
     const formattedQuestions = items.map((item, index) => {
+      /** 문제 번호 매기기, 문제 개별로 저장 */
       const formattedQuestion = {
         number: index + 1,
         question: item.question,
+        answer: item.correct_answer,
       };
+
+      // console.log("날 정보 : ", item);
+      // console.log("문제 번호 매기기, 개별 저장 : ", formattedQuestion);
 
       const answerChoices = [...item.incorrect_answers];
 
@@ -82,121 +71,26 @@ const TestQuestion = () => {
         formattedQuestion["choice" + (index + 1)] = choice;
       });
 
-      if (item.question_desc) {
-        formattedQuestion.questionDesc = item.question_desc;
-      }
+      // if (item.question_desc) {
+      //   formattedQuestion.questionDesc = item.question_desc;
+      // }
       if (item.question_img) {
         formattedQuestion.questionImg = item.question_img;
       }
-      if (item.desc) {
-        formattedQuestion.desc = item.desc;
-      }
+      // if (item.desc) {
+      //   formattedQuestion.desc = item.desc;
+      // }
 
       return formattedQuestion;
     });
 
     setQuestionAll(formattedQuestions);
-    generateQuestionComponents(formattedQuestions);
+    // generateQuestionComponents(formattedQuestions);
   };
 
-  // 문제와 OMR 컴포넌트 생성
-  const generateQuestionComponents = questions => {
-    const examHtml = [];
-    const omrHtml = [];
-
-    questions.forEach((question, number) => {
-      examHtml.push(`
-        <div class="cbt">  
-            <div class="cbt__question"><span>${question.number}</span>. ${question.question}</div>
-            <div class="cbt__question__img">
-              ${question.questionImg ? `<img src="https://kebab000.github.io/web2023/gineungsaJPG/${question.questionImg}.jpg" alt="시험이미지">` : ""}
-            </div>
-            <div class="cbt__question__desc">${question.questionDesc || ""}</div>
-            <div class="cbt__selects">
-                <input type="radio" id="select${number}_1" name="select${number}" value="${number}_1">
-                <label for="select${number}_1"><span>${question.choice1}</span></label>
-                <input type="radio" id="select${number}_2" name="select${number}" value="${number}_2">
-                <label for="select${number}_2"><span>${question.choice2}</span></label>
-                <input type="radio" id="select${number}_3" name="select${number}" value="${number}_3">
-                <label for="select${number}_3"><span>${question.choice3}</span></label>
-                <input type="radio" id="select${number}_4" name="select${number}" value="${number}_4">
-                <label for="select${number}_4"><span>${question.choice4}</span></label>
-            </div>
-            <div class="cbt__desc hide">${question.desc || ""}</div>
-        </div>
-      `);
-
-      omrHtml.push(`
-        <div class="omr">
-            <strong>${question.number}</strong>
-            <input type="radio" name="omr${number}" id="omr${number}_1" value="${number}_0">
-            <label for="omr${number}_1"><span class="label-inner">1</span></label>
-            <input type="radio" name="omr${number}" id="omr${number}_2" value="${number}_1">
-            <label for="omr${number}_2"><span class="label-inner">2</span></label>
-            <input type="radio" name="omr${number}" id="omr${number}_3" value="${number}_2">
-            <label for="omr${number}_3"><span class="label-inner">3</span></label>
-            <input type="radio" name="omr${number}" id="omr${number}_4" value="${number}_3">
-            <label for="omr${number}_4"><span class="label-inner">4</span></label>
-        </div>
-      `);
-    });
-
-    setExamHtml(examHtml.join(""));
-    setOmrHtml(omrHtml.join(""));
-  };
-
-  // quiz >> omr 체크 동기화
-  const answerSelect = () => {
-    if (!quizRef.current || !omrRef.current) return;
-
-    const quizElem = quizRef.current;
-    const omrElem = omrRef.current;
-
-    // 모든 체크된 라디오 버튼 가져오기
-    let checkAllRadio = quizElem.querySelectorAll("input[type=radio]:checked");
-
-    // 체크한 값을 오른쪽 omr에 checked할 거에요
-    checkAllRadio.forEach(radioNum => {
-      const valueParts = radioNum.value.split("_");
-      const questionNumber = valueParts[0];
-      const choiceNumber = valueParts[1];
-      const omrInput = omrElem.querySelector(
-        `input[id=omr${questionNumber}_${choiceNumber}]`,
-      );
-      if (omrInput) {
-        omrInput.checked = true;
-      }
-    });
-
-    updateRemainingQuestions(checkAllRadio.length);
-  };
-
-  // omr >> quiz 체크 동기화
-  const answerSelectOmr = () => {
-    if (!quizRef.current || !omrRef.current) return;
-
-    const quizElem = quizRef.current;
-    const omrElem = omrRef.current;
-
-    // 모든 체크된 라디오 버튼 가져오기
-    const checkedOmrRadios = omrElem.querySelectorAll(
-      "input[type=radio]:checked",
-    );
-
-    // quiz 영역의 체크박스 동기화
-    checkedOmrRadios.forEach(radio => {
-      const valueParts = radio.value.split("_");
-      const questionNumber = valueParts[0];
-      const choiceNumber = valueParts[1];
-      const correspondingQuizInput = quizElem.querySelector(
-        `input[value="${questionNumber}_${choiceNumber}"]`,
-      );
-      if (correspondingQuizInput) {
-        correspondingQuizInput.checked = true;
-      }
-    });
-
-    updateRemainingQuestions(checkedOmrRadios.length);
+  // quiz = omr 체크 동기화
+  const answerSelect = e => {
+    setSelectedValue(e.target.value);
   };
 
   // 남은 문항 계산하기
@@ -208,17 +102,146 @@ const TestQuestion = () => {
   return (
     <TestQuestionWrap>
       <div className="test-question-inner">
-        <div
-          className="question-text cbt__quiz"
-          dangerouslySetInnerHTML={{ __html: examHtml }}
-          ref={quizRef}
-        ></div>
+        <div className="question-text cbt__quiz">
+          {questionAll.map((item, index) => (
+            <div className="cbt" key={index}>
+              <div className="cbt__question">
+                <span>{item.number}</span>. {item.question || ""}
+              </div>
+              <div className="cbt__question__img">
+                {/* $
+                {question.questionImg
+                  ? `<img src="https://kebab000.github.io/web2023/gineungsaJPG/${question.questionImg}.jpg" alt="시험이미지">`
+                  : ""} */}
+              </div>
+              {/* <div className="cbt__question__desc">{item.question || ""}</div> */}
+              <div
+                className="cbt__selects"
+                ref={quizRef}
+                onChange={e => {
+                  answerSelect(e);
+                }}
+              >
+                <input
+                  type="radio"
+                  checked={selectedValue === `${item.number}_1`}
+                  id={`select${item.number}_1`}
+                  name={`select${item.number}`}
+                  value={`${item.number}_1`}
+                />
+                <label htmlFor={`select${item.number}_1`}>
+                  <span>{item.choice1}</span>
+                </label>
+                <input
+                  type="radio"
+                  checked={selectedValue === `${item.number}_2`}
+                  id={`select${item.number}_2`}
+                  name={`select${item.number}`}
+                  value={`${item.number}_2`}
+                />
+                <label htmlFor={`select${item.number}_2`}>
+                  <span>{item.choice2}</span>
+                </label>
+                <input
+                  type="radio"
+                  checked={selectedValue === `${item.number}_3`}
+                  id={`select${item.number}_3`}
+                  name={`select${item.number}`}
+                  value={`${item.number}_3`}
+                />
+                <label htmlFor={`select${item.number}_3`}>
+                  <span>{item.choice3}</span>
+                </label>
+                <input
+                  type="radio"
+                  checked={selectedValue === `${item.number}_4`}
+                  id={`select${item.number}_4`}
+                  name={`select${item.number}`}
+                  value={`${item.number}_4`}
+                />
+                <label htmlFor={`select${item.number}_4`}>
+                  <span>{item.choice4}</span>
+                </label>
+                <input
+                  type="radio"
+                  checked={selectedValue === `${item.number}_5`}
+                  id={`select${item.number}_5`}
+                  name={`select${item.number}`}
+                  value={`${item.number}_5`}
+                />
+                <label htmlFor={`select${item.number}_5`}>
+                  <span>5</span>
+                </label>
+              </div>
+              <div className="cbt__desc hide">{item.desc || ""}</div>
+            </div>
+          ))}
+        </div>
         <div className="question-pic">사진 영역 입니다.</div>
-        <div
-          className="num-select cbt__omr"
-          dangerouslySetInnerHTML={{ __html: omrHtml }}
-          ref={omrRef}
-        ></div>
+        <div className="num-select cbt__omr">
+          {questionAll.map((item, index) => (
+            <div
+              ref={omrRef}
+              className="omr"
+              key={index}
+              onChange={e => {
+                answerSelect(e);
+              }}
+            >
+              <strong>{item.number}</strong>
+              <input
+                type="radio"
+                checked={selectedValue === `${item.number}_1`}
+                id={`omr${item.number}_1`}
+                name={`omr${item.number}`}
+                value={`${item.number}_1`}
+              />
+              <label htmlFor={`omr${item.number}_1`}>
+                <span className="label-inner">1</span>
+              </label>
+              <input
+                type="radio"
+                checked={selectedValue === `${item.number}_2`}
+                id={`omr${item.number}_2`}
+                name={`omr${item.number}`}
+                value={`${item.number}_2`}
+              />
+              <label htmlFor={`omr${item.number}_2`}>
+                <span className="label-inner">2</span>
+              </label>
+              <input
+                type="radio"
+                checked={selectedValue === `${item.number}_3`}
+                id={`omr${item.number}_3`}
+                name={`omr${item.number}`}
+                value={`${item.number}_3`}
+              />
+              <label htmlFor={`omr${item.number}_3`}>
+                <span className="label-inner">3</span>
+              </label>
+              <input
+                type="radio"
+                checked={selectedValue === `${item.number}_4`}
+                id={`omr${item.number}_4`}
+                name={`omr${item.number}`}
+                value={`${item.number}_4`}
+              />
+              <label htmlFor={`omr${item.number}_4`}>
+                <span className="label-inner">4</span>
+              </label>
+              <input
+                type="radio"
+                checked={selectedValue === `${item.number}_5`}
+                id={`omr${item.number}_5`}
+                name={`omr${item.number}`}
+                value={`${item.number}_5`}
+              />
+              <label htmlFor={`omr${item.number}_5`}>
+                <span className="label-inner">5</span>
+              </label>
+            </div>
+          ))}
+        </div>
         <div className="cbt__remainder">
           남은 문항: <em>{remainingQuestions}</em>
         </div>

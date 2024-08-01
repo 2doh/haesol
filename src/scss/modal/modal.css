@@ -39,6 +39,9 @@
   display: flex;
   align-items: center;
 }
+.modal-wrap .modal-inner .modal-text {
+  white-space: pre-wrap;
+}
 .modal-wrap .modal-inner .modal-body {
   margin: 30px 0px 10px;
   text-align: center;

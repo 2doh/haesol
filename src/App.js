@@ -139,9 +139,9 @@ function App() {
 
       {/* {onHedaer ? <Header /> : null} */}
       {/* 헤더 샘플 */}
-      <HeaderTopPublic />
+      {/* <HeaderTopPublic />
       <HeaderMemu />
-      <HeaderProfile />
+      <HeaderProfile /> */}
       {/* <MainPage /> */}
 
       <Main>
