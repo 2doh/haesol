@@ -17,7 +17,8 @@ const HeaderMemuStyle = styled.div`
     position: absolute;
     left: 0;
 
-    max-width: 1500px;
+    width: calc(100vw - 10%);
+    max-width: calc(100% - 10%);
     min-width: 1000px;
 
     border-radius: 0px 50px 50px 0px;
