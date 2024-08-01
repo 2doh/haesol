@@ -210,6 +210,15 @@ function App() {
           )}
 
           {/* 교직원 : 학생 리스트 */}
+          {/* <Route
+            path="/students"
+            element={
+              <TeacherProtectedRoute
+                authenticated={accessToken}
+                component={<Students />}
+              />
+            }
+          ></Route> */}
           <Route
             path="/students"
             element={
@@ -219,6 +228,7 @@ function App() {
               />
             }
           ></Route>
+
           <Route path="/students" component={<Students />}></Route>
 
           <Route path="/selftest" element={<TestPage />}></Route>

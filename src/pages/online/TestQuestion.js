@@ -25,7 +25,6 @@ const TestQuestionWrap = styled.div`
 `;
 
 const TestQuestion = () => {
-
   // 모든 시험 문제 저장
   const [questionAll, setQuestionAll] = useState([]);
   // 문제 출력
@@ -60,6 +59,7 @@ const TestQuestion = () => {
     }
   }, [examHtml, omrHtml]);
 
+  // 나중에 BE에서 불러오는 데이터로 변경하기(받아와야할 정보 : 문제 번호, 문제 내용, 답안 내용)
   /** JSON 불러오기 */
   const dataQuestion = () => {
     const formattedQuestions = items.map((item, index) => {
