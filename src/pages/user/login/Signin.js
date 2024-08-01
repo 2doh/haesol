@@ -67,9 +67,9 @@ const Signin = ({ children, naviState, setNaviState }) => {
       setErrMsg("");
     }
   }, [userPass, userId]);
-  const userRole = useRecoilValue(userRoleState);
+  // const userRole = useRecoilValue(userRoleState);
   useEffect(() => {
-    console.log(userRole);
+    // console.log(userRole);
   }, [login]);
 
   return (
