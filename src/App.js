@@ -44,6 +44,7 @@ import HeaderTopPublic from "components/layout/header/HeaderTopPublic";
 import HeaderMemu from "components/layout/header/HeaderMenu";
 import HeaderProfile from "components/layout/header/HeaderProfile";
 import Test from "Test";
+import VocaLearn from "pages/learn/VocaLearn";
 
 // import jwt from "jsonwebtoken";
 
@@ -147,6 +148,7 @@ function App() {
       <Main>
         <Routes>
           <Route path="/test" element={<Test />}></Route>
+          <Route path="/voca" element={<VocaLearn />}></Route>
           {/* <Route index element={<Home />}></Route> */}
           <Route index element={<MainPage />}></Route>
           {/* 로그인 & 회원가입 : 이후 진입시 Home으로 강제 이동 */}
