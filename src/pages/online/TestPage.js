@@ -23,6 +23,7 @@ const TestWrap = styled.div`
 
       & > div:first-child {
         flex-grow: 2.2;
+        max-width: 803px;
       }
       & > div:last-child {
         flex-grow: 1;
