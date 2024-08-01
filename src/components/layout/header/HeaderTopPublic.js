@@ -80,6 +80,8 @@ const HeaderTopStyle = styled.div`
 `;
 
 const HeaderTopPublic = () => {
+  const navigate = useNavigate();
+
   /** 메인 페이지로 이동 */
   const moveHomePage = () => {
     navigate("/");

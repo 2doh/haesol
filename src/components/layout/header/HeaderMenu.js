@@ -70,8 +70,27 @@ const HeaderMemuStyle = styled.div`
 const HeaderMemu = () => {
   const navigate = useNavigate();
 
-  const moveMyPage = () => {
-    navigate("/notice/list/classid");
+  const moveMyPage = pageNum => {
+    switch (pageNum) {
+      case 1:
+        navigate("/notice/list/classid");
+        break;
+      case 2:
+        navigate("/test");
+        break;
+      case 3:
+        console.log("설정 안됬어요.");
+        // navigate("/selftest");
+        break;
+      case 4:
+        navigate("/online/test/create");
+        break;
+      case 5:
+        navigate("/selftest");
+        break;
+      default:
+        break;
+    }
   };
 
   return (
@@ -81,15 +100,39 @@ const HeaderMemu = () => {
           <ul>
             <li
               onClick={() => {
-                moveMyPage();
+                moveMyPage(1);
               }}
             >
               알림 마당
             </li>
-            <li>학생 마당</li>
-            <li>학부모 마당</li>
-            <li>선생님 마당</li>
-            <li>온라인 학습</li>
+            <li
+              onClick={() => {
+                moveMyPage(2);
+              }}
+            >
+              학생 마당
+            </li>
+            <li
+              onClick={() => {
+                moveMyPage(3);
+              }}
+            >
+              학부모 마당
+            </li>
+            <li
+              onClick={() => {
+                moveMyPage(4);
+              }}
+            >
+              선생님 마당
+            </li>
+            <li
+              onClick={() => {
+                moveMyPage(5);
+              }}
+            >
+              온라인 학습
+            </li>
           </ul>
         </nav>
       </div>
