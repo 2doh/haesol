@@ -8,7 +8,7 @@
   .voca-top {
     width: 100%;
     height: 40px;
-    background-color: aquamarine;
+    // background-color: aquamarine;
     @include flex-between();
     .voca-top-totalword {
       font-size: 24px;
@@ -18,12 +18,18 @@
   .voca-main {
     width: 100%;
     height: 400px;
-    background-color: wheat;
+    // background-color: wheat;
+    .voca-main-card {
+      width: 100%;
+      height: 400px;
+      background-size: cover;
+      background: no-repeat center;
+    }
   }
   .voca-bottom {
     width: 100%;
     height: 100%;
-    background-color: bisque;
+    // background-color: bisque;
     @include flex-between();
     .voca-bottom-word {
       color: #1b4957;
