@@ -18,8 +18,7 @@ const StarStyle = styled.div`
   }
 `;
 
-const BasicRating = () => {
-  const [value, setValue] = useState(3);
+const BasicRating = ({ starValue, setStarValue }) => {
   return (
     <StarStyle>
       <div className="wrapper">
@@ -27,8 +26,8 @@ const BasicRating = () => {
           <Rate
             className="rate-style"
             // tooltips={desc}
-            onChange={setValue}
-            value={value}
+            onChange={setStarValue}
+            value={starValue}
           />
           {/* {value ? <span>{desc[value - 1]}</span> : null} */}
         </div>

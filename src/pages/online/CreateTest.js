@@ -1,24 +1,69 @@
+import styled from "@emotion/styled";
 import { useRef, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "../../scss/online/createTest.css";
-import DOMPurify from "dompurify";
 import BasicRating from "./BasicRating";
-import styled from "@emotion/styled";
+import { useDispatch, useSelector } from "react-redux";
+import { openModal, updateModalDate } from "slices/modalSlice";
 
 const CreateTest = () => {
   const [content, setContent] = useState("");
-  const [sendFiles, setSendFiles] = useState([]);
-  const fileBt = useRef(null);
-
-  const handleFileClick = () => {
-    fileBt.current.click();
-  };
+  const [sendFile, setSendFile] = useState(null);
+  const [starValue, setStarValue] = useState(3);
+  const modalState = useSelector(state => state.modalSlice);
+  const dispatch = useDispatch();
 
   const handleFileChange = e => {
-    const filesArr = Array.from(e.target.files);
+    const file = e.target.files[0];
     // 파일 보관
-    setSendFiles([...sendFiles, ...filesArr]);
+    setSendFile(file);
+  };
+
+  const saveData = async e => {
+    e.preventDefault();
+    const formData = new FormData();
+    const onlineTestData = JSON.stringify({
+      // BE: FE,
+      // 제목,
+      // 난이도,
+      // 문제내용,
+      // 이미지있을수도없을수도,
+      // 보기내용,
+      // 정답,
+    });
+    console.log("onlineTestData : ", onlineTestData);
+
+    const dto = new Blob([infoData], { type: "application/json" });
+    formData.append("키명", dto);
+    // formData.append("petImage", imgFile); 처럼 백에서 요구한 값 넣기
+    formData.append("키명", sendFile);
+    axiosPost함수(formData);
+  };
+
+  const handleSave = selectModalType => {
+    const data = {
+      bodyText: [
+        "문제가 성공적으로 저장되었습니다. 다음 문제를 계속해서 제출하시겠습니까?",
+      ],
+      modalRes: [50],
+      buttonText: ["확인", "닫기"],
+    };
+
+    dispatch(updateModalDate(data));
+    dispatch(openModal(selectModalType));
+  };
+
+  /** 취소 기능 */
+  const modifyCancel = selectModalType => {
+    const data = {
+      bodyText: ["문제 제출을 취소하시겠습니까?"],
+      modalRes: [43],
+      buttonText: ["확인", "닫기"],
+    };
+
+    dispatch(updateModalDate(data));
+    dispatch(openModal(selectModalType));
   };
 
   // 모듈 활용
@@ -114,7 +159,7 @@ const CreateTest = () => {
 
           <div className="test-rating">
             <div className="online-test-required-title">난이도</div>
-            <BasicRating />
+            <BasicRating starValue={starValue} setStarValue={setStarValue} />
           </div>
         </div>
         <div className="online-test-content">
@@ -132,31 +177,20 @@ const CreateTest = () => {
         <div className="online-test-content">
           <div className="online-test-required-title">이미지 첨부</div>
           <div className="online-test-file">
-            <div className="button-section">
-              <button
-                type="button"
-                onClick={() => {
-                  handleFileClick();
-                }}
-              >
-                파일 업로드
-              </button>
-            </div>
             <input
               // 파일 이름 미리보기 가능하도록 변경 필요
-              // style={{ display: "none" }}
               id="filebt_id"
-              ref={fileBt}
               type="file"
               accept="image/*"
-              multiple
               onChange={e => handleFileChange(e)}
             />
           </div>
         </div>
         <div className="online-test-content">
-          <div className="online-test-required-title">보기(정답)</div>
-          <div></div>
+          <div className="online-test-required-title">
+            보기(정답)<p>정답에 체크해주세요.(복수 정답일 시 여러 개 체크)</p>
+          </div>
+
           <div className="online-test-select-wrap">
             <div className="online-test-select">
               <input type="checkbox" name="one" className="checkbox" />
@@ -170,17 +204,17 @@ const CreateTest = () => {
             </div>
             <div className="online-test-select">
               <input type="checkbox" name="three" className="checkbox" />
-              <label htmlFor="two">3</label>
+              <label htmlFor="three">3</label>
               <input type="text" className="select-input" />
             </div>
             <div className="online-test-select">
               <input type="checkbox" name="four" className="checkbox" />
-              <label htmlFor="two">4</label>
+              <label htmlFor="four">4</label>
               <input type="text" className="select-input" />
             </div>
             <div className="online-test-select">
               <input type="checkbox" name="five" className="checkbox" />
-              <label htmlFor="two">5</label>
+              <label htmlFor="five">5</label>
               <input type="text" className="select-input" />
             </div>
           </div>
@@ -188,7 +222,7 @@ const CreateTest = () => {
         <div className="button-section">
           <button
             onClick={() => {
-              handleSave();
+              handleSave("BasicModal");
             }}
           >
             저장

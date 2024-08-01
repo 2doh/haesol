@@ -53,6 +53,12 @@
       gap: 30px;
       .online-test-required-title {
         font-size: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        p {
+          font-size: 15px;
+        }
       }
       form {
         .test-content-quill {
@@ -66,12 +72,10 @@
         width: 100%;
         height: 40px;
         display: flex;
+        align-items: center;
         padding: 10px;
         border: solid 1px $pc-line-p;
         background-color: $pc-base-p;
-        button {
-          border: 1px solid black;
-        }
       }
       .online-test-select-wrap {
         display: flex;
