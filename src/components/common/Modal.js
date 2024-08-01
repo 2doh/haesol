@@ -224,8 +224,6 @@ const Modal = () => {
       // 알림장 작성 취소용
       if (modalState.modalRes[0] === 43) {
         navi(-1);
-
-        console.log("네비게이트 적용하기");
         const data = {
           modalRes: [false],
         };
@@ -247,6 +245,15 @@ const Modal = () => {
       if (modalState.modalRes[0] === 45) {
         console.log("수정처리를 하겠습니다.", modalState.modalRes[1]);
         const res = modifyStudentInfo(modalState.modalRes[1]);
+        if (res) {
+          dispatch(closeModal());
+        }
+      }
+
+      // 온라인 시험 제출 관련
+      if (modalState.modalRes[0] === 50) {
+        console.log("시험 제출 완!.", modalState.modalRes[1]);
+        // const res = saveOnlineCreateTest(modalState.modalRes[1]);
         if (res) {
           dispatch(closeModal());
         }

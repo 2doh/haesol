@@ -3,26 +3,21 @@ import LogoutButton from "components/common/LogoutButton";
 import React from "react";
 import { useNavigate } from "react-router";
 import { getCookie } from "utils/cookie";
-
 const TeacherProfileStyle = styled.div`
   position: relative;
   width: 330px;
   height: 300px;
 `;
-
 const TeacherProfile = () => {
+  const navigate = useNavigate();
   /** 마이페이지 이동 */
   const moveMyPage = () => {
     navigate("/teacherinfo");
   };
-
   /** 우리 학급 페이지 이동 */
   const moveMyStudentsPage = () => {
-    const navigate = useNavigate();
-
     navigate("/students");
   };
-
   return (
     <TeacherProfileStyle>
       <div className="user-info-wrap">
@@ -65,11 +60,9 @@ const TeacherProfile = () => {
                   </div>
                 </div>
               </div>
-
               <LogoutButton />
             </div>
             {/* 유저 정보 end */}
-
             {/* 버튼 start */}
             <div className="bottom-user-btn">
               <button
@@ -80,7 +73,6 @@ const TeacherProfile = () => {
               >
                 우리 학급 바로가기
               </button>
-
               <button
                 className="my-page-btn"
                 onClick={() => {
@@ -97,5 +89,4 @@ const TeacherProfile = () => {
     </TeacherProfileStyle>
   );
 };
-
 export default TeacherProfile;
