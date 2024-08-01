@@ -25,6 +25,7 @@ const TestQuestionWrap = styled.div`
 `;
 
 const TestQuestion = () => {
+
   // 모든 시험 문제 저장
   const [questionAll, setQuestionAll] = useState([]);
   // 문제 출력
@@ -32,6 +33,7 @@ const TestQuestion = () => {
   // omr 출력
   const [omrHtml, setOmrHtml] = useState("");
   // 문제 수
+
   const [remainingQuestions, setRemainingQuestions] = useState(0);
 
   const quizRef = useRef(null);
