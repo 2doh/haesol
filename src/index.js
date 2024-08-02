@@ -1,9 +1,10 @@
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
+import { RecoilRoot } from "recoil";
 import store from "store/store";
 import App from "./App";
 import "./index.css";
-import { RecoilRoot, useSetRecoilState } from "recoil";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 // InitializeUserRole 컴포넌트 정의
@@ -23,10 +24,10 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 // root.render(<App />);
 root.render(
   <RecoilRoot>
-    <Provider store={store}>
-      {/* <InitializeUserRole /> */}
-
-      <App />
-    </Provider>
+    <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </GoogleOAuthProvider>
   </RecoilRoot>,
 );

@@ -22,9 +22,9 @@
   height: 100%;
 }
 .voca-wrap .voca-top {
+  margin-top: 10px;
   width: 100%;
   height: 40px;
-  background-color: aquamarine;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -36,18 +36,27 @@
 .voca-wrap .voca-main {
   width: 100%;
   height: 400px;
-  background-color: wheat;
 }
-.voca-wrap .voca-bottom {
+.voca-wrap .voca-main .voca-main-card {
+  width: 100%;
+  height: 400px;
+  background-size: cover;
+  background: no-repeat center;
+}
+
+.voca-bottom {
   width: 100%;
   height: 100%;
-  background-color: bisque;
+  margin-top: 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.voca-wrap .voca-bottom .voca-bottom-word {
+
+.voca-bottom-word {
   color: #1b4957;
   font-size: 30px;
   font-weight: 700;
+  display: flex;
+  justify-content: center;
 }/*# sourceMappingURL=vocabulary.css.map */
