@@ -207,7 +207,7 @@ const GradeView = () => {
   const [examListTwo, setExamListTwo] = useState(initData);
   const [latestGrade, setLatestGrade] = useState(1); // 최종학년
   const [latestSemester, setLatestSemester] = useState(1); // 최종학기
-  const [latestYear, setLatestYear] = useState("2023"); // 최종년도
+  const [latestYear, setLatestYear] = useState("2024"); // 최종년도
 
   const studentGrade1 = async () => {
     try {

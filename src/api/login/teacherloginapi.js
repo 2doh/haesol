@@ -18,6 +18,7 @@ export const postTeacherSignin = async data => {
     setCookie("userEmail", res.data.email);
     // console.log("권한 :", sigedUser.role);
     // console.log("유저 PK :", signedUser.userId);
+    alert(signedUser.role);
     return res;
   } catch (error) {
     // console.log(error);

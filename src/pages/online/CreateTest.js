@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { useRef, useState } from "react";
 import ReactQuill from "react-quill";
+import DOMPurify from "dompurify";
 import "react-quill/dist/quill.snow.css";
 import "../../scss/online/createTest.css";
 import BasicRating from "./BasicRating";
@@ -8,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { openModal, updateModalDate } from "slices/modalSlice";
 
 const CreateTest = () => {
+  const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [sendFile, setSendFile] = useState(null);
   const [starValue, setStarValue] = useState(3);
@@ -73,7 +75,7 @@ const CreateTest = () => {
         [{ header: [1, 2, 3, 4, 5, 6, false] }],
         [{ font: [] }],
         [{ align: [] }],
-        ["bold", "italic", "underline", "strike", "blockquote"],
+        ["underline", "strike", "blockquote"],
         [{ list: "ordered" }, { list: "bullet" }, "link"],
         [
           {
@@ -154,6 +156,9 @@ const CreateTest = () => {
               className="online-test-title"
               type="text"
               placeholder="제목을 입력해주세요."
+              onChange={e => {
+                handleTitleChange(e);
+              }}
             ></input>
           </div>
 

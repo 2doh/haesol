@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import "../../scss/student/grade.css";
 import "../../scss/student/studentEdit.css";
+import moment from "moment";
 
 const initData = [
   {
@@ -168,7 +169,7 @@ const Grade = () => {
   const [studentName, setStudentName] = useState("");
   const [studentClass, setStudentClass] = useState("");
 
-  const [nowYear, setNowYear] = useState(new Date().getFullYear());
+  // const [nowYear, setNowYear] = useState(new Date().getFullYear());
   const [yearOptions, setYearOptions] = useState([]);
   // const [selectedYear, setSelectedYear] = useState(""); // 추가된 부분
 
@@ -177,6 +178,11 @@ const Grade = () => {
   const [classRank, setClassRank] = useState("-");
   const [gradeRank, setGradeRank] = useState("-");
 
+  // format에 맞게 출력된다.
+  const nowTime = moment().format("YYYY");
+  console.log(nowTime);
+  // 출력 결과: 2020-08-23 12:54:30
+  const [classGrade, setClassGrade] = useState([]);
   // 학생 정보 불러오기
   const studentInfoData = async () => {
     try {
@@ -185,6 +191,7 @@ const Grade = () => {
       setStudentInfo(result);
       setStudentName(result.studentName);
       setStudentClass(result.studentClass);
+      setClassGrade(result.studentClass.split(" "));
     } catch (error) {
       console.log(error);
     }
@@ -193,13 +200,16 @@ const Grade = () => {
     // 학생 데이터 불러오기
     studentInfoData();
   }, [studentPk]);
+  useEffect(() => {
+    console.log(classGrade[0]);
+  }, [classGrade]);
 
   // 최초 조회 시 성적 불러오기 중간고사
   const [examListOne, setExamListOne] = useState(initData);
   const [examListTwo, setExamListTwo] = useState(initData);
   const [latestGrade, setLatestGrade] = useState(1); // 최종학년
   const [latestSemester, setLatestSemester] = useState(1); // 최종학기
-  const [latestYear, setLatestYear] = useState("2023"); // 최종년도
+  const [latestYear, setLatestYear] = useState("2024"); // 최종년도
 
   // 싸인 정보
   const [signResultPic1, setSignResultPic1] = useState(null);
@@ -353,14 +363,22 @@ const Grade = () => {
 
   const handleSaveOne = async (e, _item) => {
     e.preventDefault();
+
+    const scoreList = examListOne.map(item => ({
+      name: item.name,
+      exam: 1,
+      mark: item.mark,
+    }));
+
+    console.log("scoreList:", scoreList);
+
     const scoreData = {
       studentPk: studentPk,
-      year: latestYear,
+      year: nowTime,
       semester: latestSemester,
-      name: _item.name,
-      exam: 1,
-      mark: _item.mark,
+      scoreList: scoreList,
     };
+    console.log("scoreData:", scoreData);
     try {
       await postStudentGradeScore(scoreData);
       alert("성공적으로 저장되었습니다.");
@@ -371,13 +389,18 @@ const Grade = () => {
 
   const handleSaveTwo = async (e, _item) => {
     e.preventDefault();
+
+    const scoreList = examListTwo.map(item => ({
+      name: item.name,
+      exam: 2,
+      mark: item.mark,
+    }));
+
     const scoreData = {
       studentPk: studentPk,
-      year: latestYear,
+      year: nowTime,
       semester: latestSemester,
-      name: _item.name,
-      exam: 2,
-      mark: _item.mark,
+      scoreList: scoreList,
     };
     console.log(scoreData);
     try {
@@ -433,7 +456,7 @@ const Grade = () => {
             subjectGradeRank: update.subjectGradeRank,
             exam: update.exam,
             semester: semester,
-            year: year,
+            year: nowTime,
             grade: grade,
           };
         }
@@ -484,7 +507,7 @@ const Grade = () => {
             subjectGradeRank: update.subjectGradeRank,
             exam: update.exam,
             semester: semester,
-            year: year,
+            year: nowTime,
             grade: grade,
           };
         }
@@ -499,35 +522,27 @@ const Grade = () => {
   const handleGradeChange = async e => {
     const newGrade = e.target.value;
     setLatestGrade(newGrade);
-    await studentGradeSelect1(newGrade, latestSemester, latestYear);
-    await studentGradeSelect2(newGrade, latestSemester, latestYear);
+    await studentGradeSelect1(newGrade, latestSemester);
+    await studentGradeSelect2(newGrade, latestSemester);
+  };
+  // 학년 값을 숫자로 변환하는 함수
+  const getNumericGrade = gradeString => {
+    const gradeMap = {
+      "1학년": "1",
+      "2학년": "2",
+      "3학년": "3",
+      "4학년": "4",
+      "5학년": "5",
+      "6학년": "6",
+    };
+    return gradeMap[gradeString] || "";
   };
   const handleSemesterChange = async e => {
     const newSemester = e.target.value;
     setLatestSemester(newSemester);
-    await studentGradeSelect1(latestGrade, newSemester, latestYear);
-    await studentGradeSelect2(latestGrade, newSemester, latestYear);
+    await studentGradeSelect1(latestGrade, newSemester);
+    await studentGradeSelect2(latestGrade, newSemester);
   };
-
-  const handleYearChange = async e => {
-    const newLatestYear = e.target.value;
-    setLatestYear(newLatestYear);
-    await studentGradeSelect1(latestGrade, latestSemester, newLatestYear);
-    await studentGradeSelect2(latestGrade, latestSemester, newLatestYear);
-  };
-
-  useEffect(() => {
-    const generateYearOptions = () => {
-      const currentYear = new Date().getFullYear();
-      const startYear = currentYear - 10;
-      const options = [];
-      for (let year = currentYear; year >= startYear; year--) {
-        options.push(year.toString());
-      }
-      setYearOptions(options);
-    };
-    generateYearOptions();
-  }, []);
 
   const ParentCheckStyle = styled.div`
     display: flex;
@@ -581,7 +596,6 @@ const Grade = () => {
                 <select
                   name="grade"
                   onChange={e => {
-                    // console.log("Button clicked"); // 이벤트가 발생했는지 확인
                     handleGradeChange(e);
                   }}
                   value={latestGrade}
@@ -604,22 +618,6 @@ const Grade = () => {
                   <option value="2">2학기</option>
                 </select>
               </div>
-              <div className="total-student">
-                <p>년도 선택</p>
-                <select
-                  id="year"
-                  value={latestYear}
-                  onChange={e => {
-                    handleYearChange(e);
-                  }}
-                >
-                  {yearOptions.map((year, index) => (
-                    <option key={index} value={year}>
-                      {year}년
-                    </option>
-                  ))}
-                </select>
-              </div>
             </div>
           </div>
         </div>
@@ -628,6 +626,16 @@ const Grade = () => {
             <div className="frame">
               <div className="text-wrapper">중간고사</div>
             </div>
+          </div>
+
+          <div className="info-button">
+            <button
+              onClick={e => {
+                handleSaveOne(e);
+              }}
+            >
+              저장
+            </button>
           </div>
         </div>
         <div className="info-contain-top">
@@ -661,15 +669,6 @@ const Grade = () => {
                     />
                     등
                   </div>
-                  <div className="info-button">
-                    <button
-                      onClick={e => {
-                        handleSaveOne(e, item);
-                      }}
-                    >
-                      저장
-                    </button>
-                  </div>
                 </div>
               </div>
             ))}
@@ -696,6 +695,15 @@ const Grade = () => {
             <div className="frame">
               <div className="text-wrapper">기말고사</div>
             </div>
+          </div>
+          <div className="info-button">
+            <button
+              onClick={e => {
+                handleSaveTwo(e);
+              }}
+            >
+              저장
+            </button>
           </div>
         </div>
 
@@ -729,15 +737,6 @@ const Grade = () => {
                       value={`${item.subjectClassRank || "-"} / ${item.subjectGradeRank || "-"}`}
                     />
                     등
-                  </div>
-                  <div className="info-button">
-                    <button
-                      onClick={e => {
-                        handleSaveTwo(e, item);
-                      }}
-                    >
-                      저장
-                    </button>
                   </div>
                 </div>
               </div>

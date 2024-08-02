@@ -45,6 +45,7 @@ import HeaderMemu from "components/layout/header/HeaderMenu";
 import HeaderProfile from "components/layout/header/HeaderProfile";
 import Test from "Test";
 import VocaLearn from "pages/learn/VocaLearn";
+import CreateTestEn from "pages/online/CreateTestEn";
 import Learn from "pages/learn/Learn";
 
 // import jwt from "jsonwebtoken";
@@ -226,14 +227,14 @@ function App() {
             }
           ></Route>
 
-          <Route path="/students" component={<Students />}></Route>
+          {/* <Route path="/students" component={<Students />}></Route> */}
 
           <Route path="/selftest" element={<TestPage />}></Route>
 
           {/* 학부모 : 성적 확인 페이지 - grade 페이지 진입시 세션에 중복 저장되는 오류 발생 */}
           {/* {accessToken ? (
             // 교직원 : 성적 등록 페이지
-            loginUserType === "ROLE_TEAHCER" ? (
+            loginUserType === "ROLE_TEACHER" ? (
               <Route path="/grade/:studentPk" element={<Grade />}></Route>
             ) : (
               <Route path="/grade/:studentPk" element={<GradeView />}></Route>
@@ -252,7 +253,7 @@ function App() {
 
           {/* 성적 확인/입력 페이지 - 세션 확인 바람 */}
           {/* 학부모 : 성적 확인 페이지 */}
-          {loginUserType === "ROLE_TEAHCER" ? (
+          {loginUserType === "ROLE_TEACHER" ? (
             <Route path="/grade/:studentPk" element={<Grade />}></Route>
           ) : (
             // <Route path="/grade/:studentPk" element={<GradeView />}></Route>
@@ -353,6 +354,10 @@ function App() {
 
           {/* 온라인 학습 라우터 */}
           <Route path="/online/test/create" element={<CreateTest />}></Route>
+          <Route
+            path="/online/test/create/english"
+            element={<CreateTestEn />}
+          ></Route>
 
           <Route
             path="*"
