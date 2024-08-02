@@ -46,6 +46,7 @@ import HeaderProfile from "components/layout/header/HeaderProfile";
 import Test from "Test";
 import VocaLearn from "pages/learn/VocaLearn";
 import CreateTestEn from "pages/online/CreateTestEn";
+import Learn from "pages/learn/Learn";
 
 // import jwt from "jsonwebtoken";
 
@@ -149,7 +150,10 @@ function App() {
       <Main>
         <Routes>
           <Route path="/test" element={<Test />}></Route>
-          <Route path="/voca" element={<VocaLearn />}></Route>
+          <Route path="/learn" element={<Learn />}>
+            <Route path="voca" element={<VocaLearn />}></Route>
+          </Route>
+
           {/* <Route index element={<Home />}></Route> */}
           <Route index element={<MainPage />}></Route>
           {/* 로그인 & 회원가입 : 이후 진입시 Home으로 강제 이동 */}
@@ -213,15 +217,6 @@ function App() {
           )}
 
           {/* 교직원 : 학생 리스트 */}
-          {/* <Route
-            path="/students"
-            element={
-              <TeacherProtectedRoute
-                authenticated={accessToken}
-                component={<Students />}
-              />
-            }
-          ></Route> */}
           <Route
             path="/students"
             element={

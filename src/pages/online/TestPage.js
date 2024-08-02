@@ -22,11 +22,14 @@ const TestWrap = styled.div`
       flex-direction: row;
 
       & > div:first-child {
-        flex-grow: 2.2;
-        max-width: 803px;
+        /* flex-grow: 2.5; */
+        min-width: 880px;
+        max-width: 880px;
       }
       & > div:last-child {
-        flex-grow: 1;
+        /* flex-grow: 1; */
+        /* min-width: 377px;
+        max-width: 377px; */
       }
     }
   }

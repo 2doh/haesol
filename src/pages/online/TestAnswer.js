@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
-import React from "react";
 import TestEndBtn from "./TestEndBtn";
 import TestOmr from "./TestOmr";
 
 const TestAnswerStyle = styled.div`
+  width: 100%;
   height: 100%;
   border-left: 1px solid #bee0e3;
 
