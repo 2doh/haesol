@@ -95,7 +95,7 @@ export const getStudentGrade1 = async studentPk => {
         studentPk: 4,
         latestGrade: 1,
         latestSemester: 2,
-        latestYear: "2023",
+        latestYear: "2024",
         exam: 0,
       },
     };
@@ -154,25 +154,15 @@ export const getStudentGradeSelect2 = async (studentPk, grade, semester) => {
   }
 };
 // 성적 입력하기
-export const postStudentGradeScore = async ({
-  studentPk,
-  year,
-  semester,
-  name,
-  exam,
-  mark,
-}) => {
+export const postStudentGradeScore = async scoreData => {
   const accessToken = getCookie("accessToken");
+  console.log(scoreData);
   try {
-    const response = await jwtAxios.post(
-      `/api/Score`,
-      { studentPk, year, semester, name, exam, mark },
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
+    const response = await jwtAxios.post(`/api/Score`, scoreData, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
       },
-    );
+    });
     return response;
   } catch (error) {
     console.log(error);

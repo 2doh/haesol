@@ -18,6 +18,7 @@ export const postParentSignin = async data => {
     setCookie("selectChildNum", 0);
     // console.log("권한 :", signedUser.role);
     // console.log("유저 PK :", signedUser.userId);
+    alert(signedUser.role);
     return res;
   } catch (error) {
     // console.log(error);
