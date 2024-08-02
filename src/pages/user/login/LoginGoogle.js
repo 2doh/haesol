@@ -1,12 +1,7 @@
-import React from "react";
-import google from "../../../images/devicon_google.svg";
+import { GoogleLogin } from "@react-oauth/google";
 
 const LoginGoogle = () => {
-  return (
-    <div className="login-panel-social-google">
-      <img src={google} />
-    </div>
-  );
+  return <GoogleLogin />;
 };
 
 export default LoginGoogle;
