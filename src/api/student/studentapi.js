@@ -189,6 +189,18 @@ export const postSign = async formData => {
   }
 };
 
+// 전자서명 다운로드
+// export const downloadSign = () => {
+//   try {
+// const response = await axios.get(
+// `/api/user/parents/download/${signPk}`
+// )
+//   } catch (error) {
+//     console.log(error)
+
+//   }
+// }
+
 // 알림장 데이터 불러오기
 export const getNoticeList = async studentPk => {
   const accessToken = getCookie("accessToken");
