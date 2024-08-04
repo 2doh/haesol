@@ -47,6 +47,7 @@ import Test from "Test";
 import VocaLearn from "pages/learn/VocaLearn";
 import CreateTestEn from "pages/online/CreateTestEn";
 import Learn from "pages/learn/Learn";
+import TeacherInfoView from "pages/teacher/TeacherInfoView";
 
 // import jwt from "jsonwebtoken";
 
@@ -142,10 +143,6 @@ function App() {
 
       {/* {onHedaer ? <Header /> : null} */}
       {/* 헤더 샘플 */}
-      {/* <HeaderTopPublic />
-      <HeaderMemu />
-      <HeaderProfile /> */}
-      {/* <MainPage /> */}
 
       <Main>
         <Routes>
@@ -276,7 +273,7 @@ function App() {
           ></Route>
 
           {/* 교직원 : 정보 수정 페이지 */}
-          <Route
+          {/* <Route
             path="/teacherinfo"
             element={
               <TeacherProtectedRoute
@@ -284,7 +281,9 @@ function App() {
                 authenticated={accessToken}
               />
             }
-          ></Route>
+          ></Route> */}
+          {/* <Route path="/teacherinfo" element={<TeacherEdit />}></Route> */}
+          <Route path="/teacherinfo" element={<TeacherInfoView />}></Route>
           {/* 학부모 - 학생 : 정보 수정 페이지 */}
           <Route
             path="/studentinfo"
@@ -366,7 +365,6 @@ function App() {
           ></Route>
         </Routes>
       </Main>
-      {/* <Footer /> */}
     </BrowserRouter>
   );
 }

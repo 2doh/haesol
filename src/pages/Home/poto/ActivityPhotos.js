@@ -1,10 +1,10 @@
 import styled from "@emotion/styled";
-import pic1 from "../../images/pic1.png";
-import pic2 from "../../images/pic2.png";
-import pic3 from "../../images/pic3.png";
-import pic4 from "../../images/pic4.png";
-import pic5 from "../../images/pic5.png";
-import pic6 from "../../images/pic6.png";
+import pic1 from "../../../images/pic1.png";
+import pic2 from "../../../images/pic2.png";
+import pic3 from "../../../images/pic3.png";
+import pic4 from "../../../images/pic4.png";
+import pic5 from "../../../images/pic5.png";
+import pic6 from "../../../images/pic6.png";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";

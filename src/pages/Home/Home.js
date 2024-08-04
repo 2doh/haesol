@@ -17,8 +17,8 @@ import LoginTeahcer from "./LoginTeahcer";
 // import { ActivityPhotos } from "./ActivityPhotos";
 import { useDispatch } from "react-redux";
 import { startTimer } from "slices/timerSlice";
-import RandomAdZone from "./RandomAdZone";
-import { ActivityPhotos } from "./ActivityPhotos";
+import RandomAdZone from "./popup/RandomAdZone";
+import { ActivityPhotos } from "./poto/ActivityPhotos";
 
 const Home = () => {
   const HomeStyle = styled.div`
