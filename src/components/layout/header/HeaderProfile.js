@@ -48,7 +48,7 @@ const HeaderProfile = () => {
       <section>
         {!getCookie("accessToken") ? <UnauthenticatedProfile /> : null}
         {getCookie("userRole") === "ROLE_PARENTS" ? <ParentsProfile /> : null}
-        {getCookie("userRole") === "ROLE_TEAHCER" ? <TeacherProfile /> : null}
+        {getCookie("userRole") === "ROLE_TEACHER" ? <TeacherProfile /> : null}
       </section>
     </HeaderProfileStyle>
   );
