@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
-import { RiSpeakFill } from "react-icons/ri";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
@@ -9,30 +8,24 @@ import TextInput from "../../components/common/TextInput";
 import "../../scss/learn/vocabulary.scss";
 import Vocabulary from "./Vocabulary";
 import listeningTest from "../../api/json/ENheartest.json";
+import { HiSpeakerphone } from "react-icons/hi";
+import { useLocation } from "react-router";
+import Loading from "components/loading/Loading";
 
-// 단어 편집거리 계산 알고리즘
-const getLevenshteinDistance = (a, b) => {
-  const matrix = Array.from({ length: b.length + 1 }, () =>
-    Array(a.length + 1).fill(0),
-  );
+// 레벤슈타인 거리 계산 함수
+const levenshtein = (a, b) => {
+  const matrix = Array.from({ length: b.length + 1 }, (_, i) => [i]);
+  for (let j = 1; j <= a.length; j++) matrix[0][j] = j;
 
-  for (let i = 0; i <= a.length; i++) {
-    matrix[0][i] = i;
-  }
-
-  for (let j = 0; j <= b.length; j++) {
-    matrix[j][0] = j;
-  }
-
-  for (let j = 1; j <= b.length; j++) {
-    for (let i = 1; i <= a.length; i++) {
-      if (b[j - 1] === a[i - 1]) {
-        matrix[j][i] = matrix[j - 1][i - 1];
+  for (let i = 1; i <= b.length; i++) {
+    for (let j = 1; j <= a.length; j++) {
+      if (b[i - 1] === a[j - 1]) {
+        matrix[i][j] = matrix[i - 1][j - 1];
       } else {
-        matrix[j][i] = Math.min(
-          matrix[j - 1][i - 1] + 1, // 치환
-          matrix[j][i - 1] + 1, // 삽입
-          matrix[j - 1][i] + 1, // 삭제
+        matrix[i][j] = Math.min(
+          matrix[i - 1][j - 1] + 1,
+          matrix[i][j - 1] + 1,
+          matrix[i - 1][j] + 1,
         );
       }
     }
@@ -40,28 +33,29 @@ const getLevenshteinDistance = (a, b) => {
   return matrix[b.length][a.length];
 };
 
-// 가장 유사한 단어 찾기 함수
-const findClosestWord = (recognizedWord, wordList) => {
-  let closestWord = wordList[0];
-  let minDistance = getLevenshteinDistance(recognizedWord, wordList[0]);
+// 가장 가까운 단어를 찾는 함수
+const findClosestWord = (input, words) => {
+  let closest = words[0];
+  let minDistance = levenshtein(input, words[0].word);
 
-  wordList.forEach(word => {
-    const distance = getLevenshteinDistance(recognizedWord, word);
+  for (let i = 1; i < words.length; i++) {
+    const distance = levenshtein(input, words[i].word);
     if (distance < minDistance) {
+      closest = words[i];
       minDistance = distance;
-      closestWord = word;
     }
-  });
-
-  return closestWord;
+  }
+  return closest;
 };
 
 const VocaLearn = () => {
-  const [learnState, setLearnState] = useState("listening");
+  const [learnState, setLearnState] = useState("");
   const [closestWord, setClosestWord] = useState("");
-  const [getObj, setGetObj] = useState(listeningTest);
+  const [getObj, setGetObj] = useState("");
   const [onAnswer, setOnAnswer] = useState("");
   const [index, setIndex] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const location = useLocation();
   const {
     transcript,
     listening,
@@ -69,75 +63,90 @@ const VocaLearn = () => {
     browserSupportsSpeechRecognition,
   } = useSpeechRecognition();
 
-  // console.log(getObj);
-
   const handleOnSubmit = e => {
     e.preventDefault();
-    if (onAnswer === getObj[index].answer) {
+    const currentWord = getObj[index].word;
+    const closest = findClosestWord(transcript, getObj);
+
+    if (transcript === currentWord) {
       alert("정답");
       setOnAnswer("");
+      setClosestWord("");
       if (index === getObj.length - 1) {
         return;
       }
       setIndex(index + 1);
-      return;
-    }
-    if (onAnswer !== getObj[index].answer) {
-      alert("오답");
+    } else {
+      setClosestWord(closest.word);
+      alert(`오답, 가장 가까운 단어: ${closest.word}`);
       setOnAnswer("");
+      resetTranscript();
     }
   };
 
   useEffect(() => {
     if (transcript) {
-      const closest = findClosestWord(transcript, wordTest);
-      setClosestWord(closest);
+      console.log(transcript);
     }
   }, [transcript]);
 
   useEffect(() => {
-    if (learnState === "voca") {
+    const lcoationState = location.state.type;
+    if (lcoationState === "말하기") {
+      setLearnState("speaking");
       setGetObj(wordTest);
     }
-    if (learnState === "listening") {
+    if (lcoationState === "듣기") {
+      setLearnState("listening");
       setGetObj(listeningTest);
     }
-  }, []);
+    if (lcoationState === "쓰기") {
+      setLearnState("voca");
+      setGetObj(wordTest);
+    }
+    setLoading(false);
+  }, [location]);
 
   return (
     <>
       <VocaWrapStyle>
-        <Vocabulary
-          getObj={getObj}
-          index={index}
-          setIndex={setIndex}
-          learnState={learnState}
-        />
-        <VocaBottomWrap>
-          {learnState === "speak" ? (
-            <WordWrapStyle>
-              <RiSpeakFill
-                size={40}
-                cursor={"pointer"}
-                onClick={() => {
-                  SpeechRecognition.startListening({ language: "en-US" });
-                }}
-              />
-              <div className="voca-bottom-word">{closestWord}</div>
-            </WordWrapStyle>
-          ) : (
-            <form
-              onSubmit={e => {
-                handleOnSubmit(e);
-              }}
-            >
-              <TextInput
-                onAnswer={onAnswer}
-                setOnAnswer={setOnAnswer}
-              ></TextInput>
-            </form>
-          )}
-        </VocaBottomWrap>
+        {loading ? (
+          <Loading></Loading>
+        ) : (
+          <>
+            <Vocabulary
+              getObj={getObj}
+              index={index}
+              setIndex={setIndex}
+              learnState={learnState}
+            />
+            <VocaBottomWrap>
+              {learnState === "speaking" ? (
+                <WordWrapStyle>
+                  <HiSpeakerphone
+                    size={40}
+                    cursor={"pointer"}
+                    onClick={() => {
+                      SpeechRecognition.startListening({ language: "en-US" });
+                    }}
+                  />
+                  <div className="voca-bottom-word">{transcript}</div>
+                </WordWrapStyle>
+              ) : (
+                <form
+                  onSubmit={e => {
+                    handleOnSubmit(e);
+                  }}
+                >
+                  <TextInput
+                    onAnswer={onAnswer}
+                    setOnAnswer={setOnAnswer}
+                  ></TextInput>
+                </form>
+              )}
+            </VocaBottomWrap>
+          </>
+        )}
       </VocaWrapStyle>
     </>
   );

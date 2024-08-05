@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiFillSound } from "react-icons/ai";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { RiSpeakFill } from "react-icons/ri";
@@ -10,7 +10,7 @@ const Vocabulary = ({ getObj, index, setIndex, learnState }) => {
 
   const tempObj = {
     speechword: voca.word,
-    speechlang: "en-US",
+    speechlang: "kr",
   };
   const temp = {
     speechword: voca.listening,
@@ -43,6 +43,8 @@ const Vocabulary = ({ getObj, index, setIndex, learnState }) => {
   // console.log(index);
   // console.log(getObj[index]);
   // console.log(getObj.length);
+
+  useEffect(() => {}, []);
 
   return (
     <>
