@@ -5,7 +5,7 @@ const AnswerStyled = styled.input`
   height: 50px;
   text-align: center;
 `;
-const TestInputAnswer = ({ placeholder, setWord, word }) => {
+const TestInputAnswer = ({ placeholder, setWord }) => {
   const wordChange = e => {
     console.log("입력 내용 : ", e.target.value);
     setWord(e.target.value);
@@ -18,7 +18,6 @@ const TestInputAnswer = ({ placeholder, setWord, word }) => {
       onChange={e => {
         wordChange(e);
       }}
-      value={word}
     ></AnswerStyled>
   );
 };

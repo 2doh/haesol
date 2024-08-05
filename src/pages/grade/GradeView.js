@@ -15,6 +15,7 @@ import "../../scss/student/studentEdit.css";
 import styled from "@emotion/styled";
 import Signature2 from "./Signature2";
 import moment from "moment";
+import StudentClassInfo from "pages/student/StudentClassInfo";
 
 const initData = [
   {
@@ -170,9 +171,10 @@ const GradeView = () => {
     navigate(`/grade/chart/${studentPk}`);
   };
 
-  const [studentInfo, setStudentInfo] = useState({});
-  const [studentName, setStudentName] = useState("");
-  const [studentClass, setStudentClass] = useState("");
+  // const [studentInfo, setStudentInfo] = useState({});
+  // const [studentName, setStudentName] = useState("");
+  // const [studentClass, setStudentClass] = useState("");
+  // const [studentGrade, setStudentGrade] = useState("");
 
   // format에 맞게 출력된다.
   const nowTime = moment().format("YYYY");
@@ -189,22 +191,23 @@ const GradeView = () => {
   const [signResultPic1, setSignResultPic1] = useState(null);
   const [signResultPic2, setSignResultPic2] = useState(null);
 
-  // 학생 정보 불러오기
-  const studentInfoData = async () => {
-    try {
-      const response = await getStudentInfo(studentPk);
-      const result = response.data;
-      setStudentInfo(result);
-      setStudentName(result.studentName);
-      setStudentClass(result.studentClass);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  useEffect(() => {
-    // 학생 데이터 불러오기
-    studentInfoData();
-  }, [studentPk]);
+  // // 학생 정보 불러오기
+  // const studentInfoData = async () => {
+  //   try {
+  //     const response = await getStudentInfo(studentPk);
+  //     const result = response.data;
+  //     setStudentInfo(result);
+  //     setStudentName(result.studentName);
+  //     setStudentClass(result.studentClass);
+  //     setStudentGrade(result.studentGrade);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+  // useEffect(() => {
+  //   // 학생 데이터 불러오기
+  //   studentInfoData();
+  // }, [studentPk]);
 
   // 최초 조회 시 성적 불러오기 중간고사
   const [examListOne, setExamListOne] = useState(initData);
@@ -475,8 +478,7 @@ const GradeView = () => {
     <div className="main-core">
       <div className="student-list-title">
         {/* <!-- 제목 위치 --> */}
-        <span>{studentClass}</span>
-        <p>{studentName} 성적 확인</p>
+        <StudentClassInfo />
       </div>
       <div className="user-info-wrap">
         {/* <!-- 탭 선택 부분 --> */}

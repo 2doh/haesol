@@ -26,7 +26,9 @@ const BasicRating = ({ starValue, setStarValue }) => {
           <Rate
             className="rate-style"
             // tooltips={desc}
-            onChange={setStarValue}
+            onChange={e => {
+              setStarValue(e);
+            }}
             value={starValue}
           />
           {/* {value ? <span>{desc[value - 1]}</span> : null} */}

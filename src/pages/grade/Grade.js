@@ -13,6 +13,7 @@ import { useNavigate, useParams } from "react-router";
 import "../../scss/student/grade.css";
 import "../../scss/student/studentEdit.css";
 import moment from "moment";
+import StudentClassInfo from "pages/student/StudentClassInfo";
 
 const initData = [
   {
@@ -165,9 +166,11 @@ const Grade = () => {
     navigate(`/students/edit/${studentPk}`);
   };
 
-  const [studentInfo, setStudentInfo] = useState({});
   const [studentName, setStudentName] = useState("");
-  const [studentClass, setStudentClass] = useState("");
+
+  // const [studentInfo, setStudentInfo] = useState({});
+  // const [studentName, setStudentName] = useState("");
+  // const [studentClass, setStudentClass] = useState("");
 
   // const [nowYear, setNowYear] = useState(new Date().getFullYear());
   const [yearOptions, setYearOptions] = useState([]);
@@ -182,27 +185,27 @@ const Grade = () => {
   const nowTime = moment().format("YYYY");
   console.log(nowTime);
   // 출력 결과: 2020-08-23 12:54:30
-  const [classGrade, setClassGrade] = useState([]);
-  // 학생 정보 불러오기
-  const studentInfoData = async () => {
-    try {
-      const response = await getStudentInfo(studentPk);
-      const result = response.data;
-      setStudentInfo(result);
-      setStudentName(result.studentName);
-      setStudentClass(result.studentClass);
-      setClassGrade(result.studentClass.split(" "));
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  useEffect(() => {
-    // 학생 데이터 불러오기
-    studentInfoData();
-  }, [studentPk]);
-  useEffect(() => {
-    console.log(classGrade[0]);
-  }, [classGrade]);
+  // const [classGrade, setClassGrade] = useState([]);
+  // // 학생 정보 불러오기
+  // const studentInfoData = async () => {
+  //   try {
+  //     const response = await getStudentInfo(studentPk);
+  //     const result = response.data;
+  //     setStudentInfo(result);
+  //     setStudentName(result.studentName);
+  //     setStudentClass(result.studentClass);
+  //     setClassGrade(result.studentClass.split(" "));
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+  // useEffect(() => {
+  //   // 학생 데이터 불러오기
+  //   studentInfoData();
+  // }, [studentPk]);
+  // useEffect(() => {
+  //   console.log(classGrade[0]);
+  // }, [classGrade]);
 
   // 최초 조회 시 성적 불러오기 중간고사
   const [examListOne, setExamListOne] = useState(initData);
@@ -568,7 +571,7 @@ const Grade = () => {
     <div className="main-core">
       <div className="student-list-title">
         {/* <!-- 제목 위치 --> */}
-        <span>{studentClass}</span>
+        <StudentClassInfo />
         <p>{studentName} 성적 입력</p>
       </div>
       <div className="user-info-wrap">

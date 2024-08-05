@@ -9,16 +9,18 @@ const CreateTestEn = () => {
   // 시험 종류
   const [selectedOption, setSelectedOption] = useState("vocabulary");
   // 시험 내용
-  const [content, setContent] = useState("");
-  const [wordEn, setWordEn] = useState("");
-  const [wordKo, setWordKo] = useState("");
+  const [title, setTitle] = useState("");
+  const [contents, setContents] = useState("");
+  // const [wordEn, setWordEn] = useState("");
+  // const [wordKo, setWordKo] = useState("");
+  const [questions, setQuestions] = useState("");
   const [answer, setAnswer] = useState("");
-  const [tempState, setTempState] = useState("");
+
   const tempObj = {
     // placeholder: "",
     state: "",
-    wordEn: "영단어를 입력해주세요",
-    wordKo: "한국어를 입력해주세요",
+    wordQuestion: "단어를 입력해주세요",
+    wordAnswer: "정답을 입력해주세요",
   };
   // <TestInputAnswer tempObj={tempObj}></TestInputAnswer>
   // <TestInputAnswer></TestInputAnswer>
@@ -114,7 +116,7 @@ const CreateTestEn = () => {
         <p>5학년 시험 출제</p>
       </TestTitleStyled>
       <div className="online-test-inner">
-        <div className="english-test-option">
+        <div className="test-option">
           <select
             name="english-test"
             value={selectedOption}
@@ -143,7 +145,14 @@ const CreateTestEn = () => {
           />
         </div>
         {selectedOption === "listening" && (
-          <div className="online-test-content-en">
+          <div className="online-test-content-write">
+            <div className="online-test-required-title">문제</div>
+            <textarea
+              type="text"
+              placeholder="지문을 입력해주세요."
+              className="test-detail-content"
+            ></textarea>
+            <div className="online-test-required-title">문장</div>
             <textarea
               type="text"
               placeholder="지문을 입력해주세요."
@@ -152,24 +161,22 @@ const CreateTestEn = () => {
           </div>
         )}
 
-        <div className="online-test-content-en">
-          <div className="online-test-required-title">단어</div>
-          <TestInputAnswer
-            placeholder={tempObj.wordEn}
-            setWord={setWordEn}
-            word={wordEn}
-          ></TestInputAnswer>
-
-          {selectedOption === "vocabulary" && (
+        {(selectedOption === "vocabulary" || selectedOption === "speaking") && (
+          <div className="online-test-content-write">
+            <div className="online-test-required-title">낱말</div>
             <TestInputAnswer
-              placeholder={tempObj.wordKo}
-              setWord={setWordKo}
-              word={wordKo}
+              placeholder={tempObj.wordQuestion}
+              setWord={setQuestions}
             ></TestInputAnswer>
-          )}
-        </div>
+            <div className="online-test-required-title">정답</div>
+            <TestInputAnswer
+              placeholder={tempObj.wordAnswer}
+              setWord={setAnswer}
+            ></TestInputAnswer>
+          </div>
+        )}
         {selectedOption === "listening" && (
-          <div className="online-test-content-en">
+          <div className="online-test-content-write">
             <div className="online-test-required-title">정답</div>
             <input type="text" placeholder="정답을 입력해주세요."></input>
           </div>
