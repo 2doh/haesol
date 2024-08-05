@@ -3,6 +3,10 @@ import { removeCookie } from "utils/cookie";
 
 const initialState = {
   // 모달 상태 관리
+  // BasicModal: "BasicModal",
+  // ArrValueModal: "ArrValueModal",
+  // PasswordChangeModal: "PasswordChangeModal",
+  // TelAcceptModal: "TelAcceptModal",
   modalType: "",
   isOpen: false,
 

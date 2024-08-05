@@ -1,55 +1,18 @@
 import styled from "@emotion/styled";
-import MainScheduleView from "./calendar/MainScheduleView";
-import LunchView from "./lunch/LunchView";
-import PopUpView from "./popup/PopUpView";
-import PotoView from "./poto/PotoView";
-import ParentsProfile from "./profile/ParentsProfile";
-import LoginUser from "./LoginUser";
-import LoginTeahcer from "./LoginTeahcer";
-import HeaderTopPublic from "components/layout/header/HeaderTopPublic";
 import HeaderMemu from "components/layout/header/HeaderMenu";
 import HeaderProfile from "components/layout/header/HeaderProfile";
+import HeaderTopPublic from "components/layout/header/HeaderTopPublic";
+import MainScheduleView from "./calendar/MainScheduleView";
 import EnglishBookList from "./englishbook/EnglishBookList";
-import Footer from "components/layout/Footer";
+import LunchView from "./lunch/LunchView";
+import MiniBannerView from "./minibanner/MiniBannerView";
+import PopUpView from "./popup/PopUpView";
+import PotoView from "./poto/PotoView";
+
+import "../../scss/main/mainpage.css";
 
 const MainPageStyle = styled.div`
   width: 100%;
-  /* padding-bottom: 100px; */
-
-  .main-page-fill-space {
-    position: relative;
-    height: 75px;
-    width: 100%;
-
-    .top-space,
-    .bottom-space {
-      position: absolute;
-      height: 50%;
-      width: 100%;
-    }
-
-    .top-space {
-      top: 0;
-      background-color: #f3f9fa;
-    }
-    .bottom-space {
-      bottom: 0;
-    }
-  }
-
-  .main-page-wrap {
-    width: 1180px;
-    border-radius: 30px;
-    margin: 0 auto;
-    overflow: hidden;
-  }
-
-  .english-book-wrap {
-    margin-top: 50px;
-    height: 400px;
-    padding: 20px;
-    background-color: #eaf0f1;
-  }
 `;
 
 const MainPageContents = styled.div`
@@ -61,44 +24,6 @@ const MainPageContents = styled.div`
   flex-direction: column;
   gap: 50px;
   height: 100%;
-
-  .calendar-and-meals-wrap {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-    max-height: 450px;
-
-    .calendar-wrap {
-      min-width: 810px;
-      background-color: #dee8e9;
-      border-radius: 30px;
-      padding: 30px;
-    }
-
-    .lunch-wrap {
-      width: 100%;
-    }
-  }
-
-  .poto-and-pop-up-wrap {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-    height: 375px;
-
-    background-color: #bed7dc;
-    padding: 5px;
-
-    .poto-wrap {
-      min-width: 780px;
-    }
-
-    .pop-up-wrap {
-      width: 100%;
-    }
-  }
 `;
 
 const MainPage = () => {
@@ -138,6 +63,9 @@ const MainPage = () => {
 
         <div className="english-book-wrap">
           <EnglishBookList />
+        </div>
+        <div className="mini-banner-wrap">
+          <MiniBannerView />
         </div>
       </MainPageStyle>
       {/* <Footer /> */}

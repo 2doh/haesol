@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import React from "react";
+import React, { useState } from "react";
 import { ActivityPhotos } from "./ActivityPhotos";
 import SlideControlButton from "components/common/style/SlideControlButton";
 
@@ -39,14 +39,21 @@ const PotoViewStyle = styled.div`
 `;
 
 const PotoView = () => {
+  const [swiper, setSwiper] = useState();
+  const [btnList, setBtnList] = useState([
+    "left-btn",
+    "right-btn",
+    "stop-and-start-btn",
+  ]);
+
   return (
     <PotoViewStyle>
       <div className="poto-view-title">우리들의 활동</div>
       <div className="poto-view-bottom">
         <div className="poto-btn">
-          <SlideControlButton />
+          <SlideControlButton swiper={swiper} btnList={btnList} />
         </div>
-        <ActivityPhotos />
+        <ActivityPhotos setSwiper={setSwiper} />
       </div>
     </PotoViewStyle>
   );

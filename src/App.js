@@ -48,36 +48,10 @@ import CreateTestKo from "pages/online/CreateTestKo";
 import CreateTestEn from "pages/online/CreateTestEn";
 import Learn from "pages/learn/Learn";
 import TeacherInfoView from "pages/teacher/TeacherInfoView";
+import ModalView from "components/common/modal/ModalView";
 import CreateTestMath from "pages/online/CreateTestMath";
 
 // import jwt from "jsonwebtoken";
-
-const ModalStyle = styled.div`
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  height: 100%;
-  width: 100vw;
-  z-index: 999999;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  & * {
-    text-shadow: none;
-  }
-
-  .not-bg-click-modal {
-    position: absolute;
-    top: 35%;
-    height: 250px;
-  }
-
-  .modal-inner {
-    height: auto;
-  }
-`;
 
 const Main = styled.div`
   /* background-color: #f3f9fa;
@@ -136,11 +110,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      {modalState.isOpen ? (
-        <ModalStyle>
-          <Modal />
-        </ModalStyle>
-      ) : null}
+      {modalState.isOpen ? <ModalView /> : null}
 
       {/* {onHedaer ? <Header /> : null} */}
       {/* 헤더 샘플 */}

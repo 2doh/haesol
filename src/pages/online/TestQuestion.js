@@ -53,13 +53,33 @@ const TestQuestionWrap = styled.div`
         display: flex;
         flex-direction: column;
         gap: 30px;
+
         .cbt__question {
+        }
+
+        .cbt__question__img {
+          width: 100%;
+          display: flex;
+          justify-content: center;
         }
 
         .cbt__selects {
           display: flex;
           flex-direction: column;
           gap: 10px;
+
+          label {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+
+            svg {
+              font-size: 20px;
+            }
+
+            span {
+            }
+          }
         }
       }
     }
@@ -239,9 +259,9 @@ const TestQuestion = () => {
                 >
                   {testState.selectNumArr[testState.nowQuestionsNum]
                     .selectNum === 1 ? (
-                    // <PiNumberCircleOneFill />
-                    <PiNumberCircleTwoDuotone />
+                    <PiNumberCircleOneFill />
                   ) : (
+                    // <PiNumberCircleTwoDuotone />
                     <PiNumberCircleOneBold />
                   )}
                   <span>

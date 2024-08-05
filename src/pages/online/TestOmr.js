@@ -1,18 +1,19 @@
 import styled from "@emotion/styled";
-import React from "react";
 import {
-  PiNumberCircleFiveBold,
+  PiNumberCircleFiveDuotone,
   PiNumberCircleFiveFill,
-  PiNumberCircleFourBold,
+  PiNumberCircleFourDuotone,
   PiNumberCircleFourFill,
-  PiNumberCircleOneBold,
+  PiNumberCircleOneDuotone,
   PiNumberCircleOneFill,
-  PiNumberCircleThreeBold,
+  PiNumberCircleThreeDuotone,
   PiNumberCircleThreeFill,
-  PiNumberCircleTwoBold,
+  PiNumberCircleTwoDuotone,
   PiNumberCircleTwoFill,
 } from "react-icons/pi";
+
 import { useDispatch, useSelector } from "react-redux";
+import { openModal, updateModalDate } from "slices/modalSlice";
 import answerSelect from "./answerSelect";
 
 const TestOmrStyle = styled.div`
@@ -84,12 +85,14 @@ const TestOmrStyle = styled.div`
 
       & > div {
         height: 30px;
+        /* height: 30px; */
         display: flex;
         align-items: center;
         justify-content: center;
       }
 
       .omr-num {
+        cursor: pointer;
         width: 15%;
         background-color: #5f909f;
 
@@ -105,7 +108,16 @@ const TestOmrStyle = styled.div`
 
         label {
           svg {
-            font-size: 20px;
+            font-size: 22px;
+          }
+        }
+
+        .circle-duotone {
+          svg {
+            path:first-of-type {
+              color: white;
+              opacity: 1;
+            }
           }
         }
       }
@@ -116,6 +128,32 @@ const TestOmrStyle = styled.div`
 const TestOmr = () => {
   const dispatch = useDispatch();
   const testState = useSelector(state => state.testSlice);
+
+  /** 문제 빠르게 이동하기 */
+  const questionsNumChange = num => {
+    const data = {
+      nowQuestionsNum: num,
+    };
+    dispatch(updateTestDate(data));
+  };
+
+  /** 현재 페이지 번호와 체크한 문제 번호 체크 */
+  const questionsNumCheck = (e, num) => {
+    if (num === testState.nowQuestionsNum) {
+      // console.log("일치 한다");
+      answerSelect(e, dispatch, testState);
+    } else {
+      const data = {
+        headerText: "주의",
+        bodyText: ["화면에 나오는 문제의 답안의 번호만 체크 할 수 있습니다."],
+        buttonCnt: 1,
+        buttonText: ["확인", "닫기"],
+      };
+
+      dispatch(updateModalDate(data));
+      dispatch(openModal("BasicModal"));
+    }
+  };
 
   return (
     <TestOmrStyle>
@@ -131,7 +169,7 @@ const TestOmr = () => {
       <div className="omr-box">
         {testState.questionAll.map((item, index) => (
           <div className="omr-box-inner" key={index}>
-            <div className="omr-num">
+            <div className="omr-num" onClick={() => questionsNumChange(index)}>
               <strong>{item.number}</strong>
             </div>
             <div className="omr-select">
@@ -142,14 +180,21 @@ const TestOmr = () => {
                 name={`omr${item.number}`}
                 value={`${item.number}_1`}
                 onChange={e => {
-                  answerSelect(e, dispatch, testState);
-                }} // onChange 핸들러 추가
+                  questionsNumCheck(e, index);
+                }}
               />
-              <label htmlFor={`omr${item.number}_1`}>
+              <label
+                htmlFor={`omr${item.number}_1`}
+                // onClick={() => questionsNumCheck(index)}
+              >
                 {testState.selectNumArr[index].selectNum === 1 ? (
-                  <PiNumberCircleOneFill />
+                  <div className="circle-fill">
+                    <PiNumberCircleOneFill />
+                  </div>
                 ) : (
-                  <PiNumberCircleOneBold />
+                  <div className="circle-duotone">
+                    <PiNumberCircleOneDuotone />
+                  </div>
                 )}
                 <span className="label-inner"></span>
               </label>
@@ -160,14 +205,18 @@ const TestOmr = () => {
                 name={`omr${item.number}`}
                 value={`${item.number}_2`}
                 onChange={e => {
-                  answerSelect(e, dispatch, testState);
+                  questionsNumCheck(e, index);
                 }} // onChange 핸들러 추가
               />
               <label htmlFor={`omr${item.number}_2`}>
                 {testState.selectNumArr[index].selectNum === 2 ? (
-                  <PiNumberCircleTwoFill />
+                  <div className="circle-fill">
+                    <PiNumberCircleTwoFill />
+                  </div>
                 ) : (
-                  <PiNumberCircleTwoBold />
+                  <div className="circle-duotone">
+                    <PiNumberCircleTwoDuotone />
+                  </div>
                 )}
                 <span className="label-inner"></span>
               </label>
@@ -178,14 +227,18 @@ const TestOmr = () => {
                 name={`omr${item.number}`}
                 value={`${item.number}_3`}
                 onChange={e => {
-                  answerSelect(e, dispatch, testState);
+                  questionsNumCheck(e, index);
                 }} // onChange 핸들러 추가
               />
               <label htmlFor={`omr${item.number}_3`}>
                 {testState.selectNumArr[index].selectNum === 3 ? (
-                  <PiNumberCircleThreeFill />
+                  <div className="circle-fill">
+                    <PiNumberCircleThreeFill />
+                  </div>
                 ) : (
-                  <PiNumberCircleThreeBold />
+                  <div className="circle-duotone">
+                    <PiNumberCircleThreeDuotone />
+                  </div>
                 )}
                 <span className="label-inner"></span>
               </label>
@@ -196,14 +249,18 @@ const TestOmr = () => {
                 name={`omr${item.number}`}
                 value={`${item.number}_4`}
                 onChange={e => {
-                  answerSelect(e, dispatch, testState);
+                  questionsNumCheck(e, index);
                 }} // onChange 핸들러 추가
               />
               <label htmlFor={`omr${item.number}_4`}>
                 {testState.selectNumArr[index].selectNum === 4 ? (
-                  <PiNumberCircleFourFill />
+                  <div className="circle-fill">
+                    <PiNumberCircleFourFill />
+                  </div>
                 ) : (
-                  <PiNumberCircleFourBold />
+                  <div className="circle-duotone">
+                    <PiNumberCircleFourDuotone />
+                  </div>
                 )}
 
                 <span className="label-inner"></span>
@@ -215,14 +272,18 @@ const TestOmr = () => {
                 name={`omr${item.number}`}
                 value={`${item.number}_5`}
                 onChange={e => {
-                  answerSelect(e, dispatch, testState);
+                  questionsNumCheck(e, index);
                 }} // onChange 핸들러 추가
               />
               <label htmlFor={`omr${item.number}_5`}>
                 {testState.selectNumArr[index].selectNum === 5 ? (
-                  <PiNumberCircleFiveFill />
+                  <div className="circle-fill">
+                    <PiNumberCircleFiveFill />
+                  </div>
                 ) : (
-                  <PiNumberCircleFiveBold />
+                  <div className="circle-duotone">
+                    <PiNumberCircleFiveDuotone />
+                  </div>
                 )}
 
                 <span className="label-inner"></span>
