@@ -26,6 +26,7 @@
   flex-direction: column;
   padding: 20px;
   gap: 60px;
+  margin-bottom: 80px;
 }
 .main-core .online-test-inner .online-test-title {
   display: flex;
@@ -147,20 +148,20 @@
   border: solid 2px #a8172a;
   color: #efece8;
 }
-.main-core .online-test-inner .english-test-option select {
+.main-core .online-test-inner .test-option select {
   height: 30px;
 }
-.main-core .online-test-inner .online-test-content-en {
+.main-core .online-test-inner .online-test-content-write {
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
   gap: 20px;
 }
-.main-core .online-test-inner .online-test-content-en .online-test-required-title {
+.main-core .online-test-inner .online-test-content-write .online-test-required-title {
   font-size: 20px;
 }
-.main-core .online-test-inner .online-test-content-en .test-detail-content {
+.main-core .online-test-inner .online-test-content-write .test-detail-content {
   padding: 10px;
   width: 100%;
   height: 100px;
@@ -168,7 +169,7 @@
   background-color: #fbfaf9;
   resize: none;
 }
-.main-core .online-test-inner .online-test-content-en input {
+.main-core .online-test-inner .online-test-content-write input {
   width: 50%;
   height: 50px;
   text-align: center;

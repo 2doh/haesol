@@ -12,6 +12,7 @@
     flex-direction: column;
     padding: 20px;
     gap: 60px;
+    margin-bottom: 80px;
     .online-test-title {
       display: flex;
       align-items: center;
@@ -137,12 +138,12 @@
         }
       }
     }
-    .english-test-option {
+    .test-option {
       select {
         height: 30px;
       }
     }
-    .online-test-content-en {
+    .online-test-content-write {
       display: flex;
       justify-content: center;
       flex-direction: column;
