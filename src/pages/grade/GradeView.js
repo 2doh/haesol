@@ -14,6 +14,7 @@ import "../../scss/student/grade.css";
 import "../../scss/student/studentEdit.css";
 import styled from "@emotion/styled";
 import Signature2 from "./Signature2";
+import moment from "moment";
 
 const initData = [
   {
@@ -173,6 +174,9 @@ const GradeView = () => {
   const [studentName, setStudentName] = useState("");
   const [studentClass, setStudentClass] = useState("");
 
+  // format에 맞게 출력된다.
+  const nowTime = moment().format("YYYY");
+  console.log(nowTime);
   const [nowYear, setNowYear] = useState(new Date().getFullYear());
   const [yearOptions, setYearOptions] = useState([]);
 
@@ -313,23 +317,23 @@ const GradeView = () => {
   const handleGradeChange = async e => {
     const newGrade = e.target.value;
     setLatestGrade(newGrade);
-    await studentGradeSelect1(newGrade, latestSemester, latestYear);
-    await studentGradeSelect2(newGrade, latestSemester, latestYear);
+    await studentGradeSelect1(newGrade, latestSemester);
+    await studentGradeSelect2(newGrade, latestSemester);
   };
   const handleSemesterChange = async e => {
     const newSemester = e.target.value;
     setLatestSemester(newSemester);
-    await studentGradeSelect1(latestGrade, newSemester, latestYear);
-    await studentGradeSelect2(latestGrade, newSemester, latestYear);
+    await studentGradeSelect1(latestGrade, newSemester);
+    await studentGradeSelect2(latestGrade, newSemester);
   };
 
-  const handleYearChange = async e => {
-    const newLatestYear = e.target.value;
-    // console.log(newLatestYear);
-    setLatestYear(newLatestYear);
-    await studentGradeSelect1(latestGrade, latestSemester, newLatestYear);
-    await studentGradeSelect2(latestGrade, latestSemester, newLatestYear);
-  };
+  // const handleYearChange = async e => {
+  //   const newLatestYear = e.target.value;
+  //   // console.log(newLatestYear);
+  //   setLatestYear(newLatestYear);
+  //   await studentGradeSelect1(latestGrade, latestSemester, newLatestYear);
+  //   await studentGradeSelect2(latestGrade, latestSemester, newLatestYear);
+  // };
 
   // 학기, 학년 선택 성적 출력 중간고사
   const studentGradeSelect1 = async (grade, semester, year) => {
@@ -434,18 +438,18 @@ const GradeView = () => {
     }
   };
 
-  useEffect(() => {
-    const generateYearOptions = () => {
-      const currentYear = new Date().getFullYear();
-      const startYear = currentYear - 10;
-      const options = [];
-      for (let year = currentYear; year >= startYear; year--) {
-        options.push(year.toString());
-      }
-      setYearOptions(options);
-    };
-    generateYearOptions();
-  }, []);
+  // useEffect(() => {
+  //   const generateYearOptions = () => {
+  //     const currentYear = new Date().getFullYear();
+  //     const startYear = currentYear - 10;
+  //     const options = [];
+  //     for (let year = currentYear; year >= startYear; year--) {
+  //       options.push(year.toString());
+  //     }
+  //     setYearOptions(options);
+  //   };
+  //   generateYearOptions();
+  // }, []);
 
   const ParentCheckStyle = styled.div`
     display: flex;
@@ -530,7 +534,7 @@ const GradeView = () => {
                   <option value="2">2학기</option>
                 </select>
               </div>
-              <div className="total-student">
+              {/* <div className="total-student">
                 <p>년도 선택</p>
                 <select
                   id="year"
@@ -545,7 +549,7 @@ const GradeView = () => {
                     </option>
                   ))}
                 </select>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -604,7 +608,7 @@ const GradeView = () => {
             latestSemester={latestSemester}
             latestYear={latestYear}
             // semester={latestSemester}
-            year={nowYear}
+            year={nowTime}
           />
         )}
 
@@ -662,7 +666,7 @@ const GradeView = () => {
             latestSemester={latestSemester}
             latestYear={latestYear}
             // semester={latestSemester}
-            year={nowYear}
+            year={nowTime}
           />
         )}
       </div>
