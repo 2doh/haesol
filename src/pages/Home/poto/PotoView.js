@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import React from "react";
-import { ActivityPhotos } from "../ActivityPhotos";
+import { ActivityPhotos } from "./ActivityPhotos";
 import SlideControlButton from "components/common/style/SlideControlButton";
 
 const PotoViewStyle = styled.div`

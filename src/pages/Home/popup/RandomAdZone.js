@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
-import pic1 from "../../images/home/ad_zone_img_01.png";
-import pic2 from "../../images/home/ad_zone_img_02.png";
-import pic3 from "../../images/home/ad_zone_img_03.png";
+import pic1 from "../../../images/home/ad_zone_img_01.png";
+import pic2 from "../../../images/home/ad_zone_img_02.png";
+import pic3 from "../../../images/home/ad_zone_img_03.png";
 
 const RandomAdZoneStyle = styled.div`
   width: 100%;
@@ -21,15 +21,20 @@ const RandomAdZone = () => {
 
   const [randomImg, setRandomImg] = useState(initArr[0]);
 
+  /** 새 탭에서 열기 */
+  const handleOpenNewTab = url => {
+    window.open(url, "_blank", "noopener, noreferrer");
+  };
+
   const movePage = () => {
     if (randomImg === pic1) {
-      window.location.replace("https://www.129.go.kr/counsel/counsel01.do");
+      handleOpenNewTab("https://www.129.go.kr/counsel/counsel01.do");
     }
     if (randomImg === pic2) {
-      window.location.replace("https://www.parents.go.kr/index.do");
+      handleOpenNewTab("https://www.parents.go.kr/index.do");
     }
     if (randomImg === pic3) {
-      window.location.replace("https://www.privacy.go.kr/front/main/main.do#");
+      handleOpenNewTab("https://www.privacy.go.kr/front/main/main.do#");
     }
   };
 

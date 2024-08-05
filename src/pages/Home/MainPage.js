@@ -6,10 +6,15 @@ import PotoView from "./poto/PotoView";
 import ParentsProfile from "./profile/ParentsProfile";
 import LoginUser from "./LoginUser";
 import LoginTeahcer from "./LoginTeahcer";
+import HeaderTopPublic from "components/layout/header/HeaderTopPublic";
+import HeaderMemu from "components/layout/header/HeaderMenu";
+import HeaderProfile from "components/layout/header/HeaderProfile";
+import EnglishBookList from "./englishbook/EnglishBookList";
+import Footer from "components/layout/Footer";
 
 const MainPageStyle = styled.div`
   width: 100%;
-  padding-bottom: 100px;
+  /* padding-bottom: 100px; */
 
   .main-page-fill-space {
     position: relative;
@@ -37,6 +42,13 @@ const MainPageStyle = styled.div`
     border-radius: 30px;
     margin: 0 auto;
     overflow: hidden;
+  }
+
+  .english-book-wrap {
+    margin-top: 50px;
+    height: 400px;
+    padding: 20px;
+    background-color: #eaf0f1;
   }
 `;
 
@@ -91,35 +103,45 @@ const MainPageContents = styled.div`
 
 const MainPage = () => {
   return (
-    <MainPageStyle>
-      {/* 로그인 후 알림장 목록 탭을 위한 공간 */}
-      <div className="main-page-fill-space">
-        <div className="top-space"></div>
-        <div className="bottom-space"></div>
-      </div>
+    <>
+      <HeaderTopPublic />
+      <HeaderMemu />
+      <HeaderProfile />
+      <MainPageStyle>
+        {/* 로그인 후 알림장 목록 탭을 위한 공간 */}
+        <div className="main-page-fill-space">
+          <div className="top-space"></div>
+          <div className="bottom-space"></div>
+        </div>
 
-      <div className="main-page-wrap">
-        <MainPageContents>
-          <div className="calendar-and-meals-wrap">
-            <div className="calendar-wrap">
-              <MainScheduleView />
+        <div className="main-page-wrap">
+          <MainPageContents>
+            <div className="calendar-and-meals-wrap">
+              <div className="calendar-wrap">
+                <MainScheduleView />
+              </div>
+              <div className="lunch-wrap">
+                <LunchView />
+              </div>
             </div>
-            <div className="lunch-wrap">
-              <LunchView />
-            </div>
-          </div>
 
-          <div className="poto-and-pop-up-wrap">
-            <div className="poto-wrap">
-              <PotoView />
+            <div className="poto-and-pop-up-wrap">
+              <div className="poto-wrap">
+                <PotoView />
+              </div>
+              <div className="pop-up-wrap">
+                <PopUpView />
+              </div>
             </div>
-            <div className="pop-up-wrap">
-              <PopUpView />
-            </div>
-          </div>
-        </MainPageContents>
-      </div>
-    </MainPageStyle>
+          </MainPageContents>
+        </div>
+
+        <div className="english-book-wrap">
+          <EnglishBookList />
+        </div>
+      </MainPageStyle>
+      {/* <Footer /> */}
+    </>
   );
 };
 

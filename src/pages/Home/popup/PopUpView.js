@@ -1,5 +1,5 @@
 import React from "react";
-import RandomAdZone from "../RandomAdZone";
+import RandomAdZone from "./RandomAdZone";
 import styled from "@emotion/styled";
 import BoxTitle from "components/common/style/BoxTitle";
 
