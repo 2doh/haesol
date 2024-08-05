@@ -4,29 +4,32 @@ import { AiFillSound } from "react-icons/ai";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { RiSpeakFill } from "react-icons/ri";
 import { speak } from "utils/speak";
-import wordTest from "../../api/json/ENwordtest.json";
 
-const Vocabulary = ({ setSpeakingWord }) => {
-  const [index, setIndex] = useState(0);
-  const voca = wordTest[index];
+const Vocabulary = ({ getObj, index, setIndex, learnState }) => {
+  const voca = getObj[index];
+
   const tempObj = {
     speechword: voca.word,
-    speechlang: "kr",
+    speechlang: "en-US",
+  };
+  const temp = {
+    speechword: voca.listening,
+    speechlang: "en-US",
   };
 
-  // console.log(wordTest);
-
-  // wordTest.map((item, index) => {
-  //   console.log(item);
-  //   console.log(index);
-  // });
+  // console.log(getObj);
+  // console.log(voca);
 
   const onSpeak = () => {
     speak(tempObj);
   };
 
+  const onClick = () => {
+    speak(temp);
+  };
+
   const onNext = () => {
-    if (index === wordTest.length - 1) {
+    if (index === getObj.length - 1) {
       return;
     }
     setIndex(index + 1);
@@ -38,17 +41,23 @@ const Vocabulary = ({ setSpeakingWord }) => {
     setIndex(index - 1);
   };
   // console.log(index);
-  // console.log(wordTest[index]);
-  // console.log(wordTest.length);
+  // console.log(getObj[index]);
+  // console.log(getObj.length);
 
   return (
     <>
       <div className="voca-wrap">
         <div className="voca-top">
           <div className="voca-top-totalword">
-            {index + 1} / {wordTest.length}
+            {index + 1} / {getObj.length}
           </div>
-          <AiFillSound size={50} cursor={"pointer"} onClick={() => onSpeak()} />
+          <AiFillSound
+            size={50}
+            cursor={"pointer"}
+            onClick={() => {
+              learnState === "listening" ? onClick() : onSpeak();
+            }}
+          />
         </div>
         <div className="voca-main">
           <img className="voca-main-card" src={voca.pic} />
@@ -61,7 +70,10 @@ const Vocabulary = ({ setSpeakingWord }) => {
               onBack();
             }}
           />
-          <div className="voca-bottom-word">{voca.word}</div>
+          {/* <div className="voca-bottom-word">{voca.word}</div> */}
+          <div className="voca-bottom-word">
+            {learnState === "listening" ? voca.sentence : voca.word}
+          </div>
           <IoIosArrowForward
             size={30}
             cursor={"pointer"}
