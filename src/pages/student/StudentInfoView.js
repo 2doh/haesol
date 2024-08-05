@@ -37,6 +37,7 @@ const StudentInfoView = () => {
   const [studentCreatedAt, setStudentCreatedAt] = useState("");
   const [parentId, setParentId] = useState("");
   const [studentClass, setStudentClass] = useState("");
+  const [studentGrade, setStudentGrade] = useState("");
 
   const [prevEtcList, setPrevEtcList] = useState([]);
 
@@ -61,6 +62,7 @@ const StudentInfoView = () => {
       setStudentCreatedAt(result.studentCreatedAt);
       setParentId(result.parentId);
       setStudentClass(result.studentClass);
+      setStudentGrade(result.studentGrade);
 
       setPrevEtcList(result.prevEtcList);
     } catch (error) {
@@ -142,7 +144,9 @@ const StudentInfoView = () => {
     <div className="main-core">
       <div className="student-list-title">
         {/* <!-- 제목 위치 --> */}
-        <span>{studentClass}</span>
+        <span>
+          {studentGrade}학년 {studentClass}반
+        </span>
         <p>학생 정보 관리</p>
       </div>
       {/* <!-- 신상정보 전체 레이아웃 --> */}

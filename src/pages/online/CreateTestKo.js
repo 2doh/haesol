@@ -8,11 +8,22 @@ import BasicRating from "./BasicRating";
 import { useDispatch, useSelector } from "react-redux";
 import { openModal, updateModalDate } from "slices/modalSlice";
 
-const CreateTest = () => {
+const CreateTestKo = () => {
   const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [sendFile, setSendFile] = useState(null);
+  const [contents, setContents] = useState("");
   const [starValue, setStarValue] = useState(3);
+  const [questions, setQuestions] = useState([
+    { name: "one", content: "", checked: false },
+    { name: "two", content: "", checked: false },
+    { name: "three", content: "", checked: false },
+    { name: "four", content: "", checked: false },
+    { name: "five", content: "", checked: false },
+  ]);
+
+  // const [answer, setAnswer] = useState([]);
+
+  // 파일처리
+  const [sendFile, setSendFile] = useState(null);
   const modalState = useSelector(state => state.modalSlice);
   const dispatch = useDispatch();
 
@@ -20,6 +31,18 @@ const CreateTest = () => {
     const file = e.target.files[0];
     // 파일 보관
     setSendFile(file);
+  };
+
+  const handleCheckboxChange = index => {
+    const newQuestions = [...questions];
+    newQuestions[index].checked = !newQuestions[index].checked;
+    setQuestions(newQuestions);
+  };
+
+  const handleInputChange = (index, event) => {
+    const newQuestions = [...questions];
+    newQuestions[index].content = event.target.value;
+    setQuestions(newQuestions);
   };
 
   const saveData = async e => {
@@ -157,7 +180,7 @@ const CreateTest = () => {
               type="text"
               placeholder="제목을 입력해주세요."
               onChange={e => {
-                handleTitleChange(e);
+                setTitle(e);
               }}
             ></input>
           </div>
@@ -172,7 +195,9 @@ const CreateTest = () => {
           {/* <textarea /> */}
           <form>
             <ReactQuill
-              onChange={setContent}
+              onChange={e => {
+                setContents(e);
+              }}
               modules={modules}
               className="test-content-quill"
               placeholder="내용을 입력해주세요"
@@ -197,31 +222,26 @@ const CreateTest = () => {
           </div>
 
           <div className="online-test-select-wrap">
-            <div className="online-test-select">
-              <input type="checkbox" name="one" className="checkbox" />
-              <label htmlFor="one">1</label>
-              <input type="text" className="select-input" />
-            </div>
-            <div className="online-test-select">
-              <input type="checkbox" name="two" className="checkbox" />
-              <label htmlFor="two">2</label>
-              <input type="text" className="select-input" />
-            </div>
-            <div className="online-test-select">
-              <input type="checkbox" name="three" className="checkbox" />
-              <label htmlFor="three">3</label>
-              <input type="text" className="select-input" />
-            </div>
-            <div className="online-test-select">
-              <input type="checkbox" name="four" className="checkbox" />
-              <label htmlFor="four">4</label>
-              <input type="text" className="select-input" />
-            </div>
-            <div className="online-test-select">
-              <input type="checkbox" name="five" className="checkbox" />
-              <label htmlFor="five">5</label>
-              <input type="text" className="select-input" />
-            </div>
+            {questions.map((item, index) => (
+              <div className="online-test-select" key={index}>
+                <input
+                  type="checkbox"
+                  name={item.name}
+                  className="checkbox"
+                  checked={item.checked}
+                  onChange={() => {
+                    handleCheckboxChange(index);
+                  }}
+                />
+                <label htmlFor={item.name}>{index + 1}</label>
+                <input
+                  type="text"
+                  className="select-input"
+                  value={item.content}
+                  onChange={event => handleInputChange(index, event)}
+                />
+              </div>
+            ))}
           </div>
         </div>
         <div className="button-section">
@@ -245,4 +265,4 @@ const CreateTest = () => {
   );
 };
 
-export default CreateTest;
+export default CreateTestKo;

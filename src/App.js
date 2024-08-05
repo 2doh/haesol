@@ -25,7 +25,6 @@ import NoticeEdit from "pages/notice/NoticeEdit";
 import NoticeItem from "pages/notice/NoticeItem";
 import NoticeList from "pages/notice/NoticeList";
 import NoticeModify from "pages/notice/NoticeModify";
-import CreateTest from "pages/online/CreateTest";
 import MyChildInfo from "pages/parents/MyChildInfo";
 import StudentEdit from "pages/student/StudentEdit";
 import Students from "pages/student/StudentsList";
@@ -45,10 +44,12 @@ import HeaderMemu from "components/layout/header/HeaderMenu";
 import HeaderProfile from "components/layout/header/HeaderProfile";
 import Test from "Test";
 import VocaLearn from "pages/learn/VocaLearn";
+import CreateTestKo from "pages/online/CreateTestKo";
 import CreateTestEn from "pages/online/CreateTestEn";
 import Learn from "pages/learn/Learn";
 import TeacherInfoView from "pages/teacher/TeacherInfoView";
 import ModalView from "components/common/modal/ModalView";
+import CreateTestMath from "pages/online/CreateTestMath";
 
 // import jwt from "jsonwebtoken";
 
@@ -322,11 +323,18 @@ function App() {
           </Route>
 
           {/* 온라인 학습 라우터 */}
-          <Route path="/online/test/create" element={<CreateTest />}></Route>
+          {/* <Route path="/online/test/create" element={<CreateTest />}></Route>
           <Route
             path="/online/test/create/english"
             element={<CreateTestEn />}
-          ></Route>
+          ></Route> */}
+
+          <Route path="/online/test/create">
+            {/* <Route index element={<CreateTest />}></Route> */}
+            <Route path="korean" element={<CreateTestKo />}></Route>
+            <Route path="math" element={<CreateTestMath />}></Route>
+            <Route path="english" element={<CreateTestEn />}></Route>
+          </Route>
 
           <Route
             path="*"

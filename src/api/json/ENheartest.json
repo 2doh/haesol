@@ -1,0 +1,20 @@
+[
+  {
+    "sentence": "민수가 좋아하는 음식은?",
+    "listening": "hi my name is minsu i like kimchi",
+    "answer": "김치",
+    "pic": "https://cdn.pixabay.com/photo/2017/06/02/14/18/boy-2366443_1280.png"
+  },
+  {
+    "sentence": "다음 두 사람이 여행했던 지역의 이름은?",
+    "listening": "Susan, Korea was beautiful. I want to travel with you again",
+    "answer": "서울",
+    "pic": "https://cdn.pixabay.com/photo/2017/06/05/11/01/airport-2373727_960_720.jpg"
+  },
+  {
+    "sentence": "민국이가 여름방학에 처음 해본것의 이름은?",
+    "listening": "Minkuk went on a trip with his parents during the summer vacation. he swam and ate delicious food, but the most memorable thing for Minguk is that he surfed for the first time",
+    "answer": "서핑",
+    "pic": "https://cdn.pixabay.com/photo/2016/11/18/19/10/beach-1836467_1280.jpg"
+  }
+]
