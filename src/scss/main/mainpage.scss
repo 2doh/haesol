@@ -1,0 +1,112 @@
+@import "../valiables";
+
+// MainPageStyle (start)
+.main-page-fill-space {
+  position: relative;
+  height: 75px;
+  width: 100%;
+
+  .top-space,
+  .bottom-space {
+    position: absolute;
+    height: 50%;
+    width: 100%;
+  }
+
+  .top-space {
+    top: 0;
+    background-color: #f3f9fa;
+  }
+  .bottom-space {
+    bottom: 0;
+  }
+}
+
+.main-page-wrap {
+  width: 1180px;
+  border-radius: 30px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.english-book-wrap {
+  margin-top: 50px;
+  height: 400px;
+  padding: 20px;
+  background-color: #eaf0f1;
+}
+
+.mini-banner-wrap {
+  height: 110px;
+  background-color: white;
+  padding: 10px 0px;
+}
+// MainPageStyle (end)
+
+// MainPageContents (start)
+.calendar-and-meals-wrap {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  max-height: 450px;
+
+  .calendar-wrap {
+    min-width: 810px;
+    background-color: #dee8e9;
+    border-radius: 30px;
+    padding: 30px;
+  }
+
+  .lunch-wrap {
+    width: 100%;
+  }
+}
+
+.poto-and-pop-up-wrap {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  height: 375px;
+
+  background-color: #bed7dc;
+  padding: 5px;
+
+  .poto-wrap {
+    min-width: 780px;
+  }
+
+  .pop-up-wrap {
+    width: 100%;
+  }
+}
+// MainPageContents (end)
+
+@media screen and (max-width: $tablet-screen) {
+  // .calendar-and-meals-wrap {
+  //   width: 100%;
+  //   display: flex;
+
+  //   gap: 20px;
+  //   max-height: 450px;
+
+  //   .calendar-wrap {
+  //     min-width: 810px;
+  //     background-color: #dee8e9;
+  //     border-radius: 30px;
+  //     padding: 30px;
+  //   }
+
+  //   .lunch-wrap {
+  //     width: 100%;
+  //   }
+  // }
+
+  .calendar-and-meals-wrap {
+    flex-direction: column;
+    max-height: auto;
+
+    background-color: red;
+  }
+}

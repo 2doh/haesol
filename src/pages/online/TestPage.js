@@ -3,6 +3,9 @@ import GreenHeaderNoOption from "components/layout/header/GreenHeaderNoOption";
 import TestTitle from "./TestTitle";
 import TestQuestion from "./TestQuestion";
 import TestAnswer from "./TestAnswer";
+import { useEffect, useState } from "react";
+import usePreventRefresh from "hooks/common/usePreventRefresh";
+import usePreventGoBack from "hooks/common/usePreventGoBack";
 
 const TestWrap = styled.div`
   position: absolute;
@@ -36,6 +39,14 @@ const TestWrap = styled.div`
 `;
 
 const TestPage = () => {
+  /** 저장하면 */
+  const [alertMessage, setAlertMessage] = useState(
+    "저장하기 또는 제출하기 버튼을 눌러주세요.",
+  );
+
+  usePreventRefresh();
+  usePreventGoBack(alertMessage);
+
   return (
     <>
       <GreenHeaderNoOption />

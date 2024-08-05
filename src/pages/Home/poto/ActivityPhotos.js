@@ -10,6 +10,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination, Autoplay } from "swiper/modules";
+import { useState } from "react";
 
 const ActivityPhotosZoneStyle = styled.div`
   position: absolute;
@@ -18,7 +19,7 @@ const ActivityPhotosZoneStyle = styled.div`
   width: 570px;
 `;
 
-export const ActivityPhotos = () => {
+export const ActivityPhotos = ({ setSwiper }) => {
   return (
     <ActivityPhotosZoneStyle>
       <div className="main-activity-wrap">
@@ -26,10 +27,6 @@ export const ActivityPhotos = () => {
           <Swiper
             slidesPerView={2}
             // spaceBetween={30}
-            navigation={{
-              nextEl: ".swiper-button-next",
-              prevEl: ".swiper-button-prev",
-            }}
             modules={[Autoplay, Pagination]}
             speed={1000}
             loop={true}
@@ -37,6 +34,9 @@ export const ActivityPhotos = () => {
               delay: 2500, // 시간 설정
               disableOnInteraction: false, // false-스와이프 후 자동 재생
               loop: true,
+            }}
+            onSwiper={e => {
+              setSwiper(e);
             }}
             className="main-our-activities-photo-swiper"
           >
