@@ -1,0 +1,46 @@
+@keyframes shake {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-4deg);
+  }
+  50% {
+    transform: rotate(4deg);
+  }
+  75% {
+    transform: rotate(-4deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+.learn-nav-box {
+  width: 100%;
+  height: 100%;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.learn-nav-box-navi {
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  max-width: 300px;
+  max-height: 300px;
+  background-color: #fff;
+  border-radius: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.34) inset, 0 2px 0 -1px rgba(0, 0, 0, 0.13), 0 3px 0 -1px rgba(0, 0, 0, 0.08), 0 3px 13px -1px rgba(0, 0, 0, 0.21);
+}
+
+.learn-nav-box-title {
+  font-size: 24px;
+  cursor: pointer;
+}/*# sourceMappingURL=learn.css.map */

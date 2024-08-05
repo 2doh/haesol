@@ -118,9 +118,8 @@ function App() {
       <Main>
         <Routes>
           <Route path="/test" element={<Test />}></Route>
-          <Route path="/learn" element={<Learn />}>
-            <Route path="voca" element={<VocaLearn />}></Route>
-          </Route>
+          <Route path="/learn" element={<Learn />}></Route>
+          <Route path="/learn/voca" element={<VocaLearn />}></Route>
 
           {/* <Route index element={<Home />}></Route> */}
           <Route index element={<MainPage />}></Route>

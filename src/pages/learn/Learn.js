@@ -4,19 +4,46 @@ import VocaLearn from "./VocaLearn";
 import styled from "@emotion/styled";
 import Footer from "components/layout/Footer";
 import GreenHeaderNoOption from "components/layout/header/GreenHeaderNoOption";
+import { RiSpeakFill } from "react-icons/ri";
+import { TbWriting } from "react-icons/tb";
+import { MdHearing } from "react-icons/md";
+import "../../scss/learn/learn.scss";
+import { useNavigate } from "react-router";
 
 const Learn = () => {
+  const initItem = [
+    { title: "말하기", pic: RiSpeakFill, id: 1 },
+    { title: "듣기", pic: MdHearing, id: 2 },
+    { title: "쓰기", pic: TbWriting, id: 3 },
+  ];
+  const navi = useNavigate();
+
+  const onNavi = data => {
+    navi("/learn/voca", { state: { type: data } });
+  };
+
   return (
     <>
-      {/* <GreenHeaderNoOption />
+      <GreenHeaderNoOption />
       <WrapStyle>
-        <SelectStyle>
-          <NavStyle></NavStyle>
-          
-        </SelectStyle>
+        <SelectWrapStyle>
+          {initItem.map(item => (
+            <div className="learn-nav-box" key={item.id}>
+              <div
+                className="learn-nav-box-navi"
+                onClick={() => {
+                  onNavi(item.title);
+                }}
+              >
+                <item.pic size={100} />
+              </div>
+              <span className="learn-nav-box-title">{item.title}</span>
+            </div>
+          ))}
+        </SelectWrapStyle>
       </WrapStyle>
-      <Footer /> */}
-      <VocaLearn></VocaLearn>
+      <Footer />
+      {/* <VocaLearn></VocaLearn> */}
     </>
   );
 };
@@ -33,12 +60,10 @@ const WrapStyle = styled.div`
   align-items: center;
 `;
 
-const SelectStyle = styled.div`
+const SelectWrapStyle = styled.div`
   width: 100%;
   height: 350px;
-  background-color: red;
-`;
-
-const NavStyle = styled.div`
-  /* width:; */
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-around;
 `;
