@@ -81,6 +81,33 @@ const Main = styled.div`
   }
 `;
 
+const ModalStyle = styled.div`
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  height: 100vh;
+  width: 100vw;
+  z-index: 999999;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & * {
+    text-shadow: none;
+  }
+
+  .not-bg-click-modal {
+    position: absolute;
+    top: 35%;
+    height: 250px;
+  }
+
+  .modal-inner {
+    height: auto;
+  }
+`;
+
 function App() {
   const [notFoundPage, setNotFoundPage] = useState(false);
   const [loginUserType, setLoginUserType] = useState(getCookie("userRole"));
@@ -110,7 +137,11 @@ function App() {
 
   return (
     <BrowserRouter>
-      {modalState.isOpen ? <ModalView /> : null}
+      {modalState.isOpen ? (
+        <ModalStyle>
+          <Modal />
+        </ModalStyle>
+      ) : null}
 
       {/* {onHedaer ? <Header /> : null} */}
       {/* 헤더 샘플 */}

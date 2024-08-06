@@ -145,9 +145,12 @@ const TestOmr = () => {
     } else {
       const data = {
         headerText: "주의",
-        bodyText: ["화면에 나오는 문제의 답안의 번호만 체크 할 수 있습니다."],
+        bodyText: [
+          "현재 페이지의 문제만 체크 할 수 있습니다.\n현재 페이지의 문제만 체크 할 수 있습니다.",
+        ],
         buttonCnt: 1,
-        buttonText: ["확인", "닫기"],
+        buttonText: ["확인"],
+        modalRes: [1],
       };
 
       dispatch(updateModalDate(data));

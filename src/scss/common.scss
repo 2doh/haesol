@@ -44,8 +44,13 @@ body,
   color: #2a1b07;
 }
 
+body {
+  position: static !important;
+  overflow-y: auto !important;
+}
+
 #root {
-  position: relative;
+  // position: relative;
 }
 
 .br10 {
