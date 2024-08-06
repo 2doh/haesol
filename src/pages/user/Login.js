@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import logo from "../../images/logo.png";
 import "../../scss/login/login.scss";
 import "../../scss/login/loginnavi.scss";
+import Footer from "components/layout/Footer";
 
 const Login = ({ setOnHeader, onHedaer }) => {
   const navi = useNavigate();
@@ -50,7 +51,7 @@ const Login = ({ setOnHeader, onHedaer }) => {
 
   return (
     <main className="login">
-      <div className="login-inner">
+      <div className="login-inner" style={{ marginBottom: "180px" }}>
         <div className="login-inner-logowrap">
           <img
             className="login-logo"
@@ -94,6 +95,7 @@ const Login = ({ setOnHeader, onHedaer }) => {
           </div>
         </div>
       </div>
+      <Footer />
     </main>
   );
 };
