@@ -154,7 +154,7 @@ const Modal = () => {
     if (modalState.modalType === "BasicModal") {
       // 단순 true 출력
       if (modalState.modalRes[0] === 1) {
-        console.log("true 를 리턴합니다.");
+        // console.log("true 를 리턴합니다.");
         const data = {
           modalRes: [false],
         };

@@ -156,7 +156,7 @@ const TestQuestion = () => {
   }, []);
 
   useEffect(() => {
-    console.log(testState.questionAll[testState.nowQuestionsNum]);
+    // console.log(testState.questionAll[testState.nowQuestionsNum]);
     setIsQuestions(true);
   }, [testState]);
 
@@ -173,7 +173,7 @@ const TestQuestion = () => {
         answer: item.correct_answer,
       };
 
-      // console.log("날 정보 : ", item);
+      console.log("날 정보 : ", item);
       // console.log("문제 번호 매기기, 개별 저장 : ", formattedQuestion);
 
       const answerChoices = [...item.incorrect_answers];

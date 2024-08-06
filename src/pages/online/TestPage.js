@@ -36,6 +36,36 @@ const TestWrap = styled.div`
       }
     }
   }
+
+  @media screen and (max-width: $tablet-screen) {
+  // .calendar-and-meals-wrap {
+  //   width: 100%;
+  //   display: flex;
+
+  //   gap: 20px;
+  //   max-height: 450px;
+
+  //   .calendar-wrap {
+  //     min-width: 810px;
+  //     background-color: #dee8e9;
+  //     border-radius: 30px;
+  //     padding: 30px;
+  //   }
+
+  //   .lunch-wrap {
+  //     width: 100%;
+  //   }
+  // }
+
+  .calendar-and-meals-wrap {
+    display: flex;
+    flex-direction: column;
+    max-height: auto;
+
+    background-color: red;
+  }
+}
+
 `;
 
 const TestPage = () => {

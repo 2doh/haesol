@@ -7,7 +7,6 @@ const GreenHeaderNoOptionStyle = styled.div`
   z-index: 999;
   height: 70px;
   width: 100%;
-  min-width: 900px;
 
   display: flex;
   justify-content: center;

@@ -5,7 +5,7 @@ import { getCookie } from "utils/cookie";
 /** 회원가입 신청 리스트 */
 export const getAwaitAcceptList = async userListType => {
   const accessToken = getCookie("accessToken");
-  // console.log("유저 타입 : ", userListType);
+  console.log("유저 타입 : ", userListType);
   try {
     const response = await axios.get(`/api/admin/${userListType}`, {
       headers: {

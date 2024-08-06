@@ -4,8 +4,9 @@ import { useRef, useState } from "react";
 import { FaChevronLeft } from "react-icons/fa";
 import { FaChevronRight } from "react-icons/fa";
 import { GiPauseButton } from "react-icons/gi";
-
+import { TiThMenu } from "react-icons/ti";
 import { RiPlayLargeFill } from "react-icons/ri";
+import { useNavigate } from "react-router";
 
 const ControlButtoStyle = styled.div`
   display: flex;
@@ -37,6 +38,7 @@ const ControlButtoStyle = styled.div`
 const SlideControlButton = ({ swiper, btnList }) => {
   const startBtn = useRef();
   const [isStartBtn, setIsStartBtn] = useState(false);
+  const navigate = useNavigate();
 
   /** 이전으로 이동 */
   const handlePrev = () => {
@@ -48,6 +50,11 @@ const SlideControlButton = ({ swiper, btnList }) => {
   const handleNext = () => {
     swiper?.slideNext();
     slideStop();
+  };
+
+  /** 배너 모음 페이지로 이동 */
+  const handleMiniBannerListPageMove = () => {
+    // navigate();
   };
 
   /** 일시정지 & 재생 버튼 */
@@ -83,6 +90,14 @@ const SlideControlButton = ({ swiper, btnList }) => {
           onClick={() => handleStopAndStart()}
         >
           {isStartBtn ? <RiPlayLargeFill /> : <GiPauseButton />}
+        </div>
+      ) : null}
+      {btnList.includes("mini-banner-list-btn") ? (
+        <div
+          className="btn mini-banner-list-btn"
+          onClick={() => handleMiniBannerListPageMove()}
+        >
+          <TiThMenu />
         </div>
       ) : null}
 

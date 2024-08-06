@@ -1,3 +1,4 @@
+// @import "../valiables";
 @import "../valiables";
 
 // MainPageStyle (start)
@@ -104,6 +105,7 @@
   // }
 
   .calendar-and-meals-wrap {
+    display: flex;
     flex-direction: column;
     max-height: auto;
 
