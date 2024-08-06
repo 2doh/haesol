@@ -77,6 +77,29 @@ const HeaderTopStyle = styled.div`
       }
     }
   }
+
+  @media screen and (max-width: 900px) {
+    background-color: red;
+    .footer-inner {
+      .footer-info-nav {
+        width: 510px;
+        flex-wrap: wrap;
+        gap: 15px 0px;
+
+        transition: all 0.2s;
+
+        .nav-text:nth-child(4),
+        .nav-text:nth-child(5) {
+          // visibility: hidden;
+        }
+
+        .nav-text:nth-child(4) {
+          padding-left: 0px;
+          padding-right: 36px;
+        }
+      }
+    }
+  }
 `;
 
 const HeaderTopPublic = () => {

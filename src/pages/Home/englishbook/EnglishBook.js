@@ -15,7 +15,7 @@ import workbook from "../../../images/home/ico_workbook.svg";
 
 const EnglishBookStyle = styled.div`
   height: 100%;
-  max-width: 100vw;
+  max-width: 99vw;
 
   .swiper {
     height: 100%;

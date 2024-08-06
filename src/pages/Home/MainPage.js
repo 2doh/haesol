@@ -10,9 +10,31 @@ import PopUpView from "./popup/PopUpView";
 import PotoView from "./poto/PotoView";
 
 import "../../scss/main/mainpage.css";
+import Footer from "components/layout/Footer";
+import Chat from "./Chat";
+
+const ChatWarp = styled.div`
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  /* display: none; */
+`;
 
 const MainPageStyle = styled.div`
   width: 100%;
+
+  @media screen and (max-width: 1023px) {
+    .calendar-and-meals-wrap {
+      display: flex;
+      flex-direction: column;
+      max-height: auto;
+
+      background-color: red;
+    }
+  }
 `;
 
 const MainPageContents = styled.div`

@@ -1,10 +1,10 @@
 import {
-    Avatar,
-    ChatContainer,
-    MainContainer,
-    Message,
-    MessageInput,
-    MessageList,
+  Avatar,
+  ChatContainer,
+  MainContainer,
+  Message,
+  MessageInput,
+  MessageList,
 } from "@chatscope/chat-ui-kit-react";
 
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";

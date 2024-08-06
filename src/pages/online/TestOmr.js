@@ -14,6 +14,7 @@ import {
 
 import { useDispatch, useSelector } from "react-redux";
 import { openModal, updateModalDate } from "slices/modalSlice";
+import { updateTestDate } from "slices/testSlice";
 import answerSelect from "./answerSelect";
 
 const TestOmrStyle = styled.div`
@@ -145,9 +146,7 @@ const TestOmr = () => {
     } else {
       const data = {
         headerText: "주의",
-        bodyText: [
-          "현재 페이지의 문제만 체크 할 수 있습니다.\n현재 페이지의 문제만 체크 할 수 있습니다.",
-        ],
+        bodyText: ["현재 페이지의 문제만 체크 할 수 있습니다."],
         buttonCnt: 1,
         buttonText: ["확인"],
         modalRes: [1],
