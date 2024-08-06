@@ -7,6 +7,7 @@ import { getCookie } from "utils/cookie";
 import { FaAngleDown } from "react-icons/fa6";
 const StudentsList = () => {
   const userClass = getCookie("userClass");
+  const userGrade = getCookie("userGrade");
 
   const navigate = useNavigate();
   const handleClick = studentPk => {
@@ -36,6 +37,12 @@ const StudentsList = () => {
     studentListData();
   }, []);
 
+  // const StudentsWrapStyle = styled.div`
+  //   max-width: 1180px;
+  //   background-color: green;
+  //   margin: 0 auto;
+  // `;
+
   const StudentsListStyle = styled.div`
     display: flex;
     justify-content: center;
@@ -47,7 +54,9 @@ const StudentsList = () => {
     <div className="main-core">
       <div className="student-list-title">
         {/* 제목 위치 */}
-        <span>{userClass}</span>
+        <span>
+          {userGrade}학년 {userClass}반
+        </span>
       </div>
       <StudentsListStyle>
         <div className="grid-frame">

@@ -36,7 +36,7 @@ const StudentClassInfo = () => {
       <span>
         {studentGrade}학년 {studentClass}반
       </span>
-      {studentName && <p>{studentName} 성적 확인</p>}
+      {studentName && <p>{studentName}</p>}
     </>
   );
 };

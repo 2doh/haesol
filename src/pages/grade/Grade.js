@@ -3,7 +3,6 @@ import {
   getStudentGrade2,
   getStudentGradeSelect1,
   getStudentGradeSelect2,
-  getStudentInfo,
   postStudentGradeScore,
 } from "api/student/studentapi";
 
@@ -14,6 +13,7 @@ import "../../scss/student/grade.css";
 import "../../scss/student/studentEdit.css";
 import moment from "moment";
 import StudentClassInfo from "pages/student/StudentClassInfo";
+import { getCookie } from "utils/cookie";
 
 const initData = [
   {
@@ -159,6 +159,8 @@ const initData = [
 ];
 
 const Grade = () => {
+  const userGrade = getCookie("userGrade");
+  // console.log("userGrade : ", userGrade);
   // 네비게이트
   const navigate = useNavigate();
   const { studentPk } = useParams();
@@ -166,16 +168,7 @@ const Grade = () => {
     navigate(`/students/edit/${studentPk}`);
   };
 
-  const [studentName, setStudentName] = useState("");
-
-  // const [studentInfo, setStudentInfo] = useState({});
-  // const [studentName, setStudentName] = useState("");
-  // const [studentClass, setStudentClass] = useState("");
-
-  // const [nowYear, setNowYear] = useState(new Date().getFullYear());
-  const [yearOptions, setYearOptions] = useState([]);
-  // const [selectedYear, setSelectedYear] = useState(""); // 추가된 부분
-
+  const [selectGrade, setSelectGrade] = useState(true);
   const [classStudentCount, setClassStudentCount] = useState("-");
   const [gradeStudentCount, setGradeStudentCount] = useState("-");
   const [classRank, setClassRank] = useState("-");
@@ -183,29 +176,6 @@ const Grade = () => {
 
   // format에 맞게 출력된다.
   const nowTime = moment().format("YYYY");
-  console.log(nowTime);
-  // 출력 결과: 2020-08-23 12:54:30
-  // const [classGrade, setClassGrade] = useState([]);
-  // // 학생 정보 불러오기
-  // const studentInfoData = async () => {
-  //   try {
-  //     const response = await getStudentInfo(studentPk);
-  //     const result = response.data;
-  //     setStudentInfo(result);
-  //     setStudentName(result.studentName);
-  //     setStudentClass(result.studentClass);
-  //     setClassGrade(result.studentClass.split(" "));
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-  // useEffect(() => {
-  //   // 학생 데이터 불러오기
-  //   studentInfoData();
-  // }, [studentPk]);
-  // useEffect(() => {
-  //   console.log(classGrade[0]);
-  // }, [classGrade]);
 
   // 최초 조회 시 성적 불러오기 중간고사
   const [examListOne, setExamListOne] = useState(initData);
@@ -257,7 +227,7 @@ const Grade = () => {
             grade: response.data.data.latestGrade,
           };
         }
-
+        setSelectGrade(true);
         return subject;
       });
       setExamListOne(updatedData);
@@ -305,6 +275,7 @@ const Grade = () => {
             grade: response.data.data.latestGrade,
           };
         }
+        setSelectGrade(true);
         return subject;
       });
       setExamListTwo(updatedData);
@@ -522,24 +493,20 @@ const Grade = () => {
     }
   };
 
+  // console.log("newGrade : ", newGrade);
   const handleGradeChange = async e => {
     const newGrade = e.target.value;
+    if (newGrade == userGrade) {
+      setSelectGrade(true);
+    } else {
+      setSelectGrade(false);
+    }
     setLatestGrade(newGrade);
     await studentGradeSelect1(newGrade, latestSemester);
     await studentGradeSelect2(newGrade, latestSemester);
+    // console.log("newGrade : ", newGrade);
   };
-  // 학년 값을 숫자로 변환하는 함수
-  const getNumericGrade = gradeString => {
-    const gradeMap = {
-      "1학년": "1",
-      "2학년": "2",
-      "3학년": "3",
-      "4학년": "4",
-      "5학년": "5",
-      "6학년": "6",
-    };
-    return gradeMap[gradeString] || "";
-  };
+
   const handleSemesterChange = async e => {
     const newSemester = e.target.value;
     setLatestSemester(newSemester);
@@ -560,10 +527,16 @@ const Grade = () => {
       border: solid 2px #886348;
       font-size: 18px;
     }
-
     .is-sign {
       background-color: #dd838f;
       color: #fbfaf9;
+    }
+    .download-sign {
+      background-color: #fbfaf9;
+      &:hover {
+        color: white;
+        background-color: #dd838f;
+      }
     }
   `;
 
@@ -572,7 +545,7 @@ const Grade = () => {
       <div className="student-list-title">
         {/* <!-- 제목 위치 --> */}
         <StudentClassInfo />
-        <p>{studentName} 성적 입력</p>
+        <p>성적 입력</p>
       </div>
       <div className="user-info-wrap">
         {/* <!-- 탭 선택 부분 --> */}
@@ -630,17 +603,21 @@ const Grade = () => {
               <div className="text-wrapper">중간고사</div>
             </div>
           </div>
-
-          <div className="info-button">
-            <button
-              onClick={e => {
-                handleSaveOne(e);
-              }}
-            >
-              저장
-            </button>
-          </div>
+          {selectGrade === true ? (
+            <div className="info-button">
+              <button
+                onClick={e => {
+                  handleSaveOne(e);
+                }}
+              >
+                저장
+              </button>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
+
         <div className="info-contain-top">
           <div className="info-item-top">
             {examListOne.map((item, index) => (
@@ -687,7 +664,10 @@ const Grade = () => {
         </div>
         <ParentCheckStyle>
           {signResultPic1 ? (
-            <button className="is-sign">학부모 확인</button>
+            <>
+              <button className="is-sign">학부모 확인</button>
+              <button className="download-sign">서명 다운로드</button>
+            </>
           ) : (
             <button className="null-sign">학부모 확인</button>
           )}
@@ -699,15 +679,19 @@ const Grade = () => {
               <div className="text-wrapper">기말고사</div>
             </div>
           </div>
-          <div className="info-button">
-            <button
-              onClick={e => {
-                handleSaveTwo(e);
-              }}
-            >
-              저장
-            </button>
-          </div>
+          {selectGrade === true ? (
+            <div className="info-button">
+              <button
+                onClick={e => {
+                  handleSaveTwo(e);
+                }}
+              >
+                저장
+              </button>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
 
         <div className="info-contain-top">

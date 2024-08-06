@@ -44,6 +44,7 @@ export const modifyStudentInfo = async data => {
   try {
     const response = await jwtAxios.put("/api/student", data, {
       headers: {
+        "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${accessToken}`,
       },
     });
@@ -172,6 +173,7 @@ export const postStudentGradeScore = async scoreData => {
 // 전자서명 보내기
 export const postSign = async formData => {
   const accessToken = getCookie("accessToken");
+  console.log("사인에 뭐 들어가니 : ", formData);
   try {
     const response = await jwtAxios.post(
       `/api/user/parents/signature`,
