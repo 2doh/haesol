@@ -11,6 +11,9 @@ import listeningTest from "../../api/json/ENheartest.json";
 import { HiSpeakerphone } from "react-icons/hi";
 import { useLocation } from "react-router";
 import Loading from "components/loading/Loading";
+import Title from "components/Title";
+import GreenHeaderNoOption from "components/layout/header/GreenHeaderNoOption";
+import Footer from "components/layout/Footer";
 
 // 레벤슈타인 거리 계산 함수
 const levenshtein = (a, b) => {
@@ -109,11 +112,13 @@ const VocaLearn = () => {
 
   return (
     <>
+      <GreenHeaderNoOption />
       <VocaWrapStyle>
+        <Title></Title>
         {loading ? (
           <Loading></Loading>
         ) : (
-          <>
+          <ContentWrapStyle>
             <Vocabulary
               getObj={getObj}
               index={index}
@@ -145,9 +150,10 @@ const VocaLearn = () => {
                 </form>
               )}
             </VocaBottomWrap>
-          </>
+          </ContentWrapStyle>
         )}
       </VocaWrapStyle>
+      <Footer></Footer>
     </>
   );
 };
@@ -156,6 +162,13 @@ const VocaWrapStyle = styled.div`
   margin: 0 auto;
   width: 100%;
   max-width: 650px;
+  height: 100%;
+  background-color: #f3f9fa;
+  padding: 50px auto;
+`;
+
+const ContentWrapStyle = styled.div`
+  width: 100%;
   height: 100%;
 `;
 

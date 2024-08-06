@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import GreenHeaderNoOption from "components/layout/header/GreenHeaderNoOption";
 import { useEffect, useState } from "react";
 import { AiFillSound } from "react-icons/ai";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";

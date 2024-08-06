@@ -4,13 +4,10 @@ import { useParams } from "react-router";
 
 const Title = () => {
   return (
-    <div className="student-list-title">
+    <div className="student-list-title" style={{ margin: 0 }}>
       {/* <!-- 제목 위치 --> */}
-      <button
-        style={{ width: 100, height: 100, backgroundColor: "red" }}
-      ></button>
-      <span>{studentClass}</span>
-      <p>{studentName}</p>
+      <span>정보</span>
+      <span>이름</span>
     </div>
   );
 };
