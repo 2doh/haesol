@@ -12,7 +12,7 @@ import { useNavigate } from "react-router";
 const HeaderProfileStyle = styled.div`
   font-size: 17px;
   position: relative;
-  z-index: 999;
+  z-index: 998;
   min-height: 80px;
   width: 100%;
   min-width: 1000px;

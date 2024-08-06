@@ -1,8 +1,12 @@
 import styled from "@emotion/styled";
+import useWindowDimensions from "hooks/common/useWindowDimensions";
+import { useEffect, useState } from "react";
 import { CgMenuGridO } from "react-icons/cg";
 import { FiSearch } from "react-icons/fi";
 import { useNavigate } from "react-router";
 import { getCookie } from "utils/cookie";
+import { BiSolidArrowToTop } from "react-icons/bi";
+import { HiMenu } from "react-icons/hi";
 
 const HeaderTopStyle = styled.div`
   font-size: 17px;
@@ -10,7 +14,7 @@ const HeaderTopStyle = styled.div`
   z-index: 999;
   height: 70px;
   width: 100%;
-  min-width: 900px;
+  min-width: 360px;
 
   display: flex;
   justify-content: center;
@@ -20,10 +24,9 @@ const HeaderTopStyle = styled.div`
   .header-wrap {
     display: flex;
     position: relative;
-
-    max-width: 1130px;
+    width: 1023px;
     /* min-width: 900px; */
-    width: 100%;
+    /* width: 100%; */
     height: 100%;
 
     .header-logo-div {
@@ -78,24 +81,38 @@ const HeaderTopStyle = styled.div`
     }
   }
 
-  @media screen and (max-width: 900px) {
-    background-color: red;
-    .footer-inner {
-      .footer-info-nav {
-        width: 510px;
-        flex-wrap: wrap;
-        gap: 15px 0px;
+  @media screen and (max-width: 1023px) {
+    position: fixed;
+    z-index: 999999;
+    top: 0;
+    .header-wrap {
+      width: 100%;
 
-        transition: all 0.2s;
+      .header-logo-div {
+      }
+      .header-btn-div {
+        height: 100%;
+        display: flex;
+        align-items: center;
 
-        .nav-text:nth-child(4),
-        .nav-text:nth-child(5) {
-          // visibility: hidden;
+        .header-seach-menu,
+        .header-login-signup {
         }
+      }
 
-        .nav-text:nth-child(4) {
-          padding-left: 0px;
-          padding-right: 36px;
+      .header-seach-menu {
+        height: calc(100% - 10px);
+        background-color: #add2d8;
+        padding: 3px 30px 3px 20px;
+        border-radius: 50px 0 0 50px;
+
+        & > div {
+          width: 50px !important;
+          border-radius: 50px !important;
+        }
+      }
+      .header-login-signup {
+        & > div {
         }
       }
     }
@@ -104,6 +121,8 @@ const HeaderTopStyle = styled.div`
 
 const HeaderTopPublic = () => {
   const navigate = useNavigate();
+  const [changeStyle, setChangeStyle] = useState(true);
+  const { height, width } = useWindowDimensions();
 
   /** 메인 페이지로 이동 */
   const moveHomePage = () => {
@@ -116,6 +135,20 @@ const HeaderTopPublic = () => {
 
   const moveSingupPage = () => {
     navigate("/signup");
+  };
+
+  useEffect(() => {
+    if (width < 1023) {
+      setChangeStyle(false);
+    } else {
+      setChangeStyle(true);
+    }
+  }, [width]);
+
+  /** 페이지 맨 위로 이동 */
+  const MoveToTop = () => {
+    // top:0 >> 맨위로  behavior:smooth >> 부드럽게 이동할수 있게 설정하는 속성
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
@@ -131,7 +164,7 @@ const HeaderTopPublic = () => {
         </div>
 
         <div className="header-btn-div">
-          {!getCookie("accessToken") ? (
+          {!getCookie("accessToken") && changeStyle ? (
             <div className="header-login-signup">
               <div
                 className="header-login"
@@ -153,12 +186,22 @@ const HeaderTopPublic = () => {
           ) : null}
 
           <div className="header-seach-menu">
-            <div className="header-seach-btn">
+            {changeStyle ? null : (
+              <div className="header-top-move-btn" onClick={() => MoveToTop()}>
+                <BiSolidArrowToTop size={30} />
+              </div>
+            )}
+            {/* <div className="header-seach-btn">
               <FiSearch size={30} />
-            </div>
+            </div> */}
             <div className="header-menu-btn">
               <CgMenuGridO size={33} />
             </div>
+            {changeStyle ? null : (
+              <div className="header-hamburger-menu-btn">
+                <HiMenu size={30} />
+              </div>
+            )}
           </div>
         </div>
       </div>
