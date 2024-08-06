@@ -609,8 +609,7 @@ const GradeView = () => {
             studentPk={studentPk}
             latestSemester={latestSemester}
             latestYear={latestYear}
-            // semester={latestSemester}
-            year={nowTime}
+            nowTime={nowTime}
           />
         )}
 
@@ -667,8 +666,7 @@ const GradeView = () => {
             studentPk={studentPk}
             latestSemester={latestSemester}
             latestYear={latestYear}
-            // semester={latestSemester}
-            year={nowTime}
+            nowTime={nowTime}
           />
         )}
       </div>

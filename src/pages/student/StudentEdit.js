@@ -8,18 +8,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { openModal, updateModalDate } from "slices/modalSlice";
 
 import catPicture from "../../images/box-cat.jpg";
+import { getCookie } from "utils/cookie";
+import StudentImg from "./StudentImg";
 
 const StudentEdit = () => {
+  const userClass = getCookie("userClass");
+  const userGrade = getCookie("userGrade");
   // 네비게이트
   const navigate = useNavigate();
   const { studentPk } = useParams();
   const handleClick = () => {
     navigate(`/grade/${studentPk}`);
   };
-  // 차트 네비게이트
-  const handleChart = () => {
-    navigate(``);
-  };
+
   const modalState = useSelector(state => state.modalSlice);
   const dispatch = useDispatch();
 
@@ -164,7 +165,9 @@ const StudentEdit = () => {
     <div className="main-core">
       <div className="student-list-title">
         {/* <!-- 제목 위치 --> */}
-        <span>{studentClass}</span>
+        <span>
+          {userGrade}학년 {userClass}반
+        </span>
         <p>학생 정보 관리</p>
       </div>
       {/* <!-- 신상정보 전체 레이아웃 --> */}
@@ -183,14 +186,6 @@ const StudentEdit = () => {
             >
               <div className="info-subtitle">성적 입력</div>
             </div>
-            {/* <div
-              className="div-wrapper"
-              onClick={() => {
-                handleChart();
-              }}
-            >
-              <div className="info-subtitle">차트</div>
-            </div> */}
           </div>
 
           <div className="info-button">
@@ -330,9 +325,7 @@ const StudentEdit = () => {
                 <img src={studentPic} alt={studentPic} />
               </StudentsImeStyle>
             ) : (
-              <StudentsImeStyle>
-                <img src={catPicture} alt="귀야운 고양이"></img>
-              </StudentsImeStyle>
+              <StudentImg />
             )}
           </div>
         </div>

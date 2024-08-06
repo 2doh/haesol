@@ -246,7 +246,7 @@ function App() {
                   {...alert("로그인이 필요합니다.")}
                 />
               }
-            ></Route>
+            ></Route> 
           )} */}
 
           {/* 성적 확인/입력 페이지 - 세션 확인 바람 */}
@@ -254,8 +254,8 @@ function App() {
           {loginUserType === "ROLE_TEACHER" ? (
             <Route path="/grade/:studentPk" element={<Grade />}></Route>
           ) : (
+            <Route path="/grade/:studentPk" element={<Grade />}></Route>
             // <Route path="/grade/:studentPk" element={<GradeView />}></Route>
-            <Route path="/grade/:studentPk" element={<GradeView />}></Route>
           )}
           <Route
             path="/grade/chart/:studentPk"

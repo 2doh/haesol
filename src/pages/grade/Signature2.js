@@ -50,7 +50,7 @@ const ButtonWrapStyle = styled.div`
   gap: 10px;
 `;
 
-const Signature2 = ({ studentPk, latestSemester, latestYear }) => {
+const Signature2 = ({ studentPk, latestSemester, nowTime }) => {
   const [showSignature, setShowSignature] = useState(false);
   const [isSigned, setIsSigned] = useState(false);
   const canvasRef = useRef(null);
@@ -80,7 +80,7 @@ const Signature2 = ({ studentPk, latestSemester, latestYear }) => {
 
     const reqData = JSON.stringify({
       studentPk: studentPk,
-      year: latestYear,
+      year: nowTime,
       semester: latestSemester,
       examSign: 2,
     });
