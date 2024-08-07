@@ -1,15 +1,50 @@
 import styled from "@emotion/styled";
-import { getAwaitAcceptList } from "api/admin/adminapi";
+import { getAwaitAcceptList, getAwaitUserList } from "api/admin/adminapi";
 import { useEffect, useRef, useState } from "react";
 import "../../scss/admin/adminhomestyle.css";
 import { useDispatch, useSelector } from "react-redux";
 import { openModal, updateModalDate } from "slices/modalSlice";
+import { AdminPageMenu } from "./AdminPageMenu";
+import GreenHeaderNoOption from "components/layout/header/GreenHeaderNoOption";
+import moment from "moment";
+
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import { SearchInput } from "components/common/style/SearchInput";
+import { switchCase } from "@babel/types";
 
 const AdminHomeStyle = styled.div`
+  width: 100vw;
+  background-color: #fbfaf9;
+
+  & > div:first-of-type {
+    position: absolute;
+    width: 100%;
+  }
+`;
+
+const AdminMainStyle = styled.div`
+  position: relative;
+
+  max-width: 1180px;
+  width: 1180px;
+  margin: 0 auto;
+  background-color: #f3f9fa;
+  padding: 65px 80px;
+  height: 100vh;
+  max-height: 100vh;
+
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  width: 100%;
-  height: 100%;
+
+  .admin-home-wrap {
+    width: 100%;
+    height: 100%;
+    /* position: absolute; */
+    /* background-color: gray; */
+  }
+  /* border-radius */
 
   .admin-home-core {
     .user-info-wrap {
@@ -35,43 +70,79 @@ const AdminHomeStyle = styled.div`
       }
     }
   }
+
+  /* 수정중 */
+  .skeleton-grid-inner-item {
+    height: 25px;
+    width: 70%;
+    /* background-color: red; */
+  }
+
+  .search-input-wrap {
+    position: relative;
+    height: 70px;
+
+    & > div {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+    }
+  }
 `;
 
 const AdminHome = () => {
-  const [acceptUserList, setAcceptUserList] = useState([]);
-  const [userListType, setUserListType] = useState(1);
-
-  const parentsRef = useRef();
-  const teacherRef = useRef();
-
   const modalState = useSelector(state => state.modalSlice);
   const dispatch = useDispatch();
 
-  /** 리스트 출력 함수 */
-  const getAwaitList = async ({ userListType }) => {
-    const res = await getAwaitAcceptList(userListType);
+  // 출력되는 리스트 저장
+  const [acceptUserList, setAcceptUserList] = useState([]);
+  // 선택된 메뉴 (0, 1, 2, 3....)
+  const [nowSelectMemu, setNowSelectMemu] = useState(0);
+
+  // 검색 키워드
+  const [searchKeyword, setSearchKeyword] = useState("");
+  const [clickSearchBtn, setClickSearchBtn] = useState(false);
+
+  /** 신청 리스트 출력 함수 */
+  const getAwaitList = async nowSelectMemu => {
+    const res = await getAwaitAcceptList(nowSelectMemu);
+    setAcceptUserList(res);
+    console.log("신청 : ", res);
+  };
+
+  /** 신청 리스트 출력 함수 */
+  const getUserList = async useNum => {
+    const res = await getAwaitUserList(useNum);
     setAcceptUserList(res);
   };
 
-  /** 최초 랜더링 시, 리스트 출력 */
-  useEffect(() => {
-    getAwaitList({ userListType });
-  }, [userListType, modalState.modalRes]);
+  // /api/admin/list
 
-  /** 메뉴 변경 */
-  const changeAccerptMenu = menuNum => {
-    if (menuNum === 1) {
-      parentsRef.current.className = "frame";
-      teacherRef.current.className = "div-wrapper";
-      // console.log("학부모입니다 : ", menuNum);
+  /** 최초 랜더링 시, 메뉴 선택시, 모달 종료시 리스트 재출력 */
+  useEffect(() => {
+    switch (nowSelectMemu) {
+      case 0:
+        getAwaitList(nowSelectMemu + 1);
+        break;
+      case 1:
+        getAwaitList(nowSelectMemu + 1);
+        break;
+      case 2:
+        console.log("3번 메뉴");
+        // 학부모 목록
+        getUserList(1);
+        break;
+      case 3:
+        // 교직원 목록
+        getAwaitList(2);
+        console.log("4번 메뉴");
+
+        // getAwaitList(nowSelectMemu + 1);
+        break;
+      default:
+        break;
     }
-    if (menuNum === 2) {
-      parentsRef.current.className = "div-wrapper";
-      teacherRef.current.className = "frame";
-      // console.log("교직원입니다 : ", menuNum);
-    }
-    setUserListType(menuNum);
-  };
+  }, [nowSelectMemu, modalState.modalRes]);
 
   /** 모달 호출 */
   const showModal = (selectBtn, selectUserId, selectUserName, selectUserPk) => {
@@ -79,7 +150,7 @@ const AdminHome = () => {
     const data = {
       headerText: [selectBtn],
       bodyTextLabel: ["ID", "이름"],
-      bodyText: [selectUserId, selectUserName, selectUserPk, userListType],
+      bodyText: [selectUserId, selectUserName, selectUserPk, nowSelectMemu],
       buttonText: [selectBtn, "취소"],
     };
 
@@ -90,98 +161,81 @@ const AdminHome = () => {
   };
 
   return (
-    <>
-      <AdminHomeStyle>
-        <div className="main-core admin-home-core">
-          <div className="user-info-wrap">
-            <div className="user-info-tap">
-              <div className="property">
-                <div
-                  ref={parentsRef}
-                  className="frame"
-                  onClick={() => {
-                    changeAccerptMenu(1);
-                  }}
-                >
-                  <div className="text-wrapper">학부모</div>
-                </div>
-                <div
-                  ref={teacherRef}
-                  className="div-wrapper"
-                  onClick={() => {
-                    changeAccerptMenu(2);
-                  }}
-                >
-                  <div className="info-subtitle">교직원</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="grid-frame">
-            <div className="item">
-              <div className="grid-inner">
-                <div className="grid-inner-item">
-                  <div className="grid-inner-item-text">구분</div>
-                </div>
-                <div className="grid-inner-item">
-                  <div className="grid-inner-item-text">아이디</div>
-                </div>
-                <div className="grid-inner-item">
-                  <div className="grid-inner-item-text">이름</div>
-                </div>
-                <div className="grid-inner-item">
-                  <div className="grid-inner-item-text">학년</div>
-                </div>
-                <div className="grid-inner-item">
-                  <div className="grid-inner-item-text">학급</div>
-                </div>
-                <div className="grid-inner-item">
-                  <div className="grid-inner-item-text">승인 신청일</div>
-                </div>
-                <div className="grid-inner-item">
-                  <div className="grid-inner-item-text">반려 / 승인</div>
-                </div>
-              </div>
-            </div>
+    <AdminHomeStyle>
+      <GreenHeaderNoOption />
 
-            {acceptUserList.map((item, index) => {
-              return (
-                <div className="item" key={index}>
+      <AdminMainStyle>
+        <div className="admin-home-wrap">
+          <AdminPageMenu
+            menuLabelList={[
+              "신청(학부모)",
+              "신청(교직원)",
+              "학부모 목록",
+              "교직원 목록",
+            ]}
+            menuType={"bottom-type-menu"}
+            setNowSelectMemu={setNowSelectMemu}
+          ></AdminPageMenu>
+
+          <div className="search-input-wrap">
+            <SearchInput
+              setSearchKeyword={setSearchKeyword}
+              setClickSearchBtn={setClickSearchBtn}
+            />
+          </div>
+
+          <div className="main-core admin-home-core">
+            <div className="grid-frame">
+              <div className="item">
+                <div className="grid-inner">
+                  <div className="grid-inner-item">
+                    <div className="grid-inner-item-text">구분</div>
+                  </div>
+                  <div className="grid-inner-item">
+                    <div className="grid-inner-item-text">아이디</div>
+                  </div>
+                  <div className="grid-inner-item">
+                    <div className="grid-inner-item-text">이름</div>
+                  </div>
+                  <div className="grid-inner-item">
+                    <div className="grid-inner-item-text">학년</div>
+                  </div>
+                  <div className="grid-inner-item">
+                    <div className="grid-inner-item-text">학급</div>
+                  </div>
+                  <div className="grid-inner-item">
+                    <div className="grid-inner-item-text">승인 신청일</div>
+                  </div>
+                  <div className="grid-inner-item">
+                    <div className="grid-inner-item-text">반려 / 승인</div>
+                  </div>
+                </div>
+              </div>
+              {/* {test ? null : (
+                <div className="item">
                   <div className="grid-inner">
-                    <div className="grid-inner-item">
-                      <div className="grid-inner-item-text">{index + 1}</div>
-                    </div>
-                    <div className="grid-inner-item">
-                      <div className="grid-inner-item-text">{item.id}</div>
-                    </div>
-                    <div className="grid-inner-item">
-                      <div className="grid-inner-item-text">{item.name}</div>
-                    </div>
-                    <div className="grid-inner-item">
-                      <div className="grid-inner-item-text">
-                        {item.grade === null ? (
-                          <div className="admin-no-list-style">미입력</div>
-                        ) : (
-                          item.grade
-                        )}
+                    <Skeleton className="grid-inner-item">
+                      <div className="grid-inner-item-text skeleton-grid-inner-item">
+                        1111
                       </div>
-                    </div>
-                    <div className="grid-inner-item">
-                      <div className="grid-inner-item-text">
-                        {item.class === null ? (
-                          <div className="admin-no-list-style">미입력</div>
-                        ) : (
-                          item.class
-                        )}
-                      </div>
-                    </div>
-                    <div className="grid-inner-item">
-                      <div className="grid-inner-item-text">
-                        {item.createdAt}
-                      </div>
-                    </div>
-                    <div className="grid-inner-item">
-                      <div className="grid-inner-item-text sign-off-on-buttons">
+                    </Skeleton>
+                    <Skeleton className="grid-inner-item">
+                      <div className="grid-inner-item-text skeleton-grid-inner-item"></div>
+                    </Skeleton>
+                    <Skeleton className="grid-inner-item">
+                      <div className="grid-inner-item-text skeleton-grid-inner-item"></div>
+                    </Skeleton>
+                    <Skeleton className="grid-inner-item ">
+                      <div className="grid-inner-item-text skeleton-grid-inner-item"></div>
+                    </Skeleton>
+                    <Skeleton className="grid-inner-item">
+                      <div className="grid-inner-item-text skeleton-grid-inner-item"></div>
+                    </Skeleton>
+                    <Skeleton className="grid-inner-item">
+                      <div className="grid-inner-item-text skeleton-grid-inner-item"></div>
+                    </Skeleton>
+                    <Skeleton className="grid-inner-item">
+                      <div className="grid-inner-item-text sign-off-on-buttons skeleton-grid-inner-item">
                         <button
                           className="rejected-button"
                           onClick={() => {
@@ -199,14 +253,73 @@ const AdminHome = () => {
                           승인
                         </button>
                       </div>
-                    </div>
+                    </Skeleton>
                   </div>
                 </div>
-              );
-            })}
+              )} */}
+              {acceptUserList.map((item, index) => {
+                return (
+                  <div className="item" key={index}>
+                    <div className="grid-inner">
+                      <div className="grid-inner-item">
+                        <div className="grid-inner-item-text">{index + 1}</div>
+                      </div>
+                      <div className="grid-inner-item">
+                        <div className="grid-inner-item-text">{item.id}</div>
+                      </div>
+                      <div className="grid-inner-item">
+                        <div className="grid-inner-item-text">{item.name}</div>
+                      </div>
+                      <div className="grid-inner-item">
+                        <div className="grid-inner-item-text">
+                          {item.grade === null ? (
+                            <div className="admin-no-list-style">미입력</div>
+                          ) : (
+                            item.grade
+                          )}
+                        </div>
+                      </div>
+                      <div className="grid-inner-item">
+                        <div className="grid-inner-item-text">
+                          {item.class === null ? (
+                            <div className="admin-no-list-style">미입력</div>
+                          ) : (
+                            item.class
+                          )}
+                        </div>
+                      </div>
+                      <div className="grid-inner-item">
+                        <div className="grid-inner-item-text">
+                          {moment(item.createdAt).format("YYYY-MM-DD hh:mm:ss")}
+                        </div>
+                      </div>
+                      <div className="grid-inner-item">
+                        <div className="grid-inner-item-text sign-off-on-buttons">
+                          <button
+                            className="rejected-button"
+                            onClick={() => {
+                              showModal("반려", item.id, item.name, item.pk);
+                            }}
+                          >
+                            반려
+                          </button>
+                          <button
+                            className="accept-button"
+                            onClick={() => {
+                              showModal("승인", item.id, item.name, item.pk);
+                            }}
+                          >
+                            승인
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
 
-            {/* 참고 */}
-            {/* <div className="item">
+              {/* 참고 */}
+              {/* <div className="item">
               <div className="grid-inner">
                 <div className="grid-inner-item">
                   <div className="grid-inner-item-text">학부모</div>
@@ -234,10 +347,11 @@ const AdminHome = () => {
                 </div>
               </div>
             </div> */}
+            </div>
           </div>
         </div>
-      </AdminHomeStyle>
-    </>
+      </AdminMainStyle>
+    </AdminHomeStyle>
   );
 };
 
