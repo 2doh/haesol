@@ -257,6 +257,14 @@
   height: 45px;
   margin: 1px;
 }
+.class-schedule-inner .grid-frame .grid-inner-item:nth-child(1) .grid-inner-item-text {
+  width: 70%;
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: red;
+}
 .class-schedule-inner .grid-frame .item:nth-child(1) {
   background-color: #fbfaf9;
 }

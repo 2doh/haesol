@@ -19,6 +19,27 @@ export const getAwaitAcceptList = async userListType => {
   }
 };
 
+/** 가입된 유저 리스트 */
+export const getAwaitUserList = async userListType => {
+  // const accessToken = getCookie("accessToken");
+  console.log("유저 타입 : ", userListType);
+  // try {
+  //   const response = await axios.get(`/api/admin/${userListType}`, {
+  //     headers: {
+  //       Authorization: `Bearer ${accessToken}`,
+  //     },
+  //   });
+  //   // console.log("api 결과 : ", response.data);
+  //   return response.data.userList;
+  // } catch (error) {
+  //   // console.log(error);
+  // }
+
+  const res = await jwtAxios.get(`/api/admin/list?p=1&check=1`);
+  console.log(res.data);
+  return res.data;
+};
+
 /** 회원가입 신청 승인 */
 export const singupAccept = async (selectUserPk, userListType) => {
   const accessToken = getCookie("accessToken");

@@ -329,6 +329,12 @@
     & .grid-inner-item:nth-child(1) {
       .grid-inner-item-text {
         // @include text-n-box-shadow;
+        width: 70%;
+        height: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: red;
       }
     }
 
