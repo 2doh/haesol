@@ -52,6 +52,7 @@ const StudentEdit = () => {
 
   const [studentCreatedAt, setStudentCreatedAt] = useState("");
   const [parentId, setParentId] = useState("");
+  const [studentGrade, setStudentGrade] = useState("");
   const [studentClass, setStudentClass] = useState("");
 
   const [prevEtcList, setPrevEtcList] = useState([]);
@@ -77,6 +78,7 @@ const StudentEdit = () => {
       setStudentEtc(result.studentEtc);
       setStudentCreatedAt(result.studentCreatedAt);
       setParentId(result.parentId);
+      setStudentGrade(result.studentGrade);
       setStudentClass(result.studentClass);
 
       setPrevEtcList(result.prevEtcList);
@@ -397,7 +399,9 @@ const StudentEdit = () => {
           <div className="info-none-modify" id="info-none-modify-last">
             <div className="info-title">
               <span>현재 학급</span>
-              <div>{studentClass}</div>
+              <div>
+                {studentGrade}학년 {studentClass}반
+              </div>
             </div>
           </div>
         </div>

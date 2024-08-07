@@ -22,8 +22,6 @@ const CreateTestEn = () => {
     wordQuestion: "단어를 입력해주세요",
     wordAnswer: "정답을 입력해주세요",
   };
-  // <TestInputAnswer tempObj={tempObj}></TestInputAnswer>
-  // <TestInputAnswer></TestInputAnswer>
 
   // 이미지
   const [previewFile, setPreviewFile] = useState(null);
