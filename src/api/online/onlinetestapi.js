@@ -1,8 +1,8 @@
 import jwtAxios from "api/jwtUtil";
 import { getCookie } from "utils/cookie";
 
-// 국어 시험 post
-export const onlineTestKorean = async formData => {
+// 시험 post
+export const onlineTestCreate = async formData => {
   const accessToken = getCookie("accessToken");
   // console.log("국어 시험 post : ", formData);
   try {

@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
 import DOMPurify from "dompurify";
 import "react-quill/dist/quill.snow.css";
@@ -8,6 +8,23 @@ import BasicRating from "./BasicRating";
 import { useDispatch, useSelector } from "react-redux";
 import { openModal, updateModalDate } from "slices/modalSlice";
 import TestInputAnswer from "./TestInputAnswer";
+import { onlineTestCreate } from "api/online/onlinetestapi";
+
+const TestTitleStyled = styled.div`
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: 20px;
+  margin: 80px;
+  span {
+    font-size: 36px;
+    font-weight: 700;
+    color: #1b4957;
+  }
+  p {
+    font-size: 18px;
+  }
+`;
 
 const CreateTestMath = () => {
   // 시험 종류
@@ -17,63 +34,73 @@ const CreateTestMath = () => {
   const [contents, setContents] = useState("");
   const [starValue, setStarValue] = useState(3);
   const [multiple, setMultiple] = useState([
-    { name: "one", value: "" },
-    { name: "two", value: "" },
-    { name: "three", value: "" },
-    { name: "four", value: "" },
-    { name: "five", value: "" },
+    { content: "" },
+    { content: "" },
+    { content: "" },
+    { content: "" },
+    { content: "" },
   ]);
-  const [answer, setAnswer] = useState([]);
-  const [wordMath, setWordMath] = useState("");
+  const [answer, setAnswer] = useState(null);
+  useEffect(() => {
+    console.log("체크되었다", answer);
+  }, [answer]);
+  const tempObj = {
+    state: "",
+    wordMath: "정답을 입력해주세요.",
+  };
+
   // 파일 처리
+  const [previewFile, setPreviewFile] = useState(null);
   const [sendFile, setSendFile] = useState(null);
 
   const modalState = useSelector(state => state.modalSlice);
   const dispatch = useDispatch();
 
-  const handleMultipleChange = (index, event) => {
-    const newMultiple = [...multiple];
-    newMultiple[index].value = event.target.value;
-    setMultiple(newMultiple);
+  // 이미지 업로드 및 미리보기용 함수
+  const handleFileChange = e => {
+    const file = e.target.files[0];
+    // 전송 파일 보관
+    setSendFile(file);
+    // 미리보기용
+    const url = URL.createObjectURL(file);
+    // 웹 브라우저 임시 파일 주소
+    setPreviewFile(url);
   };
 
-  const tempObj = {
-    state: "",
-    wordMath: "정답을 입력해주세요.",
+  /** 체크된 정답 저장 */
+  const handleCheckboxChange = (e, index) => {
+    if (e.target.checked) {
+      setAnswer(index);
+      const newMultiple = multiple.map((item, i) => (i === index ? item : ""));
+      setMultiple(newMultiple);
+    } else {
+      setAnswer(null);
+    }
   };
 
   const handleSelectChange = e => {
     setSelectedOption(e.target.value);
   };
 
-  const handleFileChange = e => {
-    const file = e.target.files[0];
-    // 파일 보관
-    setSendFile(file);
+  /** 문제 내용 저장 함수 */
+  const handleInputChange = (index, event) => {
+    const newMultiple = [...multiple];
+    newMultiple[index].content = event.target.value;
+    setMultiple(newMultiple);
   };
 
-  const saveData = async e => {
+  const handleSave = async e => {
     e.preventDefault();
-    const formData = new FormData();
-    const onlineTestData = JSON.stringify({
-      // BE: FE,
-      // 제목,
-      // 난이도,
-      // 문제내용,
-      // 이미지있을수도없을수도,
-      // 보기내용,
-      // 정답,
-    });
-    console.log("onlineTestData : ", onlineTestData);
 
-    const dto = new Blob([infoData], { type: "application/json" });
-    formData.append("키명", dto);
-    // formData.append("petImage", imgFile); 처럼 백에서 요구한 값 넣기
-    formData.append("키명", sendFile);
-    axiosPost함수(formData);
-  };
-
-  const handleSave = selectModalType => {
+    if (!title) {
+      alert("제목을 입력해주세요.");
+      return;
+    }
+    const hasEmpty = multiple.some(item => item.content.trim() === "");
+    if (hasEmpty) {
+      alert("모든 보기를 입력해주세요.");
+      return; // 하나라도 항목이 비어 있을 때 실행 중지
+    }
     const data = {
       bodyText: [
         "문제가 성공적으로 저장되었습니다. 다음 문제를 계속해서 제출하시겠습니까?",
@@ -82,8 +109,46 @@ const CreateTestMath = () => {
       buttonText: ["확인", "닫기"],
     };
 
+    await saveData(e);
     dispatch(updateModalDate(data));
-    dispatch(openModal(selectModalType));
+    dispatch(openModal("BasicModal"));
+  };
+
+  const saveData = async e => {
+    e.preventDefault();
+    const formData = new FormData();
+
+    const multipleContents = multiple.map(item => item.content);
+
+    const onlineTestData = JSON.stringify({
+      // BE: FE,
+      // 국어
+      subjectCode: 2,
+      // 제목,
+      question: title,
+      // 난이도,
+      level: starValue,
+      // 문제내용,
+      contents: contents,
+      // 보기내용,
+      multiple: multipleContents,
+      // 정답,
+      answer: answer,
+    });
+    console.log("onlineTestData : ", onlineTestData);
+
+    const dto = new Blob([onlineTestData], { type: "application/json" });
+    formData.append("pic", dto);
+    if (sendFile) {
+      formData.append("file", sendFile);
+    }
+    try {
+      console.log("국어 시험 post : ", formData.get(1));
+
+      await onlineTestCreate(formData);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   /** 취소 기능 */
@@ -155,22 +220,6 @@ const CreateTestMath = () => {
     },
   };
 
-  const TestTitleStyled = styled.div`
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    gap: 20px;
-    margin: 80px;
-    span {
-      font-size: 36px;
-      font-weight: 700;
-      color: #1b4957;
-    }
-    p {
-      font-size: 18px;
-    }
-  `;
-
   return (
     <div className="main-core">
       <TestTitleStyled>
@@ -200,7 +249,7 @@ const CreateTestMath = () => {
               type="text"
               placeholder="제목을 입력해주세요."
               onChange={e => {
-                handleTitleChange(e);
+                setTitle(e.target.value);
               }}
             ></input>
           </div>
@@ -212,10 +261,11 @@ const CreateTestMath = () => {
         </div>
         <div className="online-test-content">
           <div className="online-test-required-title">내용(문제)</div>
-          {/* <textarea /> */}
           <form>
             <ReactQuill
-              onChange={setContents}
+              onChange={() => {
+                setContents();
+              }}
               modules={modules}
               className="test-content-quill"
               placeholder="내용을 입력해주세요"
@@ -238,7 +288,7 @@ const CreateTestMath = () => {
         {selectedOption === "choice" && (
           <div className="online-test-content">
             <div className="online-test-required-title">
-              보기(정답)<p>정답에 체크해주세요.(복수 정답일 시 여러 개 체크)</p>
+              보기(정답)<p>정답에 체크해주세요.</p>
             </div>
 
             <div className="online-test-select-wrap">
@@ -246,14 +296,19 @@ const CreateTestMath = () => {
                 <div className="online-test-select" key={index}>
                   <input
                     type="checkbox"
-                    name={item.name}
+                    name={`option${index}`}
                     className="checkbox"
+                    checked={answer === index}
+                    onChange={e => {
+                      handleCheckboxChange(e, index);
+                    }}
                   />
-                  <label htmlFor={item.name}>{index + 1}</label>
+                  <label htmlFor={`option${index}`}>{index + 1}</label>
                   <input
                     type="text"
                     className="select-input"
-                    onChange={event => handleMultipleChange(index, event)}
+                    value={item.content}
+                    onChange={event => handleInputChange(index, event)}
                   />
                 </div>
               ))}
@@ -268,20 +323,14 @@ const CreateTestMath = () => {
               <div className="online-test-required-title">주관식</div>
               <TestInputAnswer
                 placeholder={tempObj.wordMath}
-                setWord={setWordMath}
+                setWord={setAnswer}
               ></TestInputAnswer>
             </div>
           </div>
         )}
 
         <div className="button-section">
-          <button
-            onClick={() => {
-              handleSave("BasicModal");
-            }}
-          >
-            저장
-          </button>
+          <button onClick={handleSave}>저장</button>
           <button
             onClick={() => {
               modifyCancel("BasicModal");
