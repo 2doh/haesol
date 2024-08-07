@@ -116,8 +116,6 @@ const AdminHome = () => {
     setAcceptUserList(res);
   };
 
-  // /api/admin/list
-
   /** 최초 랜더링 시, 메뉴 선택시, 모달 종료시 리스트 재출력 */
   useEffect(() => {
     switch (nowSelectMemu) {
@@ -179,6 +177,7 @@ const AdminHome = () => {
 
           <div className="search-input-wrap">
             <SearchInput
+              placeholderText={"아이디 입력"}
               setSearchKeyword={setSearchKeyword}
               setClickSearchBtn={setClickSearchBtn}
             />
