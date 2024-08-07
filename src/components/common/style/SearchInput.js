@@ -27,7 +27,11 @@ const SearchInputStyle = styled.div`
   }
 `;
 
-export const SearchInput = ({ setSearchKeyword, setClickSearchBtn }) => {
+export const SearchInput = ({
+  placeholderText,
+  setSearchKeyword,
+  setClickSearchBtn,
+}) => {
   const [inputVal, setInputVal] = useState("");
 
   const handleSearchBtn = e => {
@@ -44,7 +48,7 @@ export const SearchInput = ({ setSearchKeyword, setClickSearchBtn }) => {
       <fieldset className="field-container">
         <input
           type="text"
-          placeholder="아이디 입력"
+          placeholder={placeholderText || "키워드 검색"}
           className="field"
           value={inputVal}
           onChange={e => {
