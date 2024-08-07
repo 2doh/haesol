@@ -254,8 +254,8 @@ function App() {
           {loginUserType === "ROLE_TEACHER" ? (
             <Route path="/grade/:studentPk" element={<Grade />}></Route>
           ) : (
-            <Route path="/grade/:studentPk" element={<Grade />}></Route>
-            // <Route path="/grade/:studentPk" element={<GradeView />}></Route>
+            // <Route path="/grade/:studentPk" element={<Grade />}></Route>
+            <Route path="/grade/:studentPk" element={<GradeView />}></Route>
           )}
           <Route
             path="/grade/chart/:studentPk"
