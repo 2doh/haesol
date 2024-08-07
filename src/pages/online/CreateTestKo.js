@@ -45,7 +45,7 @@ const CreateTestKo = () => {
   ]);
 
   // 답 저장
-  const [answer, setAnswer] = useState();
+  const [answer, setAnswer] = useState(null);
 
   // useEffect(() => {
   //   console.log("체크되었다", answer);
@@ -108,6 +108,26 @@ const CreateTestKo = () => {
     setMultiple(newMultiple);
   };
 
+  const handleSave = async e => {
+    e.preventDefault();
+
+    if (!title || !multiple.length) {
+      alert("내용을 확인해주세요.");
+      return;
+    }
+    const data = {
+      bodyText: [
+        "문제가 성공적으로 저장되었습니다. 다음 문제를 계속해서 제출하시겠습니까?",
+      ],
+      modalRes: [50],
+      buttonText: ["확인", "닫기"],
+    };
+
+    await saveData(e);
+    dispatch(updateModalDate(data));
+    dispatch(openModal("BasicModal"));
+  };
+
   const saveData = async e => {
     e.preventDefault();
     const formData = new FormData();
@@ -137,30 +157,13 @@ const CreateTestKo = () => {
       formData.append("file", sendFile);
     }
     try {
+      console.log("국어 시험 post : ", formData.get(1));
+      console.log("국어 시험 post 222 : ", onlineTestData);
+
       await onlineTestKorean(formData);
     } catch (error) {
       console.log(error);
     }
-  };
-
-  const handleSave = async e => {
-    e.preventDefault();
-
-    if (!title || !multiple.length) {
-      alert("내용을 확인해주세요.");
-      return;
-    }
-    const data = {
-      bodyText: [
-        "문제가 성공적으로 저장되었습니다. 다음 문제를 계속해서 제출하시겠습니까?",
-      ],
-      modalRes: [50],
-      buttonText: ["확인", "닫기"],
-    };
-
-    await saveData(e);
-    dispatch(updateModalDate(data));
-    dispatch(openModal("BasicModal"));
   };
 
   /** 취소 기능 */
@@ -276,8 +279,8 @@ const CreateTestKo = () => {
           {/* <textarea /> */}
           <form>
             <ReactQuill
-              onChange={value => {
-                setContents(value);
+              onChange={() => {
+                setContents();
               }}
               modules={modules}
               className="test-content-quill"
@@ -319,7 +322,7 @@ const CreateTestKo = () => {
                 <input
                   type="text"
                   className="select-input"
-                  value={item.content}
+                  value={item}
                   onChange={event => handleInputChange(index, event)}
                 />
               </div>
@@ -328,9 +331,10 @@ const CreateTestKo = () => {
         </div>
         <div className="button-section">
           <button
-            onClick={() => {
-              handleSave();
-            }}
+            // onClick={() => {
+            //   handleSave();
+            // }}
+            onClick={handleSave}
           >
             저장
           </button>
