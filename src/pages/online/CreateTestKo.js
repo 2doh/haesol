@@ -7,7 +7,7 @@ import "../../scss/online/createTest.css";
 import BasicRating from "./BasicRating";
 import { useDispatch, useSelector } from "react-redux";
 import { openModal, updateModalDate } from "slices/modalSlice";
-import { onlineTestKorean } from "api/online/onlinetestapi";
+import { onlineTestCreate } from "api/online/onlinetestapi";
 
 const TestTitleStyled = styled.div`
   display: flex;
@@ -28,20 +28,16 @@ const TestTitleStyled = styled.div`
 const CreateTestKo = () => {
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
-  const [selectedOption, setSelectedOption] = useState("1");
+  // 문제 종류
+  const [typeTag, setTypeTag] = useState("1");
   const [starValue, setStarValue] = useState(3);
   // 보기 내용 저장 배열
   const [multiple, setMultiple] = useState([
-    "",
-    "",
-    "",
-    "",
-    "",
-    // { number: "one", content: "", checked: false },
-    // { number: "two", content: "", checked: false },
-    // { number: "three", content: "", checked: false },
-    // { number: "four", content: "", checked: false },
-    // { number: "five", content: "", checked: false },
+    { content: "" },
+    { content: "" },
+    { content: "" },
+    { content: "" },
+    { content: "" },
   ]);
 
   // 답 저장
@@ -59,7 +55,7 @@ const CreateTestKo = () => {
   const dispatch = useDispatch();
 
   const handleSelectChange = e => {
-    setSelectedOption(e.target.value);
+    setTypeTag(e.target.value);
   };
 
   // 이미지 업로드 및 미리보기용 함수
@@ -73,47 +69,35 @@ const CreateTestKo = () => {
     setPreviewFile(url);
   };
 
-  // 체크박스의 ckecked 상태만 토글
-  // const handleCheckboxChange = index => {
-  //   const newQuestions = [...questions];
-  //   newQuestions[index].checked = !newQuestions[index].checked;
-  //   setQuestions(newQuestions);
-  // };
-
-  // useEffect(() => {
-  //   console.log("대답 : ", answer);
-  // }, [answer]);
-
   /** 체크된 정답 저장 */
   const handleCheckboxChange = (e, index) => {
     if (e.target.checked) {
       setAnswer(index);
+      const newMultiple = multiple.map((item, i) => (i === index ? item : ""));
+      setMultiple(newMultiple);
+    } else {
+      setAnswer(null);
     }
-
-    // 특정 체크박스 클릭시 이외 체크박스 false 로 설정
-    // 라디오 버튼 중복 체크 방지 처리
-    // setQuestions(prevQuestions =>
-    //   prevQuestions.map((question, i) =>
-    //     i === index
-    //       ? { ...question, checked: !question.checked }
-    //       : { ...question, checked: false },
-    //   ),
-    // );
   };
 
   /** 문제 내용 저장 함수 */
   const handleInputChange = (index, event) => {
     const newMultiple = [...multiple];
-    newMultiple[index] = event.target.value;
+    newMultiple[index].content = event.target.value;
     setMultiple(newMultiple);
   };
 
   const handleSave = async e => {
     e.preventDefault();
 
-    if (!title || !multiple.length) {
-      alert("내용을 확인해주세요.");
+    if (!title) {
+      alert("제목을 입력해주세요.");
       return;
+    }
+    const hasEmpty = multiple.some(item => item.content.trim() === "");
+    if (hasEmpty) {
+      alert("모든 보기를 입력해주세요.");
+      return; // 하나라도 항목이 비어 있을 때 실행 중지
     }
     const data = {
       bodyText: [
@@ -132,6 +116,8 @@ const CreateTestKo = () => {
     e.preventDefault();
     const formData = new FormData();
 
+    const multipleContents = multiple.map(item => item.content);
+
     const onlineTestData = JSON.stringify({
       // BE: FE,
       // 국어
@@ -139,13 +125,13 @@ const CreateTestKo = () => {
       // 제목,
       question: title,
       // 타입
-      typeTag: selectedOption,
+      typeTag: typeTag,
       // 난이도,
       level: starValue,
       // 문제내용,
       contents: contents,
       // 보기내용,
-      multiple: multiple,
+      multiple: multipleContents,
       // 정답,
       answer: answer,
     });
@@ -158,9 +144,8 @@ const CreateTestKo = () => {
     }
     try {
       console.log("국어 시험 post : ", formData.get(1));
-      console.log("국어 시험 post 222 : ", onlineTestData);
 
-      await onlineTestKorean(formData);
+      await onlineTestCreate(formData);
     } catch (error) {
       console.log(error);
     }
@@ -266,7 +251,7 @@ const CreateTestKo = () => {
           <div className="test-option">
             <select
               name="korean-test"
-              value={selectedOption}
+              value={typeTag}
               onChange={e => {
                 handleSelectChange(e);
               }}
@@ -276,7 +261,6 @@ const CreateTestKo = () => {
               <option value="3">문학</option>
             </select>
           </div>
-          {/* <textarea /> */}
           <form>
             <ReactQuill
               onChange={() => {
@@ -310,10 +294,12 @@ const CreateTestKo = () => {
               <div className="online-test-select" key={index}>
                 <input
                   type="checkbox"
-                  name={item.number}
+                  // name={item.number}
+                  name={`option${index}`}
                   className="checkbox"
                   // checked={setAnswer(index)}
                   // checked={item.checked}
+                  checked={answer === index}
                   onChange={e => {
                     handleCheckboxChange(e, index);
                   }}
@@ -322,7 +308,7 @@ const CreateTestKo = () => {
                 <input
                   type="text"
                   className="select-input"
-                  value={item}
+                  value={item.content}
                   onChange={event => handleInputChange(index, event)}
                 />
               </div>
