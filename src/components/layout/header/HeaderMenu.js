@@ -26,7 +26,6 @@ const HeaderMemuStyle = styled.div`
 
     border-radius: 0px 50px 50px 0px;
 
-    /* width: 100%; */
     height: 100%;
     background-color: #5f909f;
 
@@ -39,13 +38,8 @@ const HeaderMemuStyle = styled.div`
       position: absolute;
       width: 100vw;
       height: 100%;
-      overflow: hidden;
-      /* margin-right: 130px; */
-      /* padding: 0px 180px; */
 
       & > ul {
-        /* position: relative; */
-
         height: 100%;
         width: 100%;
         max-width: 1023px;
@@ -57,50 +51,62 @@ const HeaderMemuStyle = styled.div`
       }
 
       & > ul > li {
-        /* position: relative; */
+        position: relative;
         white-space: nowrap;
         font-size: 22px;
         cursor: pointer;
         z-index: 1000;
-        /* width: 100%; */
 
         h2 {
           a {
             color: white;
           }
         }
+        #user-type-menu-label {
+          min-width: 102px;
+          text-align: center;
+        }
 
-        .navi_sub {
+        .navi_arrow_icon {
           display: none;
 
-          position: fixed;
-          padding: 14px 4px 11px;
-          z-index: 999;
+          position: absolute;
+          top: 35px;
+          left: 50%;
+          transform: translateX(calc(-50% + 0.5px));
+          text-align: center;
+          width: 50px;
+          height: 23px;
+          z-index: 20;
 
-          left: 116px;
-          top: 130px;
+          path {
+            color: #385f72;
+          }
+        }
+
+        .navi_sub {
+          /* display: none; */
+
+          max-height: 0px;
+          overflow: hidden;
+
+          position: absolute;
+          padding: 0px;
+          /* padding: 14px 4px 11px; */
+          z-index: 10;
+
+          left: -34px;
+          top: 48px;
           width: 188px;
-          /* margin-left: -105px; */
+
+          transition: max-height 0.3s; /* height를 변화 시켰을 때 0.2초간 변화 되도록 설정(기본) */
+          /* -webkit-transition: height 0.2s;
+          -moz-transition: height 0.2s;
+          -o-transition: height 0.2s; */
 
           border-radius: 30px 30px 5px 5px;
           box-shadow: 0px 2px 5px 0px rgba(7, 7, 7, 0.2);
           background: #fff;
-          /* box-sizing: border-box; */
-
-          .navi_arrow_icon {
-            position: absolute;
-            top: -11px;
-            left: 50%;
-            transform: translateX(calc(-50% + 0.5px));
-            text-align: center;
-            width: 50px;
-            height: 23px;
-            z-index: 1;
-
-            path {
-              color: #385f72;
-            }
-          }
 
           .depth2 {
             & > li {
@@ -114,7 +120,6 @@ const HeaderMemuStyle = styled.div`
                 font-weight: 400;
                 word-break: keep-all;
                 border-bottom: 2px dashed #ced4da;
-                /* background: url(../images/main/gray_line.jpg) repeat-x left bottom; */
 
                 span {
                   word-break: keep-all;
@@ -132,6 +137,21 @@ const HeaderMemuStyle = styled.div`
             }
           }
         }
+        /* 서브 메뉴들 - start */
+        .notice-menu {
+        }
+        .user-type-menu {
+          left: -28px;
+        }
+        .online-menu {
+          left: -28px;
+        }
+        .my-info-menu {
+        }
+        .learning-services-menu {
+          left: -28px;
+        }
+        /* 서브 메뉴들 - end */
 
         .navi_sub::after {
           width: calc(100% - 8px);
@@ -153,6 +173,10 @@ const HeaderMemuStyle = styled.div`
         border-radius: 50px;
 
         .navi_sub {
+          padding: 14px 4px 11px;
+          max-height: 500px;
+        }
+        .navi_arrow_icon {
           display: block;
         }
       }
@@ -191,6 +215,14 @@ const HeaderMemu = () => {
       case 5:
         navigate("/selftest");
         break;
+      case 10:
+        // 추가하기
+        // navigate("/selftest");
+        break;
+      case 11:
+        // 추가하기
+        navigate("/notice/list/classid");
+        break;
       default:
         break;
     }
@@ -211,30 +243,27 @@ const HeaderMemu = () => {
                   <h2>
                     <a>알림 마당</a>
                   </h2>
-                  <div className="navi_sub">
-                    <div className="navi_arrow_icon">
-                      <IoMdArrowDropdownCircle size={30} />
-                    </div>
-
+                  <div className="navi_arrow_icon">
+                    <IoMdArrowDropdownCircle size={30} />
+                  </div>
+                  <div className="navi_sub notice-menu">
                     <ul className="depth2">
-                      <li>
+                      <li
+                        onClick={() => {
+                          moveMyPage(10);
+                        }}
+                      >
                         <a>
-                          <span>서브 메뉴 1</span>
+                          <span>전체 일정</span>
                         </a>
                       </li>
-                      <li>
+                      <li
+                        onClick={() => {
+                          moveMyPage(11);
+                        }}
+                      >
                         <a>
-                          <span>서브 메뉴 2</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a>
-                          <span>서브 메뉴 3</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a>
-                          <span>서브 메뉴 4</span>
+                          <span>알림장</span>
                         </a>
                       </li>
                     </ul>
@@ -245,9 +274,41 @@ const HeaderMemu = () => {
                     moveMyPage(2);
                   }}
                 >
-                  <h2>
-                    <a>학생 마당</a>
+                  <h2 id="user-type-menu-label">
+                    <a>OOO 마당</a>
                   </h2>
+                  <div className="navi_arrow_icon">
+                    <IoMdArrowDropdownCircle size={30} />
+                  </div>
+                  <div className="navi_sub user-type-menu">
+                    <ul className="depth2">
+                      <li>
+                        <a>
+                          <span>학급 관리</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a>
+                          <span>문제 출제 리스트</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a>
+                          <span>영어 문제 출제</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a>
+                          <span>국어 문제 출제</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a>
+                          <span>수학 문제 출제</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
                 </li>
                 <li
                   onClick={() => {
@@ -255,37 +316,21 @@ const HeaderMemu = () => {
                   }}
                 >
                   <h2>
-                    <a>학부모 마당</a>
+                    <a>온라인 학습</a>
                   </h2>
-                  {/* <div className="navi_sub">
-                    <div className="navi_arrow_icon">
-                      <IoMdArrowDropdownCircle size={30} />
-                    </div>
-
+                  {/* <div className="navi_arrow_icon">
+                    <IoMdArrowDropdownCircle size={30} />
+                  </div>
+                  <div className="navi_sub online-menu">
                     <ul className="depth2">
                       <li>
                         <a>
-                          <span>서브 메뉴 1</span>
+                          <span>전체 일정</span>
                         </a>
                       </li>
                       <li>
                         <a>
-                          <span>서브 메뉴 2</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a>
-                          <span>서브 메뉴 3</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a>
-                          <span>서브 메뉴 4</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a>
-                          <span>서브 메뉴 5</span>
+                          <span>알림장</span>
                         </a>
                       </li>
                     </ul>
@@ -297,8 +342,33 @@ const HeaderMemu = () => {
                   }}
                 >
                   <h2>
-                    <a>선생님 마당</a>
+                    <a>나의 공간</a>
                   </h2>
+                  {/* <div className="navi_arrow_icon my-info-menu">
+                    <IoMdArrowDropdownCircle size={30} />
+                  </div>
+                  <div className="navi_sub">
+                    <ul className="depth2">
+                      <li
+                        onClick={() => {
+                          moveMyPage(10);
+                        }}
+                      >
+                        <a>
+                          <span>전체 일정</span>
+                        </a>
+                      </li>
+                      <li
+                        onClick={() => {
+                          moveMyPage(11);
+                        }}
+                      >
+                        <a>
+                          <span>알림장</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </div> */}
                 </li>
                 <li
                   onClick={() => {
@@ -306,8 +376,33 @@ const HeaderMemu = () => {
                   }}
                 >
                   <h2>
-                    <a>온라인 학습</a>
+                    <a>학습 서비스</a>
                   </h2>
+                  {/* <div className="navi_arrow_icon">
+                    <IoMdArrowDropdownCircle size={30} />
+                  </div>
+                  <div className="navi_sub learning-services-menu">
+                    <ul className="depth2">
+                      <li
+                        onClick={() => {
+                          moveMyPage(10);
+                        }}
+                      >
+                        <a>
+                          <span>전체 일정</span>
+                        </a>
+                      </li>
+                      <li
+                        onClick={() => {
+                          moveMyPage(11);
+                        }}
+                      >
+                        <a>
+                          <span>알림장</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </div> */}
                 </li>
               </ul>
             </nav>

@@ -1,378 +1,161 @@
 import styled from "@emotion/styled";
-import { getMyChildInfo } from "api/parents/mychildinfo";
 import LogoutButton from "components/common/LogoutButton";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdOutlineLogout } from "react-icons/md";
 import { useNavigate } from "react-router";
 import { getCookie, removeCookie, setCookie } from "utils/cookie";
-import ParentsChildProfile from "./ParentsChildProfile";
 
 const ParentsProfileStyle = styled.div`
   position: relative;
   width: 330px;
   height: 300px;
-  perspective: 1000px;
-
-  .page {
-    position: absolute;
-    /* background-color: #f5dec1; */
-    box-shadow:
-      0 0 2px rgba(0, 0, 0, 0.4),
-      -2px 0 2px rgba(0, 0, 0, 0.4);
-    width: 100%;
-    /* height: 100%; */
-  }
-
-  #page1 {
-    z-index: 1;
-    transform-origin: left center;
-    transition-duration: 1s;
-    transition-timing-function: ease-in;
-  }
-
-  /* #page1:hover {
-    transform: rotateY(-180deg);
-    opacity: 0;
-  } */
-
-  .page1 {
-    /* 기본 스타일 */
-    transform-origin: left center;
-    transition:
-      transform 1s ease-in-out,
-      opacity 1s ease-in-out,
-      visibility 1s ease-in-out;
-    /* 초기 상태 */
-    transform: rotateY(0deg);
-    opacity: 1;
-    visibility: visible;
-  }
-
-  .page1.animate {
-    animation: rotateAndFade 3s ease-in-out;
-    animation-fill-mode: forwards;
-  }
-
-  @keyframes rotateAndFade {
-    0% {
-      transform: rotateY(0deg);
-      opacity: 1;
-      visibility: visible;
-    }
-    50% {
-      transform: rotateY(-180deg);
-      opacity: 0;
-      visibility: visible;
-    }
-    100% {
-      transform: rotateY(0deg);
-      opacity: 0;
-      visibility: visible;
-    }
-  }
-  #page2 {
-    z-index: 0;
-  }
-
-  .content {
-    width: 100%;
-    height: 100%;
-    transition-duration: 1s;
-  }
-
-  /* #content1:hover {
-    opacity: 0.4;
-  } */
-
-  .chainSection {
-    position: absolute;
-    top: 10px;
-    left: 0;
-    height: 100%;
-    z-index: 10;
-  }
-
-  .chain {
-    display: flex;
-    align-items: center;
-    margin: 18px 0;
-  }
-
-  .chainFrame {
-    width: 20px;
-    height: 8px;
-    background-color: #616161;
-    display: inline-block;
-    z-index: 1;
-    border-radius: 0 8px 8px 0;
-  }
-
-  .chainCircle {
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background-color: #fff;
-    display: inline-block;
-    transform: translateX(-8px);
-    box-shadow: -1px -1px 3px rgba(0, 0, 0, 0.4) inset;
-  }
-
-  /*
-    친효애드온 : 포스트잇 모듈 (마크1) 시작
-    https://rgy0409.tistory.com
-    e-mail : rgy0409@gmail.com
-*/
-  .menu-rayRostIt {
-    * {
-      z-index: -10;
-    }
-  }
-
-  div.rgyPostIt {
-    left: 310px;
-    /* right: -85px; */
-    /* top: 8px; */
-    text-wrap: nowrap;
-
-    position: absolute;
-    display: inline-block;
-    /* padding: 20px 45px 20px 15px; */
-    padding: 13px;
-    margin: 5px 0;
-    border: 1px solid #f8f861;
-    border-left: 15px solid #f8f861;
-    /* border-bottom-right-radius: 60px 10px; */
-    border-bottom-right-radius: 35px 5px;
-    font-size: 15px;
-    color: #555;
-    word-break: break-all;
-    background: #ffff88; /* Old browsers */
-    background: -moz-linear-gradient(
-      -45deg,
-      #ffff88 81%,
-      #ffff88 82%,
-      #ffff88 82%,
-      #ffffc6 100%
-    ); /* FF3.6+ */
-    background: -webkit-gradient(
-      linear,
-      left top,
-      right bottom,
-      color-stop(81%, #ffff88),
-      color-stop(82%, #ffff88),
-      color-stop(82%, #ffff88),
-      color-stop(100%, #ffffc6)
-    ); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(
-      -45deg,
-      #ffff88 81%,
-      #ffff88 82%,
-      #ffff88 82%,
-      #ffffc6 100%
-    ); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(
-      -45deg,
-      #ffff88 81%,
-      #ffff88 82%,
-      #ffff88 82%,
-      #ffffc6 100%
-    ); /* Opera 11.10+ */
-    background: -ms-linear-gradient(
-      -45deg,
-      #ffff88 81%,
-      #ffff88 82%,
-      #ffff88 82%,
-      #ffffc6 100%
-    ); /* IE10+ */
-    background: linear-gradient(
-      135deg,
-      #ffff88 81%,
-      #ffff88 82%,
-      #ffff88 82%,
-      #ffffc6 100%
-    ); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffff88', endColorstr='#ffffc6', GradientType=1); /* IE6-9 fallback on horizontal gradient */
-    transition: all 0.2s;
-    -webkit-transition: all 0.2s;
-  }
-
-  div.rgyPostIt::after {
-    content: " ";
-    position: absolute;
-    z-index: -1;
-    right: 0;
-    bottom: 35px;
-    width: 150px;
-    height: 30px;
-    background-color: rgba(0, 0, 0, 0);
-    box-shadow: 2px 35px 5px rgba(0, 0, 0, 0.4);
-    -webkit-box-shadow: 2px 35px 5px rgba(0, 0, 0, 0.4);
-    transform: matrix(-1, -0.1, 0, 1, 0, 0);
-    -webkit-transform: matrix(-1, -0.1, 0, 1, 0, 0);
-    -moz-transform: matrix(-1, -0.1, 0, 1, 0, 0);
-    -ms-transform: matrix(-1, -0.1, 0, 1, 0, 0);
-    -o-transform: matrix(-1, -0.1, 0, 1, 0, 0);
-    transition: all 0.2s;
-    -webkit-transition: all 0.2s;
-  }
-
-  div.rgyPostIt:hover {
-    border-bottom-right-radius: 30px 15px;
-  }
-
-  div.rgyPostIt:hover::after {
-    box-shadow: 2px 37px 7px rgba(0, 0, 0, 0.37);
-    -webkit-box-shadow: 2px 37px 7px rgba(0, 0, 0, 0.37);
-  }
-
-  div.rgyPostIt > p {
-    padding: 5px 0 !important;
-  }
-
-  div.rgyPostIt > p::before {
-    content: "\f198";
-    margin-right: 7px;
-    font-family: "FontAwesome";
-    font-weight: normal;
-    font-size: 20px;
-    vertical-align: middle;
-  }
-
-  div.rgyPostIt > p > a {
-    color: #555;
-  }
-  /* 포스트잇 모듈 (마크1) 끝 */
-  /* .no-transform {
-    transform: none !important;
-  } */
 `;
 
 const ParentsProfile = () => {
+  // 나중에 : api 수정 후
+
   const navigate = useNavigate();
   const [loginUserType, setLoginUserType] = useState(getCookie("userRole"));
 
   const [myChildList, setMyChildList] = useState([]);
   const [offUseEffect, setOffUseEffect] = useState(false);
 
+  // 선택되어 있는 학생 한 명의 정보
+  const [birth, setBirth] = useState("");
+  const [classId, setClassId] = useState("");
+  const [className, setClassName] = useState("");
+  // const [class, setClass] = useState("");
+  const [gender, setGender] = useState("");
+  const [name, setName] = useState("");
+  const [age, setAge] = useState("");
+  const [teacherName, setTeacherName] = useState("");
+  const [parentName, setParentName] = useState("");
+  const [parentPhone, setParentPhone] = useState("");
+  const [parentsPK, setParentsPK] = useState("");
+  const [phone, setPhone] = useState("");
+  const [studentPk, setStudentPk] = useState("");
+
+  // 이미지
+  const [studentPic, setStudentPic] = useState(null);
+
+  const [selectChildInfo, setSelectChildInfo] = useState([]);
+  const [num, setnum] = useState(0);
+
   /** 메뉴 선택 */
-  const [countIndex, setCountIndex] = useState(0);
-
-  /** 이전 자녀의 번호 */
-  const [prevChildNum, setPrevChildNum] = useState(0);
-
-  /** 메뉴 선택시 selectChildNum 변경 */
-  const handleOnClick = (e, idx) => {
-    console.log("들어옴.");
-    setCountIndex(idx);
-    setPrevChildNum(getCookie("studentPk"));
-    setCookie("studentPk", idx);
-
-    // 강제로 애니메이션 재시작
-    const page1Element = page1Ref.current;
-    page1Element.classList.remove("animate");
-    void page1Element.offsetWidth; // Reflow
-    page1Element.classList.add("animate");
-  };
 
   /** 아이들 정보 불러오기 */
-  const myChildInfo = async childNum => {
-    const res = await getMyChildInfo();
-    // console.log("자녀 정보 : ", res);
 
-    if (res === false) {
-      console.log("자녀 없음.");
+  useEffect(() => {
+    // console.log("offUseEffect False");
+    if (offUseEffect) {
+      const num = getCookie("selectChildNum");
+      // console.log("offUseEffect True");
+      // console.log("정보 확인 : ", myChildList[num].name);
+
+      /** 선택되어 있는 학생의 정보 저장 */
+      setBirth(myChildList[num].birth);
+      setClassId(myChildList[num].classId);
+      setClassName(myChildList[num].classId);
+      setGender(myChildList[num].gender);
+      setName(myChildList[num].name);
+      setParentName(myChildList[num].parentName);
+      setParentPhone(myChildList[num].parentPhone);
+      setParentsPK(myChildList[num].parentsPK);
+      setPhone(myChildList[num].phone);
+      setStudentPk(myChildList[num].studentPk);
+      setAge(myChildList[num].age);
+      setTeacherName(myChildList[num].teacherName);
+      setStudentPic(myChildList[num].pic);
+      setCookie("studentPk", myChildList[num].studentPk);
     }
+  }, [getCookie("selectChildNum")]);
 
-    const num = childNum;
-
-    if (res) {
-      // 자녀 리스트 저장
-      setMyChildList(res);
-
-      // 학생 PK 저장
-      setCookie("studentPk", res[num].studentPk);
-
-      setOffUseEffect(true);
-    }
+  /** 마이페이지 이동 */
+  const moveMyPage = () => {
+    navigate(`/studentinfo`);
   };
 
-  useEffect(() => {
-    myChildInfo(getCookie("selectChildNum"));
-  }, []);
-
-  /** 프로필 html 코드 추가 */
-  useEffect(() => {
-    const chainSections = document.getElementsByClassName("chainSection");
-    const chain = `
-          <div class="chain">
-          <div class="chainFrame"></div>
-          <div class="chainCircle"></div>
-          </div>
-        `;
-
-    for (let i = 0; i < chainSections.length; i++) {
-      const chainSection = chainSections[i];
-
-      for (let j = 0; j < 7; j++) {
-        chainSection.innerHTML += chain;
-      }
-    }
-  }, []);
-
-  const page1Ref = useRef();
-
-  // onClick={() => {
-  //   asdf213.current.classList = "user-info-wrap page page1";
-  // }}
+  /** 성적 확인 페이지 이동 */
+  const moveMyGradePage = () => {
+    // navigate("/grade/1");
+    navigate(`/grade/${studentPk}`);
+  };
 
   return (
     <ParentsProfileStyle>
-      {/* 자녀 메뉴 - start */}
-      {myChildList.map((item, index) => {
-        const topPosition = index * 50 + 30; // 인덱스에 따라 left 위치 계산
-        // console.log(item);
-        return (
-          <div
-            className="rgyPostIt menu-rayRostIt"
-            key={index}
-            style={{ top: `${topPosition}px` }}
-            onClick={e => {
-              handleOnClick(e, index);
-            }}
-          >
-            {item.name}
+      <div className="user-info-wrap">
+        <div className="user-info-inner">
+          <div className="user-info">
+            {/* 유저 정보 start */}
+            <div className="top-user-info">
+              <div className="user-pic"></div>
+
+              <div className="user-info-div">
+                <div className="user-info-label-box">
+                  <div className="user-info-label">학생 이름</div>
+                  <div className="user-info-label">생일</div>
+                  <div className="user-info-label">학급</div>
+                  <div className="user-info-label">선생님 성함</div>
+                </div>
+                <div className="user-info-text-box">
+                  <div className="login-user-info-text">
+                    {name === "" || name === null || name === 0 ? (
+                      <div className="no-info">미등록</div>
+                    ) : (
+                      birth
+                    )}
+                  </div>
+                  <div className="login-user-info-text">
+                    {birth === "" || birth === null || birth === 0 ? (
+                      <div className="no-info">미등록</div>
+                    ) : (
+                      birth
+                    )}
+                  </div>
+                  <div className="login-user-info-text">
+                    {className === "" || className === null ? (
+                      <div className="no-info">미등록</div>
+                    ) : (
+                      className
+                    )}
+                  </div>
+                  <div className="login-user-info-text">
+                    {teacherName === "" || teacherName === null ? (
+                      <div className="no-info">미등록</div>
+                    ) : (
+                      teacherName
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              <LogoutButton />
+            </div>
+            {/* 유저 정보 end */}
+
+            {/* 버튼 start */}
+            <div className="bottom-user-btn">
+              <button
+                className="subject-grade-btn"
+                onClick={() => {
+                  moveMyGradePage();
+                }}
+              >
+                과목별 성적
+              </button>
+
+              <button
+                className="my-page-btn"
+                onClick={() => {
+                  moveMyPage();
+                }}
+              >
+                마이페이지
+              </button>
+            </div>
+            {/* 버튼 end */}
           </div>
-        );
-      })}
-      {/* 자녀 메뉴 - end */}
-
-      <div className="user-info-wrap page page1" id="page1" ref={page1Ref}>
-        <div className="user-info-inner content" id="content1">
-          {prevChildNum !== null ? (
-            <ParentsChildProfile
-              childInfo={myChildList[prevChildNum]}
-              childNum={prevChildNum}
-            />
-          ) : null}
         </div>
-        <section className="chainSection"></section>
-      </div>
-
-      <div
-        className="user-info-wrap page"
-        id="page2"
-        // ref={asdf213}
-        // onClick={() => {
-        //   asdf213.current.classList = "user-info-wrap page page2";
-        // }}
-      >
-        <div className="user-info-inner content" id="contents">
-          <ParentsChildProfile
-            childInfo={myChildList[getCookie("studentPk")]}
-            childNum={getCookie("studentPk")}
-          />
-        </div>
-        <section className="chainSection"></section>
       </div>
     </ParentsProfileStyle>
   );

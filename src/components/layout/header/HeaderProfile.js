@@ -8,6 +8,7 @@ import ParentsProfile from "pages/Home/profile/ParentsProfile";
 import "../../../scss/main/profile.css";
 import TeacherProfile from "pages/Home/profile/TeacherProfile";
 import { useNavigate } from "react-router";
+import MainBanner from "./MainBanner";
 
 const HeaderProfileStyle = styled.div`
   font-size: 17px;
@@ -20,22 +21,9 @@ const HeaderProfileStyle = styled.div`
   align-items: center;
   gap: 50px;
   background-color: #f3f9fa;
-
   .banner-warp {
     padding: 20px 0px;
     width: 60%;
-
-    .banner {
-      height: 300px;
-      width: 100%;
-      background-color: #dbebee;
-      border-radius: 0px 50px 50px 0px;
-
-      /* 나중에 삭제 */
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
   }
 `;
 
@@ -43,7 +31,7 @@ const HeaderProfile = () => {
   return (
     <HeaderProfileStyle>
       <section className="banner-warp">
-        <div className="banner">배너</div>
+        <MainBanner />
       </section>
       <section>
         {!getCookie("accessToken") ? <UnauthenticatedProfile /> : null}
