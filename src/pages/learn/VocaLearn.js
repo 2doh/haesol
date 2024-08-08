@@ -15,45 +15,8 @@ import Title from "components/Title";
 import GreenHeaderNoOption from "components/layout/header/GreenHeaderNoOption";
 import Footer from "components/layout/Footer";
 
-// 레벤슈타인 거리 계산 함수
-const levenshtein = (a, b) => {
-  const matrix = Array.from({ length: b.length + 1 }, (_, i) => [i]);
-  for (let j = 1; j <= a.length; j++) matrix[0][j] = j;
-
-  for (let i = 1; i <= b.length; i++) {
-    for (let j = 1; j <= a.length; j++) {
-      if (b[i - 1] === a[j - 1]) {
-        matrix[i][j] = matrix[i - 1][j - 1];
-      } else {
-        matrix[i][j] = Math.min(
-          matrix[i - 1][j - 1] + 1,
-          matrix[i][j - 1] + 1,
-          matrix[i - 1][j] + 1,
-        );
-      }
-    }
-  }
-  return matrix[b.length][a.length];
-};
-
-// 가장 가까운 단어를 찾는 함수
-const findClosestWord = (input, words) => {
-  let closest = words[0];
-  let minDistance = levenshtein(input, words[0].word);
-
-  for (let i = 1; i < words.length; i++) {
-    const distance = levenshtein(input, words[i].word);
-    if (distance < minDistance) {
-      closest = words[i];
-      minDistance = distance;
-    }
-  }
-  return closest;
-};
-
 const VocaLearn = () => {
   const [learnState, setLearnState] = useState("");
-  const [closestWord, setClosestWord] = useState("");
   const [getObj, setGetObj] = useState("");
   const [onAnswer, setOnAnswer] = useState("");
   const [index, setIndex] = useState(0);
@@ -69,19 +32,16 @@ const VocaLearn = () => {
   const handleOnSubmit = e => {
     e.preventDefault();
     const currentWord = getObj[index].word;
-    const closest = findClosestWord(transcript, getObj);
 
     if (transcript === currentWord) {
       alert("정답");
       setOnAnswer("");
-      setClosestWord("");
       if (index === getObj.length - 1) {
         return;
       }
       setIndex(index + 1);
     } else {
-      setClosestWord(closest.word);
-      alert(`오답, 가장 가까운 단어: ${closest.word}`);
+      alert(`오답`);
       setOnAnswer("");
       resetTranscript();
     }
@@ -159,11 +119,12 @@ const VocaLearn = () => {
 };
 
 const VocaWrapStyle = styled.div`
-  margin: 0 auto;
+  margin: 50px auto;
   width: 100%;
   max-width: 650px;
   height: 100%;
-  background-color: #f3f9fa;
+  /* background-color: #f3f9fa; */
+  border: solid 1px #000;
   padding: 50px auto;
 `;
 

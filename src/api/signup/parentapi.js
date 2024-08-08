@@ -21,9 +21,12 @@ export const duplicateParentId = async parentId => {
   }
 };
 
-export const getChildList = async () => {
+export const getChildList = async data => {
+  console.log(data.searchWord);
   try {
-    const resp = await axios.get(`/api/student/list`);
+    const resp = await axios.get(
+      `/api/student/list?searchWord=${data.searchWord}`,
+    );
     return resp;
   } catch (error) {
     // console.log(error);

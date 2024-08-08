@@ -1,8 +1,7 @@
 import axios from "axios";
 
-// 구글 소셜로그인
-export const googleSignin = async data => {
-  // console.log(data.id);
+export const socialLogin = async data => {
+  console.log(data);
   try {
     const res = await axios.post(
       `/api/user/parents/sign-in/social-login`,
@@ -28,7 +27,26 @@ export const googleToken = async token => {
       throw new Error(`Error: ${data.error}`);
     }
   } catch (error) {
-    console.error("Error verifying token:", error);
+    console.error(error);
     throw error;
+  }
+};
+
+// 토큰 정보 불러오기
+export const fetchUserInfo = async token => {
+  try {
+    const response = await fetch(
+      "https://www.googleapis.com/oauth2/v2/userinfo",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    const userInfo = await response.json();
+    // console.log("User Info:", userInfo);
+    return userInfo;
+  } catch (error) {
+    console.error(error);
   }
 };

@@ -68,7 +68,6 @@ const Signin = ({ children, naviState, setNaviState }) => {
     }
   }, [userPass, userId]);
 
-
   return (
     <>
       <form

@@ -4,37 +4,51 @@ import { useEffect } from "react";
 
 const ChildInputFields = ({
   children,
-  setUserChildrenName,
-  userChildrenName,
+  setUserChildrenCode,
+  userChildrenCode,
   setOnModal,
   setChildList,
+  setIsChild,
 }) => {
   const handleonClick = async e => {
     e.preventDefault();
-    const result = await getChildList();
-    // console.log(result.data);
-    setOnModal(true);
-    if (userChildrenName) {
-      // const findChild = find(
-      //   item => item.name === userChildrenName,
-      // );
-      // console.log(findChild);
-      const tempArr = result.data.filter(
-        item => (item.name === userChildrenName) === true,
-      );
-      if (tempArr.length === 0) {
-        alert("자녀 이름을 확인해주세요");
-        setOnModal(false);
-        return;
-      }
-      // console.log(tempArr);
-      // const selectChild = Array.from(tempArr);
-      // console.log(selectChild);
-      setChildList(tempArr);
+    const reqData = {
+      searchWord: userChildrenCode,
+    };
+    console.log(reqData);
+    const result = await getChildList(reqData);
+    console.log(result);
+    if (result.data.response === "성공적으로 등록 되었습니다") {
+      alert("자녀 확인 완료");
+      setIsChild(true);
     }
-    if (!userChildrenName) {
-      setChildList(result.data);
+    if (result.data.response !== "성공적으로 등록 되었습니다") {
+      alert(result.data.response);
+      setIsChild(true);
     }
+
+    // setOnModal(true);
+    // if (userChildrenCode) {
+    //   // const findChild = find(
+    //   //   item => item.name === userChildrenName,
+    //   // );
+    //   // console.log(findChild);
+    //   const tempArr = result.data.filter(
+    //     item => (item.name === userChildrenCode) === true,
+    //   );
+    //   if (tempArr.length === 0) {
+    //     alert("자녀 이름을 확인해주세요");
+    //     setOnModal(false);
+    //     return;
+    //   }
+    //   // console.log(tempArr);
+    //   // const selectChild = Array.from(tempArr);
+    //   // console.log(selectChild);
+    //   setChildList(tempArr);
+    // }
+    // if (!userChildrenCode) {
+    //   setChildList(result.data);
+    // }
   };
 
   return (
@@ -45,9 +59,9 @@ const ChildInputFields = ({
       <div className="signup-main-fields-section-bottom">
         <input
           className="fieleds-section-children"
-          placeholder="자녀이름"
-          value={userChildrenName}
-          onChange={e => setUserChildrenName(e.target.value)}
+          placeholder="자녀코드"
+          value={userChildrenCode}
+          onChange={e => setUserChildrenCode(e.target.value)}
         />
         <button
           className="check-duplicate-id-bt"

@@ -6,27 +6,10 @@ import Chatting from "components/chat/Chatting";
 import Vocabulary from "pages/learn/Vocabulary";
 import Title from "components/Title";
 import wordtest from "./api/json/ENwordtest.json";
-
-// const commands = [
-//   {
-//     command: "hello",
-//     callback: () => alert("Hello!"),
-//     isFuzzyMatch: true,
-//     fuzzyMatchingThreshold: 0.2,
-//     bestMatchOnly: true,
-//   },
-//   {
-//     command: "reset",
-//     callback: ({ resetTranscript }) => resetTranscript(),
-//   },
-//   {
-//     command: "stop",
-//     callback: () => SpeechRecognition.stopListening(),
-//   },
-// ];
+import "../src/test.scss";
 
 const Test = () => {
-  // return <input className="textinput-size-s"></input>;
+  // return <input classNameName="textinput-size-s"></input>;
   // return <Title></Title>;
   // return (
   //   <>
