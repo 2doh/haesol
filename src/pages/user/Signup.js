@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import logo from "../../images/logo.png";
 import "../../scss/signup/signup.scss";
+import Footer from "components/layout/Footer";
 
 const Signup = ({ setOnHeader }) => {
   const [userType, setUserType] = useState("parent");
@@ -27,9 +28,12 @@ const Signup = ({ setOnHeader }) => {
   }, []);
 
   return (
-    <div className="signup">
-      <div className="signup-wrap">
-        <div className="signup-wrap-inner br20">
+    <div className="signup" style={{ flexDirection: "column" }}>
+      <div className="signup-wrap" style={{ backgroundColor: "white" }}>
+        <div
+          className="signup-wrap-inner br20"
+          style={{ marginBottom: "50px" }}
+        >
           <div className="signup-wrap-inner-content">
             <div className="signup-top">
               <img
@@ -54,6 +58,7 @@ const Signup = ({ setOnHeader }) => {
           </div>
         </div>
       </div>
+      <Footer></Footer>
     </div>
   );
 };

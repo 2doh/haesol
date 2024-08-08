@@ -6,6 +6,7 @@ import { PhoneNumber } from "utils/helpers";
 import logo from "../../../images/logo.png";
 import "../../../scss/findinfo/findid.scss";
 import FindInfoNavi from "./FindInfoNavi";
+import Footer from "components/layout/Footer";
 
 const FindId = ({ setOnHeader }) => {
   const navi = useNavigate();

@@ -28,8 +28,7 @@ const SignupParent = ({ handleCancel, setUserType, userType }) => {
   const [userPass, setUserPass] = useState("");
   const [userPassConfirm, setUserPassConfirm] = useState("");
   const [userName, setUserName] = useState("");
-  const [userChildrenName, setUserChildrenName] = useState("");
-  const [userChildrenPk, setUserChildrenPk] = useState("");
+  const [userChildrenCode, setUserChildrenCode] = useState("");
   const [userPhoneNum, setUserPhoneNum] = useState("");
   const [userSubPhoneNum, setUserSubPhoneNum] = useState("");
   const [userEmail, setUserEmail] = useState("");
@@ -62,7 +61,7 @@ const SignupParent = ({ handleCancel, setUserType, userType }) => {
       uid: userId,
       upw: userPass,
       nm: userName,
-      studentPk: userChildrenPk,
+      studentRandomCode: userChildrenCode,
       phone: userPhoneNum,
       subPhone: userSubPhoneNum,
       email: userEmail,
@@ -88,7 +87,7 @@ const SignupParent = ({ handleCancel, setUserType, userType }) => {
           userName &&
           userConnet &&
           userPhoneNum &&
-          userChildrenPk &&
+          userChildrenCode &&
           userEmail
         )
       ) {
@@ -142,22 +141,19 @@ const SignupParent = ({ handleCancel, setUserType, userType }) => {
               <div className="signup-parent-modal-wrap">
                 <div className="signup-parent-modal-title">자녀정보확인</div>
                 <div className="signup-parent-modal-inner">
-                  {childList.map((item, index) => (
-                    <div
-                      className="signup-parent-modal-content"
-                      key={index}
-                      onClick={() => {
-                        // console.log(item);
-                        setUserChildrenPk(item.pk);
-                        setUserChildrenName(item.name);
-                        setOnModal(false);
-                        setIsChild(true);
-                      }}
-                    >
-                      <div>{item.name}</div>
-                      <div>{item.grade}</div>
-                    </div>
-                  ))}
+                  <div
+                    className="signup-parent-modal-content"
+                    key={index}
+                    onClick={() => {
+                      // console.log(item);
+                      setUserChildrenCode(item.name);
+                      setOnModal(false);
+                      setIsChild(true);
+                    }}
+                  >
+                    <div>{item.name}</div>
+                    <div>{item.grade}</div>
+                  </div>
                 </div>
                 <div
                   className="signup-parent-modal-bt"
@@ -189,14 +185,13 @@ const SignupParent = ({ handleCancel, setUserType, userType }) => {
             보호자
           </ParentInputFields>
           <ChildInputFields
-            setUserChildrenName={setUserChildrenName}
-            userChildrenName={userChildrenName}
-            setUserChildrenPk={setUserChildrenPk}
+            setUserChildrenCode={setUserChildrenCode}
+            userChildrenCode={userChildrenCode}
             setOnModal={setOnModal}
             setChildList={setChildList}
             setIsChild={setIsChild}
           >
-            자녀이름
+            자녀코드
           </ChildInputFields>
         </UserNameStyle>
         <PhoneInputFields

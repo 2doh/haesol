@@ -21,7 +21,7 @@ export const postParentSignin = async data => {
     alert(signedUser.role);
     return res;
   } catch (error) {
-    // console.log(error);
+    console.log(error);
     return "error";
   }
 };

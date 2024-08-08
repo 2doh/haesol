@@ -1,29 +1,49 @@
-import { googleSignin, googleToken } from "api/login/google";
-import { kkoLogin } from "api/login/kko";
+import {
+  fetchUserInfo,
+  googleSignin,
+  googleToken,
+  socialLogin,
+  socialSignin,
+} from "api/login/social";
 import { useEffect, useState } from "react";
 import KakaoLogin from "react-kakao-login";
 import kakao from "../../../images/ri_kakao-talk-fill.svg";
 import naver from "../../../images/simple-icons_naver.svg";
 import LoginGoogle from "./LoginGoogle";
-import { naverLogin } from "api/login/naver";
+import { setCookie } from "utils/cookie";
+import base64 from "base-64";
 
 const SocialSignin = () => {
   const handleGoogleSuccess = async response => {
-    // 로그인 성공 확인
     // console.log(response);
-    // 토큰 내용 확인
     const token = response.access_token;
+    const res = await fetchUserInfo(token);
+    console.log(res);
     // console.log(token);
     // 토큰 파싱
-    const resp = await googleToken(token);
-    // console.log(reqData);
-
+    // const resp = await googleToken(token);
     const reqData = {
-      id: resp,
+      id: res.id,
+      providerType: 0,
+    };
+    const socialType = {
+      type: google,
     };
     // console.log(reqData);
-    // 아래는 BE와 통신 코드
-    const result = await googleSignin(reqData);
+    const result = await socialLogin(reqData, socialType);
+    console.log(result);
+    if (result.data.parentsId === -1) {
+      alert("자식코드,번호 보내야함");
+    }
+    if (result.data.parentsId !== -1) {
+      let acTken = result.data.accessToken;
+      const payload = JSON.parse(
+        base64.decode(acTken.split(".")[1]),
+      ).signedUser;
+      const signedUser = JSON.parse(payload);
+      setCookie("userRole", signedUser.role);
+      alert(signedUser.role);
+    }
     console.log(result);
   };
 
@@ -33,19 +53,26 @@ const SocialSignin = () => {
     alert("로그인에 실패하였습니다");
   };
 
-  const handleSuccess = async response => {
+  const handleKkoSuccess = async response => {
     // 로그인 성공 확인
     console.log(response);
 
     const reqData = {
       id: response.profile.id,
+      providerType: 2,
     };
-
-    const result = await kkoLogin(reqData);
+    console.log(reqData);
+    const result = await socialLogin(reqData);
     console.log(result);
+    if (result.data.parentsId === -1) {
+      alert("자식코드,번호 보내야함");
+    }
+    if (result.data.parentsId !== -1) {
+      alert("로그인되는 코드 필요");
+    }
   };
 
-  const handleFailure = error => {
+  const handleKkoFailure = error => {
     // 로그인 실패 처리
     console.log(error);
     alert("로그인에 실패하였습니다");
@@ -55,26 +82,26 @@ const SocialSignin = () => {
   const REDIRECT_URI = process.env.REACT_APP_NAVER_REDIRECT_URI;
   const STATE = "false";
   const NAVER_AUTH_URL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_CLIENT_ID}&state=${STATE}&redirect_uri=${REDIRECT_URI}`;
+
   const handleClick = () => {
     window.location.href = NAVER_AUTH_URL;
-    handleNaverLogin();
   };
 
   const handleNaverLogin = async data => {
     const reqData = {
       id: data,
     };
-    const result = await naverLogin(reqData);
+    const result = await socialLogin(reqData);
     console.log(result);
   };
 
-  useEffect(() => {
-    // 백엔드로 코드값을 넘겨주는 로직
-    // 요청 성공 코드값
-    let code = new URL(window.location.href).searchParams.get("code");
-    console.log(code);
-    handleNaverLogin(code);
-  }, [handleClick]);
+  // useEffect(() => {
+  //   let code = new URL(window.location.href).searchParams.get("code");
+  //   // console.log(code);
+  //   if (code) {
+  //     handleNaverLogin(code);
+  //   }
+  // }, []);
 
   return (
     <div className="login-wrap-panel-social">
@@ -101,8 +128,8 @@ const SocialSignin = () => {
         /> */}
         <KakaoLogin
           token={process.env.REACT_APP_KAKAO_JAVASCRIPT_KEY}
-          onSuccess={handleSuccess}
-          onFailure={handleFailure}
+          onSuccess={handleKkoSuccess}
+          onFailure={handleKkoFailure}
           render={({ onClick }) => (
             <div className="login-panel-social-kakao" onClick={onClick}>
               <img src={kakao} />
