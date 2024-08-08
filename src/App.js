@@ -50,6 +50,7 @@ import Learn from "pages/learn/Learn";
 import TeacherInfoView from "pages/teacher/TeacherInfoView";
 import ModalView from "components/common/modal/ModalView";
 import CreateTestMath from "pages/online/CreateTestMath";
+import ChatParents from "components/chat/ChatParents";
 
 // import jwt from "jsonwebtoken";
 
@@ -152,6 +153,10 @@ function App() {
           <Route path="/learn" element={<Learn />}></Route>
           <Route path="/learn/voca" element={<VocaLearn />}></Route>
 
+          <Route
+            path="/chat/teacher/:선생님pk"
+            element={<ChatParents />}
+          ></Route>
           {/* <Route index element={<Home />}></Route> */}
           <Route index element={<MainPage />}></Route>
           {/* 로그인 & 회원가입 : 이후 진입시 Home으로 강제 이동 */}

@@ -73,8 +73,6 @@ const CreateTestKo = () => {
   const handleCheckboxChange = (e, index) => {
     if (e.target.checked) {
       setAnswer(index);
-      const newMultiple = multiple.map((item, i) => (i === index ? item : ""));
-      setMultiple(newMultiple);
     } else {
       setAnswer(null);
     }
@@ -92,6 +90,10 @@ const CreateTestKo = () => {
 
     if (!title) {
       alert("제목을 입력해주세요.");
+      return;
+    }
+    if (!answer) {
+      alert("정답을 선택해주세요.");
       return;
     }
     const hasEmpty = multiple.some(item => item.content.trim() === "");
@@ -115,7 +117,6 @@ const CreateTestKo = () => {
   const saveData = async e => {
     e.preventDefault();
     const formData = new FormData();
-
     const multipleContents = multiple.map(item => item.content);
 
     const onlineTestData = JSON.stringify({
@@ -126,6 +127,8 @@ const CreateTestKo = () => {
       question: title,
       // 타입
       typeTag: typeTag,
+      // 객관식
+      queTag: 1,
       // 난이도,
       level: starValue,
       // 문제내용,
@@ -137,14 +140,19 @@ const CreateTestKo = () => {
     });
     console.log("onlineTestData : ", onlineTestData);
 
+    // JSON 데이터를 문자열로 변환하여 FormData에 추가
     const dto = new Blob([onlineTestData], { type: "application/json" });
-    formData.append("pic", dto);
-    if (sendFile) {
-      formData.append("file", sendFile);
-    }
-    try {
-      console.log("국어 시험 post : ", formData.get(1));
+    formData.append("p", dto);
+    console.log("========== sendFile : ", sendFile);
 
+    // 파일이 있을 경우 FormData에 추가
+    if (sendFile) {
+      formData.append("pic", sendFile);
+    }
+
+    try {
+      // console.log("국어 시험 post : ", formData.get("p"), formData.get("pic"));
+      console.log("데이터 전송중");
       await onlineTestCreate(formData);
     } catch (error) {
       console.log(error);

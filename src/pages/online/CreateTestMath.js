@@ -29,7 +29,8 @@ const TestTitleStyled = styled.div`
 const CreateTestMath = () => {
   // 시험 종류
   const [selectedOption, setSelectedOption] = useState("choice");
-
+  // 문제 종류
+  const [typeTag, setTypeTag] = useState("1");
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
   const [starValue, setStarValue] = useState(3);
@@ -40,10 +41,13 @@ const CreateTestMath = () => {
     { content: "" },
     { content: "" },
   ]);
+
+  // 답 저장
   const [answer, setAnswer] = useState(null);
-  useEffect(() => {
-    console.log("체크되었다", answer);
-  }, [answer]);
+  // useEffect(() => {
+  //   console.log("체크되었다", answer);
+  // }, [answer]);
+
   const tempObj = {
     state: "",
     wordMath: "정답을 입력해주세요.",
@@ -71,15 +75,28 @@ const CreateTestMath = () => {
   const handleCheckboxChange = (e, index) => {
     if (e.target.checked) {
       setAnswer(index);
-      const newMultiple = multiple.map((item, i) => (i === index ? item : ""));
-      setMultiple(newMultiple);
     } else {
       setAnswer(null);
     }
   };
 
+  // 주관식 객관식 선택
   const handleSelectChange = e => {
-    setSelectedOption(e.target.value);
+    const value = e.target.value;
+    setSelectedOption(value);
+
+    if (value === "subjective") {
+      setAnswer(null); // 주관식일 경우 정답을 초기화
+    }
+  };
+  // 문제 타입 선택
+  const handleSelectTagType = e => {
+    const value = e.target.value;
+    setTypeTag(value);
+
+    // if (value === "1") {
+    //   setTypeTag(null);
+    // }
   };
 
   /** 문제 내용 저장 함수 */
@@ -96,11 +113,23 @@ const CreateTestMath = () => {
       alert("제목을 입력해주세요.");
       return;
     }
-    const hasEmpty = multiple.some(item => item.content.trim() === "");
-    if (hasEmpty) {
-      alert("모든 보기를 입력해주세요.");
+    // 객관식일 경우에만 정답 선택 여부를 검사
+    if (selectedOption === "choice" && answer === null) {
+      alert("정답을 선택해주세요.");
+      return;
+    }
+    if (selectedOption === "choice") {
+      const hasEmpty = multiple.some(item => item.content.trim() === "");
+      if (hasEmpty) {
+        alert("모든 보기를 입력해주세요.");
+        return; // 하나라도 항목이 비어 있을 때 실행 중지
+      }
+    }
+    if (selectedOption === "subjective" && answer === null) {
+      alert("정답을 입력해주세요.");
       return; // 하나라도 항목이 비어 있을 때 실행 중지
     }
+
     const data = {
       bodyText: [
         "문제가 성공적으로 저장되었습니다. 다음 문제를 계속해서 제출하시겠습니까?",
@@ -117,15 +146,18 @@ const CreateTestMath = () => {
   const saveData = async e => {
     e.preventDefault();
     const formData = new FormData();
-
     const multipleContents = multiple.map(item => item.content);
 
     const onlineTestData = JSON.stringify({
       // BE: FE,
-      // 국어
+      // 수학
       subjectCode: 2,
       // 제목,
       question: title,
+      // 타입
+      typeTag: typeTag,
+      // 객관식
+      queTag: selectedOption,
       // 난이도,
       level: starValue,
       // 문제내용,
@@ -137,14 +169,19 @@ const CreateTestMath = () => {
     });
     console.log("onlineTestData : ", onlineTestData);
 
+    // JSON 데이터를 문자열로 변환하여 FormData에 추가
     const dto = new Blob([onlineTestData], { type: "application/json" });
-    formData.append("pic", dto);
-    if (sendFile) {
-      formData.append("file", sendFile);
-    }
-    try {
-      console.log("국어 시험 post : ", formData.get(1));
+    formData.append("p", dto);
+    console.log("========== sendFile : ", sendFile);
 
+    // 파일이 있을 경우 FormData에 추가
+    if (sendFile) {
+      formData.append("pic", sendFile);
+    }
+
+    try {
+      // console.log("수학 시험 post : ", formData.get("p"), formData.get("pic"));
+      console.log("데이터 전송중");
       await onlineTestCreate(formData);
     } catch (error) {
       console.log(error);
@@ -261,6 +298,21 @@ const CreateTestMath = () => {
         </div>
         <div className="online-test-content">
           <div className="online-test-required-title">내용(문제)</div>
+          <div className="test-option">
+            <select
+              name="math-test"
+              value={typeTag}
+              onChange={e => {
+                handleSelectTagType(e);
+              }}
+            >
+              <option value="1">사칙연산</option>
+              <option value="2">단위환산</option>
+              <option value="3">그래프</option>
+              <option value="4">규칙찾기</option>
+              <option value="5">도형 넓이 계산</option>
+            </select>
+          </div>
           <form>
             <ReactQuill
               onChange={() => {
