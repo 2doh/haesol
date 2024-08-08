@@ -51,6 +51,7 @@ import TeacherInfoView from "pages/teacher/TeacherInfoView";
 import ModalView from "components/common/modal/ModalView";
 import CreateTestMath from "pages/online/CreateTestMath";
 import ChatParents from "components/chat/ChatParents";
+import SocialSignup from "pages/user/login/SocialSignup";
 
 // import jwt from "jsonwebtoken";
 
@@ -152,6 +153,7 @@ function App() {
           <Route path="/test" element={<Test />}></Route>
           <Route path="/learn" element={<Learn />}></Route>
           <Route path="/learn/voca" element={<VocaLearn />}></Route>
+          <Route path="/signup/social" element={<SocialSignup />}></Route>
 
           <Route
             path="/chat/teacher/:선생님pk"
