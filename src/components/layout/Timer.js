@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { getReAccessToken } from "api/user";
+import MiniButtonVer01 from "components/common/style/MiniButtonVer01";
 import { useEffect, useRef, useState } from "react";
 import { FiClock } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,9 +12,11 @@ const TimerStyle = styled.div`
   min-width: 80px;
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 5px;
   & * {
     color: #ffffff !important;
+    font-size: 15px;
   }
   /* margin: 0px 10px; */
 
@@ -35,6 +38,8 @@ const Timer = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const modalState = useSelector(state => state.modalSlice);
+
+  const [btnClick, setBtnClick] = useState(false);
 
   const [min, setMin] = useState(getCookie("timerMin") || 60);
   const [sec, setSec] = useState(getCookie("timerSec") || 0);
@@ -135,25 +140,27 @@ const Timer = () => {
     }
   };
 
+  useEffect(() => {
+    console.log(btnClick);
+  }, [btnClick]);
+
   return (
     <>
       <ClockStyle>
         <FiClock size={17} style={{ color: "green" }} />
       </ClockStyle>
+
       <TimerStyle>
         <div>{String(min).padStart(2, "0")}</div>
         <div> : </div>
         <div>{String(sec).padStart(2, "0")}</div>
       </TimerStyle>
-      <div>
-        <button
-          onClick={() => {
-            reAccessToken();
-          }}
-        >
-          연장
-        </button>
-      </div>
+
+      <MiniButtonVer01
+        buttonClick={setBtnClick}
+        nowbutton={btnClick}
+        buttonLabel={"연장"}
+      />
     </>
   );
 };

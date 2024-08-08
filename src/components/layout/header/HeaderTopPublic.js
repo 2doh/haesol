@@ -14,7 +14,7 @@ const HeaderTopStyle = styled.div`
   z-index: 999;
   height: 70px;
   width: 100%;
-  min-width: 360px;
+  min-width: 530px;
 
   display: flex;
   justify-content: center;
@@ -164,7 +164,7 @@ const HeaderTopPublic = () => {
         </div>
 
         <div className="header-btn-div">
-          {!getCookie("accessToken") && changeStyle ? (
+          {!getCookie("accessToken") ? (
             <div className="header-login-signup">
               <div
                 className="header-login"
