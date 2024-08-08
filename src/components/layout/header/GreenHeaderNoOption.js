@@ -1,6 +1,10 @@
 import styled from "@emotion/styled";
 import { useNavigate } from "react-router";
 import "../../../scss/header/header.css";
+import { getCookie, removeCookie } from "utils/cookie";
+import { useState } from "react";
+import Timer from "../Timer";
+import { MdOutlineLogout } from "react-icons/md";
 
 const GreenHeaderNoOptionStyle = styled.div`
   position: relative;
@@ -16,6 +20,7 @@ const GreenHeaderNoOptionStyle = styled.div`
   .header-wrap {
     display: flex;
     position: relative;
+    flex-direction: row;
 
     max-width: 1130px;
     width: 100%;
@@ -31,14 +36,51 @@ const GreenHeaderNoOptionStyle = styled.div`
       align-items: center;
     }
   }
+
+  .access-wrap {
+    position: absolute;
+    right: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+
+    .timer-wrap {
+      display: flex;
+      flex-direction: row;
+    }
+
+    .logout-icon {
+    }
+  }
 `;
 
 const GreenHeaderNoOption = () => {
   const navigate = useNavigate();
 
+  const [loginUserType, setLoginUserType] = useState(getCookie("userRole"));
+
   /** 메인 페이지로 이동 */
   const moveHomePage = () => {
     navigate("/");
+  };
+
+  /** 로그아웃 기능 */
+  const logout = () => {
+    removeCookie("accessToken");
+    removeCookie("userIdPk");
+    removeCookie("userRole");
+
+    removeCookie("userClass");
+    removeCookie("userEmail");
+    removeCookie("userName");
+
+    removeCookie("timerMin");
+    removeCookie("timerSec");
+    removeCookie("timerTime");
+
+    window.location.reload("/");
   };
 
   return (
@@ -52,6 +94,22 @@ const GreenHeaderNoOption = () => {
             }}
           ></div>
         </div>
+
+        {getCookie("accessToken") ? (
+          <div className="access-wrap">
+            <div className="timer-wrap">
+              <Timer />
+            </div>
+            <div
+              className="logout-icon"
+              onClick={() => {
+                logout();
+              }}
+            >
+              <MdOutlineLogout size="22px" title="로그아웃" />
+            </div>
+          </div>
+        ) : null}
       </div>
     </GreenHeaderNoOptionStyle>
   );

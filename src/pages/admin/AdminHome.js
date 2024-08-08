@@ -12,6 +12,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { SearchInput } from "components/common/style/SearchInput";
 import { switchCase } from "@babel/types";
+import { HiRefresh } from "react-icons/hi";
 
 const AdminHomeStyle = styled.div`
   width: 100vw;
@@ -82,12 +83,64 @@ const AdminMainStyle = styled.div`
     position: relative;
     height: 70px;
 
-    & > div {
+    .search-opction {
+      display: flex;
+      flex-direction: row;
+      gap: 5px;
+      /* width: 100%;
+      height: 100%; */
+
       position: absolute;
       right: 0;
       bottom: 0;
+
+      .refresh-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-size: 25px;
+        min-width: 45px;
+        & * {
+          color: #5d9e88;
+        }
+
+        &:hover {
+          font-size: 30px;
+
+          svg {
+            animation: rotate_image 2s linear infinite;
+            transform-origin: 50% 50%;
+          }
+          @keyframes rotate_image {
+            100% {
+              transform: rotate(360deg);
+            }
+          }
+        }
+      }
+
+      .checkbox-wrapper-4 {
+        display: flex;
+        align-items: center;
+
+        span {
+          font-size: 15px;
+          color: #636262;
+        }
+      }
     }
   }
+`;
+
+const NoResults = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 500px;
+  font-size: 30px;
+  color: gray;
 `;
 
 const AdminHome = () => {
@@ -103,44 +156,59 @@ const AdminHome = () => {
   const [searchKeyword, setSearchKeyword] = useState("");
   const [clickSearchBtn, setClickSearchBtn] = useState(false);
 
+  // 퇴사자 포함 체크박스
+  const [isCheck, setIsCheck] = useState(1);
+
   /** 신청 리스트 출력 함수 */
   const getAwaitList = async nowSelectMemu => {
-    const res = await getAwaitAcceptList(nowSelectMemu);
+    const res = await getAwaitAcceptList(nowSelectMemu, searchKeyword);
     setAcceptUserList(res);
-    console.log("신청 : ", res);
   };
 
-  /** 신청 리스트 출력 함수 */
+  /** 가입한 유저 리스트 출력 함수 */
   const getUserList = async useNum => {
-    const res = await getAwaitUserList(useNum);
+    const res = await getAwaitUserList(useNum, isCheck, searchKeyword);
     setAcceptUserList(res);
   };
 
-  /** 최초 랜더링 시, 메뉴 선택시, 모달 종료시 리스트 재출력 */
-  useEffect(() => {
+  /** 메뉴 선택시, 모달 종료시 리스트, 체크박스 클릭시 리스트 재출력 */
+  const listCall = () => {
+    setClickSearchBtn(false);
+
+    if (!clickSearchBtn) {
+      setSearchKeyword("");
+    }
+
     switch (nowSelectMemu) {
       case 0:
-        getAwaitList(nowSelectMemu + 1);
+        getAwaitList(1);
         break;
       case 1:
-        getAwaitList(nowSelectMemu + 1);
+        getAwaitList(2);
         break;
       case 2:
-        console.log("3번 메뉴");
         // 학부모 목록
         getUserList(1);
         break;
       case 3:
         // 교직원 목록
-        getAwaitList(2);
+        getUserList(2);
         console.log("4번 메뉴");
-
-        // getAwaitList(nowSelectMemu + 1);
         break;
       default:
         break;
     }
-  }, [nowSelectMemu, modalState.modalRes]);
+  };
+
+  /** 최초 랜더링 시, 리스트 재출력 */
+  useEffect(() => {
+    listCall(nowSelectMemu);
+  }, [nowSelectMemu, modalState.modalRes, clickSearchBtn, isCheck]);
+
+  /** 메뉴 변경시 퇴사자 포함 체크박스 초기화 */
+  useEffect(() => {
+    setIsCheck(1);
+  }, [nowSelectMemu]);
 
   /** 모달 호출 */
   const showModal = (selectBtn, selectUserId, selectUserName, selectUserPk) => {
@@ -156,6 +224,15 @@ const AdminHome = () => {
     dispatch(updateModalDate(data));
     /**(고정) 모달 활성화 */
     dispatch(openModal("ArrValueModal"));
+  };
+
+  /** 퇴사자 포함 체크박스 확인 */
+  const checkBoxCheck = e => {
+    if (e.target.checked) {
+      setIsCheck(2);
+    } else {
+      setIsCheck(1);
+    }
   };
 
   return (
@@ -176,11 +253,50 @@ const AdminHome = () => {
           ></AdminPageMenu>
 
           <div className="search-input-wrap">
-            <SearchInput
-              placeholderText={"아이디 입력"}
-              setSearchKeyword={setSearchKeyword}
-              setClickSearchBtn={setClickSearchBtn}
-            />
+            <div className="search-opction">
+              {nowSelectMemu === 2 || nowSelectMemu === 3 ? (
+                <div className="checkbox-wrapper-4">
+                  <input
+                    className="inp-cbx"
+                    id="morning"
+                    type="checkbox"
+                    checked={isCheck === 2 ? true : false}
+                    onChange={e => {
+                      checkBoxCheck(e);
+                    }}
+                  />
+
+                  <label className="cbx" htmlFor="morning">
+                    <span>
+                      <svg width="12px" height="10px">
+                        <use href="#check-4"></use>
+                      </svg>
+                    </span>
+                    <span>퇴사자 포함</span>
+                  </label>
+                  <svg className="inline-svg">
+                    <symbol id="check-4" viewBox="0 0 12 10">
+                      <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+                    </symbol>
+                  </svg>
+                </div>
+              ) : null}
+
+              <SearchInput
+                placeholderText={"아이디 입력"}
+                setSearchKeyword={setSearchKeyword}
+                setClickSearchBtn={setClickSearchBtn}
+              />
+              <div
+                className="refresh-icon"
+                onClick={() => {
+                  setSearchKeyword("");
+                  listCall();
+                }}
+              >
+                <HiRefresh />
+              </div>
+            </div>
           </div>
 
           <div className="main-core admin-home-core">
@@ -256,66 +372,76 @@ const AdminHome = () => {
                   </div>
                 </div>
               )} */}
-              {acceptUserList.map((item, index) => {
-                return (
-                  <div className="item" key={index}>
-                    <div className="grid-inner">
-                      <div className="grid-inner-item">
-                        <div className="grid-inner-item-text">{index + 1}</div>
-                      </div>
-                      <div className="grid-inner-item">
-                        <div className="grid-inner-item-text">{item.id}</div>
-                      </div>
-                      <div className="grid-inner-item">
-                        <div className="grid-inner-item-text">{item.name}</div>
-                      </div>
-                      <div className="grid-inner-item">
-                        <div className="grid-inner-item-text">
-                          {item.grade === null ? (
-                            <div className="admin-no-list-style">미입력</div>
-                          ) : (
-                            item.grade
-                          )}
+              {acceptUserList.length === 0 ? (
+                <NoResults>검색결과가 없습니다.</NoResults>
+              ) : (
+                acceptUserList.map((item, index) => {
+                  return (
+                    <div className="item" key={index}>
+                      <div className="grid-inner">
+                        <div className="grid-inner-item">
+                          <div className="grid-inner-item-text">
+                            {index + 1}
+                          </div>
                         </div>
-                      </div>
-                      <div className="grid-inner-item">
-                        <div className="grid-inner-item-text">
-                          {item.class === null ? (
-                            <div className="admin-no-list-style">미입력</div>
-                          ) : (
-                            item.class
-                          )}
+                        <div className="grid-inner-item">
+                          <div className="grid-inner-item-text">{item.id}</div>
                         </div>
-                      </div>
-                      <div className="grid-inner-item">
-                        <div className="grid-inner-item-text">
-                          {moment(item.createdAt).format("YYYY-MM-DD hh:mm:ss")}
+                        <div className="grid-inner-item">
+                          <div className="grid-inner-item-text">
+                            {item.name}
+                          </div>
                         </div>
-                      </div>
-                      <div className="grid-inner-item">
-                        <div className="grid-inner-item-text sign-off-on-buttons">
-                          <button
-                            className="rejected-button"
-                            onClick={() => {
-                              showModal("반려", item.id, item.name, item.pk);
-                            }}
-                          >
-                            반려
-                          </button>
-                          <button
-                            className="accept-button"
-                            onClick={() => {
-                              showModal("승인", item.id, item.name, item.pk);
-                            }}
-                          >
-                            승인
-                          </button>
+                        <div className="grid-inner-item">
+                          <div className="grid-inner-item-text">
+                            {item.grade === null ? (
+                              <div className="admin-no-list-style">미입력</div>
+                            ) : (
+                              item.grade
+                            )}
+                          </div>
+                        </div>
+                        <div className="grid-inner-item">
+                          <div className="grid-inner-item-text">
+                            {item.class === null ? (
+                              <div className="admin-no-list-style">미입력</div>
+                            ) : (
+                              item.class
+                            )}
+                          </div>
+                        </div>
+                        <div className="grid-inner-item">
+                          <div className="grid-inner-item-text">
+                            {moment(item.createdAt).format(
+                              "YYYY-MM-DD hh:mm:ss",
+                            )}
+                          </div>
+                        </div>
+                        <div className="grid-inner-item">
+                          <div className="grid-inner-item-text sign-off-on-buttons">
+                            <button
+                              className="rejected-button"
+                              onClick={() => {
+                                showModal("반려", item.id, item.name, item.pk);
+                              }}
+                            >
+                              반려
+                            </button>
+                            <button
+                              className="accept-button"
+                              onClick={() => {
+                                showModal("승인", item.id, item.name, item.pk);
+                              }}
+                            >
+                              승인
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })
+              )}
 
               {/* 참고 */}
               {/* <div className="item">

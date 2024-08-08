@@ -41,6 +41,15 @@ export const SearchInput = ({
 
   const handleReset = () => {
     setInputVal("");
+    setSearchKeyword("");
+  };
+
+  /** Enter Key로 검색 */
+  const handleSearchEnter = e => {
+    if (e.key === "Enter") {
+      setClickSearchBtn(true);
+      setInputVal("");
+    }
   };
 
   return (
@@ -54,12 +63,16 @@ export const SearchInput = ({
           onChange={e => {
             handleSearchBtn(e);
           }}
+          onKeyUp={e => {
+            handleSearchEnter(e);
+          }}
         />
         <div className="icons-container">
           <div
             className="icon-search"
             onClick={() => {
               setClickSearchBtn(true);
+              setInputVal("");
             }}
           ></div>
           <div

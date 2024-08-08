@@ -3,26 +3,35 @@ import axios from "axios";
 import { getCookie } from "utils/cookie";
 
 /** 회원가입 신청 리스트 */
-export const getAwaitAcceptList = async userListType => {
-  const accessToken = getCookie("accessToken");
-  console.log("유저 타입 : ", userListType);
-  try {
-    const response = await axios.get(`/api/admin/${userListType}`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-    // console.log("api 결과 : ", response.data);
-    return response.data.userList;
-  } catch (error) {
-    // console.log(error);
-  }
+export const getAwaitAcceptList = async (userListType, searchKeyword) => {
+  // const accessToken = getCookie("accessToken");
+  // console.log("유저 타입 : ", userListType);
+  // console.log("검색 키워드 : ", searchKeyword);
+
+  const res = await jwtAxios.get(
+    `/api/admin?p=${userListType}&searchWord=${searchKeyword}`,
+  );
+  console.log(res.data);
+  return res.data.userList;
+
+  // try {
+  //   const response = await axios.get(`/api/admin?p=${userListType}`, {
+  //     headers: {
+  //       Authorization: `Bearer ${accessToken}`,
+  //     },
+  //   });
+  //   // console.log("api 결과 : ", response.data);
+  //   return response.data.userList;
+  // } catch (error) {
+  //   return console.log(error);
+  // }
 };
 
 /** 가입된 유저 리스트 */
-export const getAwaitUserList = async userListType => {
+export const getAwaitUserList = async (userListType, check, searchKeyword) => {
   // const accessToken = getCookie("accessToken");
-  console.log("유저 타입 : ", userListType);
+  // console.log("유저 타입 : ", userListType);
+  // console.log("체크 : ", check);
   // try {
   //   const response = await axios.get(`/api/admin/${userListType}`, {
   //     headers: {
@@ -35,8 +44,10 @@ export const getAwaitUserList = async userListType => {
   //   // console.log(error);
   // }
 
-  const res = await jwtAxios.get(`/api/admin/list?p=1&check=1`);
-  console.log(res.data);
+  const res = await jwtAxios.get(
+    `/api/admin/list?p=${userListType}&check=${check}&searchWord=${searchKeyword}`,
+  );
+  // console.log(res.data);
   return res.data;
 };
 

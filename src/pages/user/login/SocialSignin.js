@@ -109,10 +109,10 @@ const SocialSignin = () => {
             </div>
           )}
         />
-        <LoginGoogle
+        {/* <LoginGoogle
           onSuccess={handleGoogleSuccess}
           onFailure={handleGoogleFailure}
-        />
+        /> */}
       </div>
     </div>
   );
