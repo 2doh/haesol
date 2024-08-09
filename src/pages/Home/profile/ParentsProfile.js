@@ -13,7 +13,7 @@ const ParentsProfileStyle = styled.div`
   height: 300px;
   perspective: 1000px;
   z-index: 99999;
-  
+
   .page {
     position: absolute;
     /* background-color: #f5dec1; */
@@ -243,7 +243,7 @@ const ParentsProfile = () => {
 
   /** 메뉴 선택시 selectChildNum 변경 */
   const handleOnClick = (e, idx) => {
-    console.log("들어옴.");
+    // console.log("들어옴.");
     setCountIndex(idx);
     setPrevChildNum(getCookie("studentPk"));
     setCookie("studentPk", idx);
@@ -258,7 +258,7 @@ const ParentsProfile = () => {
   /** 아이들 정보 불러오기 */
   const myChildInfo = async childNum => {
     const res = await getMyChildInfo();
-    // console.log("자녀 정보 : ", res);
+    console.log("자녀 정보 : ", res);
 
     if (res === false) {
       console.log("자녀 없음.");
