@@ -6,6 +6,18 @@ import { getCookie } from "utils/cookie";
 import { useNavigate } from "react-router";
 import { openModal, updateModalDate } from "slices/modalSlice";
 import { useDispatch, useSelector } from "react-redux";
+import HeaderTopPublic from "components/layout/header/HeaderTopPublic";
+import HeaderMemu from "components/layout/header/HeaderMenu";
+import styled from "@emotion/styled";
+import Footer from "components/layout/Footer";
+
+const NoticeEditWrapStyle = styled.div`
+  max-width: 1180px;
+  margin: 0 auto;
+  background-color: #f3f9fa;
+  min-height: calc(100vh - 328px);
+  padding: 0 30px;
+`;
 
 const NoticeEdit = () => {
   const userClass = getCookie("userClass");
@@ -79,69 +91,76 @@ const NoticeEdit = () => {
   }, [modalState.modalRes[0]]);
 
   return (
-    <div className="main-core">
-      <div className="student-list-title">
-        {/* 제목 위치 */}
-        <span>{userClass}</span>
-        <p>알림장 작성</p>
-      </div>
-      <div className="write-notice-wrap">
-        <div className="select-notice-inner">
-          <div className="select-notice-inner-left">
-            <select
-              name="select-notice"
-              onChange={e => {
-                handleSelectChange(e);
-              }}
-            >
-              <option value="준비물">준비물</option>
-              <option value="알림">알림</option>
-            </select>
-            {/* <input
+    <>
+      <HeaderTopPublic />
+      <HeaderMemu />
+      <NoticeEditWrapStyle>
+        <div className="main-core">
+          <div className="student-list-title">
+            {/* 제목 위치 */}
+            <span>{userClass}</span>
+            <p>알림장 작성</p>
+          </div>
+          <div className="write-notice-wrap">
+            <div className="select-notice-inner">
+              <div className="select-notice-inner-left">
+                <select
+                  name="select-notice"
+                  onChange={e => {
+                    handleSelectChange(e);
+                  }}
+                >
+                  <option value="준비물">준비물</option>
+                  <option value="알림">알림</option>
+                </select>
+                {/* <input
               type="date"
               value={date}
               onChange={e => {
                 handleDateChange(e);
               }}
             /> */}
-          </div>
-          <div className="info-button">
-            <button
-              onClick={() => {
-                handleSave();
-              }}
-            >
-              저장
-            </button>
-            <button
-              onClick={() => {
-                modifyCancel("BasicModal");
-              }}
-            >
-              취소
-            </button>
+              </div>
+              <div className="info-button">
+                <button
+                  onClick={() => {
+                    handleSave();
+                  }}
+                >
+                  저장
+                </button>
+                <button
+                  onClick={() => {
+                    modifyCancel("BasicModal");
+                  }}
+                >
+                  취소
+                </button>
+              </div>
+            </div>
+            <div className="write-notice-section">
+              <input
+                type="text"
+                placeholder="제목을 입력하세요"
+                value={title}
+                onChange={e => {
+                  handleTitleChange(e);
+                }}
+              />
+              <textarea
+                type="text"
+                placeholder="내용을 입력하세요."
+                value={content}
+                onChange={e => {
+                  handleContentChange(e);
+                }}
+              />
+            </div>
           </div>
         </div>
-        <div className="write-notice-section">
-          <input
-            type="text"
-            placeholder="제목을 입력하세요"
-            value={title}
-            onChange={e => {
-              handleTitleChange(e);
-            }}
-          />
-          <textarea
-            type="text"
-            placeholder="내용을 입력하세요."
-            value={content}
-            onChange={e => {
-              handleContentChange(e);
-            }}
-          />
-        </div>
-      </div>
-    </div>
+      </NoticeEditWrapStyle>
+      <Footer />
+    </>
   );
 };
 

@@ -1,11 +1,16 @@
 import styled from "@emotion/styled";
 import "../../scss/main/footer.css";
+
 const FooterStyle = styled.div`
   background-color: #dee8e9;
-
   min-height: 180px;
   width: 100%;
+
+  @media screen and (max-width: 1023px) {
+    min-width: 605px;
+  }
 `;
+
 const Footer = () => {
   return (
     <FooterStyle>

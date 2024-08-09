@@ -16,16 +16,6 @@ import { useEffect, useState } from "react";
 
 const MainPageStyle = styled.div`
   width: 100%;
-
-  @media screen and (max-width: 1023px) {
-    .calendar-and-meals-wrap {
-      display: flex;
-      flex-direction: column;
-      max-height: auto;
-
-      background-color: red;
-    }
-  }
 `;
 
 const MainPageContents = styled.div`
@@ -34,6 +24,10 @@ const MainPageContents = styled.div`
   flex-direction: column;
   gap: 50px;
   height: 100%;
+
+  @media screen and (max-width: 1023px) {
+    gap: 0px;
+  }
 `;
 
 const LoginUserMainPageContents = styled.div`
@@ -43,33 +37,7 @@ const LoginUserMainPageContents = styled.div`
   }
 `;
 
-const AAAStyle = styled.div`
-  .side-bar {
-    position: absolute;
-    right: 20px; /* 왼쪽 여백 */
-    top: 50%;
-    z-index: 999999;
-    transform: translateY(-50%);
-  }
-`;
-
 const MainPage = () => {
-  const [barPosition, setBarPosition] = useState(510);
-
-  const handleScroll = () => {
-    const position = 510 + window.scrollY;
-    // const position = 956 < 510 + window.scrollY ? 956 : 510 + window.scrollY;
-    setBarPosition(position);
-  };
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
   return (
     <>
       <HeaderTopPublic />
@@ -83,12 +51,7 @@ const MainPage = () => {
         </div>
 
         <div className="main-page-wrap">
-          {/* <QuickMenu /> */}
-          <AAAStyle>
-            <div className="side-bar" style={{ top: barPosition }}>
-              11111 {/* 내용 */}
-            </div>
-          </AAAStyle>
+          <QuickMenu />
 
           <MainPageContents>
             {/* <LoginUserMainPageContents>

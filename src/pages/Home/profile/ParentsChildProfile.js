@@ -2,7 +2,7 @@ import LogoutButton from "components/common/LogoutButton";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
-const ParentsChildProfile = ({ childInfo, childNum }) => {
+const ParentsChildProfile = ({ childInfo, childNum, nowTopPosition }) => {
   const navigate = useNavigate();
 
   // 상태 초기화
@@ -42,7 +42,7 @@ const ParentsChildProfile = ({ childInfo, childNum }) => {
       {name === "미등록" ? null : (
         <div
           className="rgyPostIt"
-          style={{ top: `${childNum * 50 + 4}px`, transition: "none" }}
+          style={{ top: `${nowTopPosition - 27}px`, transition: "none" }}
         >
           {/* {console.log(childNum)} */}
           {name}

@@ -14,6 +14,21 @@ const RandomAdZoneStyle = styled.div`
   .random-pic {
     cursor: pointer;
   }
+
+  @media screen and (max-width: 1023px) {
+    .random-ad-zone {
+      background-color: unset;
+      .random-info-wrap {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .random-pic {
+          aspect-ratio: 16 / 9;
+          width: auto !important;
+        }
+      }
+    }
+  }
 `;
 
 const RandomAdZone = () => {

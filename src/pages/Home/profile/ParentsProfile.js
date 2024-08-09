@@ -13,7 +13,7 @@ const ParentsProfileStyle = styled.div`
   height: 300px;
   perspective: 1000px;
   z-index: 99999;
-  
+
   .page {
     position: absolute;
     /* background-color: #f5dec1; */
@@ -241,12 +241,38 @@ const ParentsProfile = () => {
   /** 이전 자녀의 번호 */
   const [prevChildNum, setPrevChildNum] = useState(0);
 
+  /** 현재 선택된 메뉴의 높이 */
+  const [nowTopPosition, setNowTopPosition] = useState(0);
+
+  /** 메뉴 변경되었을 때 studentPk 쿠키 변경 */
+  useEffect(() => {
+    console.log("호가인중, ", nowTopPosition);
+  }, [nowTopPosition]);
+
+  const reStudentPk = idx => {
+    setCookie("studentPk", myChildList[idx].studentPk);
+  };
+  // /** 메뉴 선택시 selectChildNum 변경 */
+  // const handleOnClick = (e, idx) => {
+  //   // console.log("들어옴.");
+  //   setCountIndex(idx);
+  //   setPrevChildNum(getCookie("studentPk"));
+  //   // setCookie("studentPk", idx);
+  //   // 강제로 애니메이션 재시작
+  //   const page1Element = page1Ref.current;
+  //   page1Element.classList.remove("animate");
+  //   void page1Element.offsetWidth; // Reflow
+  //   page1Element.classList.add("animate");
+  // };
+
   /** 메뉴 선택시 selectChildNum 변경 */
   const handleOnClick = (e, idx) => {
-    console.log("들어옴.");
+    // console.log("들어옴.");
     setCountIndex(idx);
     setPrevChildNum(getCookie("studentPk"));
-    setCookie("studentPk", idx);
+    // setCookie("studentPk", idx);
+
+    reStudentPk(idx);
 
     // 강제로 애니메이션 재시작
     const page1Element = page1Ref.current;
@@ -258,7 +284,7 @@ const ParentsProfile = () => {
   /** 아이들 정보 불러오기 */
   const myChildInfo = async childNum => {
     const res = await getMyChildInfo();
-    // console.log("자녀 정보 : ", res);
+    console.log("자녀 정보 : ", res);
 
     if (res === false) {
       console.log("자녀 없음.");
@@ -319,6 +345,7 @@ const ParentsProfile = () => {
             style={{ top: `${topPosition}px` }}
             onClick={e => {
               handleOnClick(e, index);
+              setNowTopPosition(topPosition);
             }}
           >
             {item.name}
@@ -351,6 +378,7 @@ const ParentsProfile = () => {
           <ParentsChildProfile
             childInfo={myChildList[getCookie("studentPk")]}
             childNum={getCookie("studentPk")}
+            nowTopPosition={nowTopPosition}
           />
         </div>
         <section className="chainSection"></section>

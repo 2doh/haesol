@@ -1,163 +1,119 @@
 import styled from "@emotion/styled";
-import React, { useEffect, useRef, useState } from "react";
+import ChatParents from "components/chat/ChatParents";
+import Chat from "pages/Home/Chat";
+import { useEffect, useState } from "react";
 
 const QuickMenuStyle = styled.div`
-  position: fixed;
-  right: 0;
-  width: 88px;
-  height: 167px;
-  padding-top: 0;
-  border-radius: 25px 25px 0 0;
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.15);
-  z-index: 99999;
+  .quick-menu-wrap {
+    position: absolute;
+    right: 0px;
+    top: 50%;
+    z-index: 999999;
+    transform: translateY(-50%);
 
-  transform: translateY(-50%);
-  transition: top 0.7s ease-out;
+    border-radius: 20px 0 0 10px;
+    overflow: hidden;
 
-  .quick_wrap {
-    .userquick_tit {
-      position: relative;
-      display: flex;
-      height: 35px;
-      justify-content: center;
-      align-items: center;
-      border-radius: 25px 0 0 0;
-      text-align: center;
-      background-color: #6ea1ff;
+    /* background-color: ; */
+
+    .quick-menu-title {
+      padding: 10px;
+      background-color: #d1ecff;
+      color: #4279a0;
+      font-size: 20px;
     }
-    .quick_btns {
+
+    .quick-menu-btns {
       display: flex;
-      box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.1);
-      position: relative;
-      width: 88px;
-      height: 167px;
-      border-radius: 0 0 0 10px;
-      padding: 12px 0;
-      flex-direction: column;
-      justify-content: space-between;
-      background: #fff;
-      box-sizing: border-box;
+      gap: 10px;
+
+      /* flex-direction: row-reverse; */
+      flex-direction: column-reverse;
+      background-color: white;
+      padding: 10px;
+      border-top: 1px solid white;
 
       .btn {
-        position: relative;
-        margin-bottom: 1px;
-        width: auto;
+        background-color: #eaeaea;
+        padding: 10px;
+        border-radius: 10px;
+        text-align: center;
+      }
 
-        .qk {
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          align-items: center;
-          position: relative;
-          line-height: normal;
-          box-sizing: border-box;
-          width: 76px;
-          height: 44px;
-          margin: 0 auto;
-          border-radius: 5px;
-          text-align: center;
-          overflow: hidden;
-
-          .hidden {
-            overflow: hidden;
-            height: 0;
-            width: 0;
-            line-height: 0;
-            font-size: 0;
-            text-indent: -9999999px;
-          }
-        }
-
-        .qk::before {
-          content: "";
-          display: block;
-          width: 0;
-          height: 70px;
-          position: absolute;
-          left: 0;
-          bottom: 0;
-          z-index: 5;
-          transition: 0.8s;
-          color: #fff;
-          line-height: normal;
-          text-align: center;
-        }
+      .hidden {
+        color: #1b4957;
+        font-size: 15px;
       }
     }
   }
 `;
 
 const QuickMenu = () => {
-  const [scrollTop, setScrollTop] = useState(0);
-  const [boxHeight, setBoxHeight] = useState(0);
-  const [boxOffsetTop, setBoxOffsetTop] = useState(0);
-  const [quickMenuHeight, setQuickMenuHeight] = useState(0);
+  // 퀵메뉴 위치 저장
+  const [barPosition, setBarPosition] = useState(510);
+  const [chatOpen, setChatOpen] = useState(false);
 
-  const boxRef = useRef(null);
-  const quickMenuRef = useRef(null);
+  /** 퀵메뉴 위치 계산 */
+  const handleScroll = () => {
+    const position = 510 + window.scrollY;
+    // const position = 956 < 510 + window.scrollY ? 956 : 510 + window.scrollY;
+    setBarPosition(position);
+  };
 
+  /** 스크롤 위치 */
   useEffect(() => {
-    const handleResize = () => {
-      if (boxRef.current) {
-        setBoxHeight(boxRef.current.clientHeight);
-        setBoxOffsetTop(
-          boxRef.current.getBoundingClientRect().top + window.scrollY,
-        );
-      }
-      if (quickMenuRef.current) {
-        setQuickMenuHeight(quickMenuRef.current.clientHeight);
-      }
-    };
-
-    const handleScroll = () => {
-      setScrollTop(window.scrollY);
-    };
-
-    handleResize(); // Initial call to set dimensions
-
-    window.addEventListener("resize", handleResize);
     window.addEventListener("scroll", handleScroll);
 
     return () => {
-      window.removeEventListener("resize", handleResize);
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
-  useEffect(() => {
-    if (quickMenuRef.current) {
-      const point =
-        scrollTop < boxOffsetTop
-          ? 0
-          : scrollTop > boxHeight - quickMenuHeight
-            ? boxHeight - quickMenuHeight
-            : scrollTop - boxOffsetTop;
-
-      quickMenuRef.current.style.top = `${point}px`;
-    }
-  }, [scrollTop, boxHeight, boxOffsetTop, quickMenuHeight]);
+  const callChat = bool => {
+    setChatOpen(bool);
+  };
 
   return (
-    <QuickMenuStyle ref={quickMenuRef}>
-      <div className="quick_wrap">
-        <p className="userquick_tit">111</p>
-        <ul className="quick_btns">
-          <li className="btn">
-            <a href="/" className="qk qk01" data-num="01">
-              <span className="hidden">학생</span>
-            </a>
-            <div className="quick_box qb01">
-              <div className="qbox">
-                <ul className="clear_fix"></ul>
-                <p className="qk_bt_tit">
-                  <img src="" alt="학생 퀵메뉴" />
-                </p>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </QuickMenuStyle>
+    <>
+      {chatOpen ? <ChatParents /> : null}
+      {/* {chatOpen ? <Chat /> : null} */}
+      <QuickMenuStyle>
+        <div className="quick-menu-wrap" style={{ top: barPosition }}>
+          <div className="quick-menu-title">퀵메뉴</div>
+
+          <div className="quick-menu-btns">
+            <li
+              className="btn"
+              onClick={() => {
+                callChat(true);
+              }}
+            >
+              {/* 채팅 */}
+              {/* <a href="/" className="qk qk01" data-num="01">
+              <span className="hidden">채팅</span>
+            </a> */}
+              <a className="qk qk01" data-num="01">
+                <span className="hidden">채팅</span>
+              </a>
+            </li>
+            <li
+              className="btn"
+              onClick={() => {
+                callChat(false);
+              }}
+            >
+              {/* 채팅 */}
+              {/* <a href="/" className="qk qk01" data-num="01">
+              <span className="hidden">채팅</span>
+            </a> */}
+              <a className="qk qk01" data-num="01">
+                <span className="hidden">(닫기)</span>
+              </a>
+            </li>
+          </div>
+        </div>
+      </QuickMenuStyle>
+    </>
   );
 };
 

@@ -43,6 +43,10 @@ const LunchViewStyle = styled.div`
       padding: 30px;
     }
   }
+
+  @media screen and (max-width: 1023px) {
+    padding: 0px;
+  }
 `;
 
 const LunchView = () => {

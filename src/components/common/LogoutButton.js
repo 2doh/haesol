@@ -1,5 +1,6 @@
 import { MdOutlineLogout } from "react-icons/md";
 import { logout } from "./Logout";
+import styled from "@emotion/styled";
 
 const LogoutButton = () => {
   return (

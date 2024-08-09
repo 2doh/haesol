@@ -51,7 +51,7 @@ const GreenHeaderNoOptionStyle = styled.div`
       }
 
       & > div:first-of-type {
-        padding-bottom: 5px;
+        /* padding-bottom: 5px; */
       }
 
       display: flex;
@@ -66,6 +66,10 @@ const GreenHeaderNoOptionStyle = styled.div`
       justify-content: center;
       align-items: center;
       padding-left: 20px;
+
+      & * {
+        color: #113f4d;
+      }
     }
   }
 `;

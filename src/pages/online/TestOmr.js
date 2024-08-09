@@ -16,6 +16,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { openModal, updateModalDate } from "slices/modalSlice";
 import { updateTestDate } from "slices/testSlice";
 import answerSelect from "./answerSelect";
+import { useEffect, useState } from "react";
+import useWindowDimensions from "hooks/common/useWindowDimensions";
 
 const TestOmrStyle = styled.div`
   display: flex;
@@ -32,36 +34,44 @@ const TestOmrStyle = styled.div`
     height: 30px;
   }
 
-  .omr-top {
+  .omr-top-wrap {
     & > div {
       display: flex;
-      justify-content: center;
-      align-items: center;
+      flex-direction: row;
+      height: 30px;
+    }
 
-      span,
-      strong {
-        font-size: 18px;
+    .omr-top {
+      & > div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        span,
+        strong {
+          font-size: 18px;
+        }
+      }
+
+      & > div:first-of-type {
+        width: 15%;
+      }
+
+      & > div:last-child {
+        width: 85%;
       }
     }
 
-    & > div:first-of-type {
-      width: 15%;
-    }
+    .omr-top {
+      width: 100%;
 
-    & > div:last-child {
-      width: 85%;
-    }
-  }
+      div {
+        background-color: #5f909f;
 
-  .omr-top {
-    width: 100%;
-
-    div {
-      background-color: #5f909f;
-
-      span,
-      strong {
-        color: #fff;
+        span,
+        strong {
+          color: #fff;
+        }
       }
     }
   }
@@ -124,11 +134,61 @@ const TestOmrStyle = styled.div`
       }
     }
   }
+
+  @media screen and (max-width: 1180px) {
+    .omr-top-wrap {
+      .omr-top {
+        border: 1px solid #5f909f;
+      }
+    }
+    .omr-box {
+      flex-wrap: wrap;
+      flex-direction: row;
+
+      .omr-box-inner {
+        width: 50%;
+
+        flex: 1 1 40%;
+
+        & > div {
+        }
+
+        .omr-num {
+          span,
+          strong {
+          }
+        }
+        .omr-select {
+          label {
+            svg {
+            }
+          }
+
+          .circle-duotone {
+            svg {
+              path:first-of-type {
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 `;
 
 const TestOmr = () => {
   const dispatch = useDispatch();
   const testState = useSelector(state => state.testSlice);
+  const [changeStyle, setChangeStyle] = useState(true);
+  const { height, width } = useWindowDimensions();
+
+  useEffect(() => {
+    if (width < 1180) {
+      setChangeStyle(false);
+    } else {
+      setChangeStyle(true);
+    }
+  }, [width]);
 
   /** 문제 빠르게 이동하기 */
   const questionsNumChange = num => {
@@ -159,13 +219,25 @@ const TestOmr = () => {
 
   return (
     <TestOmrStyle>
-      <div className="omr-top">
-        <div className="omr-num-text">
-          <span>문항</span>
+      <div className="omr-top-wrap">
+        <div className="omr-top">
+          <div className="omr-num-text">
+            <span>문항</span>
+          </div>
+          <div className="omr-select-text">
+            <span>답 안</span>
+          </div>
         </div>
-        <div className="omr-select-text">
-          <span>답 안</span>
-        </div>
+        {changeStyle ? null : (
+          <div className="omr-top">
+            <div className="omr-num-text">
+              <span>문항</span>
+            </div>
+            <div className="omr-select-text">
+              <span>답 안</span>
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="omr-box">

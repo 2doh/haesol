@@ -17,6 +17,7 @@ const TestWrap = styled.div`
     height: 100%;
     background-color: #f3f9fa;
     margin: 0 auto;
+    min-width: 350px;
 
     .test-page-inner {
       width: 100%;
@@ -37,35 +38,21 @@ const TestWrap = styled.div`
     }
   }
 
-  @media screen and (max-width: $tablet-screen) {
-  // .calendar-and-meals-wrap {
-  //   width: 100%;
-  //   display: flex;
+  @media screen and (max-width: 1180px) {
+    .test-page {
+      width: auto;
+      .test-page-inner {
+        display: flex;
+        flex-direction: column;
 
-  //   gap: 20px;
-  //   max-height: 450px;
-
-  //   .calendar-wrap {
-  //     min-width: 810px;
-  //     background-color: #dee8e9;
-  //     border-radius: 30px;
-  //     padding: 30px;
-  //   }
-
-  //   .lunch-wrap {
-  //     width: 100%;
-  //   }
-  // }
-
-  .calendar-and-meals-wrap {
-    display: flex;
-    flex-direction: column;
-    max-height: auto;
-
-    background-color: red;
+        & > div:first-child {
+          min-width: auto;
+          width: 100%;
+          max-width: none;
+        }
+      }
+    }
   }
-}
-
 `;
 
 const TestPage = () => {
