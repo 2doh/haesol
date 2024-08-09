@@ -6,19 +6,21 @@ import {
   socialSignin,
 } from "api/login/social";
 import { useEffect, useState } from "react";
-import KakaoLogin from "react-kakao-login";
+// import KakaoLogin from "react-kakao-login";
 import kakao from "../../../images/ri_kakao-talk-fill.svg";
 import naver from "../../../images/simple-icons_naver.svg";
 import LoginGoogle from "./LoginGoogle";
-import { setCookie } from "utils/cookie";
-import base64 from "base-64";
+import useSocialLogin from "hooks/useSocialLogin";
+import KakaoLogin from "react-kakao-login";
+import { useNavigate } from "react-router";
 
 const SocialSignin = () => {
+  const navi = useNavigate();
   const handleGoogleSuccess = async response => {
     // console.log(response);
     const token = response.access_token;
     const res = await fetchUserInfo(token);
-    console.log(res);
+    // console.log(res);
     // console.log(token);
     // 토큰 파싱
     // const resp = await googleToken(token);
@@ -31,20 +33,8 @@ const SocialSignin = () => {
     };
     // console.log(reqData);
     const result = await socialLogin(reqData, socialType);
-    console.log(result);
-    if (result.data.parentsId === -1) {
-      alert("자식코드,번호 보내야함");
-    }
-    if (result.data.parentsId !== -1) {
-      let acTken = result.data.accessToken;
-      const payload = JSON.parse(
-        base64.decode(acTken.split(".")[1]),
-      ).signedUser;
-      const signedUser = JSON.parse(payload);
-      setCookie("userRole", signedUser.role);
-      alert(signedUser.role);
-    }
-    console.log(result);
+    const naviState = useSocialLogin(result);
+    navi(naviState);
   };
 
   const handleGoogleFailure = error => {
@@ -55,21 +45,15 @@ const SocialSignin = () => {
 
   const handleKkoSuccess = async response => {
     // 로그인 성공 확인
-    console.log(response);
+    // console.log(response);
 
     const reqData = {
       id: response.profile.id,
       providerType: 2,
     };
-    console.log(reqData);
+    // console.log(reqData);
     const result = await socialLogin(reqData);
-    console.log(result);
-    if (result.data.parentsId === -1) {
-      alert("자식코드,번호 보내야함");
-    }
-    if (result.data.parentsId !== -1) {
-      alert("로그인되는 코드 필요");
-    }
+    const naviState = useSocialLogin(result);
   };
 
   const handleKkoFailure = error => {
@@ -136,10 +120,10 @@ const SocialSignin = () => {
             </div>
           )}
         />
-        {/* <LoginGoogle
+        <LoginGoogle
           onSuccess={handleGoogleSuccess}
           onFailure={handleGoogleFailure}
-        /> */}
+        />
       </div>
     </div>
   );

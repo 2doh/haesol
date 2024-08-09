@@ -7,6 +7,7 @@ import Vocabulary from "pages/learn/Vocabulary";
 import Title from "components/Title";
 import wordtest from "./api/json/ENwordtest.json";
 import "../src/test.scss";
+import KakaoLogin from "react-kakao-login";
 
 const Test = () => {
   // return <input classNameName="textinput-size-s"></input>;
@@ -96,11 +97,11 @@ const Test = () => {
   // );
   // ==========================================
   // const io = new Server(3000);
-  return (
-    <div>
-      <Chatting />
-    </div>
-  );
+  // return (
+  //   <div>
+  //     <Chatting />
+  //   </div>
+  // );
 };
 
 export default Test;
