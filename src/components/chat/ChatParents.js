@@ -5,22 +5,25 @@ import SendMsg from "./SendMsg";
 import ChatButton from "./ChatButton";
 
 const ChatWrapStyle = styled.div`
-  width: 335px;
-  height: 550px;
-  background-color: green;
-  margin-bottom: 888px;
-`;
-
-const ChatHeaderStyle = styled.div`
-  width: 100%;
-  height: 10%;
-  background-color: #5f909f;
-`;
-
-const ChatFieldStyle = styled.div`
-  width: 100%;
-  height: 70%;
-  background-color: #dee8e9;
+  margin: 20px;
+  width: 530px;
+  height: 860px;
+  overflow: hidden;
+  border-radius: 10px;
+  /* box-shadow: 0 0 10px; */
+  box-shadow:
+    0px 3px 6px rgba(0, 0, 0, 0.16),
+    0 3px 6px rgba(0, 0, 0, 0.23);
+  .chat-header {
+    width: 100%;
+    height: 10%;
+    background-color: #5f909f;
+  }
+  .chat-field {
+    width: 100%;
+    height: 70%;
+    background-color: #dee8e9;
+  }
 `;
 
 const ChatInputStyle = styled.div`
@@ -54,12 +57,16 @@ const ChatParents = () => {
   };
   return (
     <>
+      {/* 버튼 클릭하면 채팅창 나오게 */}
       <ChatButton />
       <ChatWrapStyle>
-        <ChatHeaderStyle></ChatHeaderStyle>
-        <ChatFieldStyle>
+        <div className="chat-header">
+          <span>채팅 헤더</span>
+        </div>
+        <div className="chat-field">
           <SendMsg sandingMsg={sandingMsg} nowTime={nowTime}></SendMsg>
-        </ChatFieldStyle>
+        </div>
+
         <ChatInputStyle>
           <form className="chat-wrap">
             <textarea
