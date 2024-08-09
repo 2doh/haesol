@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import "../../scss/chat/chat.scss";
 import SendMsg from "./SendMsg";
 import ChatButton from "./ChatButton";
+import ChatStart from "./ChatStart";
+import ChatList from "./ChatList";
 
 const ChatWrapStyle = styled.div`
   margin: 20px;
@@ -15,25 +17,30 @@ const ChatWrapStyle = styled.div`
     0px 3px 6px rgba(0, 0, 0, 0.16),
     0 3px 6px rgba(0, 0, 0, 0.23);
   .chat-header {
-    width: 100%;
-    height: 10%;
+    height: 80px;
     background-color: #5f909f;
+    display: flex;
+    padding-left: 20px;
+    align-items: center;
+    span {
+      font-size: 27px;
+      font-weight: 700;
+      color: #fff;
+    }
   }
   .chat-field {
-    width: 100%;
-    height: 70%;
+    height: 660px;
     background-color: #dee8e9;
   }
-`;
-
-const ChatInputStyle = styled.div`
-  width: 100%;
-  height: 20%;
-  background-color: #fff;
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  gap: 10px;
+  .chat-input-style {
+    height: 120px;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    gap: 10px;
+  }
 `;
 
 const ChatParents = () => {
@@ -59,15 +66,17 @@ const ChatParents = () => {
     <>
       {/* 버튼 클릭하면 채팅창 나오게 */}
       <ChatButton />
+      <ChatStart />
+      <ChatList />
       <ChatWrapStyle>
         <div className="chat-header">
-          <span>채팅 헤더</span>
+          <span>몇 반 김누구 선생님</span>
         </div>
         <div className="chat-field">
           <SendMsg sandingMsg={sandingMsg} nowTime={nowTime}></SendMsg>
         </div>
 
-        <ChatInputStyle>
+        <div className="chat-input-style">
           <form className="chat-wrap">
             <textarea
               className="chat-input"
@@ -85,7 +94,7 @@ const ChatParents = () => {
               전송
             </div>
           </form>
-        </ChatInputStyle>
+        </div>
       </ChatWrapStyle>
     </>
   );

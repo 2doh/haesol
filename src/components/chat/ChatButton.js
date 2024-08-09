@@ -43,7 +43,7 @@ const ChatButton = () => {
   return (
     <StartChatButton>
       <div className="chat-button-contain">
-        <div className="chat-button-text">채팅 시작하기</div>
+        <div className="chat-button-text">채팅하기</div>
       </div>
       <div className="chat-button-icon">
         <PiChatCircleDotsFill size="60" fill="#5f909f" />

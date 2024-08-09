@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @keyframes shake {
   0% {
     transform: rotate(0deg);
@@ -65,6 +66,92 @@
   color: #fff;
   padding: 10px;
   background-color: #5f909f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chat-wrap-style {
+  word-break: keep-all;
+  position: relative;
+  margin: 20px;
+  width: 420px;
+  height: 660px;
+  overflow: hidden;
+  border-radius: 20px;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+.chat-wrap-style .chat-header {
+  display: flex;
+  align-items: center;
+  height: 60px;
+  padding-left: 20px;
+  gap: 10px;
+}
+.chat-wrap-style .chat-header span {
+  font-size: 22px;
+  font-weight: 700;
+}
+.chat-wrap-style .chat-info-wrap {
+  display: flex;
+  height: 100%;
+  gap: 30px;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 20px;
+}
+.chat-wrap-style .chat-info-wrap .chat-time {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.chat-wrap-style .chat-info-wrap .chat-time span {
+  font-size: 19px;
+  font-weight: 700;
+}
+.chat-wrap-style .chat-info-wrap .chat-time ul {
+  font-size: 17px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-bottom: 5px;
+}
+.chat-wrap-style .chat-info-wrap .chat-instructions {
+  width: 95%;
+  display: flex;
+  gap: 15px;
+  color: #1b4957;
+}
+.chat-wrap-style .chat-info-wrap .chat-instructions p {
+  color: #7f85a4;
+  font-size: 16px;
+}
+.chat-wrap-style .chat-field {
+  display: flex;
+  justify-content: flex-end;
+  overflow-y: auto;
+  align-items: center;
+  flex-direction: column;
+  /* 스크롤 바 숨기기 */
+  -ms-overflow-style: none; /* IE에서 스크롤 바 숨기기 */
+  scrollbar-width: none; /* Firefox에서 스크롤 바 숨기기 */
+}
+.chat-wrap-style .chat-field ::-webkit-scrollbar {
+  display: none; /* 크롬, 사파리, 엣지에서 스크롤 바 숨기기 */
+}
+.chat-wrap-style .chat-field .chat-button {
+  position: absolute;
+  bottom: 30px;
+  width: 85%;
+  min-height: 60px;
+  border-radius: 20px;
+  background-color: #8cc1d3;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  font-size: 28px;
+  font-weight: 700;
+  color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
