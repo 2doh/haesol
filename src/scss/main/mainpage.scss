@@ -85,30 +85,48 @@
 // MainPageContents (end)
 
 @media screen and (max-width: $tablet-screen) {
-  // .calendar-and-meals-wrap {
-  //   width: 100%;
-  //   display: flex;
-
-  //   gap: 20px;
-  //   max-height: 450px;
-
-  //   .calendar-wrap {
-  //     min-width: 810px;
-  //     background-color: #dee8e9;
-  //     border-radius: 30px;
-  //     padding: 30px;
-  //   }
-
-  //   .lunch-wrap {
-  //     width: 100%;
-  //   }
-  // }
+  .main-page-wrap {
+    width: auto;
+    // padding: 20px;
+    min-width: 750px;
+    border-radius: 0px;
+  }
 
   .calendar-and-meals-wrap {
+    width: 100%;
+    max-height: fit-content;
     display: flex;
     flex-direction: column;
-    max-height: auto;
+    padding: 20px;
 
-    background-color: red;
+    .calendar-wrap {
+      min-width: auto;
+    }
+  }
+
+  .poto-and-pop-up-wrap {
+    flex-direction: column;
+    height: auto;
+
+    .pop-up-wrap {
+      padding-bottom: 30px;
+    }
+  }
+
+  .main-random-ad-zone-wrap {
+    border-radius: 0 0 20px 20px;
+    background-color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .english-book-wrap {
+    margin-top: 0px;
+  }
+
+  .mini-banner-wrap {
+    min-width: 615px;
   }
 }

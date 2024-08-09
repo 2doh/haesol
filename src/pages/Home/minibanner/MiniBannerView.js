@@ -44,6 +44,10 @@ const MiniBannerViewStyle = styled.div`
       cursor: pointer;
     }
   }
+
+  @media screen and (max-width: 1023px) {
+    padding: 0 20px;
+  }
 `;
 const MiniBannerView = () => {
   const [swiper, setSwiper] = useState();

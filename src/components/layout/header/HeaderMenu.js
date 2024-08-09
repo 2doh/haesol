@@ -14,6 +14,7 @@ const HeaderMemuStyle = styled.div`
   justify-content: center;
   align-items: center;
   background-color: #f3f9fa;
+  padding-bottom: 10px;
 
   .header-menu-wrap {
     display: flex;
@@ -198,6 +199,8 @@ const HeaderMemu = () => {
   }, [width]);
 
   const moveMyPage = pageNum => {
+    // 2n : 2번째 메뉴의 서브메뉴
+
     switch (pageNum) {
       case 1:
         navigate("/notice/list/classid");
@@ -216,12 +219,26 @@ const HeaderMemu = () => {
         navigate("/selftest");
         break;
       case 10:
+        // navigate("/selftest");
+
         // 추가하기
         // navigate("/selftest");
         break;
       case 11:
         // 추가하기
         navigate("/notice/list/classid");
+        break;
+      case 21:
+        // 국어 문제 출제 페이지
+        navigate("/online/test/create/korean");
+        break;
+      case 22:
+        // 영어 문제 출제 페이지
+        navigate("/online/test/create/english");
+        break;
+      case 23:
+        // 수학 문제 출제 페이지
+        navigate("/online/test/create/math");
         break;
       default:
         break;
@@ -292,17 +309,32 @@ const HeaderMemu = () => {
                           <span>문제 출제 리스트</span>
                         </a>
                       </li>
-                      <li>
+                      <li
+                        onClick={e => {
+                          e.stopPropagation();
+                          moveMyPage(22);
+                        }}
+                      >
                         <a>
                           <span>영어 문제 출제</span>
                         </a>
                       </li>
-                      <li>
+                      <li
+                        onClick={e => {
+                          e.stopPropagation();
+                          moveMyPage(21);
+                        }}
+                      >
                         <a>
                           <span>국어 문제 출제</span>
                         </a>
                       </li>
-                      <li>
+                      <li
+                        onClick={e => {
+                          e.stopPropagation();
+                          moveMyPage(23);
+                        }}
+                      >
                         <a>
                           <span>수학 문제 출제</span>
                         </a>

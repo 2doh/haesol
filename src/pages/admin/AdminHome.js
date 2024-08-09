@@ -283,7 +283,7 @@ const AdminHome = () => {
               ) : null}
 
               <SearchInput
-                placeholderText={"아이디 입력"}
+                placeholderText={"이름 입력"}
                 setSearchKeyword={setSearchKeyword}
                 setClickSearchBtn={setClickSearchBtn}
               />

@@ -20,8 +20,9 @@ import bannerImg16 from "../../../images/home/minibanner/mini-banner-img-16.jpg"
 import bannerImg17 from "../../../images/home/minibanner/mini-banner-img-17.jpg";
 import bannerImg18 from "../../../images/home/minibanner/mini-banner-img-18.png";
 import bannerImg19 from "../../../images/home/minibanner/mini-banner-img-19.jpg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
+import useWindowDimensions from "hooks/common/useWindowDimensions";
 
 const MiniBannerWrap = styled.div`
   /* display: flex;
@@ -138,10 +139,21 @@ const MiniBannerSwiper = ({ setSwiper }) => {
     // }
   };
 
+  const { height, width } = useWindowDimensions();
+  const [changeStyle, setChangeStyle] = useState(true);
+
+  useEffect(() => {
+    if (width < 1023) {
+      setChangeStyle(false);
+    } else {
+      setChangeStyle(true);
+    }
+  }, [width]);
+
   return (
     // <MiniBannerWrap>
     <Swiper
-      slidesPerView={4}
+      slidesPerView={changeStyle ? 4 : 2}
       navigation={true}
       modules={[Autoplay, Pagination]}
       loop={true}

@@ -30,10 +30,13 @@ const MenuStyle = styled.div`
     border-radius: 10px;
   }
 
-  .today-lunch-menu {
+  .today-no-menu {
   }
 
-  .today-no-menu {
+  @media screen and (max-width: 1023px) {
+    .today-lunch-menu {
+      padding: 20px;
+    }
   }
 `;
 

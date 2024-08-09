@@ -11,12 +11,20 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination, Autoplay } from "swiper/modules";
 import { useState } from "react";
+import { getCookie } from "utils/cookie";
 
 const ActivityPhotosZoneStyle = styled.div`
   position: absolute;
   top: 18px;
   right: 35px;
   width: 570px;
+
+  @media screen and (max-width: 1023px) {
+    position: static;
+    width: auto;
+    .poto-view-title {
+    }
+  }
 `;
 
 export const ActivityPhotos = ({ setSwiper }) => {
@@ -38,7 +46,11 @@ export const ActivityPhotos = ({ setSwiper }) => {
             onSwiper={e => {
               setSwiper(e);
             }}
-            className="main-our-activities-photo-swiper"
+            className={
+              getCookie("accessToken")
+                ? "main-our-activities-photo-swiper"
+                : "main-our-activities-photo-swiper img_blur"
+            }
           >
             <SwiperSlide>
               <div className="item">

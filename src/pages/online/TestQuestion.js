@@ -92,6 +92,7 @@ const TestQuestionWrap = styled.div`
       align-items: center;
       justify-content: center;
       gap: 50px;
+      min-height: 100px;
 
       .cbt_inner {
         position: relative;

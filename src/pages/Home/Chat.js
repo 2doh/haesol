@@ -18,6 +18,7 @@ const ChatWrap = styled.div`
   bottom: 80px;
   right: 110px;
   position: absolute;
+  z-index: 99999999999999;
 
   /* z-index: 1; */
 `;
