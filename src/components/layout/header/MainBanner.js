@@ -25,6 +25,12 @@ const MainBannerStyle = styled.div`
       cursor: pointer;
     }
   }
+
+  @media screen and (max-width: 1023px) {
+    .swiper {
+      border-radius: 0px;
+    }
+  }
 `;
 
 /** 새 탭에서 열기 */

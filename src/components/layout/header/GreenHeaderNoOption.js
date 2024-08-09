@@ -44,14 +44,28 @@ const GreenHeaderNoOptionStyle = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 20px;
 
     .timer-wrap {
+      & > div:not(:last-of-type) * {
+        color: white;
+      }
+
+      & > div:first-of-type {
+        padding-bottom: 5px;
+      }
+
       display: flex;
       flex-direction: row;
+      align-items: center;
     }
 
     .logout-icon {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-left: 20px;
     }
   }
 `;

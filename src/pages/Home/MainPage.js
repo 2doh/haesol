@@ -8,20 +8,11 @@ import LunchView from "./lunch/LunchView";
 import MiniBannerView from "./minibanner/MiniBannerView";
 import PopUpView from "./popup/PopUpView";
 import PotoView from "./poto/PotoView";
-
 import "../../scss/main/mainpage.css";
 import Footer from "components/layout/Footer";
-import Chat from "./Chat";
-
-const ChatWarp = styled.div`
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  /* display: none; */
-`;
+import ClassNotice from "./ClassNotice";
+import QuickMenu from "components/common/quickmenu/QuickMenu";
+import { useEffect, useState } from "react";
 
 const MainPageStyle = styled.div`
   width: 100%;
@@ -38,17 +29,47 @@ const MainPageStyle = styled.div`
 `;
 
 const MainPageContents = styled.div`
-  display: flex;
-  flex-direction: column;
   width: 100%;
-
   display: flex;
   flex-direction: column;
   gap: 50px;
   height: 100%;
 `;
 
+const LoginUserMainPageContents = styled.div`
+  .main-inner-class {
+    width: 700px;
+    /* height: 100%; */
+  }
+`;
+
+const AAAStyle = styled.div`
+  .side-bar {
+    position: absolute;
+    right: 20px; /* 왼쪽 여백 */
+    top: 50%;
+    z-index: 999999;
+    transform: translateY(-50%);
+  }
+`;
+
 const MainPage = () => {
+  const [barPosition, setBarPosition] = useState(510);
+
+  const handleScroll = () => {
+    const position = 510 + window.scrollY;
+    // const position = 956 < 510 + window.scrollY ? 956 : 510 + window.scrollY;
+    setBarPosition(position);
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <>
       <HeaderTopPublic />
@@ -62,7 +83,21 @@ const MainPage = () => {
         </div>
 
         <div className="main-page-wrap">
+          {/* <QuickMenu /> */}
+          <AAAStyle>
+            <div className="side-bar" style={{ top: barPosition }}>
+              11111 {/* 내용 */}
+            </div>
+          </AAAStyle>
+
           <MainPageContents>
+            {/* <LoginUserMainPageContents>
+              <div className="main-inner-class">
+                <ClassNotice />
+              </div>
+
+            </LoginUserMainPageContents> */}
+
             <div className="calendar-and-meals-wrap">
               <div className="calendar-wrap">
                 <MainScheduleView />
@@ -90,7 +125,7 @@ const MainPage = () => {
           <MiniBannerView />
         </div>
       </MainPageStyle>
-      {/* <Footer /> */}
+      <Footer />
     </>
   );
 };

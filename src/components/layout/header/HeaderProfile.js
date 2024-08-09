@@ -1,14 +1,12 @@
 import styled from "@emotion/styled";
-import React from "react";
-import UnauthenticatedProfile from "./UnauthenticatedProfile";
-import { getCookie } from "utils/cookie";
-import LoginUser from "pages/Home/LoginUser";
-import LoginTeahcer from "pages/Home/LoginTeahcer";
 import ParentsProfile from "pages/Home/profile/ParentsProfile";
-import "../../../scss/main/profile.css";
 import TeacherProfile from "pages/Home/profile/TeacherProfile";
-import { useNavigate } from "react-router";
+import { getCookie } from "utils/cookie";
+import "../../../scss/main/profile.css";
 import MainBanner from "./MainBanner";
+import UnauthenticatedProfile from "./UnauthenticatedProfile";
+import useWindowDimensions from "hooks/common/useWindowDimensions";
+import { useEffect, useState } from "react";
 
 const HeaderProfileStyle = styled.div`
   font-size: 17px;
@@ -25,16 +23,57 @@ const HeaderProfileStyle = styled.div`
     padding: 20px 0px;
     width: 60%;
   }
+
+  @media screen and (max-width: 1023px) {
+    top: 70px;
+    flex-direction: column;
+    min-width: 750px;
+    gap: 0px;
+
+    .banner-warp {
+      width: 100%;
+    }
+
+    /* section {
+      .main-inner-info {
+        .main-login-user-info {
+          margin: 0px;
+
+          .main-inner-info-login {
+            margin: 0px;
+          }
+        }
+      }
+    } */
+    /* section:last-of-type {
+      padding-bottom: 20px;
+    } */
+  }
 `;
 
 const HeaderProfile = () => {
+  const { height, width } = useWindowDimensions();
+  const [changeStyle, setChangeStyle] = useState(true);
+
+  useEffect(() => {
+    if (width < 1023) {
+      setChangeStyle(false);
+    } else {
+      setChangeStyle(true);
+    }
+  }, [width]);
+
   return (
     <HeaderProfileStyle>
       <section className="banner-warp">
         <MainBanner />
       </section>
       <section>
-        {!getCookie("accessToken") ? <UnauthenticatedProfile /> : null}
+        {changeStyle ? (
+          !getCookie("accessToken") ? (
+            <UnauthenticatedProfile />
+          ) : null
+        ) : null}
         {getCookie("userRole") === "ROLE_PARENTS" ? <ParentsProfile /> : null}
         {getCookie("userRole") === "ROLE_TEACHER" ? <TeacherProfile /> : null}
       </section>

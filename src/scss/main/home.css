@@ -337,10 +337,4 @@
   justify-content: center;
   background: no-repeat center;
   background-size: cover;
-}
-
-@media screen and (max-width: 1023px) {
-  .main-inner {
-    flex-direction: column;
-  }
 }/*# sourceMappingURL=home.css.map */
