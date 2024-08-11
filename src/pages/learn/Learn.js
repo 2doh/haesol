@@ -1,14 +1,12 @@
-import React from "react";
-import Vocabulary from "./Vocabulary";
-import VocaLearn from "./VocaLearn";
 import styled from "@emotion/styled";
 import Footer from "components/layout/Footer";
 import GreenHeaderNoOption from "components/layout/header/GreenHeaderNoOption";
+import { MdHearing } from "react-icons/md";
 import { RiSpeakFill } from "react-icons/ri";
 import { TbWriting } from "react-icons/tb";
-import { MdHearing } from "react-icons/md";
-import "../../scss/learn/learn.scss";
 import { useNavigate } from "react-router";
+import "../../scss/learn/learn.scss";
+import VocaLearn from "./VocaLearn";
 
 const Learn = () => {
   const initItem = [
@@ -43,7 +41,6 @@ const Learn = () => {
         </SelectWrapStyle>
       </WrapStyle>
       <Footer />
-      {/* <VocaLearn></VocaLearn> */}
     </>
   );
 };
@@ -53,7 +50,7 @@ export default Learn;
 const WrapStyle = styled.div`
   width: 100%;
   max-width: 1180px;
-  height: 100vh;
+  height: 90vh;
   margin: 0 auto;
   background-color: #f3f9fa;
   display: flex;
