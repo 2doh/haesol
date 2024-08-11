@@ -36,3 +36,11 @@
     position: relative;
   }
 }
+
+// 클릭시 밑으로 조금 내려가는 애니메이션
+@mixin bt-animation-02 {
+  &:active {
+    -webkit-transform: translateY(2px);
+    transform: translateY(2px);
+  }
+}

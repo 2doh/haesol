@@ -209,8 +209,7 @@ const HeaderMemu = () => {
         navigate("/test");
         break;
       case 3:
-        console.log("설정 안됬어요.");
-        // navigate("/selftest");
+        navigate("/onlinemain");
         break;
       case 4:
         navigate("/online/test/create");
@@ -292,7 +291,7 @@ const HeaderMemu = () => {
                   }}
                 >
                   <h2 id="user-type-menu-label">
-                    <a>OOO 마당</a>
+                    <a>선생님 마당</a>
                   </h2>
                   <div className="navi_arrow_icon">
                     <IoMdArrowDropdownCircle size={30} />

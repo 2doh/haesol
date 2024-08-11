@@ -243,7 +243,19 @@
 }
 
 // MainScheduleView.js
+
 .schedule-wrap {
+  display: flex;
+  flex-direction: column;
+
+  .schedule-tag {
+    padding: 15px;
+    padding-bottom: 0px;
+    font-size: 13px;
+  }
+}
+
+.schedule-inner {
   display: flex;
   flex-direction: row;
   gap: 20px;
@@ -333,6 +345,4 @@
       }
     }
   }
-
-
 }

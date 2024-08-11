@@ -4,31 +4,25 @@ import { getCookie } from "utils/cookie";
 
 /** 회원가입 신청 리스트 */
 export const getAwaitAcceptList = async (userListType, searchKeyword) => {
-  // const accessToken = getCookie("accessToken");
   // console.log("유저 타입 : ", userListType);
   // console.log("검색 키워드 : ", searchKeyword);
-
-  const res = await jwtAxios.get(
-    `/api/admin?p=${userListType}&searchWord=${searchKeyword}`,
-  );
-  console.log(res.data);
-  return res.data.userList;
-
-  // try {
-  //   const response = await axios.get(`/api/admin?p=${userListType}`, {
-  //     headers: {
-  //       Authorization: `Bearer ${accessToken}`,
-  //     },
-  //   });
-  //   // console.log("api 결과 : ", response.data);
-  //   return response.data.userList;
-  // } catch (error) {
-  //   return console.log(error);
-  // }
+  await jwtAxios
+    .get(`/api/admin?p=${userListType}&searchWord=${searchKeyword}`)
+    .then(res => {
+      // 성공 처리
+      // console.log("성공");
+      return res.data.userList;
+    })
+    .catch(error => {
+      console.log("에러 : ", error);
+      return false;
+      // return Promise.reject(error);
+    });
 };
 
 /** 가입된 유저 리스트 */
 export const getAwaitUserList = async (userListType, check, searchKeyword) => {
+  // 2차
   // const accessToken = getCookie("accessToken");
   // console.log("유저 타입 : ", userListType);
   // console.log("체크 : ", check);
@@ -44,11 +38,24 @@ export const getAwaitUserList = async (userListType, check, searchKeyword) => {
   //   // console.log(error);
   // }
 
-  const res = await jwtAxios.get(
-    `/api/admin/list?p=${userListType}&check=${check}&searchWord=${searchKeyword}`,
-  );
-  // console.log(res.data);
-  return res.data;
+  // 3차
+  // const res = await jwtAxios.get(
+  //   `/api/admin/list?p=${userListType}&check=${check}&searchWord=${searchKeyword}`,
+  // );
+  // return res.data;
+
+  await jwtAxios
+    .get(
+      `/api/admin/list?p=${userListType}&check=${check}&searchWord=${searchKeyword}`,
+    )
+    .then(res => {
+      // 성공 처리
+      return res.data;
+    })
+    .catch(error => {
+      console.log("에러 : ", error);
+      return false;
+    });
 };
 
 /** 회원가입 신청 승인 */

@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import ChatParents from "components/chat/ChatParents";
+import { BiSolidArrowToTop } from "react-icons/bi";
 import Chat from "pages/Home/Chat";
 import { useEffect, useState } from "react";
 
@@ -11,16 +12,24 @@ const QuickMenuStyle = styled.div`
     z-index: 999999;
     transform: translateY(-50%);
 
-    border-radius: 20px 0 0 10px;
-    overflow: hidden;
+    /* border-radius: 20px 0 0 10px; */
+    /* overflow: hidden; */
 
     /* background-color: ; */
 
     .quick-menu-title {
+      display: flex;
+      justify-content: center;
+
       padding: 10px;
       background-color: #d1ecff;
       color: #4279a0;
-      font-size: 20px;
+      font-size: 19px;
+
+      border: 1px solid #91aeff;
+      border-bottom: 0px;
+      border-right: 0px;
+      border-radius: 20px 0 0 0;
     }
 
     .quick-menu-btns {
@@ -31,18 +40,42 @@ const QuickMenuStyle = styled.div`
       flex-direction: column-reverse;
       background-color: white;
       padding: 10px;
-      border-top: 1px solid white;
+      /* border-top: 1px solid white; */
+
+      border: 1px solid #91aeff;
+      border-right: 0px;
+      border-top: 0px;
+      border-radius: 0 0 0 10px;
 
       .btn {
         background-color: #eaeaea;
         padding: 10px;
-        border-radius: 10px;
+        border-radius: 15px;
         text-align: center;
       }
 
       .hidden {
         color: #1b4957;
         font-size: 15px;
+      }
+    }
+
+    .top-btn {
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+
+      border-radius: 50px 50px 10px 10px;
+      background-color: #9fd2f7;
+      color: white;
+      padding: 8px;
+      font-size: 13px;
+      text-align: center;
+      path {
+        color: white;
       }
     }
   }
@@ -71,6 +104,12 @@ const QuickMenu = () => {
 
   const callChat = bool => {
     setChatOpen(bool);
+  };
+
+  /** 페이지 맨 위로 이동 */
+  const MoveToTop = () => {
+    // top:0 >> 맨위로  behavior:smooth >> 부드럽게 이동할수 있게 설정하는 속성
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
@@ -110,6 +149,38 @@ const QuickMenu = () => {
                 <span className="hidden">(닫기)</span>
               </a>
             </li>
+            <li
+              className="btn"
+              onClick={() => {
+                callChat(false);
+              }}
+            >
+              {/* 채팅 */}
+              {/* <a href="/" className="qk qk01" data-num="01">
+              <span className="hidden">채팅</span>
+            </a> */}
+              <a className="qk qk01" data-num="01">
+                <span className="hidden">알림장</span>
+              </a>
+            </li>
+
+            <li
+              className="btn"
+              onClick={() => {
+                callChat(false);
+              }}
+            >
+              {/* 채팅 */}
+              {/* <a href="/" className="qk qk01" data-num="01">
+              <span className="hidden">채팅</span>
+            </a> */}
+              <a className="qk qk01" data-num="01">
+                <span className="hidden">시간표</span>
+              </a>
+            </li>
+          </div>
+          <div className="top-btn" onClick={() => MoveToTop()}>
+            <BiSolidArrowToTop size={15} />맨 위로
           </div>
         </div>
       </QuickMenuStyle>

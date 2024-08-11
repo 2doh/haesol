@@ -216,14 +216,24 @@
 
 .schedule-wrap {
   display: flex;
+  flex-direction: column;
+}
+.schedule-wrap .schedule-tag {
+  padding: 15px;
+  padding-bottom: 0px;
+  font-size: 13px;
+}
+
+.schedule-inner {
+  display: flex;
   flex-direction: row;
   gap: 20px;
 }
-.schedule-wrap .item {
+.schedule-inner .item {
   position: relative;
   flex: 1;
 }
-.schedule-wrap .calendar-list {
+.schedule-inner .calendar-list {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -232,45 +242,45 @@
   border-radius: 20px;
   padding: 20px;
 }
-.schedule-wrap .calendar-list .now-schedule-day {
+.schedule-inner .calendar-list .now-schedule-day {
   width: 100%;
   height: 100%;
   overflow-y: auto;
   /* 스크롤바 막대 설정*/
   /* 스크롤바 뒷 배경 설정*/
 }
-.schedule-wrap .calendar-list .now-schedule-day::-webkit-scrollbar {
+.schedule-inner .calendar-list .now-schedule-day::-webkit-scrollbar {
   background-color: #fedbe1;
   overflow: hidden;
   width: 10px;
   border-radius: 0px 0px 0px 0px;
 }
-.schedule-wrap .calendar-list .now-schedule-day::-webkit-scrollbar-thumb {
+.schedule-inner .calendar-list .now-schedule-day::-webkit-scrollbar-thumb {
   background-color: #f4878d;
   /* 스크롤바 둥글게 설정    */
   border-radius: 10px;
   border: 1px solid #dee8e9;
 }
-.schedule-wrap .calendar-list .now-schedule-day::-webkit-scrollbar-track {
+.schedule-inner .calendar-list .now-schedule-day::-webkit-scrollbar-track {
   background-color: rgba(0, 0, 0, 0);
 }
-.schedule-wrap .calendar-list .now-schedule-day .now-month-event-text {
+.schedule-inner .calendar-list .now-schedule-day .now-month-event-text {
   font-size: 14px;
   display: flex;
   gap: 12px;
   flex-direction: column;
   padding-top: 10px;
 }
-.schedule-wrap .calendar-list .now-schedule-day .now-month-event-text .event-day {
+.schedule-inner .calendar-list .now-schedule-day .now-month-event-text .event-day {
   display: flex;
   flex-direction: row;
   gap: 30px;
   padding-left: 20px;
 }
-.schedule-wrap .calendar-list .now-schedule-day .now-month-event-text .event-day:hover {
+.schedule-inner .calendar-list .now-schedule-day .now-month-event-text .event-day:hover {
   background-color: #feccd5;
 }
-.schedule-wrap .calendar-list .now-schedule-day .now-month-event-text .event-day .event-day-style {
+.schedule-inner .calendar-list .now-schedule-day .now-month-event-text .event-day .event-day-style {
   background-color: #feccd5;
   font-weight: bold;
   color: #dd838f;
@@ -281,7 +291,7 @@
   align-items: center;
   justify-content: center;
 }
-.schedule-wrap .calendar-list .now-schedule-day .now-month-event-text .event-day .event-day-text-style {
+.schedule-inner .calendar-list .now-schedule-day .now-month-event-text .event-day .event-day-text-style {
   font-size: 17px;
   display: flex;
   align-items: center;

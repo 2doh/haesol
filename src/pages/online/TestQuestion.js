@@ -145,9 +145,6 @@ const TestQuestion = () => {
   const dispatch = useDispatch();
   const testState = useSelector(state => state.testSlice);
 
-  // 문제 수
-  const [remainingQuestions, setRemainingQuestions] = useState(0);
-
   // const [nowQuestionsNum, setNowQuestionsNum] = useState(0);
   const [isQuestions, setIsQuestions] = useState(false);
 
@@ -157,7 +154,6 @@ const TestQuestion = () => {
   }, []);
 
   useEffect(() => {
-    // console.log(testState.questionAll[testState.nowQuestionsNum]);
     setIsQuestions(true);
   }, [testState]);
 
@@ -174,7 +170,7 @@ const TestQuestion = () => {
         answer: item.correct_answer,
       };
 
-      console.log("날 정보 : ", item);
+      // console.log("날 정보 : ", item);
       // console.log("문제 번호 매기기, 개별 저장 : ", formattedQuestion);
 
       const answerChoices = [...item.incorrect_answers];
@@ -216,11 +212,11 @@ const TestQuestion = () => {
     dispatch(updateTestDate(data));
   };
 
-  const updateRemainingQuestions = answeredCount => {
-    // const totalQuestions = questionAll.length;
-    const totalQuestions = 2;
-    setRemainingQuestions(totalQuestions - answeredCount);
-  };
+  // const updateRemainingQuestions = answeredCount => {
+  //   // const totalQuestions = questionAll.length;
+  //   const totalQuestions = 2;
+  //   setRemainingQuestions(totalQuestions - answeredCount);
+  // };
 
   // const nowQuestionsNumCalc = () => {};
 
@@ -487,9 +483,6 @@ const TestQuestion = () => {
             </div>
           ))} */}
         </div>
-        {/* <div className="cbt__remainder">
-          남은 문항: <em>{remainingQuestions}</em>
-        </div> */}
 
         <div className="cbt_wrap">
           <div className="cbt_inner">

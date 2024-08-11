@@ -10,7 +10,7 @@ const initialState = {
   modalType: "",
   isOpen: false,
 
-  // 모달에 들어갈 내용
+  // 모달 헤더 들어갈 내용
   headerText: "확인",
   //   bodyTextLabel: ["구분", "아이디"],
   bodyTextLabel: ["-"],

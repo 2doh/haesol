@@ -11,8 +11,10 @@ const initialState = {
   selectNumArr: [],
   // 상태 변수 설정
   selectedValue: "",
-  // 현제 화면에 출력되는 문제의 번호 - 1
+  // 현재 화면에 출력되는 문제의 번호 - 1
   nowQuestionsNum: 0,
+  // 남은 문제 수
+  remainingQuestions: 20,
 };
 
 export const testSlice = createSlice({

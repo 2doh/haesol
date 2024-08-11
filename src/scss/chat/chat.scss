@@ -129,6 +129,9 @@
     scrollbar-width: none; /* Firefox에서 스크롤 바 숨기기 */
 
     .chat-button {
+      // (필요없을 시 삭제)
+      @include bt-animation-02;
+
       position: absolute;
       bottom: 30px;
       width: 85%;
