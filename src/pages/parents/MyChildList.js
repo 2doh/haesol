@@ -8,59 +8,6 @@ import HeaderTopPublic from "components/layout/header/HeaderTopPublic";
 import React, { useEffect, useState } from "react";
 import { getCookie, setCookie } from "utils/cookie";
 
-const MyChildListStyle = styled.div`
-  /* max-width: 1180px; */
-  /* width: 1180px; */
-  /* background-color: #f3f9fa; */
-  margin: 0 auto;
-  min-height: calc(100vh - 328px);
-
-  display: flex;
-  flex-direction: column;
-
-  /* & > div { */
-  /* height: 100%; */
-  /* } */
-  .top-div {
-    background-color: #e8f2f4;
-    height: 80px;
-  }
-
-  .child-list-wrap {
-    position: relative;
-    width: 1180px;
-    margin: 0 auto;
-    z-index: 1;
-    min-height: 600px;
-
-    .child-list-inner {
-      position: relative;
-      z-index: 99999;
-      width: 100%;
-      height: 100%;
-      background-color: green;
-
-      .menu-list {
-        position: relative;
-        height: 100%;
-        width: 100%;
-        z-index: 1;
-
-        h1 {
-          position: absolute;
-          z-index: -1;
-          background-color: blue;
-          width: 200px;
-          height: 80px;
-          color: white;
-          top: -40px;
-          border-radius: 50px;
-        }
-      }
-    }
-  }
-`;
-
 const PageWrapStyle = styled.div`
   position: relative;
   width: 100vw;
@@ -69,75 +16,85 @@ const PageWrapStyle = styled.div`
   justify-content: center;
   /* background-color: #f3f9fa; */
   background-color: white;
-
   .page-inner {
-    position: absolute;
-    height: 100%;
-    min-width: 955px;
-
+    position: relative;
     display: flex;
     flex-direction: row;
-
-    z-index: 1;
-
+    width: 100%;
+    max-width: 1180px; /* Adjust the max-width as needed */
+    margin: 0 auto;
+    height: 100%; /* Ensure it adjusts to content height */
     .page-menu-wrap {
+      height: 100%;
+      width: 185px;
+      position: relative;
+
       .page-name {
         position: absolute;
         z-index: 0;
         top: -30px;
-        left: -50px;
-        background-color: yellow;
+        /* left: -50px; */
+        background-color: #f05650;
         border-radius: 50px;
         width: 250px;
-        height: 85px;
+        height: 70px;
 
         display: flex;
-        /* justify-content: center; */
+        justify-content: center;
         align-items: center;
         padding: 0 40px;
-        font-size: 20px;
+        font-size: 25px;
         font-weight: bold;
+        color: white;
       }
       .page-menu {
-        top: 70px;
-        left: -20px;
+        /* top: 70px;
+        left: 25px; */
+        top: 160px;
+        left: 0px;
         position: absolute;
         z-index: 3;
-        width: 200px;
-        height: 200px;
+        width: 250px;
+        height: 100%;
       }
     }
 
     .page-content-wrap {
-      position: absolute;
-      right: 0;
-      width: 90%;
-      height: 100%;
+      flex: 1; /* Take up the remaining space */
       background-color: white;
       border-radius: 50px 0 0 0;
-      z-index: 2;
-
       padding-right: 50px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      overflow: auto; /* Handle overflow if content exceeds the container */
+      /* margin-left: 135px; */
 
       .child-info-inner {
         height: 100%;
         position: relative;
         display: flex;
         padding-top: 50px;
+        padding-right: 55px;
         justify-content: flex-start;
         flex-direction: column;
         align-items: flex-end;
         gap: 40px;
-        padding-bottom: 40px;
+        z-index: 0;
+        background-color: white;
+        padding-bottom: 80px;
 
         .child-info-div,
         .no-child-info-div {
+          box-shadow:
+            0 19px 38px rgba(0, 0, 0, 0.3),
+            0 15px 12px rgba(0, 0, 0, 0.22);
+
           position: relative;
           min-height: 220px;
 
           height: fit-content;
           overflow: hidden;
-          background-color: gray;
           max-width: 600px;
           width: 100%;
           border-radius: 30px;
@@ -173,7 +130,7 @@ const PageWrapStyle = styled.div`
               flex-direction: column;
               align-items: flex-start;
               justify-content: center;
-              gap: 10px;
+              gap: 15px;
 
               .child-info-text {
                 font-size: 15px;
@@ -183,7 +140,7 @@ const PageWrapStyle = styled.div`
 
           .child-btn-wrap {
             width: 100%;
-            background-color: cadetblue;
+            /* background-color: cadetblue; */
             display: flex;
             flex-direction: row;
             bottom: 0;
@@ -192,11 +149,23 @@ const PageWrapStyle = styled.div`
             grid-template-columns: 1fr 1fr 1fr;
 
             & button {
-              border: 1px solid;
               min-width: 33%;
               flex-grow: 1;
+              background-color: #ff8a8a;
+              font-size: 15px;
 
               height: 50px;
+              border-top: 1px solid #d9381e;
+              border-right: 1px solid #d9381e;
+
+              &:hover {
+                background-color: #ff5c5c;
+                color: white;
+                /* font-weight: bold; */
+              }
+              &:last-of-type {
+                border-right: 0;
+              }
             }
           }
         }
@@ -219,6 +188,7 @@ const PageWrapStyle = styled.div`
           flex-direction: column;
           align-items: center;
           gap: 20px;
+          cursor: pointer;
 
           .child-add-icon {
             width: 33%;
@@ -303,9 +273,9 @@ const MyChildList = () => {
       <PageWrapStyle>
         <div className="page-inner">
           <div className="page-menu-wrap">
-            <div className="page-name">나의 공간</div>
+            <div className="page-name">자녀 목록</div>
             <div className="page-menu">
-              <ThreeDimensionsAccordion />
+              <ThreeDimensionsAccordion menuList={myChildList} />
             </div>
           </div>
           <div className="page-content-wrap">
@@ -325,19 +295,14 @@ const MyChildList = () => {
                             자녀 이름 : {item.name}
                           </div>
                           <div className="child-info-text">
-                            생년월일(나이) : {item.birth}( {item.age})
+                            생년월일 : {item.birth} ({item.age}세)
                           </div>
                           <div className="child-info-text">
-                            학생 연락처 : {item.phone}
+                            학급 : {item.classId.split(" ")[0]} 학년{" "}
+                            {item.classId.split(" ")[1]} 반
                           </div>
                           <div className="child-info-text">
-                            학부모 연락처(성함) : {item.parentPhonme}({" "}
-                            {item.parentName})
-                          </div>
-                          <div className="child-info-text">
-                            학급(담임 선생님) : {item.classId.split(" ")[0]}{" "}
-                            학년 {item.classId.split(" ")[1]} 반 (
-                            {item.teacherName} )
+                            담임 선생 : {item.teacherName}
                           </div>
                         </div>
                       </div>
@@ -376,19 +341,6 @@ const MyChildList = () => {
         </div>
       </PageWrapStyle>
 
-      {/* <MyChildListStyle>
-        <div className="top-div"></div>
-        <div className="child-list-wrap">
-          <div className="child-list-inner">
-            <div className="menu-list">
-              <h1>나의 공간</h1>
-              <ul>
-                <li>자녀 목록</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </MyChildListStyle> */}
       <Footer />
     </>
   );

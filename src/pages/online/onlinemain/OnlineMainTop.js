@@ -39,11 +39,21 @@ const OnlineMainTopStyle = styled.div`
   .search-container .search-btn .fas {
     color: #5cbdbb;
   }
+
+  .button-51 {
+    width: 100px;
+    height: 100px;
+  }
 `;
 
 const OnlineMainTop = () => {
   return (
     <OnlineMainTopStyle>
+      <button className="button-51" role="button">
+        <span className="button-51__Content">
+          <span className="button-51__Text text">Button 51</span>
+        </span>
+      </button>
       <div className="search-container">
         <input
           type="text"

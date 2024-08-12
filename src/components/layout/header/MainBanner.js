@@ -9,7 +9,7 @@ import banner03 from "../../../images/home/main_banner_03.jpg";
 
 const MainBannerStyle = styled.div`
   .swiper {
-    height: 450px;
+    height: 400px;
     width: 100%;
     background-color: #dbebee;
     border-radius: 0px 50px 50px 0px;
