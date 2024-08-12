@@ -6,27 +6,39 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { RiSpeakFill } from "react-icons/ri";
 import { speak } from "utils/speak";
 
-const Vocabulary = ({ getObj, index, setIndex, learnState }) => {
+const Vocabulary = ({
+  getObj,
+  index,
+  setIndex,
+  learnState,
+  resetTranscript,
+  listening,
+  setIsTranscript,
+}) => {
   const voca = getObj[index];
+  const [listen, setListen] = useState(false);
 
   const tempObj = {
     speechword: voca.word,
-    speechlang: "kr",
+    speechlang: "en-US",
   };
   const temp = {
     speechword: voca.listening,
     speechlang: "en-US",
   };
 
-  // console.log(getObj);
-  // console.log(voca);
+  console.log(getObj);
+  console.log(voca);
+  console.log(index);
 
   const onSpeak = () => {
-    speak(tempObj);
+    setListen(true);
+    speak(tempObj, () => setListen(false));
   };
 
   const onClick = () => {
-    speak(temp);
+    setListen(true);
+    speak(temp, () => setListen(false));
   };
 
   const onNext = () => {
@@ -34,18 +46,18 @@ const Vocabulary = ({ getObj, index, setIndex, learnState }) => {
       return;
     }
     setIndex(index + 1);
+    setIsTranscript("");
   };
   const onBack = () => {
     if (index === 0) {
       return;
     }
     setIndex(index - 1);
+    setIsTranscript("");
   };
   // console.log(index);
   // console.log(getObj[index]);
   // console.log(getObj.length);
-
-  useEffect(() => {}, []);
 
   return (
     <>
@@ -60,6 +72,9 @@ const Vocabulary = ({ getObj, index, setIndex, learnState }) => {
             onClick={() => {
               learnState === "listening" ? onClick() : onSpeak();
             }}
+            style={{
+              filter: listen ? `drop-shadow(1px 1px 5px red)` : `none`,
+            }}
           />
         </div>
         <div className="voca-main">
@@ -70,7 +85,10 @@ const Vocabulary = ({ getObj, index, setIndex, learnState }) => {
             size={30}
             cursor={"pointer"}
             onClick={() => {
-              onBack();
+              if (!listen && !listening) {
+                onBack();
+                resetTranscript();
+              }
             }}
           />
           {/* <div className="voca-bottom-word">{voca.word}</div> */}
@@ -81,7 +99,10 @@ const Vocabulary = ({ getObj, index, setIndex, learnState }) => {
             size={30}
             cursor={"pointer"}
             onClick={() => {
-              onNext();
+              if (!listen && !listening) {
+                onNext();
+                resetTranscript();
+              }
             }}
           />
         </div>
