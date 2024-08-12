@@ -27,9 +27,9 @@ const Vocabulary = ({
     speechlang: "en-US",
   };
 
-  console.log(getObj);
-  console.log(voca);
-  console.log(index);
+  // console.log(getObj);
+  // console.log(voca);
+  // console.log(index);
 
   const onSpeak = () => {
     setListen(true);

@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import SpeechRecognition, {
   useSpeechRecognition,
 } from "react-speech-recognition";
@@ -14,6 +14,7 @@ import Loading from "components/loading/Loading";
 import Title from "components/Title";
 import GreenHeaderNoOption from "components/layout/header/GreenHeaderNoOption";
 import Footer from "components/layout/Footer";
+import AudioRender from "components/learn/AudioRender";
 
 const VocaLearn = () => {
   const [learnState, setLearnState] = useState("");
@@ -23,7 +24,10 @@ const VocaLearn = () => {
   const [loading, setLoading] = useState(true);
   const [onListening, setOnListening] = useState(false);
   const [isTranscript, setIsTranscript] = useState("");
+  const [audioStream, setAudioStream] = useState(null);
+
   const location = useLocation();
+
   const {
     transcript,
     listening,
@@ -72,18 +76,55 @@ const VocaLearn = () => {
   }, [location]);
 
   // 말하기
-  // useEffect(() => {
-  //   setOnListening(true);
-  // }, [listening]);
-
-  useEffect(() => {
-    if (listening) {
-      setOnListening(true);
-    }
-    if (!listening) {
+  const micHandler = async () => {
+    // console.log(SpeechRecognition);
+    // console.log(onListening);
+    if (onListening) {
+      SpeechRecognition.stopListening();
+      if (audioStream) {
+        audioStream.getTracks().forEach(track => track.stop());
+        setAudioStream(null);
+      }
       setOnListening(false);
     }
-  }, [listening]);
+    if (!onListening) {
+      try {
+        // 권한 요청
+        await navigator.mediaDevices
+          .getUserMedia({ audio: true })
+          .then(stream => setAudioStream(stream));
+        // 권한이 허용된 경우
+        SpeechRecognition.startListening({
+          language: "en-US",
+        });
+        setOnListening(true);
+      } catch (err) {
+        // 권한이 거부된 경우
+        alert(
+          "연결된 마이크가 없거나, 마이크 권한이 없습니다. 마이크 연결 및 웹브라우저 환경에서 마이크 권한을 허용해 주세요",
+        );
+      }
+    }
+  };
+  // useEffect(() => {
+  //   if (onListening) {
+  //     SpeechRecognition.startListening({ language: "en-US" });
+  //     navigator.mediaDevices
+  //       .getUserMedia({ audio: true })
+  //       .then(stream => setAudioStream(stream))
+  //       .catch(err =>
+  //         alert(
+  //           "연결된 마이크가 없거나, 마이크 권한이 없습니다. 마이크 연결 및 웹브라우저 환경에서 마이크 권한을 허용해 주세요",
+  //         ),
+  //       );
+  //   } else {
+  //     SpeechRecognition.stopListening();
+  //     if (audioStream) {
+  //       audioStream.getTracks().forEach(track => track.stop());
+  //       setAudioStream(null);
+  //     }
+  //   }
+  // }, [onListening]);
 
   useEffect(() => {
     if (isTranscript === getObj[index]?.word) {
@@ -124,12 +165,7 @@ const VocaLearn = () => {
                     size={40}
                     cursor={"pointer"}
                     onClick={() => {
-                      if (onListening) {
-                        SpeechRecognition.stopListening();
-                      }
-                      if (!onListening) {
-                        SpeechRecognition.startListening({ language: "en-US" });
-                      }
+                      micHandler();
                     }}
                     style={{
                       filter: onListening
@@ -137,7 +173,8 @@ const VocaLearn = () => {
                         : `none`,
                     }}
                   />
-                  <div className="voca-bottom-word">{isTranscript}</div>
+                  <AudioRender audioStream={audioStream} />
+                  {/* <div className="voca-bottom-word">{isTranscript}</div> */}
                 </WordWrapStyle>
               ) : (
                 <form
@@ -177,12 +214,13 @@ const ContentWrapStyle = styled.div`
 
 const VocaBottomWrap = styled.div`
   margin: 10px auto 0;
-  max-width: 200px;
+  max-width: 300px;
   width: 100%;
   height: 100%;
 `;
 
 const WordWrapStyle = styled.div`
+  width: 100%;
   margin-top: 30px;
   display: flex;
   justify-content: center;
