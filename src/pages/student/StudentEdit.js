@@ -18,7 +18,7 @@ const StudentEdit = () => {
   const navigate = useNavigate();
   const { studentPk } = useParams();
   const handleClick = () => {
-    navigate(`/grade/${studentPk}`);
+    navigate(`/grade/edit/${studentPk}`);
   };
 
   const modalState = useSelector(state => state.modalSlice);
