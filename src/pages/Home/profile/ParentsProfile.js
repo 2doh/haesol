@@ -261,16 +261,17 @@ const ParentsProfile = () => {
 
   // 확인용 삭제해
   useEffect(() => {
-    // console.log("값 확인 : ", childState);
+    console.log("값 확인 : ", childState);
   }, [childState]);
 
   /** 메뉴 선택시 selectChildNum 변경 */
-  const handleOnClick = (beforeIndex, idx, topPosition) => {
+  const handleOnClick = (beforeIndex, idx, topPosition, prevPosition) => {
     // 학생 태그 높이 저장
     const data = {
+      prevTopPosition: prevPosition,
       prevChildNum: beforeIndex,
       selectChildIndex: idx,
-      nowTopPosition: topPosition,
+      nowTopPosition: topPosition - 25,
     };
     dispatch(updateSelectChildInfo(data));
 
@@ -349,7 +350,12 @@ const ParentsProfile = () => {
             key={index}
             style={{ top: `${topPosition}px` }}
             onClick={() => {
-              handleOnClick(childState.selectChildIndex, index, topPosition);
+              handleOnClick(
+                childState.selectChildIndex,
+                index,
+                topPosition,
+                childState.nowTopPosition,
+              );
               // setNowTopPosition(topPosition);
             }}
           >
@@ -362,12 +368,10 @@ const ParentsProfile = () => {
       <div className="user-info-wrap page page1" id="page1" ref={page1Ref}>
         <div className="user-info-inner content" id="content1">
           {childState.prevChildNum !== null ? (
-            <ParentsChildProfile
-              childInfo={myChildList[childState.prevChildNum]}
-              childNum={childState.prevChildNum}
-            />
+            <ParentsChildProfile childNum={childState.prevChildNum} type={1} />
           ) : null}
         </div>
+        {/* 스프링 영역 */}
         <section className="chainSection"></section>
       </div>
 
@@ -381,11 +385,11 @@ const ParentsProfile = () => {
       >
         <div className="user-info-inner content" id="contents">
           <ParentsChildProfile
-            childInfo={myChildList[getCookie("studentPk")]}
             childNum={childState.selectChildIndex}
-            nowTopPosition={childState.nowTopPosition}
+            type={2}
           />
         </div>
+        {/* 스프링 영역 */}
         <section className="chainSection"></section>
       </div>
     </ParentsProfileStyle>

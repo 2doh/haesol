@@ -1,11 +1,14 @@
 import styled from "@emotion/styled";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const AccordionStyle = styled.div`
   .wrapper {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: -80px;
+    /* top: 50%; */
+    /* left: 50%; */
+    /* transform: translate(-50%, -50%); */
   }
   .mainMenu {
     width: 250px;
@@ -16,6 +19,7 @@ const AccordionStyle = styled.div`
   .item {
     border-top: 1px solid #ef584a;
     overflow: hidden;
+    font-size: 15px;
   }
   .btn {
     display: block;
@@ -23,6 +27,7 @@ const AccordionStyle = styled.div`
     background-color: #ff6f61;
     color: #fff;
     position: relative;
+    cursor: pointer; /* Indicate that it's clickable */
   }
   .btn:before {
     content: "";
@@ -42,8 +47,15 @@ const AccordionStyle = styled.div`
   .subMenu {
     background: #273057;
     overflow: hidden;
-    transition: max-height 0.7s;
-    max-height: 0;
+    transition:
+      max-height 0.7s,
+      opacity 0.7s;
+    max-height: 0; /* Start with collapsed height */
+    opacity: 1; /* Start with invisible */
+  }
+  .subMenu.open {
+    max-height: 15em; /* Expanded height */
+    opacity: 1; /* Make it visible */
   }
   .subMenu a {
     display: block;
@@ -52,6 +64,7 @@ const AccordionStyle = styled.div`
     font-size: 14px;
     border-bottom: 1px solid #394c7f;
     position: relative;
+    text-align: center;
   }
   .subMenu a:before {
     content: "";
@@ -66,9 +79,8 @@ const AccordionStyle = styled.div`
     left: 0;
     top: 0;
     opacity: 1;
-    /* background-color: #d8d824; */
     border-top: 24px solid transparent;
-    border-left: 11px solid #fcdc29;
+    border-left: 11px solid white;
     border-bottom: 24px solid transparent;
   }
   .subMenu a:after {
@@ -84,9 +96,8 @@ const AccordionStyle = styled.div`
     right: 0px;
     top: 0;
     opacity: 1;
-    /* background-color: #d8d824; */
     border-top: 24px solid transparent;
-    border-right: 11px solid #fcdc29;
+    border-right: 11px solid white;
     border-bottom: 24px solid transparent;
   }
   .subMenu a:hover {
@@ -112,52 +123,77 @@ const AccordionStyle = styled.div`
       #394c7f 51%,
       #394c7f 100%
     );
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#273057', endColorstr='#394c7f',GradientType=0 );
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#273057', endColorstr='#394c7f', GradientType=0);
     transition: all 0.3s;
     border-bottom: 1px solid #394c7f;
   }
   .subMenu a:last-child {
     border: none;
   }
-  .item:target .subMenu {
-    max-height: 10em;
-  }
 `;
-const ThreeDimensionsAccordion = () => {
+
+const ThreeDimensionsAccordion = ({ menuList }) => {
+  const handleClick = event => {
+    event.preventDefault();
+    const parentItem = event.currentTarget.parentElement;
+    const subMenu = parentItem.querySelector(".subMenu");
+
+    subMenu.classList.toggle("open");
+  };
+
+  useEffect(() => {
+    // console.log("메뉴 : ", menuList);
+  }, [menuList]);
+
   return (
     <AccordionStyle>
       <div className="wrapper">
         <ul className="mainMenu">
-          <li className="item" id="account">
-            <a href="#account" className="btn">
+          {menuList.map((item, index) => {
+            return (
+              <li className="item" id="account" key={index}>
+                <a href="" className="btn" onClick={handleClick}>
+                  <i className="fas fa-user-circle"></i>
+                  {item.name}
+                </a>
+                <div className="subMenu open">
+                  <a href="">상세 정보</a>
+                  <a href="">성적 확인</a>
+                  <a href="">자녀 선택</a>
+                </div>
+              </li>
+            );
+          })}
+          {/* <li className="item" id="account">
+            <a href="#account" className="btn" onClick={handleClick}>
               <i className="fas fa-user-circle"></i>My Account
             </a>
-            <div className="subMenu">
-              <a href="">item-1</a>
-              <a href="">item-2</a>
-              <a href="">item-3</a>
+            <div className="subMenu open">
+              <a href="#">item-1</a>
+              <a href="#">item-2</a>
+              <a href="#">item-3</a>
             </div>
           </li>
           <li className="item" id="about">
-            <a href="#about" className="btn">
+            <a href="#about" className="btn" onClick={handleClick}>
               <i className="fas fa-address-card"></i>About
             </a>
             <div className="subMenu">
-              <a href="">item-1</a>
-              <a href="">item-2</a>
+              <a href="#">item-1</a>
+              <a href="#">item-2</a>
             </div>
           </li>
           <li className="item" id="support">
-            <a href="#support" className="btn">
+            <a href="#support" className="btn" onClick={handleClick}>
               <i className="fas fa-info"></i>Support
             </a>
             <div className="subMenu">
-              <a href="">item-1</a>
+              <a href="#">item-1</a>
             </div>
-          </li>
-          <li className="item">
-            <a href="#" className="btn">
-              <i className="fas fa-sign-out-alt"></i>Log Out
+          </li>*/}
+          <li className="item" id="account-end">
+            <a className="btn">
+              <i className="fas fa-sign-out-alt"></i>
             </a>
           </li>
         </ul>

@@ -3,36 +3,62 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 
-const ParentsChildProfile = ({ childInfo, nowTopPosition }) => {
+const ParentsChildProfile = ({ childNum, type }) => {
+  // pageType = "page1" 이전 페이지
+  // pageType = "page2" 현재 페이지
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const childState = useSelector(state => state.selectChildSlice);
+
+  const [infoArr, setInfoArr] = useState([]);
 
   // 상태 초기화
   const [birth, setBirth] = useState("미등록");
   const [classId, setClassId] = useState("미등록");
   const [className, setClassName] = useState("미등록");
   const [name, setName] = useState("미등록");
+  const [prevTop, setPrevTop] = useState();
   const [teacherName, setTeacherName] = useState("미등록");
   const [studentPk, setStudentPk] = useState("");
   const [studentPic, setStudentPic] = useState(null);
 
   useEffect(() => {
-    // console.log("페이지 : ", childState);
-  }, []);
+    console.log("페이지 : ", childState.selectChildInfoList);
+  }, [childState]);
+
+  const getProfile = () => {
+    if (childState.selectChildInfoList.length !== 0) {
+      console.log("여기");
+      setBirth(childState.selectChildInfoList[childNum].birth || "미등록");
+      setClassId(
+        childState.selectChildInfoList[childNum].classId.split(" ")[0] ||
+          "미등록",
+      );
+      setClassName(
+        childState.selectChildInfoList[childNum].classId.split(" ")[1] ||
+          "미등록",
+      );
+      setName(childState.selectChildInfoList[childNum].name || "미등록");
+      setTeacherName(
+        childState.selectChildInfoList[childNum].teacherName || "미등록",
+      );
+      setStudentPic(childState.selectChildInfoList[childNum].pic || null);
+      setStudentPk(childState.selectChildInfoList[childNum].studentPk || "");
+    }
+
+    if (type === 1) {
+      setPrevTop(childState.prevTopPosition);
+    }
+    if (type === 2) {
+      setPrevTop(childState.nowTopPosition);
+    }
+  };
 
   /** 최초 또는 childInfo 변경 시 아이 정보 업데이트 */
   useEffect(() => {
-    if (childInfo) {
-      setBirth(childInfo.birth || "미등록");
-      setClassId(childInfo.classId || "미등록");
-      setClassName(childInfo.classId || "미등록");
-      setName(childInfo.name || "미등록");
-      setTeacherName(childInfo.teacherName || "미등록");
-      setStudentPic(childInfo.pic || null);
-      setStudentPk(childInfo.studentPk || "");
-    }
-  }, [childInfo]);
+    getProfile();
+  }, [childState]);
 
   /** 마이페이지 이동 */
   const moveMyPage = () => {
@@ -44,13 +70,15 @@ const ParentsChildProfile = ({ childInfo, nowTopPosition }) => {
     navigate(`/grade/${studentPk}`);
   };
 
+  console.log(type);
+
   return (
     <div className="user-info">
       {name === "미등록" ? null : (
         <div
           className="rgyPostIt"
           style={{
-            top: `${childState.nowTopPosition - 25}px`,
+            top: `${prevTop}px`,
             transition: "none",
           }}
         >
@@ -86,10 +114,15 @@ const ParentsChildProfile = ({ childInfo, nowTopPosition }) => {
               )}
             </div>
             <div className="login-user-info-text">
-              {className === "" || className === null ? (
+              {className === "" ||
+              className === null ||
+              className === 0 ||
+              classId === "" ||
+              classId === null ||
+              classId === 0 ? (
                 <div className="no-info">미등록</div>
               ) : (
-                className
+                `${className} 학년 ${classId} 반`
               )}
             </div>
             <div className="login-user-info-text">

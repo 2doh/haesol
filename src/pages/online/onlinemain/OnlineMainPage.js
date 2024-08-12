@@ -6,6 +6,7 @@ import OnlineMainTop from "./OnlineMainTop";
 import SubjectsListWrap from "./SubjectsListWrap";
 import SubSubjectsListWrap from "./SubSubjectsListWrap";
 import QuickMenu from "components/common/quickmenu/QuickMenu";
+import "../../../scss/online/onlinemainpage.css";
 
 const OnlineMainPageStyle = styled.div`
   max-width: 1180px;
@@ -17,6 +18,8 @@ const OnlineMainPageStyle = styled.div`
   display: flex;
   flex-direction: column;
   gap: 30px;
+
+  padding-bottom: 80px;
 
   & > div {
     height: 100%;
