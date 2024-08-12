@@ -17,6 +17,12 @@
   }
 }
 
+.sing-user-list {
+  .grid-inner {
+    grid-template-columns: 130px 230px 130px 1fr 1fr !important;
+  }
+}
+
 .grid-frame {
   @include box-shadow;
 
@@ -83,7 +89,6 @@
 }
 
 // 퇴사자 포함 체크박스 - start
-
 .checkbox-wrapper-4 * {
   box-sizing: border-box;
 }

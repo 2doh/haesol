@@ -258,6 +258,24 @@ const Modal = () => {
           dispatch(closeModal());
         }
       }
+
+      // 온라인 시험 작성 후 저장 버튼
+      if (modalState.modalRes[0] === 55) {
+        // api 작성되면 추가하기
+        const res = true;
+        if (res) {
+          dispatch(closeModal());
+        }
+      }
+
+      // 온라인 시험 작성 후 제출 버튼
+      if (modalState.modalRes[0] === 56) {
+        // api 작성되면 추가하기
+        const res = true;
+        if (res) {
+          dispatch(closeModal());
+        }
+      }
     }
 
     if (modalState.modalType === "ArrValueModal") {

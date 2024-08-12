@@ -155,4 +155,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.chat-wrap-style .chat-field .chat-button:active {
+  transform: translateY(2px);
 }/*# sourceMappingURL=chat.css.map */

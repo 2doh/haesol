@@ -52,6 +52,8 @@ import ModalView from "components/common/modal/ModalView";
 import CreateTestMath from "pages/online/CreateTestMath";
 import ChatParents from "components/chat/ChatParents";
 import SocialSignup from "pages/user/login/SocialSignup";
+import OnlineMainPage from "pages/online/onlinemain/OnlineMainPage";
+import MyChildList from "pages/parents/MyChildList";
 
 // import jwt from "jsonwebtoken";
 
@@ -201,7 +203,7 @@ function App() {
             </>
           )}
 
-          {/* Admin 계정의 경우 */}
+          {/* Admin 계정의 경우 - START */}
           {loginUserType === "ROLE_ADMIN" ? (
             <>
               <Route
@@ -220,6 +222,7 @@ function App() {
           ) : (
             <Route path="/admin/*" element={<SecureRoute />}></Route>
           )}
+          {/* Admin 계정의 경우 - END */}
 
           {/* 교직원 : 학생 리스트 */}
           <Route
@@ -235,6 +238,7 @@ function App() {
           {/* <Route path="/students" component={<Students />}></Route> */}
 
           <Route path="/selftest" element={<TestPage />}></Route>
+          <Route path="/onlinemain" element={<OnlineMainPage />}></Route>
 
           {/* 학부모 : 성적 확인 페이지 - grade 페이지 진입시 세션에 중복 저장되는 오류 발생 */}
           {/* {accessToken ? (
@@ -279,6 +283,8 @@ function App() {
               />
             }
           ></Route>
+
+          <Route path="/childlist" element={<MyChildList />}></Route>
 
           {/* 교직원 : 정보 수정 페이지 */}
           {/* <Route

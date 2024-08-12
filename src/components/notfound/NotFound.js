@@ -9,12 +9,17 @@ const NotFoundStyle = styled.div`
   flex-direction: column;
   gap: 200px;
   width: 100%;
-  height: 100%;
-  /* position: relative; */
+  height: 100vh;
+  background-color: #f3f9fa;
 
   .not-found-wrap {
+    position: absolute;
+    bottom: 65%;
+    z-index: 999999;
+
     display: flex;
     flex-direction: column;
+    justify-content: center;
     text-align: center;
     gap: 10px;
 
