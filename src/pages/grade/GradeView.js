@@ -570,11 +570,12 @@ const GradeView = () => {
                 <div className="grade-info-section">
                   <div className="grade-info">
                     <p>원점수</p>
-                    <input placeholder="-" value={item.mark || ""} />점
+                    <input disabled placeholder="-" value={item.mark || ""} />점
                   </div>
                   <div className="grade-info">
                     <p>반/전체 평균</p>
                     <input
+                      disabled
                       value={`${Math.trunc(item.classAvg) || "-"} / ${Math.trunc(item.gradeAvg) || "-"}`}
                     />
                     점
@@ -582,6 +583,7 @@ const GradeView = () => {
                   <div className="grade-info">
                     <p>반/전체 등수</p>
                     <input
+                      disabled
                       value={`${item.subjectClassRank || "-"} / ${item.subjectGradeRank || "-"}`}
                     />
                     등
@@ -593,10 +595,12 @@ const GradeView = () => {
         </div>
         <div className="all-grade">
           <div className="grade-rank">
-            학년 전체 등수 <input value={gradeRank} /> / {gradeStudentCount} 등
+            학년 전체 등수 <input disabled value={gradeRank} /> /{" "}
+            {gradeStudentCount} 등
           </div>
           <div className="grade-rank">
-            반 등수 <input value={classRank} /> / {classStudentCount} 등
+            반 등수 <input disabled value={classRank} /> / {classStudentCount}{" "}
+            등
           </div>
         </div>
 
@@ -628,11 +632,12 @@ const GradeView = () => {
                 <div className="grade-info-section">
                   <div className="grade-info">
                     <p>원점수</p>
-                    <input placeholder="-" value={item.mark || ""} />점
+                    <input disabled placeholder="-" value={item.mark || ""} />점
                   </div>
                   <div className="grade-info">
                     <p>반/전체 평균</p>
                     <input
+                      disabled
                       value={`${Math.trunc(item.classAvg) || "-"} / ${Math.trunc(item.gradeAvg) || "-"}`}
                     />
                     점
@@ -640,6 +645,7 @@ const GradeView = () => {
                   <div className="grade-info">
                     <p>반/전체 등수</p>
                     <input
+                      disabled
                       value={`${item.subjectClassRank || "-"} / ${item.subjectGradeRank || "-"}`}
                     />
                     등
@@ -651,10 +657,12 @@ const GradeView = () => {
         </div>
         <div className="all-grade">
           <div className="grade-rank">
-            학년 전체 등수 <input value={gradeRank} /> / {gradeStudentCount} 등
+            학년 전체 등수 <input disabled value={gradeRank} /> /{" "}
+            {gradeStudentCount} 등
           </div>
           <div className="grade-rank">
-            반 등수 <input value={classRank} /> / {classStudentCount} 등
+            반 등수 <input disabled value={classRank} /> / {classStudentCount}{" "}
+            등
           </div>
         </div>
         {signResultPic2 ? (

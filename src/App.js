@@ -241,10 +241,11 @@ function App() {
           <Route path="/onlinemain" element={<OnlineMainPage />}></Route>
 
           {/* 학부모 : 성적 확인 페이지 - grade 페이지 진입시 세션에 중복 저장되는 오류 발생 */}
-          {/* {accessToken ? (
+          {/* 해결한듯 */}
+          {accessToken ? (
             // 교직원 : 성적 등록 페이지
             loginUserType === "ROLE_TEACHER" ? (
-              <Route path="/grade/:studentPk" element={<Grade />}></Route>
+              <Route path="/grade/edit/:studentPk" element={<Grade />}></Route>
             ) : (
               <Route path="/grade/:studentPk" element={<GradeView />}></Route>
             )
@@ -257,16 +258,7 @@ function App() {
                   {...alert("로그인이 필요합니다.")}
                 />
               }
-            ></Route> 
-          )} */}
-
-          {/* 성적 확인/입력 페이지 - 세션 확인 바람 */}
-          {/* 학부모 : 성적 확인 페이지 */}
-          {loginUserType === "ROLE_TEACHER" ? (
-            <Route path="/grade/:studentPk" element={<Grade />}></Route>
-          ) : (
-            // <Route path="/grade/:studentPk" element={<Grade />}></Route>
-            <Route path="/grade/:studentPk" element={<GradeView />}></Route>
+            ></Route>
           )}
           <Route
             path="/grade/chart/:studentPk"
