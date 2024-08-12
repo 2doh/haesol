@@ -45,7 +45,9 @@ const UserList = ({
 
   /** 신청 리스트 출력 함수 */
   const getAwaitList = async nowSelectMemu => {
+    console.log("네?");
     const res = await getAwaitAcceptList(nowSelectMemu, searchKeyword);
+    console.log("결과 : ", res);
     if (res) setAcceptUserList(res);
   };
 

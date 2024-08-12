@@ -3,6 +3,7 @@ import BoxTitle from "components/common/style/BoxTitle";
 import CalendarList from "./CalendarList";
 import MainSchedule from "./MainSchedule";
 import { ImSpoonKnife } from "react-icons/im";
+import { useEffect, useState } from "react";
 
 const MainScheduleViewStyle = styled.div`
   display: flex;
@@ -31,16 +32,18 @@ const MainScheduleViewStyle = styled.div`
 `;
 
 const MainScheduleView = () => {
+  const [eventList, setEventList] = useState([]);
+
   return (
     <MainScheduleViewStyle>
       <BoxTitle>학교 일정</BoxTitle>
       <div className="schedule-wrap">
         <div className="schedule-inner">
           <div className="item">
-            <MainSchedule />
+            <MainSchedule setEventList={setEventList} />
           </div>
           <div className="item">
-            <CalendarList />
+            <CalendarList eventList={eventList} />
           </div>
         </div>
         <div className="schedule-tag">
