@@ -5,6 +5,7 @@ import HeaderTopPublic from "components/layout/header/HeaderTopPublic";
 import OnlineMainTop from "./OnlineMainTop";
 import SubjectsListWrap from "./SubjectsListWrap";
 import SubSubjectsListWrap from "./SubSubjectsListWrap";
+import QuickMenu from "components/common/quickmenu/QuickMenu";
 
 const OnlineMainPageStyle = styled.div`
   max-width: 1180px;

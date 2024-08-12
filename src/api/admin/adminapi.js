@@ -6,18 +6,21 @@ import { getCookie } from "utils/cookie";
 export const getAwaitAcceptList = async (userListType, searchKeyword) => {
   // console.log("유저 타입 : ", userListType);
   // console.log("검색 키워드 : ", searchKeyword);
-  await jwtAxios
+
+  let res = await jwtAxios
     .get(`/api/admin?p=${userListType}&searchWord=${searchKeyword}`)
     .then(res => {
       // 성공 처리
-      // console.log("성공");
+      // console.log("성공 : ", res);
       return res.data.userList;
     })
     .catch(error => {
-      console.log("에러 : ", error);
+      // console.log("에러 : ", error);
       return false;
       // return Promise.reject(error);
     });
+
+  return res;
 };
 
 /** 가입된 유저 리스트 */
@@ -44,7 +47,7 @@ export const getAwaitUserList = async (userListType, check, searchKeyword) => {
   // );
   // return res.data;
 
-  await jwtAxios
+  let res = await jwtAxios
     .get(
       `/api/admin/list?p=${userListType}&check=${check}&searchWord=${searchKeyword}`,
     )
@@ -56,6 +59,8 @@ export const getAwaitUserList = async (userListType, check, searchKeyword) => {
       console.log("에러 : ", error);
       return false;
     });
+
+  return res;
 };
 
 /** 회원가입 신청 승인 */

@@ -6,6 +6,8 @@ import { MdOutlineLogout } from "react-icons/md";
 import { useNavigate } from "react-router";
 import { getCookie, removeCookie, setCookie } from "utils/cookie";
 import ParentsChildProfile from "./ParentsChildProfile";
+import { useDispatch, useSelector } from "react-redux";
+import { updateSelectChildInfo } from "slices/selectChildSlice";
 
 const ParentsProfileStyle = styled.div`
   position: relative;
@@ -119,7 +121,7 @@ const ParentsProfileStyle = styled.div`
   div.rgyPostIt {
     left: 310px;
     /* right: -85px; */
-    /* top: 8px; */
+    top: 6px;
     text-wrap: nowrap;
     position: absolute;
     display: inline-block;
@@ -230,27 +232,19 @@ const ParentsProfileStyle = styled.div`
 
 const ParentsProfile = () => {
   const navigate = useNavigate();
-  const [loginUserType, setLoginUserType] = useState(getCookie("userRole"));
+  const dispatch = useDispatch();
+  const childState = useSelector(state => state.selectChildSlice);
 
   const [myChildList, setMyChildList] = useState([]);
   const [offUseEffect, setOffUseEffect] = useState(false);
 
-  /** 메뉴 선택 */
-  const [countIndex, setCountIndex] = useState(0);
-
-  /** 이전 자녀의 번호 */
-  const [prevChildNum, setPrevChildNum] = useState(0);
-
-  /** 현재 선택된 메뉴의 높이 */
-  const [nowTopPosition, setNowTopPosition] = useState(0);
-
   /** 메뉴 변경되었을 때 studentPk 쿠키 변경 */
-  useEffect(() => {
-    console.log("호가인중, ", nowTopPosition);
-  }, [nowTopPosition]);
-
   const reStudentPk = idx => {
-    setCookie("studentPk", myChildList[idx].studentPk);
+    // 학생 PK 저장
+    const data = {
+      selectChildPk: myChildList[idx].studentPk,
+    };
+    dispatch(updateSelectChildInfo(data));
   };
   // /** 메뉴 선택시 selectChildNum 변경 */
   // const handleOnClick = (e, idx) => {
@@ -265,12 +259,20 @@ const ParentsProfile = () => {
   //   page1Element.classList.add("animate");
   // };
 
+  // 확인용 삭제해
+  useEffect(() => {
+    // console.log("값 확인 : ", childState);
+  }, [childState]);
+
   /** 메뉴 선택시 selectChildNum 변경 */
-  const handleOnClick = (e, idx) => {
-    // console.log("들어옴.");
-    setCountIndex(idx);
-    setPrevChildNum(getCookie("studentPk"));
-    // setCookie("studentPk", idx);
+  const handleOnClick = (beforeIndex, idx, topPosition) => {
+    // 학생 태그 높이 저장
+    const data = {
+      prevChildNum: beforeIndex,
+      selectChildIndex: idx,
+      nowTopPosition: topPosition,
+    };
+    dispatch(updateSelectChildInfo(data));
 
     reStudentPk(idx);
 
@@ -284,27 +286,30 @@ const ParentsProfile = () => {
   /** 아이들 정보 불러오기 */
   const myChildInfo = async childNum => {
     const res = await getMyChildInfo();
-    console.log("자녀 정보 : ", res);
+    const num = childNum;
+    // console.log("자녀 정보 : ", res);
 
     if (res === false) {
       console.log("자녀 없음.");
-    }
-
-    const num = childNum;
-
-    if (res) {
+    } else {
       // 자녀 리스트 저장
       setMyChildList(res);
 
       // 학생 PK 저장
-      setCookie("studentPk", res[num].studentPk);
+      const data = {
+        selectChildInfoList: res,
+        selectChildInfo: res[childState.selectChildIndex],
+        selectChildPk: res[num].studentPk,
+      };
+      dispatch(updateSelectChildInfo(data));
 
       setOffUseEffect(true);
     }
   };
 
+  /** 최초 랜더링 */
   useEffect(() => {
-    myChildInfo(getCookie("selectChildNum"));
+    myChildInfo(childState.selectChildIndex);
   }, []);
 
   /** 프로필 html 코드 추가 */
@@ -343,9 +348,9 @@ const ParentsProfile = () => {
             className="rgyPostIt menu-rayRostIt"
             key={index}
             style={{ top: `${topPosition}px` }}
-            onClick={e => {
-              handleOnClick(e, index);
-              setNowTopPosition(topPosition);
+            onClick={() => {
+              handleOnClick(childState.selectChildIndex, index, topPosition);
+              // setNowTopPosition(topPosition);
             }}
           >
             {item.name}
@@ -356,10 +361,10 @@ const ParentsProfile = () => {
 
       <div className="user-info-wrap page page1" id="page1" ref={page1Ref}>
         <div className="user-info-inner content" id="content1">
-          {prevChildNum !== null ? (
+          {childState.prevChildNum !== null ? (
             <ParentsChildProfile
-              childInfo={myChildList[prevChildNum]}
-              childNum={prevChildNum}
+              childInfo={myChildList[childState.prevChildNum]}
+              childNum={childState.prevChildNum}
             />
           ) : null}
         </div>
@@ -377,8 +382,8 @@ const ParentsProfile = () => {
         <div className="user-info-inner content" id="contents">
           <ParentsChildProfile
             childInfo={myChildList[getCookie("studentPk")]}
-            childNum={getCookie("studentPk")}
-            nowTopPosition={nowTopPosition}
+            childNum={childState.selectChildIndex}
+            nowTopPosition={childState.nowTopPosition}
           />
         </div>
         <section className="chainSection"></section>

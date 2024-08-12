@@ -40,6 +40,7 @@ export const getMyChildInfo = async () => {
     } else {
       // console.log("자녀 정보가 있습니다.");
       return response.data;
+      // return false;
     }
   } catch (error) {
     // console.log(error);

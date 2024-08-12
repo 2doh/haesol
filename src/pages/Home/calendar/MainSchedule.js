@@ -12,6 +12,7 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import { ImSpoonKnife } from "react-icons/im";
 import "../../../scss/main/mainschedule.css";
+import { getSchedule } from "api/schedule/scheduleapi";
 
 const ScWrap = styled.div`
   width: 100%;
@@ -139,121 +140,108 @@ const CalendarAccordionWrap = styled.div`
   }
 `;
 
-const MainSchedule = () => {
+const MainSchedule = ({ setEventList }) => {
   const curDate = new Date(); // 현재 날짜
   const today = moment(curDate).format("YYYY-MM-DD"); // 출력용
+
   // 클릭한 날짜 (초기값 : 현재 날짜)
   const [value, onChange] = useState(curDate);
   const [activeStartDate, setActiveStartDate] = useState(curDate);
+
   // 조회 기간 시작일
   const fromMmd = moment().format("YYYYMM01");
   // 조회 기간 말일
   const toYmd = moment().format("YYYYMM" + { last });
   var last = new Date(2024, 7, 0).getDate();
 
-  const [eventList, setEventList] = useState([]);
+  // 캘린더 라이브러리에 들어갈 날짜 목록
   const [eventDayList, setEventDayList] = useState([]);
-
-  const [currentActive, setCurrentActive] = useState(false);
 
   // 공제일 리스트
   const [closedDayList, setClosedDayList] = useState([]);
   // 시험일 리스트
-  const [testDayList, setTestDayList] = useState([
-    "2024-07-10",
-    "2024-07-11",
-    "2024-07-12",
-  ]);
+  const [testDayList, setTestDayList] = useState([]);
   // 잔반없는 날 리스트
-  const [noLeftoversDay, setNoLeftoversDay] = useState([
-    "2024-07-03",
-    "2024-07-10",
-    "2024-07-17",
-  ]);
+  const [noLeftoversDay, setNoLeftoversDay] = useState([]);
 
-  // 일정 count 수
-  const [eventListTotalCount, setEventListTotalCount] = useState(0);
+  /** (2차) 학사 일정 공공데이터 */
+  // useEffect(() => {
+  //   const url = `${AA_SERVER_URL}?ATPT_OFCDC_SC_CODE=${ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${SD_SCHUL_CODE}&KEY=${KEY}&AA_FROM_YMD=${fromMmd}&AA_TO_YMD=${toYmd}&TYPE=JSON`;
 
-  /** 학사 일정 */
-  useEffect(() => {
-    const url = `${AA_SERVER_URL}?ATPT_OFCDC_SC_CODE=${ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${SD_SCHUL_CODE}&KEY=${KEY}&AA_FROM_YMD=${fromMmd}&AA_TO_YMD=${toYmd}&TYPE=JSON`;
-    // const url = `${AA_SERVER_URL}?ATPT_OFCDC_SC_CODE=${ATPT_OFCDC_SC_CODE}&SD_SCHUL_CODE=${SD_SCHUL_CODE}&KEY=${KEY}&TYPE=JSON`;
+  //   axios.get(url).then(async res => {
+  //     const eventNum = res.data.SchoolSchedule[0].head[0].list_total_count;
 
-    axios.get(url).then(async res => {
-      // 급식 데이터가 있는 없는지 확인
-      const eventNum = res.data.SchoolSchedule[0].head[0].list_total_count;
+  //     if (eventNum >= 1) {
+  //       const data = res.data.SchoolSchedule[1].row;
 
-      setEventListTotalCount(eventNum);
-
-      if (eventNum >= 1) {
-        const data = res.data.SchoolSchedule[1].row;
-
-        data.map((item, index) => {
-          // console.log("값 확인 : ", item);
-
-          setEventDayList(prevEventDayList => [
-            ...prevEventDayList,
-            moment(item.AA_YMD).format("YYYY-MM-DD"),
-          ]);
-          setEventList(prevEventList => [...prevEventList, item.EVENT_NM]);
-
-          switch (item.SBTR_DD_SC_NM) {
-            case "휴업일":
-              setClosedDayList(prevClosedDayList => [
-                ...prevClosedDayList,
-                moment(item.AA_YMD).format("YYYY-MM-DD"),
-              ]);
-              break;
-            default:
-              break;
-          }
-
-          // console.log("학사 일정 : ", item.AA_YMD);
-          // console.log("행사명 : ", item.EVENT_NM);
-          // console.log("수정일자 : ", item.LOAD_DTM);
-          // console.log("수업 공제일명 : ", item.SBTR_DD_SC_NM);
-          // 공제일명에 따라서 색상 다르게 설정하기
-        });
-      }
-    });
-  }, []);
-
-  useEffect(() => {
-    // console.log("일정 있는 날짜 배열 : ", eventDayList);
-    // console.log("일정  배열 : ", eventList);
-  }, [eventDayList, eventList]);
-
-  // 클릭한 날짜 (년-월-일)
-  //   const activeDate = moment(value).format("YYYY-MM-DD");
-  // 날짜 요일 출력
-  //   const weekName = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
-  //   const formatShortWeekday = (locale, date) => {
-  //     const idx = date.getDay();
-  //     return weekName[idx];
-  //   };
-
-  //   // 특정 날짜 클래스 적용하기
-  //   const tileClassName = ({ date }) => {
-  //     // date.getDay() 는 요일을 리턴한다.
-  //     // 0 = 일요일
-  //     console.log(date.getDay());
-  //     const day = date.getDay();
-  //     let classNames = "";
-  //     // 화요일인 경우 샘플
-  //     if (day === 2) {
-  //       classNames += "rain";
-  //     } else if (day === 4) {
-  //       classNames += "sun";
+  //       data.map((item, index) => {
+  // console.log("값 확인 : ", item);
+  // setEventDayList(prevEventDayList => [
+  //   ...prevEventDayList,
+  //   moment(item.AA_YMD).format("YYYY-MM-DD"),
+  // ]);
+  // setEventList(prevEventList => [...prevEventList, item.EVENT_NM]);
+  // switch (item.SBTR_DD_SC_NM) {
+  //   case "휴업일":
+  //     setClosedDayList(prevClosedDayList => [
+  //       ...prevClosedDayList,
+  //       moment(item.AA_YMD).format("YYYY-MM-DD"),
+  //     ]);
+  //     break;
+  //   default:
+  //     break;
+  // }
+  // console.log("학사 일정 : ", item.AA_YMD);
+  // console.log("행사명 : ", item.EVENT_NM);
+  // console.log("수정일자 : ", item.LOAD_DTM);
+  // console.log("수업 공제일명 : ", item.SBTR_DD_SC_NM);
+  // 공제일명에 따라서 색상 다르게 설정하기
+  //       });
   //     }
-  //     return classNames;
-  //   };
+  //   });
+  // }, []);
 
-  //   const [value, onChange] = useState(new Date());
-  /** 오늘로 돌아오는 버튼 기능 */
-  // const handleTodayClick = () => {
-  //   setActiveStartDate(curDate);
-  //   onChange(curDate);
-  // };
+  const scheduleList = async () => {
+    const res = await getSchedule();
+    // console.log("api 결과 : ", res);
+
+    if (res) {
+      res.map((item, index) => {
+        setEventDayList(prevEventDayList => [...prevEventDayList, item.AA_YMD]);
+
+        switch (item.STATE) {
+          case 1:
+            // 수다날
+            // setTestDayList
+            // setNoLeftoversDay
+            setNoLeftoversDay(noLeftoversDay => [
+              ...noLeftoversDay,
+              item.AA_YMD,
+            ]);
+            break;
+          case 2:
+            // 시험일
+            setTestDayList(testDayList => [...testDayList, item.AA_YMD]);
+            break;
+          case 3:
+            // 휴업일
+            setClosedDayList(prevClosedDayList => [
+              ...prevClosedDayList,
+              item.AA_YMD,
+            ]);
+            break;
+          default:
+            break;
+        }
+      });
+      setEventList(res);
+    }
+  };
+
+  /** (3차) 자체 일정 */
+  useEffect(() => {
+    scheduleList();
+  }, []);
 
   /** 현재 캘린더에 보이는 월이 변경되었을 때 */
   const changeCalendarMonth = e => {
@@ -318,20 +306,10 @@ const MainSchedule = () => {
           );
         }}
         showNeighboringMonth={false}
-        // 오늘 날짜로 돌아오는 기능을 위해 필요한 옵션 설정
-        // activeStartDate={activeStartDate === null ? undefined : activeStartDate}
-        // onViewChange={e => {
-        //   console.log(e);
-        // }}
-
         // 활성화된(현재 보여지는) 년, 월, 일이 변경될 때마다 실행
         onActiveStartDateChange={e => {
           changeCalendarMonth(e);
         }}
-
-        // onActiveStartDateChange={({ activeStartDate }) =>
-        //   getActiveMonth(activeStartDate)
-        // }
       />
     </ScWrap>
   );

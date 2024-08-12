@@ -1,9 +1,12 @@
 import LogoutButton from "components/common/LogoutButton";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 
-const ParentsChildProfile = ({ childInfo, childNum, nowTopPosition }) => {
+const ParentsChildProfile = ({ childInfo, nowTopPosition }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const childState = useSelector(state => state.selectChildSlice);
 
   // 상태 초기화
   const [birth, setBirth] = useState("미등록");
@@ -13,6 +16,10 @@ const ParentsChildProfile = ({ childInfo, childNum, nowTopPosition }) => {
   const [teacherName, setTeacherName] = useState("미등록");
   const [studentPk, setStudentPk] = useState("");
   const [studentPic, setStudentPic] = useState(null);
+
+  useEffect(() => {
+    // console.log("페이지 : ", childState);
+  }, []);
 
   /** 최초 또는 childInfo 변경 시 아이 정보 업데이트 */
   useEffect(() => {
@@ -42,7 +49,10 @@ const ParentsChildProfile = ({ childInfo, childNum, nowTopPosition }) => {
       {name === "미등록" ? null : (
         <div
           className="rgyPostIt"
-          style={{ top: `${nowTopPosition - 27}px`, transition: "none" }}
+          style={{
+            top: `${childState.nowTopPosition - 25}px`,
+            transition: "none",
+          }}
         >
           {/* {console.log(childNum)} */}
           {name}

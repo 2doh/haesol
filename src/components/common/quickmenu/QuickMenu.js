@@ -26,7 +26,7 @@ const QuickMenuStyle = styled.div`
       color: #4279a0;
       font-size: 19px;
 
-      border: 1px solid #91aeff;
+      border: 1px solid #cbd8fa;
       border-bottom: 0px;
       border-right: 0px;
       border-radius: 20px 0 0 0;
@@ -42,7 +42,7 @@ const QuickMenuStyle = styled.div`
       padding: 10px;
       /* border-top: 1px solid white; */
 
-      border: 1px solid #91aeff;
+      border: 1px solid #cbd8fa;
       border-right: 0px;
       border-top: 0px;
       border-radius: 0 0 0 10px;

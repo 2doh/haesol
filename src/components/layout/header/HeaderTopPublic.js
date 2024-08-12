@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import useWindowDimensions from "hooks/common/useWindowDimensions";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CgMenuGridO } from "react-icons/cg";
 import { FiSearch } from "react-icons/fi";
 import { useNavigate } from "react-router";
@@ -20,6 +20,11 @@ const HeaderTopStyle = styled.div`
   justify-content: center;
   align-items: center;
   background-color: #f3f9fa;
+
+  /* 반응형 시, 하단 밑줄 추가 */
+  .line-active {
+    border-bottom: 1px solid #e6e5e6 !important;
+  }
 
   .header-wrap {
     display: flex;
@@ -124,6 +129,8 @@ const HeaderTopPublic = () => {
   const [changeStyle, setChangeStyle] = useState(true);
   const { height, width } = useWindowDimensions();
 
+  const header = useRef(null);
+
   /** 메인 페이지로 이동 */
   const moveHomePage = () => {
     navigate("/");
@@ -151,9 +158,57 @@ const HeaderTopPublic = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  /** 반응형 시, 하단 밑줄 추가 */
+  useEffect(() => {
+    const headerActiveClass = "line-active";
+    const headerActiveValue = 0;
+
+    function showLine(_html, _tgY, _active, _scY) {
+      if (_html && _html.classList) {
+        // _html이 null이 아니고 classList가 존재하는지 확인
+        if (_scY > _tgY) {
+          _html.classList.add(_active);
+        } else {
+          _html.classList.remove(_active);
+        }
+      }
+    }
+
+    if (header.current) {
+      // header.current가 null이 아닌지 확인
+      showLine(
+        header.current,
+        headerActiveValue,
+        headerActiveClass,
+        window.scrollY,
+      );
+      window.addEventListener("scroll", () => {
+        showLine(
+          header.current,
+          headerActiveValue,
+          headerActiveClass,
+          window.scrollY,
+        );
+      });
+    }
+
+    return () => {
+      if (header.current) {
+        window.removeEventListener("scroll", () => {
+          showLine(
+            header.current,
+            headerActiveValue,
+            headerActiveClass,
+            window.scrollY,
+          );
+        });
+      }
+    };
+  }, []);
+
   return (
     <HeaderTopStyle>
-      <div className="header-wrap">
+      <div className="header-wrap" ref={header}>
         <div className="header-logo-div">
           <div
             className="logo"
