@@ -14,7 +14,6 @@ export const postTeacherSignin = async data => {
     setCookie("userIdPk", signedUser.userId);
     setCookie("userRole", signedUser.role);
     setCookie("userGrade", res.data.grade);
-
     setCookie("userClass", res.data.class);
     setCookie("userName", res.data.name);
     setCookie("userEmail", res.data.email);

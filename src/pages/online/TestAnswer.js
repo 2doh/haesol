@@ -68,7 +68,8 @@ const TestAnswer = () => {
 
   const countOmr = () => {
     const num =
-      20 - testState.selectNumArr.filter(item => item.selectNum !== 0).length;
+      testState.remainingQuestions -
+      testState.selectNumArr.filter(item => item.selectNum !== 0).length;
     setOmerCount(num);
 
     const data = {

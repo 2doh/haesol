@@ -3,6 +3,7 @@ import useWindowDimensions from "hooks/common/useWindowDimensions";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { IoMdArrowDropdownCircle } from "react-icons/io";
+import { FaShare } from "react-icons/fa6";
 
 const HeaderMemuStyle = styled.div`
   font-size: 17px;
@@ -122,18 +123,33 @@ const HeaderMemuStyle = styled.div`
                 word-break: keep-all;
                 border-bottom: 2px dashed #ced4da;
 
+                align-items: center;
+                display: flex;
+                justify-content: center;
+                gap: 10px;
+
+                svg {
+                  font-size: 12px;
+                }
+
                 span {
                   word-break: keep-all;
                   font-size: 18px;
-                }
-                span:hover {
-                  color: #385f72;
-                  font-weight: bold;
                 }
               }
 
               &:last-child > a {
                 border-bottom: 0px;
+              }
+            }
+
+            & > li:hover {
+              path {
+                color: #385f72;
+              }
+              span {
+                color: #385f72;
+                font-weight: bold;
               }
             }
           }
@@ -190,6 +206,11 @@ const HeaderMemu = () => {
   const [changeStyle, setChangeStyle] = useState(true);
   const { height, width } = useWindowDimensions();
 
+  /** 새 탭에서 열기 */
+  const handleOpenNewTab = url => {
+    window.open(url, "_blank", "noopener, noreferrer");
+  };
+
   useEffect(() => {
     if (width < 1023) {
       setChangeStyle(false);
@@ -209,13 +230,13 @@ const HeaderMemu = () => {
         navigate("/test");
         break;
       case 3:
-        navigate("/onlinemain");
+        navigate("/online");
         break;
       case 4:
         navigate("/online/test/create");
         break;
       case 5:
-        navigate("/selftest");
+        // navigate("/");
         break;
       case 10:
         // navigate("/selftest");
@@ -409,6 +430,68 @@ const HeaderMemu = () => {
                   <h2>
                     <a>학습 서비스</a>
                   </h2>
+                  <div className="navi_arrow_icon">
+                    <IoMdArrowDropdownCircle size={30} />
+                  </div>
+                  <div className="navi_sub notice-menu">
+                    <ul className="depth2">
+                      <li
+                        onClick={() => {
+                          handleOpenNewTab("https://cls.edunet.net/");
+                        }}
+                      >
+                        <a>
+                          <span>e학습터</span>
+                          <FaShare />
+                        </a>
+                      </li>
+                      <li
+                        onClick={() => {
+                          handleOpenNewTab("https://rang.edunet.net/main.do");
+                        }}
+                      >
+                        <a>
+                          <span>위두랑</span>
+                          <FaShare />
+                        </a>
+                      </li>
+                      <li
+                        onClick={() => {
+                          handleOpenNewTab("https://dtbook.edunet.net/");
+                        }}
+                      >
+                        <a>
+                          <span>디지털 교과서</span>
+                          <FaShare />
+                        </a>
+                      </li>
+                      <li
+                        onClick={() => {
+                          handleOpenNewTab(
+                            "https://educator.edunet.net/main/html/intro.html",
+                          );
+                        }}
+                      >
+                        <a>
+                          <span>지식 샘터</span>
+                          <FaShare />
+                        </a>
+                      </li>
+                      <li
+                        onClick={() => {
+                          handleOpenNewTab(
+                            "https://korean.edunet.net/lms/cm/mcom/pmco000b00.do",
+                          );
+                        }}
+                      >
+                        <a>
+                          <span>모두의 한국어</span>
+                          <FaShare />
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+
                   {/* <div className="navi_arrow_icon">
                     <IoMdArrowDropdownCircle size={30} />
                   </div>

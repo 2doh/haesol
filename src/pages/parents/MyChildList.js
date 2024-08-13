@@ -1,11 +1,14 @@
 import styled from "@emotion/styled";
 import { getMyChildInfo } from "api/parents/mychildinfo";
+import { allowScroll, preventScroll } from "components/common/ScrollManagement";
 import ThreeDimensionsAccordion from "components/common/accordion/ThreeDimensionsAccordion";
 import Footer from "components/layout/Footer";
 import HeaderMemu from "components/layout/header/HeaderMenu";
 import HeaderProfile from "components/layout/header/HeaderProfile";
 import HeaderTopPublic from "components/layout/header/HeaderTopPublic";
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { openModal, updateModalDate } from "slices/modalSlice";
 import { getCookie, setCookie } from "utils/cookie";
 
 const PageWrapStyle = styled.div`
@@ -233,6 +236,8 @@ const MyChildList = () => {
   const [myChildList, setMyChildList] = useState([]);
   const [offUseEffect, setOffUseEffect] = useState(false);
 
+  const dispatch = useDispatch();
+
   /** 아이들 정보 불러오기 */
   const myChildInfo = async childNum => {
     const res = await getMyChildInfo();
@@ -262,6 +267,19 @@ const MyChildList = () => {
   useEffect(() => {
     console.log("새로고침 : ", myChildList);
   }, [myChildList]);
+
+  const addChild = () => {
+    const data = {
+      headerText: "자녀 추가",
+      buttonText: ["추가", "취소"],
+      modalRes: [1],
+    };
+
+    // addChildModal
+
+    dispatch(updateModalDate(data));
+    dispatch(openModal("AddChildModal"));
+  };
 
   return (
     <>
@@ -327,7 +345,12 @@ const MyChildList = () => {
               )}
 
               {myChildList.length !== 0 ? (
-                <div className="child-info-div child-add-div">
+                <div
+                  className="child-info-div child-add-div"
+                  onClick={() => {
+                    addChild();
+                  }}
+                >
                   {/* <div className="child-info-div"> */}
 
                   <div className="child-add-icon">

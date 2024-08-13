@@ -72,6 +72,20 @@
   gap: 10px;
   width: 75%;
 }
+.modal-wrap .modal-inner .modal-body .add-child-modal-body-text-div,
+.modal-wrap .modal-inner .modal-body .add-child-modal-body-input-btn-div {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 75%;
+}
+.modal-wrap .modal-inner .modal-body .add-child-modal-body-input-btn-div {
+  display: flex;
+  flex-direction: row;
+}
+.modal-wrap .modal-inner .modal-body .add-child-modal-body-input-btn-div input[type=text] {
+  width: 100%;
+}
 .modal-wrap .modal-inner .arr-value-modal-body {
   flex-direction: row;
 }
@@ -109,7 +123,8 @@
 .modal-wrap .modal-inner .tel-accept-modal-body .tel-accept-modal-wrap .tel-input-box .tel-box-inner > form p {
   padding: 0 10px;
 }
-.modal-wrap .modal-inner .pw-modal-text {
+.modal-wrap .modal-inner .pw-modal-text,
+.modal-wrap .modal-inner .add-child-modal-text {
   text-align: left;
 }
 .modal-wrap .modal-inner .modal-header {

@@ -21,17 +21,16 @@ const SubSubjectsListWrap = () => {
   return (
     <SubSubjectsListWrapStyle>
       <button className="button-36" role="button">
-        <span className="text">Button 36</span>
+        <span className="text">말하기</span>
       </button>
       <button className="button-36" role="button">
-        <span className="text">Button 36</span>
+        <span className="text">듣기</span>
       </button>
       <button className="button-36" role="button">
-        <span className="text">Button 36</span>
+        <span className="text">쓰기</span>
       </button>
-
       {/* <div className="sub-subjects">SubSubjectsListWrap</div>
-      <div className="sub-subjects">SubSubjectsListWrap</div> */}
+      <div className="sub-subjects">ectsListWrap</div> */}
     </SubSubjectsListWrapStyle>
   );
 };

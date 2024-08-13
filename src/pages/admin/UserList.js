@@ -43,11 +43,18 @@ const UserList = ({
   // 출력되는 리스트 저장
   const [acceptUserList, setAcceptUserList] = useState([]);
 
+  // 열려있는 아코디언의 인덱스
+  const [openAccordionId, setOpenAccordionId] = useState(null);
+
+  // 열려있는 아코디언의 인덱스를 저장
+  const handleAccordionClick = id => {
+    setOpenAccordionId(prevId => (prevId === id ? null : id));
+  };
+
   /** 신청 리스트 출력 함수 */
   const getAwaitList = async nowSelectMemu => {
-    console.log("네?");
     const res = await getAwaitAcceptList(nowSelectMemu, searchKeyword);
-    console.log("결과 : ", res);
+    // console.log("결과 : ", res);
     if (res) setAcceptUserList(res);
   };
 
@@ -106,69 +113,87 @@ const UserList = ({
     dispatch(openModal("ArrValueModal"));
   };
 
-  // 리스트
-
-  const contents = (
-    <div className="item admin-user-list sing-user-list">
-      <div className="grid-inner">
-        <div className="grid-inner-item">
-          <div className="grid-inner-item-text">재학중</div>
-        </div>
-        <div className="grid-inner-item">
-          <div className="grid-inner-item-text">acahe1d3123</div>
-        </div>
-        <div className="grid-inner-item">
-          <div className="grid-inner-item-text">길만기</div>
-        </div>
-        <div className="grid-inner-item">
-          <div className="grid-inner-item-text">학생 코드 : 000000000</div>
-        </div>
-        <div className="grid-inner-item">
-          <div className="grid-inner-item-text sign-off-on-buttons">
-            <button className="rejected-button">신청</button>
-            <button className="accept-button">학적 변동</button>
+  /** 아코디언 메뉴 : 학부모 1명 정보 */
+  const accordionList = item => {
+    const title = (
+      <div className="item admin-user-list sing-user-list">
+        <div className="grid-inner">
+          <div className="grid-inner-item">
+            <div className="grid-inner-item-text">{item.state}</div>
+          </div>
+          <div className="grid-inner-item">
+            <div className="grid-inner-item-text">{item.id}</div>
+          </div>
+          <div className="grid-inner-item">
+            <div className="grid-inner-item-text">{item.name}</div>
+          </div>
+          <div className="grid-inner-item">
+            <div className="grid-inner-item-text">
+              {moment(item.createdAt).format("YYYY-MM-DD hh:mm:ss")}
+            </div>
+          </div>
+          <div className="grid-inner-item">
+            <div className="grid-inner-item-text sign-off-on-buttons">
+              <button className="accept-button" onClick={() => {}}>
+                휴먼 전환
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
 
-  const title = (
-    <div className="item admin-user-list sing-user-list">
-      <div className="grid-inner">
-        <div className="grid-inner-item">
-          <div className="grid-inner-item-text">활성화</div>
-        </div>
-        <div className="grid-inner-item">
-          <div className="grid-inner-item-text">acahe1d3</div>
-        </div>
-        <div className="grid-inner-item">
-          <div className="grid-inner-item-text">길형태</div>
-        </div>
-        <div className="grid-inner-item">
-          <div className="grid-inner-item-text">2024.06.28</div>
-        </div>
-        <div className="grid-inner-item">
-          <div className="grid-inner-item-text sign-off-on-buttons">
-            <button className="accept-button">휴먼 전환</button>
+    /** 아코디언 메뉴 : 학부모 1명의 자녀 리스트 */
+    const contents = (
+      <div>
+        {item.studentList && item.studentList.length > 0 ? (
+          item.studentList.map((cItem, cIndex) => (
+            <div key={cIndex} className="item admin-user-list sing-user-list">
+              <div className="grid-inner">
+                <div className="grid-inner-item">
+                  <div className="grid-inner-item-text">
+                    {cItem.studentState}
+                  </div>
+                </div>
+                <div className="grid-inner-item">
+                  <div className="grid-inner-item-text">acahe1d3123</div>
+                </div>
+                <div className="grid-inner-item">
+                  <div className="grid-inner-item-text">길만기</div>
+                </div>
+                <div className="grid-inner-item">
+                  <div className="grid-inner-item-text">
+                    학생 코드 : 000000000
+                  </div>
+                </div>
+                <div className="grid-inner-item">
+                  <div className="grid-inner-item-text sign-off-on-buttons">
+                    <button className="rejected-button">신청</button>
+                    <button className="accept-button">학적 변동</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="item admin-user-list sing-user-list">
+            <div className="grid-inner">
+              <div className="grid-inner-item">
+                <div className="grid-inner-item-text">자녀 없음</div>
+              </div>
+            </div>
           </div>
-        </div>
+        )}
       </div>
-    </div>
-  );
+    );
+    return { title, contents };
+  };
 
   return (
     <UserListStyle>
       <div className="main-core admin-home-core">
         <div className="grid-frame">
           <UserListTop nowSelectMemu={nowSelectMemu} />
-
-          <Accordion
-            viewContent={title}
-            contents={contents}
-            topBackgroundColor={"rgba(222,232,233,0.7)"}
-            backgroundColor={"#dee8e9"}
-          />
 
           {/* <div className="item">
             <div className="grid-inner">
@@ -199,54 +224,24 @@ const UserList = ({
             </div>
           </div> */}
 
-          {/* {test ? null : (
-        <div className="item">
-          <div className="grid-inner">
-            <Skeleton className="grid-inner-item">
-              <div className="grid-inner-item-text skeleton-grid-inner-item">
-                1111
-              </div>
-            </Skeleton>
-            <Skeleton className="grid-inner-item">
-              <div className="grid-inner-item-text skeleton-grid-inner-item"></div>
-            </Skeleton>
-            <Skeleton className="grid-inner-item">
-              <div className="grid-inner-item-text skeleton-grid-inner-item"></div>
-            </Skeleton>
-            <Skeleton className="grid-inner-item ">
-              <div className="grid-inner-item-text skeleton-grid-inner-item"></div>
-            </Skeleton>
-            <Skeleton className="grid-inner-item">
-              <div className="grid-inner-item-text skeleton-grid-inner-item"></div>
-            </Skeleton>
-            <Skeleton className="grid-inner-item">
-              <div className="grid-inner-item-text skeleton-grid-inner-item"></div>
-            </Skeleton>
-            <Skeleton className="grid-inner-item">
-              <div className="grid-inner-item-text sign-off-on-buttons skeleton-grid-inner-item">
-                <button
-                  className="rejected-button"
-                  onClick={() => {
-                    showModal("반려", item.id, item.name, item.pk);
-                  }}
-                >
-                  반려
-                </button>
-                <button
-                  className="accept-button"
-                  onClick={() => {
-                    showModal("승인", item.id, item.name, item.pk);
-                  }}
-                >
-                  승인
-                </button>
-              </div>
-            </Skeleton>
-          </div>
-        </div>
-      )} */}
           {acceptUserList.length === 0 ? (
             <NoResults>검색결과가 없습니다.</NoResults>
+          ) : nowSelectMemu === 2 ? (
+            acceptUserList.map((item, index) => {
+              const list = accordionList(item);
+
+              return (
+                <Accordion
+                  key={index}
+                  viewContent={list.title}
+                  contents={list.contents}
+                  topBackgroundColor={"rgba(222,232,233,0.7)"}
+                  backgroundColor={"#dee8e9"}
+                  isOpen={openAccordionId === item.id}
+                  onClick={() => handleAccordionClick(item.id)}
+                />
+              );
+            })
           ) : (
             acceptUserList.map((item, index) => {
               return (

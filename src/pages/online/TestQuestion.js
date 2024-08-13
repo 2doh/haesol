@@ -25,6 +25,10 @@ import { FaArrowLeft } from "react-icons/fa6";
 import { FaArrowRight } from "react-icons/fa6";
 
 import { PiNumberCircleTwoDuotone } from "react-icons/pi";
+import { switchCase } from "@babel/types";
+import { getOnlineTest } from "api/online/onlinetestapi";
+import StudentImg from "pages/student/StudentImg";
+import { TestPreviewImage } from "./TestPreviewImage";
 
 const TestQuestionWrap = styled.div`
   height: 100%;
@@ -61,6 +65,17 @@ const TestQuestionWrap = styled.div`
           width: 100%;
           display: flex;
           justify-content: center;
+          max-height: 350px;
+
+          .question-pic {
+            display: flex;
+            justify-content: center;
+
+            img {
+              height: 100%;
+              object-fit: cover;
+            }
+          }
         }
 
         .cbt__selects {
@@ -141,21 +156,97 @@ const TestQuestionWrap = styled.div`
   }
 `;
 
-const TestQuestion = () => {
+const TestQuestion = ({ subjects }) => {
   const dispatch = useDispatch();
   const testState = useSelector(state => state.testSlice);
 
-  // const [nowQuestionsNum, setNowQuestionsNum] = useState(0);
+  // 문제 리스트
+  // const [questionList, setQuestionList] = useState([]);
+
   const [isQuestions, setIsQuestions] = useState(false);
 
   useEffect(() => {
-    dataQuestion();
-    // setNowQuestionsNum(0);
+    // dataQuestion();
+    if (subjects) {
+      getDateQuestion(subjects);
+    }
   }, []);
 
   useEffect(() => {
     setIsQuestions(true);
   }, [testState]);
+
+  /** 최초 랜더링시 시험 데이터 가져오기 */
+  const getDateQuestion = async subjects => {
+    let res = [];
+
+    switch (subjects) {
+      case "korean":
+        res = await getOnlineTest(1);
+        break;
+      case "math":
+        res = await getOnlineTest(2);
+        return;
+      default:
+        break;
+    }
+
+    if (res) {
+      reGetDateQuestion(res);
+    }
+  };
+
+  useEffect(() => {
+    console.log("testState : ", testState);
+  }, [testState]);
+
+  // useEffect(() => {
+  //   if (questionList.length !== 0) reGetDateQuestion();
+  // }, [questionList]);
+
+  /** 데이터 리덕스 툴킷에 저장 */
+  const reGetDateQuestion = list => {
+    const formattedQuestions = list.map((item, index) => {
+      /** 문제 번호 매기기, 문제 개별로 저장 */
+      const formattedQuestion = {
+        number: index + 1,
+        question: item.question,
+        answer: item.correct_answer,
+        choice1: item.sentence[0],
+        choice2: item.sentence[1],
+        choice3: item.sentence[2],
+        choice4: item.sentence[3],
+        choice5: item.sentence[4],
+        questionImg: item.pic,
+        questionImgPk: item.queId,
+      };
+      return formattedQuestion;
+    });
+
+    const questionsNumArr = list.map((item, index) => {
+      const questionsNum = {
+        number: index + 1,
+        selectNum: 0,
+      };
+
+      return questionsNum;
+    });
+
+    const listLength = list.length;
+
+    const data = {
+      questionAll: formattedQuestions,
+      selectNumArr: questionsNumArr,
+      nowQuestionsNum: 0,
+      remainingQuestions: listLength,
+    };
+
+    // console.log("formattedQuestions : ", formattedQuestions);
+    // console.log("questionsNumArr : ", questionsNumArr);
+    // console.log("data : ", data);
+
+    dispatch(updateTestDate(data));
+  };
 
   // 나중에 BE에서 불러오는 데이터로 변경하기(받아와야할 정보 : 문제 번호, 문제 내용, 답안 내용)
   // 나중에 BE에서 불러오는 데이터로 변경하기(보내야할 정보 : 문제 번호, 문제 내용, 작성한 답안 내용)
@@ -212,19 +303,11 @@ const TestQuestion = () => {
     dispatch(updateTestDate(data));
   };
 
-  // const updateRemainingQuestions = answeredCount => {
-  //   // const totalQuestions = questionAll.length;
-  //   const totalQuestions = 2;
-  //   setRemainingQuestions(totalQuestions - answeredCount);
-  // };
-
-  // const nowQuestionsNumCalc = () => {};
-
   return (
     <TestQuestionWrap>
       <div className="test-question-inner">
         <div className="question-text cbt__quiz">
-          {isQuestions ? (
+          {testState.questionAll[testState.nowQuestionsNum] ? (
             <div className="cbt">
               <div className="cbt__question">
                 <span>
@@ -235,7 +318,21 @@ const TestQuestion = () => {
                   ""}
               </div>
               <div className="cbt__question__img">
-                <div className="question-pic">사진 영역 입니다.</div>
+                <div className="question-pic">
+                  {testState.questionAll[testState.nowQuestionsNum]
+                    .questionImg === "DEFAULT_PICTURE_DATA" ? null : (
+                    <TestPreviewImage
+                      imgUrl={
+                        testState.questionAll[testState.nowQuestionsNum]
+                          .questionImg
+                      }
+                      imgPk={
+                        testState.questionAll[testState.nowQuestionsNum]
+                          .questionImgPk
+                      }
+                    />
+                  )}
+                </div>
               </div>
               <div className="cbt__selects">
                 <input
@@ -368,7 +465,10 @@ const TestQuestion = () => {
                   ) : (
                     <PiNumberCircleFiveBold />
                   )}
-                  <span>5</span>
+
+                  <span>
+                    {testState.questionAll[testState.nowQuestionsNum].choice5}
+                  </span>
                 </label>
               </div>
               {/* <div className="cbt__desc hide">{item.desc || ""}</div> */}

@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { removeCookie } from "utils/cookie";
 
 const initialState = {
   // questionSubject: "",

@@ -68,15 +68,13 @@ const HeaderProfile = () => {
       <section className="banner-warp">
         <MainBanner />
       </section>
-      <section>
-        {changeStyle ? (
-          !getCookie("accessToken") ? (
-            <UnauthenticatedProfile />
-          ) : null
-        ) : null}
-        {getCookie("userRole") === "ROLE_PARENTS" ? <ParentsProfile /> : null}
-        {getCookie("userRole") === "ROLE_TEACHER" ? <TeacherProfile /> : null}
-      </section>
+      {changeStyle ? (
+        <section>
+          {!getCookie("accessToken") ? <UnauthenticatedProfile /> : null}
+          {getCookie("userRole") === "ROLE_PARENTS" ? <ParentsProfile /> : null}
+          {getCookie("userRole") === "ROLE_TEACHER" ? <TeacherProfile /> : null}
+        </section>
+      ) : null}
     </HeaderProfileStyle>
   );
 };

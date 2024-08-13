@@ -20,7 +20,7 @@ const TimerStyle = styled.div`
   }
   /* margin: 0px 10px; */
 
-  & > div:nth-child(3) {
+  & > div:nth-of-type(3) {
     width: 20px;
   }
 
@@ -160,6 +160,9 @@ const Timer = () => {
         buttonClick={setBtnClick}
         nowbutton={btnClick}
         buttonLabel={"연장"}
+        onClick={() => {
+          reAccessToken();
+        }}
       />
     </>
   );

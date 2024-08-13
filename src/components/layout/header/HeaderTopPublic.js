@@ -7,6 +7,9 @@ import { useNavigate } from "react-router";
 import { getCookie } from "utils/cookie";
 import { BiSolidArrowToTop } from "react-icons/bi";
 import { HiMenu } from "react-icons/hi";
+import Timer from "../Timer";
+import { MdOutlineLogout } from "react-icons/md";
+import { logout } from "components/common/Logout";
 
 const HeaderTopStyle = styled.div`
   font-size: 17px;
@@ -86,6 +89,46 @@ const HeaderTopStyle = styled.div`
     }
   }
 
+  .access-wrap {
+    position: absolute;
+    right: 92px;
+    height: 90%;
+    border-radius: 15px 15px 0 0;
+    background-color: #2b708978;
+    padding: 10px 10px 10px 10px;
+    top: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .timer-wrap {
+      & > div:not(:last-of-type) * {
+        color: white;
+      }
+
+      & > div:first-of-type {
+        /* padding-bottom: 5px; */
+      }
+
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .logout-icon {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-left: 20px;
+
+      & * {
+        color: #113f4d;
+      }
+    }
+  }
+
   @media screen and (max-width: 1023px) {
     position: fixed;
     z-index: 999999;
@@ -119,6 +162,22 @@ const HeaderTopStyle = styled.div`
       .header-login-signup {
         & > div {
         }
+      }
+    }
+
+    .access-wrap {
+      height: 65%;
+      border-radius: 15px;
+      position: static;
+
+      .timer-wrap {
+        & > :nth-of-type(2) {
+          min-width: 65px;
+        }
+      }
+
+      .logout-icon {
+        padding-left: 5px;
       }
     }
   }
@@ -238,7 +297,21 @@ const HeaderTopPublic = () => {
                 회원가입
               </div>
             </div>
-          ) : null}
+          ) : (
+            <div className="access-wrap">
+              <div className="timer-wrap">
+                <Timer />
+              </div>
+              <div
+                className="logout-icon"
+                onClick={() => {
+                  logout();
+                }}
+              >
+                <MdOutlineLogout size="22px" title="로그아웃" />
+              </div>
+            </div>
+          )}
 
           <div className="header-seach-menu">
             {changeStyle ? null : (

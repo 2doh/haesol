@@ -7,6 +7,14 @@ const TeacherProfileStyle = styled.div`
   position: relative;
   width: 330px;
   height: 300px;
+
+  .teacher-info-inner {
+    border-radius: 10px;
+
+    .teacher-info-text-box {
+      justify-content: space-between !important;
+    }
+  }
 `;
 const TeacherProfile = () => {
   const navigate = useNavigate();
@@ -21,7 +29,7 @@ const TeacherProfile = () => {
   return (
     <TeacherProfileStyle>
       <div className="user-info-wrap">
-        <div className="user-info-inner">
+        <div className="user-info-inner teacher-info-inner">
           <div className="user-info">
             {/* 유저 정보 start */}
             <div className="top-user-info">
@@ -31,7 +39,7 @@ const TeacherProfile = () => {
                   <div className="user-info-label">담당 학급</div>
                   <div className="user-info-label">이메일</div>
                 </div>
-                <div className="user-info-text-box">
+                <div className="user-info-text-box teacher-info-text-box">
                   <div className="login-user-info-text">
                     {getCookie("userName") === "" ||
                     getCookie("userName") === null ||
@@ -42,12 +50,16 @@ const TeacherProfile = () => {
                     )}
                   </div>
                   <div className="login-user-info-text">
-                    {getCookie("userClass") === "" ||
+                    {getCookie("userGrade") === "" ||
+                    getCookie("userGrade") === null ||
+                    getCookie("userGrade") === 0 ||
+                    getCookie("userClass") === "" ||
                     getCookie("userClass") === null ||
                     getCookie("userClass") === 0 ? (
                       <div className="no-info">미정</div>
                     ) : (
-                      getCookie("userClass")
+                      `${getCookie("userGrade")} 학년 
+                      ${getCookie("userClass")} 반`
                     )}
                   </div>
                   <div className="login-user-info-text">
