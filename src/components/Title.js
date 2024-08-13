@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 
 const Title = () => {
+  useEffect(() => {}, []);
+
   return (
     <div className="student-list-title" style={{ margin: 0 }}>
       {/* <!-- 제목 위치 --> */}

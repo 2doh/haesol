@@ -3,7 +3,7 @@ import usePlaceholder from "hooks/common/usePlaceholder";
 import React, { useEffect, useState } from "react";
 import { PhoneNumber } from "utils/helpers";
 
-const SignupPhone = ({ userPhoneNum, setUserPhoneNum, children }) => {
+const SignupPhone = ({ userPhoneNum, setUserPhoneNum, children, register }) => {
   const handleOnChange = e => {
     // console.log(e.target.value);
     setUserPhoneNum(PhoneNumber(e));
@@ -21,6 +21,7 @@ const SignupPhone = ({ userPhoneNum, setUserPhoneNum, children }) => {
       </TitleWrap>
       <div className="signup-main-fields-section-bottom">
         <FieldStyle
+          {...register("phone")}
           value={userPhoneNum}
           className="fieleds-section-input"
           type="text"

@@ -1,6 +1,7 @@
 import React from "react";
 import SignupParent from "./SignupParent";
 import SignupTeacher from "./SignupTeacher";
+import SignupBt from "components/user/SignupBt";
 
 const SignupField = ({ userType, handleCancel, setUserType }) => {
   return (
