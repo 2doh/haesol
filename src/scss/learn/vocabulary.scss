@@ -1,4 +1,5 @@
 @import "../mixin";
+@import "../valiables";
 
 .voca-wrap {
   margin: 0 auto;
@@ -12,7 +13,27 @@
     @include flex-between();
     .voca-top-totalword {
       font-size: 24px;
-      color: #1b4957;
+      color: $b400;
+    }
+    .voca-top-soundwrap {
+      gap: 10px;
+      display: flex;
+      align-items: center;
+      .voca-top-volumeslider {
+        -webkit-appearance: none;
+        appearance: none;
+        height: 8px;
+        cursor: pointer;
+        background-color: $b200;
+      }
+      & ::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        height: 16px;
+        width: 16px;
+        background-color: $b400;
+        cursor: pointer;
+      }
     }
   }
   .voca-main {

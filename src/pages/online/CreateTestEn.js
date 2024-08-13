@@ -4,17 +4,37 @@ import { useDispatch, useSelector } from "react-redux";
 import "../../scss/online/createTest.css";
 import { openModal, updateModalDate } from "slices/modalSlice";
 import TestInputAnswer from "./TestInputAnswer";
+import ReactQuill from "react-quill";
+import {
+  onlineTestCreateEn,
+  onlineTestCreateListeningEn,
+} from "api/online/onlinetestapi";
+
+const TestTitleStyled = styled.div`
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: 20px;
+  margin: 80px;
+  span {
+    font-size: 36px;
+    font-weight: 700;
+    color: #1b4957;
+  }
+  p {
+    font-size: 18px;
+  }
+`;
 
 const CreateTestEn = () => {
   // 시험 종류
   const [selectedOption, setSelectedOption] = useState("vocabulary");
-  // 시험 내용
-  const [title, setTitle] = useState("");
-  const [contents, setContents] = useState("");
-  // const [wordEn, setWordEn] = useState("");
-  // const [wordKo, setWordKo] = useState("");
-  const [questions, setQuestions] = useState("");
+  const [word, setWord] = useState("");
   const [answer, setAnswer] = useState("");
+
+  // 듣기
+  const [question, setQuestion] = useState("");
+  const [sentence, setSentence] = useState("");
 
   const tempObj = {
     // placeholder: "",
@@ -26,6 +46,7 @@ const CreateTestEn = () => {
   // 이미지
   const [previewFile, setPreviewFile] = useState(null);
   const [sendFile, setSendFile] = useState(null);
+
   // 모달
   const modalState = useSelector(state => state.modalSlice);
   const dispatch = useDispatch();
@@ -45,38 +66,129 @@ const CreateTestEn = () => {
     setPreviewFile(url);
   };
 
-  const saveData = async e => {
+  const handleSave = async e => {
     e.preventDefault();
-    const formData = new FormData();
+
+    if (!sendFile) {
+      alert("이미지를 첨부해주세요.");
+      return;
+    }
+    if (!word) {
+      alert("단어를 입력해주세요.");
+      return;
+    }
+    if (!answer) {
+      alert("정답을 입력해주세요.");
+      return;
+    }
+
+    // 추후 문제 종류 따라 api 호출하도록 업데이트 필요
+    let res = false;
+    if (selectedOption === "vocabulary" || selectedOption === "speaking") {
+      // api 호출
+      // res 담아 옳으면 true 아니면 그대로
+      await EnTestSaveData(e);
+    }
+    if (selectedOption === "listening") {
+      // res 담아 옳으면 true 아니면 그대로
+      // api 호출
+      await EnListeningTestSaveData(e);
+    }
+
+    if (res) {
+      const data = {
+        bodyText: [
+          "문제가 성공적으로 저장되었습니다. 다음 문제를 계속해서 제출하시겠습니까?",
+        ],
+        modalRes: [50],
+        buttonText: ["확인", "닫기"],
+      };
+
+      dispatch(updateModalDate(data));
+      dispatch(openModal("BasicModal"));
+    } else {
+      const data = {
+        bodyText: ["문제 제출에 실패했습니다. 다시 시도해주세요."],
+        modalRes: [1],
+        buttonCnt: 1,
+        buttonText: ["확인"],
+      };
+      dispatch(updateModalDate(data));
+      dispatch(openModal("BasicModal"));
+    }
+  };
+
+  // 영어 말하기/단어 시험
+  const EnTestSaveData = async e => {
+    e.preventDefault();
+
     const onlineTestEnData = JSON.stringify({
       // BE: FE,
-      // 시험종류,
-      // 이미지,
-      // 문제내용,
-      // 영어단어,
-      // 한국어단어,
-      // 정답,
+      word,
+      answer,
     });
     console.log("onlineTestEnData : ", onlineTestEnData);
 
-    const dto = new Blob([infoData], { type: "application/json" });
-    formData.append("키명", dto);
-    // formData.append("petImage", imgFile); 처럼 백에서 요구한 값 넣기
-    formData.append("키명", sendFile);
-    axiosPost함수(formData);
+    // JSON 데이터를 문자열로 변환하여 FormData에 추가
+
+    const formData = new FormData();
+    const dto = new Blob([onlineTestEnData], { type: "application/json" });
+    formData.append("p", dto);
+    console.log("========== sendFile : ", sendFile);
+
+    // 파일이 있을 경우 FormData에 추가
+    if (sendFile) {
+      formData.append("pic", sendFile);
+      console.log("pic", sendFile);
+    } else {
+      // 빈 Blob을 파일처럼 추가 (빈 파일을 나타냄)
+      formData.append("pic", new Blob([]), "empty.jpg");
+      console.log("pic", "empty.jpg (빈 파일 추가)");
+    }
+
+    try {
+      const response = await onlineTestCreateEn(formData);
+      console.log("데이터 전송 결과 : ", response);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const handleSave = selectModalType => {
-    const data = {
-      bodyText: [
-        "문제가 성공적으로 저장되었습니다. 다음 문제를 계속해서 제출하시겠습니까?",
-      ],
-      modalRes: [50],
-      buttonText: ["확인", "닫기"],
-    };
+  // 영어 듣기 시험
+  const EnListeningTestSaveData = async e => {
+    e.preventDefault();
 
-    dispatch(updateModalDate(data));
-    dispatch(openModal(selectModalType));
+    const onlineTestEnData = JSON.stringify({
+      // BE: FE,
+      question,
+      sentence,
+      answer,
+    });
+    console.log("onlineTestEnData : ", onlineTestEnData);
+
+    // JSON 데이터를 문자열로 변환하여 FormData에 추가
+
+    const formData = new FormData();
+    const dto = new Blob([onlineTestEnData], { type: "application/json" });
+    formData.append("p", dto);
+    console.log("========== sendFile : ", sendFile);
+
+    // 파일이 있을 경우 FormData에 추가
+    if (sendFile) {
+      formData.append("pic", sendFile);
+      console.log("pic", sendFile);
+    } else {
+      // 빈 Blob을 파일처럼 추가 (빈 파일을 나타냄)
+      formData.append("pic", new Blob([]), "empty.jpg");
+      console.log("pic", "empty.jpg (빈 파일 추가)");
+    }
+
+    try {
+      const response = await onlineTestCreateListeningEn(formData);
+      console.log("데이터 전송 결과 : ", response);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   /** 취소 기능 */
@@ -91,21 +203,63 @@ const CreateTestEn = () => {
     dispatch(openModal(selectModalType));
   };
 
-  const TestTitleStyled = styled.div`
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    gap: 20px;
-    margin: 80px;
-    span {
-      font-size: 36px;
-      font-weight: 700;
-      color: #1b4957;
-    }
-    p {
-      font-size: 18px;
-    }
-  `;
+  // 모듈 활용
+  const modules = {
+    toolbar: {
+      container: [
+        [{ header: [1, 2, 3, 4, 5, 6, false] }],
+        [{ font: [] }],
+        [{ align: [] }],
+        ["underline", "strike", "blockquote"],
+        [{ list: "ordered" }, { list: "bullet" }, "link"],
+        [
+          {
+            color: [
+              "#000000",
+              "#e60000",
+              "#ff9900",
+              "#ffff00",
+              "#008a00",
+              "#0066cc",
+              "#9933ff",
+              "#ffffff",
+              "#facccc",
+              "#ffebcc",
+              "#ffffcc",
+              "#cce8cc",
+              "#cce0f5",
+              "#ebd6ff",
+              "#bbbbbb",
+              "#f06666",
+              "#ffc266",
+              "#ffff66",
+              "#66b966",
+              "#66a3e0",
+              "#c285ff",
+              "#888888",
+              "#a10000",
+              "#b26b00",
+              "#b2b200",
+              "#006100",
+              "#0047b2",
+              "#6b24b2",
+              "#444444",
+              "#5c0000",
+              "#663d00",
+              "#666600",
+              "#003700",
+              "#002966",
+              "#3d1466",
+              "custom-color",
+            ],
+          },
+          { background: [] },
+        ],
+        ["clean"],
+      ],
+    },
+  };
+
   return (
     <div className="main-core">
       <TestTitleStyled>
@@ -144,27 +298,43 @@ const CreateTestEn = () => {
         </div>
         {selectedOption === "listening" && (
           <div className="online-test-content-write">
-            <div className="online-test-required-title">문제</div>
-            <textarea
-              type="text"
-              placeholder="지문을 입력해주세요."
-              className="test-detail-content"
-            ></textarea>
-            <div className="online-test-required-title">문장</div>
-            <textarea
-              type="text"
-              placeholder="지문을 입력해주세요."
-              className="test-detail-content"
-            ></textarea>
+            <div className="online-test-content">
+              <div className="online-test-required-title">문제</div>
+              <form>
+                <ReactQuill
+                  value={question}
+                  onChange={value => {
+                    setQuestion(value);
+                  }}
+                  modules={modules}
+                  className="test-content-quill"
+                  placeholder="문제를 입력해주세요"
+                />
+              </form>
+            </div>
+            <div className="online-test-content">
+              <div className="online-test-required-title">문장</div>
+              <form>
+                <ReactQuill
+                  value={sentence}
+                  onChange={value => {
+                    setSentence(value);
+                  }}
+                  modules={modules}
+                  className="test-content-quill"
+                  placeholder="지문을 입력해주세요"
+                />
+              </form>
+            </div>
           </div>
         )}
 
         {(selectedOption === "vocabulary" || selectedOption === "speaking") && (
           <div className="online-test-content-write">
-            <div className="online-test-required-title">낱말</div>
+            <div className="online-test-required-title">단어</div>
             <TestInputAnswer
               placeholder={tempObj.wordQuestion}
-              setWord={setQuestions}
+              setWord={setWord}
             ></TestInputAnswer>
             <div className="online-test-required-title">정답</div>
             <TestInputAnswer
@@ -180,13 +350,7 @@ const CreateTestEn = () => {
           </div>
         )}
         <div className="button-section">
-          <button
-            onClick={() => {
-              handleSave("BasicModal");
-            }}
-          >
-            저장
-          </button>
+          <button onClick={handleSave}>저장</button>
           <button
             onClick={() => {
               modifyCancel("BasicModal");

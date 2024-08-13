@@ -1,7 +1,9 @@
+import usePlaceholder from "hooks/common/usePlaceholder";
 import React, { useState } from "react";
 
 const LoginIdField = ({ children, cleanupBt, userId, setUserId }) => {
-  const [idPlacholder, setIdPlacholder] = useState("아이디를 입력해 주세요");
+  const { placeholder, handleFocus, handleBlur } =
+    usePlaceholder("아이디를 입력해 주세요");
   const cleanupId = e => {
     e.preventDefault();
     setUserId("");
@@ -13,9 +15,9 @@ const LoginIdField = ({ children, cleanupBt, userId, setUserId }) => {
       <input
         className="login-panel-userid-input"
         type="text"
-        placeholder={idPlacholder}
-        onFocus={() => setIdPlacholder("")}
-        onBlur={() => setIdPlacholder("아이디를 입력해 주세요")}
+        placeholder={placeholder}
+        onFocus={() => handleFocus()}
+        onBlur={() => handleBlur()}
         value={userId}
         onChange={e => {
           setUserId(e.target.value);

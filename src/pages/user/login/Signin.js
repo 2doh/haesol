@@ -6,7 +6,7 @@ import { useNavigate } from "react-router";
 import { getCookie } from "utils/cookie";
 import cleanupBt from "../../../images/tabler_circle-x-filled.svg";
 import LoginIdField from "./LoginIdField";
-import SocialSignin from "./SocialSignin";
+import SocialSignin from "../../../components/user/SocialSignin";
 
 const Signin = ({ children, naviState, setNaviState }) => {
   const [userId, setUserId] = useState("");
@@ -31,8 +31,8 @@ const Signin = ({ children, naviState, setNaviState }) => {
     if (naviState === "signin") {
       const result = await postParentSignin(request);
       if (result.status === 200) {
-        console.log(result);
-        // window.location.replace("/");
+        // console.log(result);
+        window.location.replace("/");
       }
       if (result === "error") {
         setErrMsg("아이디 혹은 비밀번호를 확인해주세요");

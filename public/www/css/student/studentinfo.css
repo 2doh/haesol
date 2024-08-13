@@ -150,22 +150,6 @@
   -webkit-appearance: none;
   margin: 0;
 }
-.info-contain-top .info-item-top .info-title .form-check,
-.info-contain-top .info-item-right .info-title .form-check,
-.info-contain-mid .info-item-top .info-title .form-check,
-.info-contain-mid .info-item-right .info-title .form-check {
-  margin-left: 10px;
-  display: flex;
-  justify-content: center;
-  gap: 5px;
-}
-.info-contain-top .info-item-top .info-title .form-check .form-check-gender,
-.info-contain-top .info-item-right .info-title .form-check .form-check-gender,
-.info-contain-mid .info-item-top .info-title .form-check .form-check-gender,
-.info-contain-mid .info-item-right .info-title .form-check .form-check-gender {
-  width: 15px;
-  height: 15px;
-}
 .info-contain-top .info-item-mid,
 .info-contain-mid .info-item-mid {
   width: 100%;

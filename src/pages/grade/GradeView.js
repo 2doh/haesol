@@ -456,7 +456,8 @@ const GradeView = () => {
 
   const ParentCheckStyle = styled.div`
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
+    flex-direction: row-reverse;
     gap: 15px;
     align-items: flex-end;
     margin-bottom: 100px;
@@ -471,6 +472,18 @@ const GradeView = () => {
     .is-sign {
       background-color: #dd838f;
       color: #fbfaf9;
+      position: relative;
+      &:hover {
+        .sign-view {
+          position: absolute;
+          bottom: -100%;
+          left: -10%;
+          width: 120%;
+          height: 300%;
+          border: solid 1px #886348;
+          background-color: #fbfaf9;
+        }
+      }
     }
   `;
 
@@ -606,7 +619,10 @@ const GradeView = () => {
 
         {signResultPic1 ? (
           <ParentCheckStyle>
-            <button className="is-sign">학부모 확인</button>
+            <button className="is-sign">
+              학부모 확인
+              <div className="sign-view"></div>
+            </button>
           </ParentCheckStyle>
         ) : (
           <Signature
