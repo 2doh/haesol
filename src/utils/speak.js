@@ -6,6 +6,9 @@ export const speak = (tempObj, onEndCallback) => {
     speech.lang = tempObj.speechlang;
     speech.rate = 0.7;
 
+    // 볼륨 조절
+    speech.volume = tempObj.speechvolume;
+
     // 음성 종료되었을 때 호출될 콜백
     speech.onend = () => {
       if (onEndCallback) {

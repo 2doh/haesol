@@ -7,8 +7,8 @@ import {
 } from "api/login/social";
 import { useEffect, useState } from "react";
 // import KakaoLogin from "react-kakao-login";
-import kakao from "../../../images/ri_kakao-talk-fill.svg";
-import naver from "../../../images/simple-icons_naver.svg";
+import kakao from "../../images/ri_kakao-talk-fill.svg";
+import naver from "../../images/simple-icons_naver.svg";
 import LoginGoogle from "./LoginGoogle";
 import useSocialLogin from "hooks/useSocialLogin";
 import KakaoLogin from "react-kakao-login";

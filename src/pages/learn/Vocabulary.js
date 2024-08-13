@@ -1,9 +1,7 @@
 import styled from "@emotion/styled";
-import GreenHeaderNoOption from "components/layout/header/GreenHeaderNoOption";
-import { useEffect, useState } from "react";
-import { AiFillSound } from "react-icons/ai";
+import { useState } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { RiSpeakFill } from "react-icons/ri";
+import { PiSpeakerHighFill, PiSpeakerXFill } from "react-icons/pi";
 import { speak } from "utils/speak";
 
 const Vocabulary = ({
@@ -12,19 +10,25 @@ const Vocabulary = ({
   setIndex,
   learnState,
   resetTranscript,
-  listening,
+  audioStream,
   setIsTranscript,
 }) => {
   const voca = getObj[index];
   const [listen, setListen] = useState(false);
+  const [volume, setVolume] = useState(localStorage.getItem("initVolume"));
+  const [isVolume, setIsVolume] = useState(volume);
+
+  localStorage.setItem("initVolume", volume);
 
   const tempObj = {
     speechword: voca.word,
     speechlang: "en-US",
+    speechvolume: volume,
   };
   const temp = {
     speechword: voca.listening,
     speechlang: "en-US",
+    speechvolume: volume,
   };
 
   // console.log(getObj);
@@ -59,6 +63,9 @@ const Vocabulary = ({
   // console.log(getObj[index]);
   // console.log(getObj.length);
 
+  // console.log(volume);
+  // console.log(isVolume);
+
   return (
     <>
       <div className="voca-wrap">
@@ -66,26 +73,59 @@ const Vocabulary = ({
           <div className="voca-top-totalword">
             {index + 1} / {getObj.length}
           </div>
-          <AiFillSound
-            size={50}
-            cursor={"pointer"}
+          <div className="voca-top-soundwrap">
+            {volume === 0 ? (
+              <PiSpeakerXFill
+                size={30}
+                onClick={() => {
+                  setVolume(isVolume);
+                }}
+                cursor={"pointer"}
+              />
+            ) : (
+              <PiSpeakerHighFill
+                size={30}
+                cursor={"pointer"}
+                onClick={() => {
+                  setIsVolume(volume);
+                  setVolume(0);
+                }}
+                style={{
+                  filter: listen ? `drop-shadow(1px 1px 5px red)` : `none`,
+                }}
+              />
+            )}
+            <input
+              className="voca-top-volumeslider"
+              type="range"
+              min={0}
+              max={1}
+              color="gray"
+              step={0.02}
+              value={volume}
+              onChange={event => {
+                setVolume(event.target.valueAsNumber);
+                setIsVolume(event.target.valueAsNumber);
+              }}
+            />
+          </div>
+        </div>
+        <div className="voca-main">
+          <img
+            className="voca-main-card"
+            src={voca.pic}
             onClick={() => {
               learnState === "listening" ? onClick() : onSpeak();
             }}
-            style={{
-              filter: listen ? `drop-shadow(1px 1px 5px red)` : `none`,
-            }}
+            style={{ cursor: "pointer" }}
           />
-        </div>
-        <div className="voca-main">
-          <img className="voca-main-card" src={voca.pic} />
         </div>
         <div className="voca-bottom">
           <IoIosArrowBack
             size={30}
             cursor={"pointer"}
             onClick={() => {
-              if (!listen && !listening) {
+              if (!listen && !audioStream) {
                 onBack();
                 resetTranscript();
               }
@@ -99,14 +139,13 @@ const Vocabulary = ({
             size={30}
             cursor={"pointer"}
             onClick={() => {
-              if (!listen && !listening) {
+              if (!listen && !audioStream) {
                 onNext();
                 resetTranscript();
               }
             }}
           />
         </div>
-        {/* input 컴포넌트 추가(로그인 탭과 형식 공유하므로 하나의 컴포넌트로) */}
       </div>
     </>
   );

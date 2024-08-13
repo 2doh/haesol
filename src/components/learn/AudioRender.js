@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
-import "../../scss/learn/audiorender.scss";
+import { useEffect, useState } from "react";
 import audioContext from "utils/learn/audioContext";
 import audioFrequency from "utils/learn/audioFrequency";
-import styled from "@emotion/styled";
+import "../../scss/learn/audiorender.scss";
 
 const AudioRender = ({ audioStream }) => {
   const [volume, setVolume] = useState("");
@@ -46,7 +45,7 @@ const AudioRender = ({ audioStream }) => {
         analyser.getByteFrequencyData(dataArray);
         const volume = audioFrequency(dataArray, bufferLength);
         setVolume(Math.floor((volume / 256) * 100));
-        console.log(volume);
+        // console.log(volume);
       }, 30);
       return () => clearInterval(Interval);
     }
@@ -56,13 +55,15 @@ const AudioRender = ({ audioStream }) => {
     <div className="volumemeter">
       {Array.from({ length: barCount }).map((_, index) => {
         const barColor =
-          volume / 5 > index ? "#4ADE80" : "rgba(255, 255, 255, 0.3)";
+          volume / 2 > index ? "#4ADE80" : "rgba(255, 255, 255, 0.3)";
         return (
           <div
             key={index}
             className="volumebar"
             style={{
-              backgroundColor: barColor,
+              backgroundColor: audioStream
+                ? barColor
+                : "rgba(255, 255, 255, 0.3)",
             }}
           ></div>
         );

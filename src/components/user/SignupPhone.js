@@ -1,20 +1,9 @@
 import styled from "@emotion/styled";
+import usePlaceholder from "hooks/common/usePlaceholder";
 import React, { useEffect, useState } from "react";
 import { PhoneNumber } from "utils/helpers";
 
-const SignupPhone = ({
-  placeholder,
-  phoneNum,
-  setStudentPhone,
-  setParentPhone,
-  children,
-}) => {
-  const [userPhoneNum, setUserPhoneNum] = useState(phoneNum);
-
-  useEffect(() => {
-    setUserPhoneNum(phoneNum);
-  }, [phoneNum]);
-
+const SignupPhone = ({ userPhoneNum, setUserPhoneNum, children }) => {
   const handleOnChange = e => {
     // console.log(e.target.value);
     setUserPhoneNum(PhoneNumber(e));
@@ -22,23 +11,28 @@ const SignupPhone = ({
     // setParentPhone(PhoneNumber(e));
   };
 
+  const { placeholder, handleFocus, handleBlur } =
+    usePlaceholder("전화번호를 입력해 주세요");
+
   return (
     <WrapStyle>
       <TitleWrap>
         <TitleStyle>{children}</TitleStyle>
       </TitleWrap>
       <div className="signup-main-fields-section-bottom">
-        <input
+        <FieldStyle
           value={userPhoneNum}
           className="fieleds-section-input"
           type="text"
           placeholder={placeholder}
+          onFocus={() => handleFocus()}
+          onBlur={() => handleBlur()}
           // value={phoneNum}
           onChange={e => {
             handleOnChange(e);
           }}
           maxLength={13}
-        ></input>
+        ></FieldStyle>
       </div>
     </WrapStyle>
   );
@@ -47,7 +41,7 @@ const SignupPhone = ({
 const WrapStyle = styled.div`
   width: 100%;
   height: 100%;
-  margin-top: 30px;
+  margin-top: 20px;
 `;
 
 const TitleWrap = styled.div`
@@ -64,7 +58,7 @@ const TitleStyle = styled.div`
   white-space: nowrap;
 `;
 
-const SelectStyle = styled.select`
+const FieldStyle = styled.input`
   border-radius: 5px;
   border: 1px solid #886348;
   width: 100%;

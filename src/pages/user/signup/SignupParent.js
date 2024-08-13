@@ -16,6 +16,8 @@ import PassInputField from "./PassInputField";
 import PhoneInputFields from "./PhoneInputFields";
 import SubPhoneInputFields from "./SubPhoneInputFields";
 import { allowScroll, preventScroll } from "components/common/ScrollManagement";
+import SignupDrop from "components/user/SignupDrop";
+import SignupPhone from "components/user/SignupPhone";
 
 const SignupParent = ({ handleCancel, setUserType, userType }) => {
   //   "uid": "test1234",
@@ -194,13 +196,15 @@ const SignupParent = ({ handleCancel, setUserType, userType }) => {
             자녀코드
           </ChildInputFields>
         </UserNameStyle>
-        <PhoneInputFields
+        {/* <PhoneInputFields
           userPhoneNum={userPhoneNum}
           setUserPhoneNum={setUserPhoneNum}
-        >
+          >
           전화번호
-        </PhoneInputFields>
-        <DropFields setUserConnet={setUserConnet}>가족관계</DropFields>
+        </PhoneInputFields> */}
+        <SignupPhone setUserPhoneNum={setUserPhoneNum}>전화번호</SignupPhone>
+        {/* <DropFields setUserConnet={setUserConnet}>가족관계</DropFields> */}
+        <SignupDrop setUserConnet={setUserConnet}>가족관계</SignupDrop>
         <EmailInputField setUserEmail={setUserEmail} userEmail={userEmail}>
           이메일
         </EmailInputField>
