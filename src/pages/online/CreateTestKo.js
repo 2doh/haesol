@@ -26,10 +26,10 @@ const TestTitleStyled = styled.div`
 `;
 
 const CreateTestKo = () => {
+  // 문제 종류
+  const [typeTag, setTypeTag] = useState(11);
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
-  // 문제 종류
-  const [typeTag, setTypeTag] = useState("1");
   const [starValue, setStarValue] = useState(3);
   // 보기 내용 저장 배열
   const [multiple, setMultiple] = useState([
@@ -43,18 +43,16 @@ const CreateTestKo = () => {
   // 답 저장
   const [answer, setAnswer] = useState(null);
 
-  // useEffect(() => {
-  //   console.log("체크되었다", answer);
-  // }, [answer]);
+  // 해설
+  const [explanation, setExplanation] = useState("");
 
   // 파일처리
-  const [previewFile, setPreviewFile] = useState(null);
   const [sendFile, setSendFile] = useState(null);
 
   const modalState = useSelector(state => state.modalSlice);
   const dispatch = useDispatch();
 
-  const handleSelectChange = e => {
+  const handleSelectTagType = e => {
     setTypeTag(e.target.value);
   };
 
@@ -64,9 +62,9 @@ const CreateTestKo = () => {
     // 전송 파일 보관
     setSendFile(file);
     // 미리보기용
-    const url = URL.createObjectURL(file);
+    // const url = URL.createObjectURL(file);
     // 웹 브라우저 임시 파일 주소
-    setPreviewFile(url);
+    // setPreviewFile(url);
   };
 
   /** 체크된 정답 저장 */
@@ -92,7 +90,7 @@ const CreateTestKo = () => {
       alert("제목을 입력해주세요.");
       return;
     }
-    if (!answer) {
+    if (answer === null) {
       alert("정답을 선택해주세요.");
       return;
     }
@@ -116,31 +114,35 @@ const CreateTestKo = () => {
 
   const saveData = async e => {
     e.preventDefault();
-    const formData = new FormData();
-    const multipleContents = multiple.map(item => item.content);
 
+    const multipleContents = multiple.map(item => item.content);
     const onlineTestData = JSON.stringify({
       // BE: FE,
       // 국어
       subjectCode: 1,
-      // 제목,
-      question: title,
       // 타입
-      typeTag: typeTag,
+      // typeTag: typeTag,
+      typeTag: parseInt(typeTag, 10), // 선택한 유형 (정수형 변환)
       // 객관식
       queTag: 1,
       // 난이도,
       level: starValue,
+      // 제목,
+      question: title,
       // 문제내용,
       contents: contents,
       // 보기내용,
       multiple: multipleContents,
       // 정답,
       answer: answer,
+      // 해설
+      해설: explanation,
     });
     console.log("onlineTestData : ", onlineTestData);
 
     // JSON 데이터를 문자열로 변환하여 FormData에 추가
+
+    const formData = new FormData();
     const dto = new Blob([onlineTestData], { type: "application/json" });
     formData.append("p", dto);
     console.log("========== sendFile : ", sendFile);
@@ -148,12 +150,16 @@ const CreateTestKo = () => {
     // 파일이 있을 경우 FormData에 추가
     if (sendFile) {
       formData.append("pic", sendFile);
+      console.log("pic", sendFile);
+    } else {
+      // 빈 Blob을 파일처럼 추가 (빈 파일을 나타냄)
+      formData.append("pic", new Blob([]), "empty.jpg");
+      console.log("pic", "empty.jpg (빈 파일 추가)");
     }
 
     try {
-      // console.log("국어 시험 post : ", formData.get("p"), formData.get("pic"));
-      console.log("데이터 전송중");
-      await onlineTestCreate(formData);
+      const response = await onlineTestCreate(formData);
+      console.log("데이터 전송 결과 : ", response);
     } catch (error) {
       console.log(error);
     }
@@ -261,18 +267,19 @@ const CreateTestKo = () => {
               name="korean-test"
               value={typeTag}
               onChange={e => {
-                handleSelectChange(e);
+                handleSelectTagType(e);
               }}
             >
-              <option value="1">독해</option>
-              <option value="2">문법</option>
-              <option value="3">문학</option>
+              <option value="11">독해</option>
+              <option value="12">문법</option>
+              <option value="13">문학</option>
             </select>
           </div>
           <form>
             <ReactQuill
-              onChange={() => {
-                setContents();
+              value={contents}
+              onChange={value => {
+                setContents(value);
               }}
               modules={modules}
               className="test-content-quill"
@@ -302,11 +309,8 @@ const CreateTestKo = () => {
               <div className="online-test-select" key={index}>
                 <input
                   type="checkbox"
-                  // name={item.number}
                   name={`option${index}`}
                   className="checkbox"
-                  // checked={setAnswer(index)}
-                  // checked={item.checked}
                   checked={answer === index}
                   onChange={e => {
                     handleCheckboxChange(e, index);
@@ -324,14 +328,7 @@ const CreateTestKo = () => {
           </div>
         </div>
         <div className="button-section">
-          <button
-            // onClick={() => {
-            //   handleSave();
-            // }}
-            onClick={handleSave}
-          >
-            저장
-          </button>
+          <button onClick={handleSave}>저장</button>
           <button
             onClick={() => {
               modifyCancel("BasicModal");
@@ -339,6 +336,20 @@ const CreateTestKo = () => {
           >
             취소
           </button>
+        </div>
+        <div className="online-test-content">
+          <div className="online-test-required-title">해설</div>
+          <form>
+            <ReactQuill
+              value={explanation}
+              onChange={value => {
+                setExplanation(value);
+              }}
+              modules={modules}
+              className="test-content-quill"
+              placeholder="내용을 입력해주세요"
+            />
+          </form>
         </div>
       </div>
     </div>

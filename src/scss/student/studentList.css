@@ -24,6 +24,15 @@
   color: #1b4957;
 }
 
+.main-core {
+  margin: 0 auto;
+  width: 1180px;
+}
+@media screen and (max-width: 1023px) {
+  .main-core {
+    margin-top: 70px;
+  }
+}
 .main-core .grid-frame {
   text-shadow: 0 1.5px 0 rgba(0, 0, 0, 0.15);
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.34) inset, 0 2px 0 -1px rgba(0, 0, 0, 0.13), 0 3px 0 -1px rgba(0, 0, 0, 0.08), 0 3px 13px -1px rgba(0, 0, 0, 0.21);
@@ -76,23 +85,9 @@
   justify-content: center;
   gap: 30px;
 }
-@media screen and (max-width: 1023px) {
-  .main-core .grid-frame .grid-inner .grid-inner-item:nth-child(3),
-  .main-core .grid-frame .grid-inner .grid-inner-item:nth-child(5) {
-    display: none;
-  }
-  .main-core .grid-frame .grid-inner .downIcon {
-    display: block;
-  }
-}
 .main-core .grid-frame #grid-content {
   cursor: pointer;
 }
 .main-core .grid-frame #grid-content:hover {
   background: #c6dbda;
-}
-@media screen and (max-width: 1023px) {
-  .main-core .grid-frame .grid-inner {
-    grid-template-columns: 1fr 1fr 1.5fr 1fr 1.5fr 0.5fr;
-  }
 }/*# sourceMappingURL=studentList.css.map */

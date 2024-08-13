@@ -203,6 +203,24 @@ export const postSign = async formData => {
 //   }
 // }
 
+// 전자서명 get
+export const getSign = async studentPk => {
+  const accessToken = getCookie("accessToken");
+  try {
+    const response = await axios.get(
+      `/api/user/parents/get-signature?studentPk=${studentPk}&year=2024&semester=${semester}&examSign=${examSign}`,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 // 알림장 데이터 불러오기
 export const getNoticeList = async studentPk => {
   const accessToken = getCookie("accessToken");
