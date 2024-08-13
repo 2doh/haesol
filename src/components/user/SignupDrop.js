@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-const SignupDrop = ({ setUserConnet, children }) => {
+const SignupDrop = ({ setUserConnet, children, register }) => {
   return (
     <WrapStyle>
       <TitleWrap>
@@ -9,6 +9,7 @@ const SignupDrop = ({ setUserConnet, children }) => {
       <SelectStyle
         className="fields-section-drop"
         onChange={e => setUserConnet(e.target.value)}
+        {...register("connet")}
       >
         <option value="none" hidden>
           가족관계

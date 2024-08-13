@@ -50,3 +50,15 @@ export const fetchUserInfo = async token => {
     console.error(error);
   }
 };
+
+export const socialRandomCode = async data => {
+  try {
+    const response = await axios.post(
+      `/api/user/parents/sign-up/social-login/random-code`,
+      data,
+    );
+    console.log(response);
+  } catch (error) {
+    console.log(error);
+  }
+};

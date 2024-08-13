@@ -4,7 +4,7 @@ import MiniButtonVer01 from "components/common/style/MiniButtonVer01";
 import usePlaceholder from "hooks/common/usePlaceholder";
 import React from "react";
 
-const SignupChildInput = ({ children, setUserChildrenCode }) => {
+const SignupChildInput = ({ children, setUserChildrenCode, register }) => {
   const { placeholder, handleFocus, handleBlur } =
     usePlaceholder("자녀코드를 입력해주세요");
 
@@ -17,6 +17,7 @@ const SignupChildInput = ({ children, setUserChildrenCode }) => {
         <>
           <FieldStyle style={{ position: "relative", padding: "5px" }}>
             <input
+              {...register("childecode")}
               className="fieleds-section-children"
               placeholder={placeholder}
               onFocus={() => handleFocus()}

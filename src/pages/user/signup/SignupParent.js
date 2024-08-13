@@ -196,15 +196,15 @@ const SignupParent = ({ handleCancel, setUserType, userType }) => {
             자녀코드
           </ChildInputFields>
         </UserNameStyle>
-        {/* <PhoneInputFields
+        <PhoneInputFields
           userPhoneNum={userPhoneNum}
           setUserPhoneNum={setUserPhoneNum}
-          >
+        >
           전화번호
-        </PhoneInputFields> */}
-        <SignupPhone setUserPhoneNum={setUserPhoneNum}>전화번호</SignupPhone>
-        {/* <DropFields setUserConnet={setUserConnet}>가족관계</DropFields> */}
-        <SignupDrop setUserConnet={setUserConnet}>가족관계</SignupDrop>
+        </PhoneInputFields>
+        {/* <SignupPhone setUserPhoneNum={setUserPhoneNum}>전화번호</SignupPhone> */}
+        <DropFields setUserConnet={setUserConnet}>가족관계</DropFields>
+        {/* <SignupDrop setUserConnet={setUserConnet}>가족관계</SignupDrop> */}
         <EmailInputField setUserEmail={setUserEmail} userEmail={userEmail}>
           이메일
         </EmailInputField>
