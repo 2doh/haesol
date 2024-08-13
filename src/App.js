@@ -54,6 +54,7 @@ import ChatParents from "components/chat/ChatParents";
 import SocialSignup from "pages/user/login/SocialSignup";
 import OnlineMainPage from "pages/online/onlinemain/OnlineMainPage";
 import MyChildList from "pages/parents/MyChildList";
+import { TestExPage } from "pages/online/TestExPage";
 
 // import jwt from "jsonwebtoken";
 
@@ -89,8 +90,8 @@ const ModalStyle = styled.div`
   position: absolute;
   left: 0px;
   top: 0px;
-  height: 100vh;
-  width: 100vw;
+  /* height: 100vh; */
+  /* width: 100vw; */
   z-index: 999999;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
@@ -152,17 +153,35 @@ function App() {
 
       <Main>
         <Routes>
-          <Route path="/test" element={<Test />}></Route>
-          <Route path="/learn" element={<Learn />}></Route>
-          <Route path="/learn/voca" element={<VocaLearn />}></Route>
-          <Route path="/signup/social" element={<SocialSignup />}></Route>
+          {/* 메인 화면 - start */}
+          {getCookie("userRole") === "ROLE_ADMIN" ? (
+            <Route
+              index
+              element={
+                <PrivateRoute
+                  component={<AdminHome />}
+                  authenticated={accessToken}
+                />
+              }
+            ></Route>
+          ) : (
+            <Route index element={<MainPage />}></Route>
+          )}
+          {/* 메인 화면 - end */}
 
-          <Route
-            path="/chat/teacher/:선생님pk"
-            element={<ChatParents />}
-          ></Route>
-          {/* <Route index element={<Home />}></Route> */}
-          <Route index element={<MainPage />}></Route>
+          {/* Admin 계정의 경우 - START */}
+          {getCookie("userRole") === "ROLE_ADMIN" ? (
+            <>
+              <Route path="*" element={<AdminHome />}></Route>
+              <Route path="/admin" element={<AdminHome />}>
+                <Route index path="home" element={<AdminHome />}></Route>
+              </Route>
+            </>
+          ) : (
+            <Route path="/admin/*" element={<SecureRoute />}></Route>
+          )}
+          {/* Admin 계정의 경우 - END */}
+
           {/* 로그인 & 회원가입 : 이후 진입시 Home으로 강제 이동 */}
           {accessToken ? (
             <>
@@ -202,27 +221,17 @@ function App() {
               ></Route>
             </>
           )}
+          {/* 로그인 & 회원가입 : end */}
 
-          {/* Admin 계정의 경우 - START */}
-          {loginUserType === "ROLE_ADMIN" ? (
-            <>
-              <Route
-                path="*"
-                element={
-                  <PrivateRoute
-                    component={<AdminHome />}
-                    authenticated={accessToken}
-                  />
-                }
-              ></Route>
-              <Route path="/admin" element={<AdminHome />}>
-                <Route index path="home" element={<AdminHome />}></Route>
-              </Route>
-            </>
-          ) : (
-            <Route path="/admin/*" element={<SecureRoute />}></Route>
-          )}
-          {/* Admin 계정의 경우 - END */}
+          <Route path="/testcode" element={<Test />}></Route>
+          <Route path="/learn" element={<Learn />}></Route>
+          <Route path="/learn/voca" element={<VocaLearn />}></Route>
+          <Route path="/signup/social" element={<SocialSignup />}></Route>
+
+          <Route
+            path="/chat/teacher/:선생님pk"
+            element={<ChatParents />}
+          ></Route>
 
           {/* 교직원 : 학생 리스트 */}
           <Route
@@ -235,10 +244,60 @@ function App() {
             }
           ></Route>
 
-          {/* <Route path="/students" component={<Students />}></Route> */}
+          <Route path="/online">
+            {/* 과목 리스트 페이지 */}
+            <Route index element={<OnlineMainPage />}></Route>
+            {/* 시험 페이지 */}
+            <Route path="test" element={<TestPage />}></Route>
+            {/* 시험 설명 */}
+            <Route path="test/ex" element={<TestExPage />}></Route>
+          </Route>
 
-          <Route path="/selftest" element={<TestPage />}></Route>
-          <Route path="/onlinemain" element={<OnlineMainPage />}></Route>
+          <Route path="/online/test/create">
+            {/* <Route index element={<CreateTest />}></Route> */}
+            {/* <Route path="korean" element={<CreateTestKo />}></Route> */}
+            <Route
+              path="korean"
+              element={
+                <TeacherProtectedRoute
+                  authenticated={accessToken}
+                  component={<CreateTestKo />}
+                />
+              }
+            ></Route>
+            <Route
+              path="math"
+              element={
+                <TeacherProtectedRoute
+                  authenticated={accessToken}
+                  component={<CreateTestMath />}
+                />
+              }
+            ></Route>
+            <Route
+              path="english"
+              element={
+                <TeacherProtectedRoute
+                  authenticated={accessToken}
+                  component={<CreateTestEn />}
+                />
+              }
+            ></Route>
+
+            {/* 기존 라우터 */}
+            {/* <Route path="korean" element={<Students />}></Route>
+            <Route path="math" element={<CreateTestMath />}></Route>
+            <Route path="english" element={<CreateTestEn />}></Route> */}
+          </Route>
+
+          {/* 온라인 학습 라우터 */}
+          {/* <Route path="/online/test/create" element={<CreateTest />}></Route>
+          <Route
+            path="/online/test/create/english"
+            element={<CreateTestEn />}
+          ></Route> */}
+
+          <Route path="/childlist" element={<MyChildList />}></Route>
 
           {/* 학부모 : 성적 확인 페이지 - grade 페이지 진입시 세션에 중복 저장되는 오류 발생 */}
           {/* 해결한듯 */}
@@ -275,8 +334,6 @@ function App() {
               />
             }
           ></Route>
-
-          <Route path="/childlist" element={<MyChildList />}></Route>
 
           {/* 교직원 : 정보 수정 페이지 */}
           {/* <Route
@@ -355,20 +412,6 @@ function App() {
                 />
               }
             />
-          </Route>
-
-          {/* 온라인 학습 라우터 */}
-          {/* <Route path="/online/test/create" element={<CreateTest />}></Route>
-          <Route
-            path="/online/test/create/english"
-            element={<CreateTestEn />}
-          ></Route> */}
-
-          <Route path="/online/test/create">
-            {/* <Route index element={<CreateTest />}></Route> */}
-            <Route path="korean" element={<CreateTestKo />}></Route>
-            <Route path="math" element={<CreateTestMath />}></Route>
-            <Route path="english" element={<CreateTestEn />}></Route>
           </Route>
 
           <Route

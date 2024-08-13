@@ -14,7 +14,8 @@ const SubjectsListWrapStyle = styled.div`
     cursor: pointer;
     width: 200px;
     height: 200px;
-    background-color: violet;
+    border-radius: 20px;
+    background-color: white;
   }
 `;
 
@@ -24,7 +25,7 @@ const SubjectsListWrap = () => {
   const movePage = pageNnum => {
     switch (pageNnum) {
       case 1:
-        navigate("/selftest");
+        navigate("/online/test/ex");
         break;
 
       default:
@@ -53,11 +54,11 @@ const SubjectsListWrap = () => {
       <div className="box"></div>
       <div className="box"></div>
 
-{/* <button class="button-24" role="button">
+      {/* <button class="button-24" role="button">
   <span class="text">Button 24</span>
 </button> */}
 
-{/* .button-24 {
+      {/* .button-24 {
   background-color: transparent;
   background-image: linear-gradient(#fff, #f5f5fa);
   border: 0 solid #003dff;
@@ -100,9 +101,6 @@ const SubjectsListWrap = () => {
   cursor: not-allowed;
   opacity: .5;
 } */}
-
-
-
     </SubjectsListWrapStyle>
   );
 };

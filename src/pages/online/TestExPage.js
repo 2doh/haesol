@@ -1,19 +1,17 @@
-import styled from "@emotion/styled";
 import GreenHeaderNoOption from "components/layout/header/GreenHeaderNoOption";
+import React from "react";
 import TestTitle from "./TestTitle";
 import TestQuestion from "./TestQuestion";
 import TestAnswer from "./TestAnswer";
-import { useEffect, useState } from "react";
-import usePreventRefresh from "hooks/common/usePreventRefresh";
-import usePreventGoBack from "hooks/common/usePreventGoBack";
-import { useLocation } from "react-router";
+import styled from "@emotion/styled";
+import { useNavigate } from "react-router";
 
-const TestWrap = styled.div`
+const TestExWrap = styled.div`
   position: absolute;
   width: 100%;
   height: calc(100vh - 70px);
 
-  .test-page {
+  .test-ex-page {
     width: 1180px;
     height: 100%;
     background-color: #f3f9fa;
@@ -40,7 +38,7 @@ const TestWrap = styled.div`
   }
 
   @media screen and (max-width: 1180px) {
-    .test-page {
+    .test-ex-page {
       width: auto;
       .test-page-inner {
         display: flex;
@@ -56,35 +54,34 @@ const TestWrap = styled.div`
   }
 `;
 
-const TestPage = () => {
-  const location = useLocation();
-  // const subjects = location.state.subjects;
-  // useEffect(() => {
-  //   console.log(subjects);
-  // }, [subjects]);
-  /** 저장하면 */
-  const [alertMessage, setAlertMessage] = useState(
-    "저장하기 또는 제출하기 버튼을 눌러주세요.",
-  );
+export const TestExPage = () => {
+  const navigate = useNavigate();
 
-  usePreventRefresh();
-  usePreventGoBack(alertMessage);
+  const startTest = subjects => {
+    // console.log(subjects);
+    navigate("/online/test", { state: { subjects: subjects } });
+  };
 
   return (
     <>
       <GreenHeaderNoOption />
-      <TestWrap>
-        <div className="test-page">
-          <TestTitle />
+      <TestExWrap>
+        <div className="test-ex-page">
+          <button
+            onClick={() => {
+              startTest("korean");
+            }}
+          >
+            시작하기
+          </button>
+          <button>설명보기</button>
+          {/* <TestTitle />
           <div className="test-page-inner">
-            {/* <TestQuestion subjects={subjects} /> */}
-            <TestQuestion subjects={"korean"} />
+            <TestQuestion />
             <TestAnswer />
-          </div>
+          </div> */}
         </div>
-      </TestWrap>
+      </TestExWrap>
     </>
   );
 };
-
-export default TestPage;

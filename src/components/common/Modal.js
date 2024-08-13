@@ -14,6 +14,7 @@ import { deleteNotice, modifyStudentInfo } from "api/student/studentapi";
 import NoticeList from "pages/notice/NoticeList";
 import { useNavigate } from "react-router";
 import { putChildInfo, putParentsPwChange } from "api/parents/mychildinfo";
+import { getChildList } from "api/signup/parentapi";
 
 const ModalStyle = styled.div`
   position: fixed;
@@ -104,6 +105,10 @@ const ModalStyle = styled.div`
     width: 100%;
     text-align: center !important;
   }
+
+  .modal-inner {
+    height: auto;
+  }
 `;
 
 const Modal = () => {
@@ -114,6 +119,9 @@ const Modal = () => {
   const modalState = useSelector(state => state.modalSlice);
   const dispatch = useDispatch();
   const navi = useNavigate();
+
+  // 자녀 코드
+  const childCode = useRef();
 
   const [min, setMin] = useState(3);
   const [sec, setSec] = useState(0);
@@ -328,9 +336,9 @@ const Modal = () => {
     /** 모달 생성시 스크롤 금지 */
     const prevScrollY = preventScroll();
 
-    if (modalState.modalType === "TelAcceptModal") {
-      timerTime();
-    }
+    // if (modalState.modalType === "TelAcceptModal") {
+    //   timerTime();
+    // }
 
     return () => {
       allowScroll(prevScrollY);
@@ -405,6 +413,34 @@ const Modal = () => {
     }
   };
 
+  const handleAddChild = async e => {
+    e.preventDefault();
+    // console.log("자녀 코드 : ", childCode.current.value);
+
+    if (!childCode.current.value) {
+      console.log("값 없음.");
+    } else {
+      console.log("값 있음.");
+      const res = await getChildList({ searchWord: childCode.current.value });
+      console.log(res);
+    }
+
+    // try {
+    //   const res = await singupAccept(
+    //     modalState.bodyText[2],
+    //     modalState.bodyText[3],
+    //   );
+    //   if (res) {
+    //     const data = {
+    //       modalRes: [!modalState.modalRes],
+    //     };
+    //     dispatch(updateModalDate(data));
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    // }
+  };
+
   return (
     <ModalStyle>
       <div className="modal-wrap">
@@ -450,6 +486,35 @@ const Modal = () => {
               <div className="modal-body-text-div basic-modal-div">
                 <div className="modal-text">{modalState.bodyText[0]}</div>
               </div>
+            </div>
+          ) : null}
+
+          {/* AddChildModal */}
+          {modalState.modalType === "AddChildModal" ? (
+            <div className="modal-body">
+              <div className="add-child-modal-body-text-div">
+                <div className="add-child-modal-text">자녀 코드</div>
+              </div>
+              <div className="add-child-modal-body-text-div add-child-modal-body-input-btn-div">
+                <form
+                  onSubmit={e => {
+                    handleAddChild(e);
+                  }}
+                >
+                  <input type="text" ref={childCode} />
+                  <button type="submit">인증</button>
+                </form>
+              </div>
+              <div className="pw-modal-body-text-div">
+                <div className="pw-modal-text">인증 전</div>
+              </div>
+              {validationConfirmMsg === "" ? null : (
+                <div className="pw-modal-body-text-div pw-error-msg-div">
+                  <div className="pw-modal-text pw-error-msg">
+                    {validationConfirmMsg}
+                  </div>
+                </div>
+              )}
             </div>
           ) : null}
 
