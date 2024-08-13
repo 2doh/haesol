@@ -43,7 +43,7 @@ const VocaLearn = () => {
   const handleOnSubmit = e => {
     e.preventDefault();
     const currentWord = getObj[index]?.answer;
-    console.log(currentWord);
+    // console.log(currentWord);
     if (onAnswer === currentWord) {
       alert("정답");
       setOnAnswer("");
@@ -128,6 +128,14 @@ const VocaLearn = () => {
 
   useEffect(() => {
     if (isTranscript === getObj[index]?.word) {
+      if (onListening) {
+        SpeechRecognition.stopListening();
+        if (audioStream) {
+          audioStream.getTracks().forEach(track => track.stop());
+          setAudioStream(null);
+        }
+        setOnListening(false);
+      }
       alert("정답!");
       if (index < getObj.length - 1) {
         setIndex(index + 1);
@@ -154,7 +162,7 @@ const VocaLearn = () => {
               index={index}
               setIndex={setIndex}
               learnState={learnState}
-              listening={listening}
+              audioStream={audioStream}
               resetTranscript={resetTranscript}
               setIsTranscript={setIsTranscript}
             />

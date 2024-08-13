@@ -33,6 +33,27 @@
   font-size: 24px;
   color: #1b4957;
 }
+.voca-wrap .voca-top .voca-top-soundwrap {
+  gap: 10px;
+  display: flex;
+  align-items: center;
+}
+.voca-wrap .voca-top .voca-top-soundwrap .voca-top-volumeslider {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+       appearance: none;
+  height: 8px;
+  cursor: pointer;
+  background-color: #add2d8;
+}
+.voca-wrap .voca-top .voca-top-soundwrap ::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 16px;
+  width: 16px;
+  background-color: #1b4957;
+  cursor: pointer;
+}
 .voca-wrap .voca-main {
   width: 100%;
   height: 400px;

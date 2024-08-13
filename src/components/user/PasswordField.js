@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import cleanupBt from "../../images/tabler_circle-x-filled.svg";
 import { PassValidation } from "utils/helpers";
+import usePlaceholder from "hooks/common/usePlaceholder";
 
 // userPass는 입력되는 사용자의 비밀번호임
 const PasswordField = ({ children, userPass, setUserPass }) => {
-  const [passPlaceholder, setPassPlaceholder] =
-    useState("비밀번호를 입력해 주세요");
+  const { placeholder, handleFocus, handleBlur } =
+    usePlaceholder("비밀번호를 입력해 주세요");
   const [changeInputType, setChangeInputType] = useState("password");
   const [showPass, setShowPass] = useState(false);
 
@@ -37,9 +38,9 @@ const PasswordField = ({ children, userPass, setUserPass }) => {
       <input
         className="login-panel-userpass-input"
         type={changeInputType}
-        placeholder={passPlaceholder}
-        onFocus={() => setPassPlaceholder("")}
-        onBlur={() => setPassPlaceholder("비밀번호를 입력해 주세요")}
+        placeholder={placeholder}
+        onFocus={() => handleFocus("")}
+        onBlur={() => handleBlur("")}
         value={userPass}
         onChange={e => {
           handleOnChange(e);
