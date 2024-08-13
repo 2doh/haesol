@@ -16,6 +16,18 @@
     transform: rotate(0deg);
   }
 }
+.main-core {
+  margin: 0 auto;
+  width: 1180px;
+  padding-top: 70px;
+  padding-bottom: 120px;
+  min-height: calc(100vh - 328px);
+}
+@media screen and (max-width: 1023px) {
+  .main-core {
+    padding-top: 70px;
+  }
+}
 .main-core .student-list-title {
   display: flex;
   align-items: center;
@@ -198,21 +210,14 @@
   color: #757575;
   font-family: "NexonMaplestory";
 }
-.main-core .info-contain-top .info-item-top .info-title .form-check,
-.main-core .info-contain-top .info-item-right .info-title .form-check,
-.main-core .info-contain-mid .info-item-top .info-title .form-check,
-.main-core .info-contain-mid .info-item-right .info-title .form-check {
-  margin-left: 10px;
-  display: flex;
-  justify-content: center;
-  gap: 5px;
-}
-.main-core .info-contain-top .info-item-top .info-title .form-check .form-check-gender,
-.main-core .info-contain-top .info-item-right .info-title .form-check .form-check-gender,
-.main-core .info-contain-mid .info-item-top .info-title .form-check .form-check-gender,
-.main-core .info-contain-mid .info-item-right .info-title .form-check .form-check-gender {
-  width: 15px;
-  height: 15px;
+.main-core .info-contain-top .info-item-top .info-title .form-check .form-gender,
+.main-core .info-contain-top .info-item-right .info-title .form-check .form-gender,
+.main-core .info-contain-mid .info-item-top .info-title .form-check .form-gender,
+.main-core .info-contain-mid .info-item-right .info-title .form-check .form-gender {
+  width: 28px;
+  height: 28px;
+  text-align: center;
+  padding-right: 5px;
 }
 .main-core .info-contain-top .info-item-mid,
 .main-core .info-contain-mid .info-item-mid {
@@ -386,18 +391,15 @@
   align-items: center;
   border-right: none;
 }
-.main-core .student-info .grid-frame .grid-inner .grid-inner-item {
+.main-core .student-info .grid-frame .grid-inner .grid-inner-info {
   background: #e7d9d9;
   border-right: 2px solid #886348;
 }
-.main-core .student-info .grid-frame .grid-inner .grid-inner-item1 {
+.main-core .student-info .grid-frame .grid-inner .grid-inner-info1 {
   background: #efece8;
   border-right: 2px solid #886348;
 }
-.main-core .student-info .grid-frame .grid-inner .grid-inner-item:last-child {
-  border-right: none;
-}
-.main-core .student-info .grid-frame .grid-inner .grid-inner-item1:last-child {
+.main-core .student-info .grid-frame .grid-inner .grid-inner-info1:last-child {
   border-right: none;
 }
 .main-core .student-info .grid-frame .grid-inner .sign-off-on-buttons {

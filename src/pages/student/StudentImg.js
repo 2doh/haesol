@@ -27,35 +27,47 @@ const StudentImg = ({ studentPk, studentPic }) => {
   // 이미지 업로드 및 미리보기용 함수
   const handleFileChange = e => {
     const file = e.target.files[0];
-    // 전송 파일 보관
-    setSendFile(file);
-    // 미리보기용
-    const url = URL.createObjectURL(file);
-    // 웹 브라우저 임시 파일 주소
-    setPreviewFile(url);
+
+    if (file) {
+      // 전송 파일 보관
+      setSendFile(file);
+      // 미리보기용
+      const url = URL.createObjectURL(file);
+      // 웹 브라우저 임시 파일 주소
+      setPreviewFile(url);
+    }
   };
 
-  const handleFileClick = () => {
-    fileBt.current.click();
-  };
-
-  // useEffect(() => {
-  //   if (studentPic) {
-  //     setPreviewImg(
-  //       `http://112.222.157.156:5121/pic/2nd/student/${studentPk}/${studentPic}`,
-  //     );
-  //   }
-  // }, [studentPic, previewImg]);
-
-  // const handleFileChange = e => {
-  //   const tempFile = e.target.files[0];
-  //   const tempUrl = URL.createObjectURL(tempFile);
-  //   // console.log(tempUrl);
-  //   setPreviewImg(tempUrl);
-  //   // 전송할 파일 변경(주의. 파일을 넣어주자.)
-  //   setImgFile(tempFile);
+  //   // 전송 파일 보관
+  //   setSendFile(file);
+  //   // 미리보기용
+  //   const url = URL.createObjectURL(file);
+  //   // 웹 브라우저 임시 파일 주소
+  //   setPreviewFile(url);
   // };
 
+  const handleFileClick = () => {
+    if (fileBt.current) {
+      fileBt.current.click();
+    }
+  };
+
+  useEffect(() => {
+    const fetchImage = async () => {
+      if (studentPic) {
+        const imageUrl = `http://192.168.0.144:5121/pic/student/${studentPk}/${studentPic}`;
+        try {
+          const response = await axios.get(imageUrl, { responseType: "blob" });
+          const url = URL.createObjectURL(response.data);
+          setPreviewFile(url);
+        } catch (error) {
+          console.error("이미지를 가져오는 중 오류 발생:", error);
+        }
+      }
+    };
+
+    fetchImage();
+  }, [studentPk, studentPic]);
   const handleFileUpload = async () => {
     const formData = new FormData();
     const infoData = JSON.stringify({
@@ -65,10 +77,17 @@ const StudentImg = ({ studentPk, studentPic }) => {
     const dto = new Blob([infoData], { type: "application/json" });
     formData.append("pic", dto);
     // file 추가하기
-    formData.append("pic", sendFile);
+    if (sendFile) {
+      formData.append("pic", sendFile);
+    }
     // console.log("formData 데이터 전송");
     modifyStudentInfo(formData);
   };
+
+  //   <img
+  //   src={`http://192.168.0.144:5121/pic/download/student/${studentPk}/${studentPic}`}
+  //   className="info-img"
+  // />
 
   return (
     // 이미지 전체 영역
@@ -77,11 +96,10 @@ const StudentImg = ({ studentPk, studentPic }) => {
         handleFileClick();
       }}
     >
-      <img src={previewFile} className="info-img" />
-      {previewFile === null ? (
-        <div className="info-img">이미지 업로드</div>
+      {previewFile !== null ? (
+        <img src={previewFile} className="info-img" alt="Student" />
       ) : (
-        <img src={"주소"} className="info-img" />
+        <p>사진 업로드</p>
       )}
       <input
         style={{ display: "none" }}

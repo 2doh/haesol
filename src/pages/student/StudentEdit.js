@@ -10,6 +10,11 @@ import { openModal, updateModalDate } from "slices/modalSlice";
 import catPicture from "../../images/box-cat.jpg";
 import { getCookie } from "utils/cookie";
 import StudentImg from "./StudentImg";
+import HeaderTopPublic from "components/layout/header/HeaderTopPublic";
+import HeaderMemu from "components/layout/header/HeaderMenu";
+import Footer from "components/layout/Footer";
+import BoxTitle from "components/common/style/BoxTitle";
+import PageTitle from "components/common/style/PageTitle";
 
 const StudentEdit = () => {
   const userClass = getCookie("userClass");
@@ -138,8 +143,14 @@ const StudentEdit = () => {
     justify-content: center;
     flex-direction: column;
     margin-top: 120px;
-    width: 100%;
-    height: 100%;
+    margin: 0 auto;
+    width: 1080px;
+    padding-top: 70px;
+    padding-bottom: 120px;
+    @media screen and (max-width: 1023px) {
+      // top: 70px;
+      padding-top: 70px;
+    }
   `;
 
   const StudentsImeStyle = styled.div`
@@ -164,309 +175,297 @@ const StudentEdit = () => {
   `;
 
   return (
-    <div className="main-core">
-      <div className="student-list-title">
+    <>
+      <HeaderTopPublic />
+      <HeaderMemu />
+      <div className="main-core">
         {/* <!-- 제목 위치 --> */}
-        <span>
-          {userGrade}학년 {userClass}반
-        </span>
-        <p>학생 정보 관리</p>
-      </div>
-      {/* <!-- 신상정보 전체 레이아웃 --> */}
-      <div className="user-info-wrap">
-        {/* <!-- 탭 선택 부분 --> */}
-        <div className="user-info-tap">
-          <div className="property">
-            <div className="frame">
-              <div className="text-wrapper">신상 정보</div>
-            </div>
-            <div
-              className="div-wrapper"
-              onClick={() => {
-                handleClick();
-              }}
-            >
-              <div className="info-subtitle">성적 입력</div>
-            </div>
-          </div>
-
-          <div className="info-button">
-            <button
-              onClick={() => {
-                saveModifyInfo("BasicModal");
-              }}
-            >
-              저장
-            </button>
-            <button
-              onClick={() => {
-                modifyCancel("BasicModal");
-              }}
-            >
-              취소
-            </button>
-          </div>
-        </div>
-        {/* <!-- 입력 부분 --> */}
-        <div className="info-contain-top">
-          <div className="info-item-top">
-            <div className="info-title">
-              <span>학생명</span>
-              <input
-                type="text"
-                name="text"
-                placeholder="이름을 입력해주세요"
-                value={studentName}
-                onChange={e => {
-                  setStudentName(e.target.value);
+        {/* <PageTitle>
+            {userGrade}학년 {userClass}반
+          </PageTitle> */}
+        <PageTitle>학생 정보 관리</PageTitle>
+        {/* <!-- 신상정보 전체 레이아웃 --> */}
+        <div className="user-info-wrap">
+          {/* <!-- 탭 선택 부분 --> */}
+          <div className="user-info-tap">
+            <div className="property">
+              <div className="frame">
+                <div className="text-wrapper">신상 정보</div>
+              </div>
+              <div
+                className="div-wrapper"
+                onClick={() => {
+                  handleClick();
                 }}
-              />
-              <div className="form-check">
-                <input
-                  className="form-check-gender"
-                  type="radio"
-                  name="chk_info"
-                  value="남"
-                  checked={studentGender === "남"}
-                  // onChange={e => setStudentGender(e.target.value)}
-                />
-                남자
-                <input
-                  className="form-check-gender"
-                  type="radio"
-                  name="chk_info"
-                  value="여"
-                  checked={studentGender === "여"}
-                  // onChange={e => setStudentGender(e.target.value)}
-                />
-                여자
+              >
+                <div className="info-subtitle">성적 입력</div>
               </div>
             </div>
-            <div className="info-title">
-              <span>생년월일</span>
-              <input
-                type="date"
-                name="date"
-                value={studentBirth}
-                onChange={e => setStudentBirth(e.target.value)}
-              />
+
+            <div className="info-button">
+              <button
+                onClick={() => {
+                  saveModifyInfo("BasicModal");
+                }}
+              >
+                저장
+              </button>
+              <button
+                onClick={() => {
+                  modifyCancel("BasicModal");
+                }}
+              >
+                취소
+              </button>
             </div>
-            <div className="info-title">
-              <span>전화번호</span>
-              {/* <PhoneInputFields
+          </div>
+          {/* <!-- 입력 부분 --> */}
+          <div className="info-contain-top">
+            <div className="info-item-top">
+              <div className="info-title">
+                <span>학생명</span>
+                <input
+                  type="text"
+                  name="text"
+                  placeholder="이름을 입력해주세요"
+                  value={studentName}
+                  onChange={e => {
+                    setStudentName(e.target.value);
+                  }}
+                />
+
+                <div className="form-check">
+                  {studentGender === "남" ? (
+                    <input
+                      className="form-gender"
+                      // type="radio"
+                      name="chk_info"
+                      value="남"
+                      checked={studentGender === "남"}
+                      // onChange={e => setStudentGender(e.target.value)}
+                      style={{ background: "#efece8" }}
+                      disabled
+                    />
+                  ) : (
+                    <input
+                      className="form-gender"
+                      // type="radio"
+                      name="chk_info"
+                      value="여"
+                      checked={studentGender === "여"}
+                      // onChange={e => setStudentGender(e.target.value)}
+                      style={{ background: "#efece8" }}
+                      disabled
+                    />
+                  )}
+                </div>
+              </div>
+              <div className="info-title">
+                <span>생년월일</span>
+                <input
+                  type="date"
+                  name="date"
+                  value={studentBirth}
+                  onChange={e => setStudentBirth(e.target.value)}
+                />
+              </div>
+              <div className="info-title">
+                <span>전화번호</span>
+                {/* <PhoneInputFields
                 phoneNum={studentPhone}
                 onChange={e => setStudentPhone(e.target.value)}
               /> */}
-              <PhoneInfoStyle
-                type="text"
-                name="text"
-                placeholder=""
-                value={studentPhone}
-              />
+                <PhoneInfoStyle
+                  type="text"
+                  name="text"
+                  placeholder=""
+                  disabled
+                  value={studentPhone}
+                />
+              </div>
+            </div>
+            <div className="info-item-right">
+              <div className="info-title">
+                <span>학부모명</span>
+                <input
+                  type="text"
+                  name="text"
+                  placeholder=""
+                  disabled
+                  value={parentName}
+                  onChange={e => setParentName(e.target.value)}
+                  style={{ background: "#efece8" }}
+                />
+              </div>
+              <div className="info-title">
+                <span>관계</span>
+                <select
+                  name="family-info"
+                  value={connet}
+                  disabled
+                  // onChange={e => setConnet(e.target.value)}
+                  style={{ background: "#efece8" }}
+                ></select>
+              </div>
+              <div className="info-title">
+                <span>학부모 전화번호</span>
+                <PhoneInfoStyle
+                  type="text"
+                  name="text"
+                  placeholder=""
+                  value={parentPhone}
+                  disabled
+                />
+              </div>
+            </div>
+            <div className="info-img">
+              {/* 이미지 수정 필요 */}
+              {studentPic !== null ? (
+                <StudentsImeStyle>
+                  <img src={studentPic} alt={studentPic} />
+                </StudentsImeStyle>
+              ) : (
+                <StudentImg />
+              )}
             </div>
           </div>
-          <div className="info-item-right">
-            <div className="info-title">
-              <span>학부모명</span>
-              <input
-                type="text"
-                name="text"
-                placeholder=""
-                readOnly
-                value={parentName}
-                onChange={e => setParentName(e.target.value)}
-                style={{ background: "#efece8" }}
-              />
-            </div>
-            <div className="info-title">
-              <span>관계</span>
-              <select
-                name="family-info"
-                value={connet}
-                readOnly
-                // onChange={e => setConnet(e.target.value)}
-                style={{ background: "#efece8" }}
-              >
-                <option value="부" disabled>
-                  부
-                </option>
-                <option value="모" disabled>
-                  모
-                </option>
-                <option value="조부" disabled>
-                  조부
-                </option>
-                <option value="조모" disabled>
-                  조모
-                </option>
-                <option value="기타" disabled>
-                  기타
-                </option>
-              </select>
-            </div>
-            <div className="info-title">
-              <span>학부모 전화번호</span>
-              {/* <PhoneInputFields
-                placeholder="전화번호를 입력하세요"
-                phoneNum={parentPhone}
-                readOnly
-                // onChange={e => setParentPhone(e.target.value)}
-              /> */}
-              <PhoneInfoStyle
-                type="text"
-                name="text"
-                placeholder=""
-                value={parentPhone}
-              />
-            </div>
-          </div>
-          <div className="info-img">
-            {/* 이미지 수정 필요 */}
-            {studentPic !== null ? (
-              <StudentsImeStyle>
-                <img src={studentPic} alt={studentPic} />
-              </StudentsImeStyle>
-            ) : (
-              <StudentImg />
-            )}
-          </div>
-        </div>
-        <div className="info-contain-mid">
-          <div className="info-item-mid">
-            <div className="info-title">
-              <span>주소</span>
-              <div className="add-form">
-                <div>
+          <div className="info-contain-mid">
+            <div className="info-item-mid">
+              <div className="info-title">
+                <span>주소</span>
+                <div className="add-form">
+                  <div>
+                    <input
+                      type="text"
+                      name="text"
+                      value={studentZoneCode}
+                      readOnly
+                    ></input>
+                  </div>
                   <input
                     type="text"
                     name="text"
-                    value={studentZoneCode}
+                    className="info-add"
                     readOnly
-                  ></input>
+                    value={studentAddr}
+                  />
+                  <input
+                    type="text"
+                    name="text"
+                    placeholder="상세주소를 입력해주세요."
+                    className="info-add"
+                    value={studentDetail}
+                    readOnly
+                  />
                 </div>
-                <input
-                  type="text"
-                  name="text"
-                  // placeholder={address}
-                  className="info-add"
-                  readOnly
-                  value={studentAddr}
-                  // onChange={() => setAddress(roadAddr)}
+              </div>
+            </div>
+          </div>
+          <div className="info-contain-top">
+            <div className="info-item-bottom">
+              <div className="info-title">
+                <span>기타사항</span>
+                <textarea
+                  // placeholder="기타 특이사항을 입력하세요"
+                  value={studentEtc}
+                  onChange={e => setStudentEtc(e.target.value)}
                 />
-                <input
-                  type="text"
-                  name="text"
-                  placeholder="상세주소를 입력해주세요."
-                  className="info-add"
-                  value={studentDetail}
-                  readOnly
-                  // onChange={e => setStudentDetail(e.target.value)}
-                />
+              </div>
+              <div className="info-title"></div>
+            </div>
+          </div>
+          <div className="info-contain-top">
+            <div className="info-none-modify">
+              <div className="info-title">
+                <span>최초 등록일</span>
+                <div>{studentCreatedAt}</div>
+              </div>
+            </div>
+          </div>
+          <div className="info-contain-top">
+            <div className="info-none-modify">
+              <div className="info-title">
+                <span>아이디</span>
+                <div>{parentId}</div>
+              </div>
+            </div>
+          </div>
+          <div className="info-contain-top">
+            <div className="info-none-modify" id="info-none-modify-last">
+              <div className="info-title">
+                <span>현재 학급</span>
+                <div>
+                  {studentGrade}학년 {studentClass}반
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="info-contain-top">
-          <div className="info-item-bottom">
-            <div className="info-title">
-              <span>기타사항</span>
-              <textarea
-                // placeholder="기타 특이사항을 입력하세요"
-                value={studentEtc}
-                onChange={e => setStudentEtc(e.target.value)}
-              />
+        <StudentsInfoStyle>
+          <div className="student-info">
+            <div className="main-schedule-title main-contents-title">
+              <BoxTitle>학생 기록 정보</BoxTitle>
             </div>
-            <div className="info-title"></div>
-          </div>
-        </div>
-        <div className="info-contain-top">
-          <div className="info-none-modify">
-            <div className="info-title">
-              <span>최초 등록일</span>
-              <div>{studentCreatedAt}</div>
-            </div>
-          </div>
-        </div>
-        <div className="info-contain-top">
-          <div className="info-none-modify">
-            <div className="info-title">
-              <span>아이디</span>
-              <div>{parentId}</div>
-            </div>
-          </div>
-        </div>
-        <div className="info-contain-top">
-          <div className="info-none-modify" id="info-none-modify-last">
-            <div className="info-title">
-              <span>현재 학급</span>
-              <div>
-                {studentGrade}학년 {studentClass}반
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <StudentsInfoStyle>
-        <div className="student-info">
-          <div className="main-schedule-title main-contents-title">
-            <div className="main-schedule-title-text">학생 기록 정보</div>
-          </div>
-          <div className="grid-frame">
-            {prevEtcList.length > 0 ? (
-              prevEtcList.map((item, index) => (
+            <div className="grid-frame">
+              {prevEtcList.length > 0 ? (
+                prevEtcList.map((item, index) => (
+                  <>
+                    <div className="item" key={index}>
+                      <div className="grid-inner">
+                        <div className="grid-inner-item">
+                          <div className="grid-inner-item-text">학급</div>
+                        </div>
+                        <div className="grid-inner-item1">
+                          <div className="grid-inner-item-text">
+                            {item.uclass}
+                          </div>
+                        </div>
+                        <div className="grid-inner-item">
+                          <div className="grid-inner-item-text">
+                            담당 교직원
+                          </div>
+                        </div>
+                        <div className="grid-inner-item1">
+                          <div className="grid-inner-item-text">
+                            {item.teacherName}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="student-info-readonly">
+                      {item.etc || "기록된 정보가 없습니다."}
+                    </div>
+                  </>
+                ))
+              ) : (
                 <>
-                  <div className="item" key={index}>
+                  <div className="item">
                     <div className="grid-inner">
-                      <div className="grid-inner-item">
+                      <div className="grid-inner-info">
                         <div className="grid-inner-item-text">학급</div>
                       </div>
-                      <div className="grid-inner-item1">
-                        <div className="grid-inner-item-text">
-                          {item.uclass}
-                        </div>
+                      <div className="grid-inner-info1">
+                        <div className="grid-inner-item-text">-</div>
                       </div>
-                      <div className="grid-inner-item">
+                      <div className="grid-inner-info">
                         <div className="grid-inner-item-text">담당 교직원</div>
                       </div>
-                      <div className="grid-inner-item1">
-                        <div className="grid-inner-item-text">
-                          {item.teacherName}
-                        </div>
+                      <div className="grid-inner-info1">
+                        <div className="grid-inner-item-text">-</div>
                       </div>
                     </div>
                   </div>
                   <div className="student-info-readonly">
-                    {item.etc || "기록된 정보가 없습니다."}
+                    이전 학기 정보가 없습니다.
                   </div>
                 </>
-              ))
-            ) : (
-              <>
-                <div className="item">
-                  <div className="grid-inner">
-                    <div className="grid-inner-item">
-                      <div className="grid-inner-item-text">학급</div>
-                    </div>
-                    <div className="grid-inner-item1">
-                      <div className="grid-inner-item-text">-</div>
-                    </div>
-                    <div className="grid-inner-item">
-                      <div className="grid-inner-item-text">담당 교직원</div>
-                    </div>
-                    <div className="grid-inner-item1">
-                      <div className="grid-inner-item-text">-</div>
-                    </div>
-                  </div>
-                </div>
-                <div className="student-info-readonly">
-                  이전 학기 정보가 없습니다.
-                </div>
-              </>
-            )}
+              )}
+            </div>
           </div>
-        </div>
-      </StudentsInfoStyle>
-    </div>
+        </StudentsInfoStyle>
+      </div>
+      <Footer />
+    </>
   );
 };
 
