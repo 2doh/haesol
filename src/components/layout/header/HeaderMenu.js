@@ -224,10 +224,11 @@ const HeaderMemu = () => {
 
     switch (pageNum) {
       case 1:
-        navigate("/notice/list/classid");
+        // navigate("/notice/list/classid");
+        navigate("");
         break;
       case 2:
-        navigate("/test");
+        navigate("/students");
         break;
       case 3:
         navigate("/online");
@@ -240,6 +241,7 @@ const HeaderMemu = () => {
         break;
       case 10:
         // navigate("/selftest");
+        alert("준비중인 서비스입니다.");
 
         // 추가하기
         // navigate("/selftest");

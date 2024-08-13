@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import React from "react";
+import { FaSearch } from "react-icons/fa";
 
 const OnlineMainTopStyle = styled.div`
   min-height: 150px;
@@ -10,6 +10,8 @@ const OnlineMainTopStyle = styled.div`
   align-items: center;
 
   .search-container {
+    margin: 0 20px;
+
     background: #fff;
     height: 60px;
     border-radius: 30px;
@@ -44,26 +46,38 @@ const OnlineMainTopStyle = styled.div`
     width: 100px;
     height: 100px;
   }
+
+  .search-button {
+    min-width: 70px;
+  }
 `;
 
 const OnlineMainTop = () => {
   return (
     <OnlineMainTopStyle>
-      <button className="button-51" role="button">
+      {/* <button className="button-51" role="button">
         <span className="button-51__Content">
           <span className="button-51__Text text">Button 51</span>
         </span>
-      </button>
+      </button> */}
       <div className="search-container">
         <input
           type="text"
           name="search"
-          placeholder="Search..."
+          placeholder="검색어를 입력해주세요."
           className="search-input"
         />
         <a href="#" className="search-btn">
           <i className="fas fa-search"></i>
         </a>
+      </div>
+      <div className="search-button">
+        <button className="button-27" role="button">
+          <span className="text">
+            {/* <FaSearch /> */}
+            검색
+          </span>
+        </button>
       </div>
     </OnlineMainTopStyle>
   );
