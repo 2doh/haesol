@@ -6,7 +6,7 @@ import TestAnswer from "./TestAnswer";
 import { useEffect, useState } from "react";
 import usePreventRefresh from "hooks/common/usePreventRefresh";
 import usePreventGoBack from "hooks/common/usePreventGoBack";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
 const TestWrap = styled.div`
   position: absolute;
@@ -57,11 +57,25 @@ const TestWrap = styled.div`
 `;
 
 const TestPage = () => {
+  const navigate = useNavigate();
   const location = useLocation();
-  // const subjects = location.state.subjects;
-  // useEffect(() => {
-  //   console.log(subjects);
-  // }, [subjects]);
+  const subjectsNum = location.state?.subjectsNum;
+  const subjectsName = location.state?.subjectsName;
+
+  /** 받은 과목 번호 */
+  useEffect(() => {
+    if (!subjectsNum || !subjectsName) {
+      console.log("subjectsNum : ", subjectsNum);
+      console.log("subjectsName : ", subjectsName);
+      console.log("데이터 없음. 처리하기");
+      navigate("/");
+    } else {
+      console.log("subjectsNum : ", subjectsNum);
+      console.log("subjectsName : ", subjectsName);
+      console.log("데이터 있음. ");
+    }
+  }, [subjectsNum, subjectsName]);
+
   /** 저장하면 */
   const [alertMessage, setAlertMessage] = useState(
     "저장하기 또는 제출하기 버튼을 눌러주세요.",
@@ -78,7 +92,7 @@ const TestPage = () => {
           <TestTitle />
           <div className="test-page-inner">
             {/* <TestQuestion subjects={subjects} /> */}
-            <TestQuestion subjects={"korean"} />
+            <TestQuestion subjects={1} />
             <TestAnswer />
           </div>
         </div>

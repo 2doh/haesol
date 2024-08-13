@@ -56,36 +56,9 @@ import OnlineMainPage from "pages/online/onlinemain/OnlineMainPage";
 import MyChildList from "pages/parents/MyChildList";
 import { TestExPage } from "pages/online/TestExPage";
 
-// import jwt from "jsonwebtoken";
+const Main = styled.div``;
 
-const Main = styled.div`
-  /* background-color: #f3f9fa;
-  width: 1180px; */
-  /* min-height: 687px; */
-  /* min-height: calc(100vh - 260px);
-  height: 100%;
-  margin: 0 auto;
-  padding: 40px;
-  padding-bottom: 80px; */
-
-  /* background-color: #f3f9fa; */
-  /* background-color: ${getCookie("accessToken") ? "#FBFAF9" : "#f3f9fa"}; */
-  /* width: 1180px; */
-  /* min-height: calc(100vh - 260px); */
-  /* height: 100%; */
-  /* margin: 0 auto; */
-  /* padding: 40px; */
-  /* padding-bottom: 0; */
-  /* margin-bottom: -40px; */
-
-  /* 내부 스타일 */
-  & > div,
-  main {
-    /* min-height: calc(100vh - 260px); */
-    /* padding-bottom: 120px; */
-  }
-`;
-
+/** 모달 스타일 */
 const ModalStyle = styled.div`
   position: absolute;
   left: 0px;
@@ -114,13 +87,10 @@ const ModalStyle = styled.div`
 `;
 
 function App() {
-  const [notFoundPage, setNotFoundPage] = useState(false);
   const [loginUserType, setLoginUserType] = useState(getCookie("userRole"));
   const [onHedaer, setOnHeader] = useState(true);
   const accessToken = getCookie("accessToken");
   const studentPk = getCookie("studentPk");
-
-  useEffect(() => {}, [notFoundPage]);
 
   /** 모달 상태 관리 */
   const modalState = useSelector(state => state.modalSlice);
@@ -142,14 +112,12 @@ function App() {
 
   return (
     <BrowserRouter>
+      {/* 모달 */}
       {modalState.isOpen ? (
         <ModalStyle>
           <Modal />
         </ModalStyle>
       ) : null}
-
-      {/* {onHedaer ? <Header /> : null} */}
-      {/* 헤더 샘플 */}
 
       <Main>
         <Routes>
@@ -414,11 +382,7 @@ function App() {
             />
           </Route>
 
-          <Route
-            path="*"
-            element={<NotFound />}
-            setNotFoundPage={setNotFoundPage}
-          ></Route>
+          <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </Main>
     </BrowserRouter>

@@ -181,10 +181,10 @@ const TestQuestion = ({ subjects }) => {
     let res = [];
 
     switch (subjects) {
-      case "korean":
+      case 1:
         res = await getOnlineTest(1);
         break;
-      case "math":
+      case 2:
         res = await getOnlineTest(2);
         return;
       default:

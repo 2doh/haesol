@@ -392,6 +392,7 @@ const ParentsProfile = () => {
         {/* 스프링 영역 */}
         <section className="chainSection"></section>
       </div>
+      
     </ParentsProfileStyle>
   );
 };

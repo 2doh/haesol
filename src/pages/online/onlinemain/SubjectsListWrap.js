@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
 const SubjectsListWrapStyle = styled.div`
@@ -16,43 +16,83 @@ const SubjectsListWrapStyle = styled.div`
     height: 200px;
     border-radius: 20px;
     background-color: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 `;
 
 const SubjectsListWrap = () => {
   const navigate = useNavigate();
 
-  const movePage = pageNnum => {
-    switch (pageNnum) {
-      case 1:
-        navigate("/online/test/ex");
-        break;
+  // 과목 리스트
+  const [subjectsList, setSubjectsList] = useState([
+    "국어",
+    "수학",
+    "영어",
+    "음악",
+    "미술",
+    "체육",
+    "바른생활",
+    "사회/도덕",
+    "실과",
+  ]);
 
-      default:
-        break;
+  /** 공백 box 개수 */
+  const [visibilityNum, setVisibilityNum] = useState(0);
+
+  /** 공백 채우기 계산 */
+  useEffect(() => {
+    if (subjectsList.length % 4 === 0) {
+      setVisibilityNum(0);
+    } else {
+      setVisibilityNum(4 - (subjectsList.length % 4));
     }
+  }, [visibilityNum]);
+
+  /** 공백 채우기 계산 */
+  // useEffect(() => {
+  //   if (subjectsList.length % 4 === 0) {
+  //     setVisibilityNum(0);
+  //   } else {
+  //     setVisibilityNum(4 - (subjectsList.length % 4));
+  //   }
+  // }, [subjectsList]);
+
+  const movePage = (pageNum, pageName) => {
+    if (pageNum >= 1 && pageNum <= 2) {
+      // console.log("페이지 번호 : ", pageNum);
+      navigate("/online/test/ex", {
+        state: { subjectsNum: pageNum, subjectsName: pageName },
+      });
+    } else {
+      alert("준비중인 서비스입니다.");
+    }
+    // switch (pageNnum) {
+    //   case 1:
+    //     navigate("/online/test/ex");
+    //     break;
+
+    //   default:
+    //     break;
+    // }
   };
   return (
     <SubjectsListWrapStyle>
-      <div
-        className="box"
-        onClick={() => {
-          movePage(1);
-        }}
-      >
-        국어
-      </div>
-      <div className="box">수학</div>
-      <div className="box">영어</div>
-      <div className="box">과학</div>
-      <div className="box">음악</div>
-      <div className="box">미술</div>
-      <div className="box">체육</div>
-      <div className="box">바른 생활</div>
-      <div className="box">사회/도덕</div>
-      <div className="box">실과</div>
-      <div className="box"></div>
-      <div className="box"></div>
+      {subjectsList.map((item, index) => {
+        return (
+          <div
+            key={index}
+            className="box card card-1"
+            onClick={() => {
+              movePage(index + 1, item);
+            }}
+          >
+            {item}
+          </div>
+        );
+      })}
 
       {/* <button class="button-24" role="button">
   <span class="text">Button 24</span>

@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { useNavigate } from "react-router";
 
 const SubSubjectsListWrapStyle = styled.div`
   min-height: 150px;
@@ -13,14 +14,21 @@ const SubSubjectsListWrapStyle = styled.div`
 
   & button {
     width: 100%;
-    height: 130px;
+    height: 100%;
+    /* height: 130px; */
   }
 `;
 
 const SubSubjectsListWrap = () => {
+  const navigate = useNavigate();
+
+  const movePage = type => {
+    navigate("/learn/voca", { state: { type: type } });
+  };
+
   return (
     <SubSubjectsListWrapStyle>
-      <button className="button-36" role="button">
+      {/* <button className="button-36" role="button">
         <span className="text">말하기</span>
       </button>
       <button className="button-36" role="button">
@@ -28,7 +36,42 @@ const SubSubjectsListWrap = () => {
       </button>
       <button className="button-36" role="button">
         <span className="text">쓰기</span>
+      </button> */}
+
+      <button
+        className="button-1"
+        role="button"
+        onClick={() => {
+          movePage("말하기");
+        }}
+      >
+        <span className="button-1-shadow"></span>
+        <span className="button-1-edge"></span>
+        <span className="button-1-front text">말하기</span>
       </button>
+      <button
+        className="button-1"
+        role="button"
+        onClick={() => {
+          movePage("듣기");
+        }}
+      >
+        <span className="button-1-shadow"></span>
+        <span className="button-1-edge"></span>
+        <span className="button-1-front text">듣기</span>
+      </button>
+      <button
+        className="button-1"
+        role="button"
+        onClick={() => {
+          movePage("쓰기");
+        }}
+      >
+        <span className="button-1-shadow"></span>
+        <span className="button-1-edge"></span>
+        <span className="button-1-front text">쓰기</span>
+      </button>
+
       {/* <div className="sub-subjects">SubSubjectsListWrap</div>
       <div className="sub-subjects">ectsListWrap</div> */}
     </SubSubjectsListWrapStyle>
