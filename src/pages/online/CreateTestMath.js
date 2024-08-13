@@ -9,6 +9,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { openModal, updateModalDate } from "slices/modalSlice";
 import TestInputAnswer from "./TestInputAnswer";
 import { onlineTestCreate } from "api/online/onlinetestapi";
+import HeaderTopPublic from "components/layout/header/HeaderTopPublic";
+import HeaderMemu from "components/layout/header/HeaderMenu";
+import Footer from "components/layout/Footer";
 
 const TestTitleStyled = styled.div`
   display: flex;
@@ -257,155 +260,160 @@ const CreateTestMath = () => {
   };
 
   return (
-    <div className="main-core">
-      <TestTitleStyled>
-        {/* 제목 위치 */}
-        <span>수학</span>
-        <p>5학년 시험 출제</p>
-      </TestTitleStyled>
-      <div className="online-test-inner">
-        <div className="test-option">
-          <select
-            name="math-test"
-            value={selectedOption}
-            onChange={e => {
-              handleSelectChange(e);
-            }}
-          >
-            <option value="1">객관식</option>
-            <option value="2">주관식</option>
-          </select>
-        </div>
-
-        <div className="online-test-title">
-          <div className="online-test-title-top">
-            <div className="online-test-required-title">제목</div>
-            <input
-              className="online-test-title"
-              type="text"
-              placeholder="제목을 입력해주세요."
-              onChange={e => {
-                setTitle(e.target.value);
-              }}
-            ></input>
-          </div>
-
-          <div className="test-rating">
-            <div className="online-test-required-title">난이도</div>
-            <BasicRating starValue={starValue} setStarValue={setStarValue} />
-          </div>
-        </div>
-        <div className="online-test-content">
-          <div className="online-test-required-title">내용(문제)</div>
+    <>
+      <HeaderTopPublic />
+      <HeaderMemu />
+      <div className="main-core">
+        <TestTitleStyled>
+          {/* 제목 위치 */}
+          <span>수학</span>
+          <p>5학년 시험 출제</p>
+        </TestTitleStyled>
+        <div className="online-test-inner">
           <div className="test-option">
             <select
               name="math-test"
-              value={typeTag}
+              value={selectedOption}
               onChange={e => {
-                handleSelectTagType(e);
+                handleSelectChange(e);
               }}
             >
-              <option value="21">사칙연산</option>
-              <option value="22">단위환산</option>
-              <option value="23">그래프</option>
-              <option value="24">규칙찾기</option>
-              <option value="25">도형 넓이 계산</option>
+              <option value="1">객관식</option>
+              <option value="2">주관식</option>
             </select>
           </div>
-          <form>
-            <ReactQuill
-              onChange={value => {
-                setContents(value);
-              }}
-              modules={modules}
-              className="test-content-quill"
-              placeholder="내용을 입력해주세요"
-            />
-          </form>
-        </div>
-        <div className="online-test-content">
-          <div className="online-test-required-title">이미지 첨부</div>
-          <div className="online-test-file">
-            <input
-              // 파일 이름 미리보기 가능하도록 변경 필요
-              id="filebt_id"
-              type="file"
-              accept="image/*"
-              onChange={e => handleFileChange(e)}
-            />
+
+          <div className="online-test-title">
+            <div className="online-test-title-top">
+              <div className="online-test-required-title">제목</div>
+              <input
+                className="online-test-title"
+                type="text"
+                placeholder="제목을 입력해주세요."
+                onChange={e => {
+                  setTitle(e.target.value);
+                }}
+              ></input>
+            </div>
+
+            <div className="test-rating">
+              <div className="online-test-required-title">난이도</div>
+              <BasicRating starValue={starValue} setStarValue={setStarValue} />
+            </div>
           </div>
-        </div>
-        {/* 정답 객관식 */}
-        {selectedOption === "1" && (
           <div className="online-test-content">
-            <div className="online-test-required-title">
-              보기(정답)<p>정답에 체크해주세요.</p>
+            <div className="online-test-required-title">내용(문제)</div>
+            <div className="test-option">
+              <select
+                name="math-test"
+                value={typeTag}
+                onChange={e => {
+                  handleSelectTagType(e);
+                }}
+              >
+                <option value="21">사칙연산</option>
+                <option value="22">단위환산</option>
+                <option value="23">그래프</option>
+                <option value="24">규칙찾기</option>
+                <option value="25">도형 넓이 계산</option>
+              </select>
             </div>
-
-            <div className="online-test-select-wrap">
-              {multiple.map((item, index) => (
-                <div className="online-test-select" key={index}>
-                  <input
-                    type="checkbox"
-                    name={`option${index}`}
-                    className="checkbox"
-                    checked={answer === index}
-                    onChange={e => {
-                      handleCheckboxChange(e, index);
-                    }}
-                  />
-                  <label htmlFor={`option${index}`}>{index + 1}</label>
-                  <input
-                    type="text"
-                    className="select-input"
-                    value={item.content}
-                    onChange={event => handleInputChange(index, event)}
-                  />
-                </div>
-              ))}
-            </div>
+            <form>
+              <ReactQuill
+                onChange={value => {
+                  setContents(value);
+                }}
+                modules={modules}
+                className="test-content-quill"
+                placeholder="내용을 입력해주세요"
+              />
+            </form>
           </div>
-        )}
-
-        {/* 정답 주관식 */}
-        {selectedOption === "2" && (
           <div className="online-test-content">
-            <div className="online-test-content-write">
-              <div className="online-test-required-title">주관식</div>
-              <TestInputAnswer
-                placeholder={tempObj.wordMath}
-                setWord={setAnswer}
-              ></TestInputAnswer>
+            <div className="online-test-required-title">이미지 첨부</div>
+            <div className="online-test-file">
+              <input
+                // 파일 이름 미리보기 가능하도록 변경 필요
+                id="filebt_id"
+                type="file"
+                accept="image/*"
+                onChange={e => handleFileChange(e)}
+              />
             </div>
           </div>
-        )}
+          {/* 정답 객관식 */}
+          {selectedOption === "1" && (
+            <div className="online-test-content">
+              <div className="online-test-required-title">
+                보기(정답)<p>정답에 체크해주세요.</p>
+              </div>
 
-        <div className="button-section">
-          <button onClick={handleSave}>저장</button>
-          <button
-            onClick={() => {
-              modifyCancel("BasicModal");
-            }}
-          >
-            취소
-          </button>
-        </div>
-        <div className="online-test-content">
-          <div className="online-test-required-title">해설</div>
-          <form>
-            <ReactQuill
-              value={explanation}
-              onChange={value => {
-                setExplanation(value);
+              <div className="online-test-select-wrap">
+                {multiple.map((item, index) => (
+                  <div className="online-test-select" key={index}>
+                    <input
+                      type="checkbox"
+                      name={`option${index}`}
+                      className="checkbox"
+                      checked={answer === index}
+                      onChange={e => {
+                        handleCheckboxChange(e, index);
+                      }}
+                    />
+                    <label htmlFor={`option${index}`}>{index + 1}</label>
+                    <input
+                      type="text"
+                      className="select-input"
+                      value={item.content}
+                      onChange={event => handleInputChange(index, event)}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* 정답 주관식 */}
+          {selectedOption === "2" && (
+            <div className="online-test-content">
+              <div className="online-test-content-write">
+                <div className="online-test-required-title">주관식</div>
+                <TestInputAnswer
+                  placeholder={tempObj.wordMath}
+                  setWord={setAnswer}
+                ></TestInputAnswer>
+              </div>
+            </div>
+          )}
+
+          <div className="button-section">
+            <button onClick={handleSave}>저장</button>
+            <button
+              onClick={() => {
+                modifyCancel("BasicModal");
               }}
-              modules={modules}
-              className="test-content-quill"
-              placeholder="내용을 입력해주세요"
-            />
-          </form>
+            >
+              취소
+            </button>
+          </div>
+          <div className="online-test-content">
+            <div className="online-test-required-title">해설</div>
+            <form>
+              <ReactQuill
+                value={explanation}
+                onChange={value => {
+                  setExplanation(value);
+                }}
+                modules={modules}
+                className="test-content-quill"
+                placeholder="내용을 입력해주세요"
+              />
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 };
 

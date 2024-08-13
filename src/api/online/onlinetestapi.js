@@ -19,7 +19,6 @@ export const onlineTestCreate = async formData => {
   }
 };
 
-
 // 국어/수학 시험 get
 export const getOnlineTest = async data => {
   const url = `subjectCode=${data}`;
@@ -36,9 +35,7 @@ export const getOnlineTest = async data => {
       return false;
       // return Promise.reject(error);
     });
-
-  return res;
-
+};
 // 영어 단어/말하기 시험 post
 export const onlineTestCreateEn = async formData => {
   const accessToken = getCookie("accessToken");
@@ -80,5 +77,4 @@ export const onlineTestCreateListeningEn = async formData => {
     console.log(error);
     return error;
   }
-
 };

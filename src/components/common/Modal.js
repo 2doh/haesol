@@ -9,7 +9,11 @@ import ViewPw from "./ViewPw";
 import { patchTeacherInfo, putTeacherPwChange } from "api/teacher/teacherapi";
 import PhoneInputFields from "pages/student/PhoneInputFields";
 import { getCookie, removeCookie } from "utils/cookie";
-import { deleteNotice, modifyStudentInfo } from "api/student/studentapi";
+import {
+  deleteNotice,
+  modifyStudentInfo,
+  sendSmsPost,
+} from "api/student/studentapi";
 
 import NoticeList from "pages/notice/NoticeList";
 import { useNavigate } from "react-router";
@@ -261,7 +265,7 @@ const Modal = () => {
       // 온라인 시험 제출 관련
       if (modalState.modalRes[0] === 50) {
         console.log("시험 제출 완!.", modalState.modalRes[1]);
-        // const res = saveOnlineCreateTest(modalState.modalRes[1]);
+        const res = true;
         if (res) {
           dispatch(closeModal());
         }

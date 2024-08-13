@@ -9,6 +9,9 @@ import {
   onlineTestCreateEn,
   onlineTestCreateListeningEn,
 } from "api/online/onlinetestapi";
+import HeaderTopPublic from "components/layout/header/HeaderTopPublic";
+import HeaderMemu from "components/layout/header/HeaderMenu";
+import Footer from "components/layout/Footer";
 
 const TestTitleStyled = styled.div`
   display: flex;
@@ -82,18 +85,14 @@ const CreateTestEn = () => {
       return;
     }
 
-    // 추후 문제 종류 따라 api 호출하도록 업데이트 필요
     let res = false;
     if (selectedOption === "vocabulary" || selectedOption === "speaking") {
-      // api 호출
-      // res 담아 옳으면 true 아니면 그대로
-      await EnTestSaveData(e);
+      res = await EnTestSaveData(e);
+    } else if (selectedOption === "listening") {
+      res = await EnListeningTestSaveData(e);
     }
-    if (selectedOption === "listening") {
-      // res 담아 옳으면 true 아니면 그대로
-      // api 호출
-      await EnListeningTestSaveData(e);
-    }
+
+    console.log("Handle Save Result:", res);
 
     if (res) {
       const data = {
@@ -149,8 +148,14 @@ const CreateTestEn = () => {
     try {
       const response = await onlineTestCreateEn(formData);
       console.log("데이터 전송 결과 : ", response);
+      if (response.status === 200 || response.resultMsg === "200 OK") {
+        return true;
+      } else {
+        return false;
+      }
     } catch (error) {
       console.log(error);
+      return false;
     }
   };
 
@@ -186,8 +191,14 @@ const CreateTestEn = () => {
     try {
       const response = await onlineTestCreateListeningEn(formData);
       console.log("데이터 전송 결과 : ", response);
+      if (response.status === 200 || response.resultMsg === "200 OK") {
+        return true;
+      } else {
+        return false;
+      }
     } catch (error) {
       console.log(error);
+      return false;
     }
   };
 
@@ -261,106 +272,112 @@ const CreateTestEn = () => {
   };
 
   return (
-    <div className="main-core">
-      <TestTitleStyled>
-        {/* 제목 위치 */}
-        <span>영어</span>
-        <p>5학년 시험 출제</p>
-      </TestTitleStyled>
-      <div className="online-test-inner">
-        <div className="test-option">
-          <select
-            name="english-test"
-            value={selectedOption}
-            onChange={e => {
-              handleSelectChange(e);
-            }}
-          >
-            <option value="vocabulary">단어장</option>
-            <option value="speaking">영어 말하기</option>
-            <option value="listening">영어 듣기</option>
-          </select>
-        </div>
-
-        <div className="online-test-content">
-          <div className="online-test-required-title">이미지 업로드</div>
-
-          <div className="online-english-test-file">
-            {/* 이미지 미리보기 */}
-            {previewFile !== null ? <img src={previewFile} /> : <div></div>}
+    <>
+      <HeaderTopPublic />
+      <HeaderMemu />
+      <div className="main-core">
+        <TestTitleStyled>
+          {/* 제목 위치 */}
+          <span>영어</span>
+          <p>5학년 시험 출제</p>
+        </TestTitleStyled>
+        <div className="online-test-inner">
+          <div className="test-option">
+            <select
+              name="english-test"
+              value={selectedOption}
+              onChange={e => {
+                handleSelectChange(e);
+              }}
+            >
+              <option value="vocabulary">단어장</option>
+              <option value="speaking">영어 말하기</option>
+              <option value="listening">영어 듣기</option>
+            </select>
           </div>
-          <input
-            id="filebt_id"
-            type="file"
-            accept="image/*"
-            onChange={e => handleFileChange(e)}
-          />
-        </div>
-        {selectedOption === "listening" && (
-          <div className="online-test-content-write">
-            <div className="online-test-content">
-              <div className="online-test-required-title">문제</div>
-              <form>
-                <ReactQuill
-                  value={question}
-                  onChange={value => {
-                    setQuestion(value);
-                  }}
-                  modules={modules}
-                  className="test-content-quill"
-                  placeholder="문제를 입력해주세요"
-                />
-              </form>
+
+          <div className="online-test-content">
+            <div className="online-test-required-title">이미지 업로드</div>
+
+            <div className="online-english-test-file">
+              {/* 이미지 미리보기 */}
+              {previewFile !== null ? <img src={previewFile} /> : <div></div>}
             </div>
-            <div className="online-test-content">
-              <div className="online-test-required-title">문장</div>
-              <form>
-                <ReactQuill
-                  value={sentence}
-                  onChange={value => {
-                    setSentence(value);
-                  }}
-                  modules={modules}
-                  className="test-content-quill"
-                  placeholder="지문을 입력해주세요"
-                />
-              </form>
+            <input
+              id="filebt_id"
+              type="file"
+              accept="image/*"
+              onChange={e => handleFileChange(e)}
+            />
+          </div>
+          {selectedOption === "listening" && (
+            <div className="online-test-content-write">
+              <div className="online-test-content">
+                <div className="online-test-required-title">문제</div>
+                <form>
+                  <ReactQuill
+                    value={question}
+                    onChange={value => {
+                      setQuestion(value);
+                    }}
+                    modules={modules}
+                    className="test-content-quill"
+                    placeholder="문제를 입력해주세요"
+                  />
+                </form>
+              </div>
+              <div className="online-test-content">
+                <div className="online-test-required-title">문장</div>
+                <form>
+                  <ReactQuill
+                    value={sentence}
+                    onChange={value => {
+                      setSentence(value);
+                    }}
+                    modules={modules}
+                    className="test-content-quill"
+                    placeholder="지문을 입력해주세요"
+                  />
+                </form>
+              </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {(selectedOption === "vocabulary" || selectedOption === "speaking") && (
-          <div className="online-test-content-write">
-            <div className="online-test-required-title">단어</div>
-            <TestInputAnswer
-              placeholder={tempObj.wordQuestion}
-              setWord={setWord}
-            ></TestInputAnswer>
-            <div className="online-test-required-title">정답</div>
-            <TestInputAnswer
-              placeholder={tempObj.wordAnswer}
-              setWord={setAnswer}
-            ></TestInputAnswer>
+          {(selectedOption === "vocabulary" ||
+            selectedOption === "speaking") && (
+            <div className="online-test-content-write">
+              <div className="online-test-required-title">단어</div>
+              <TestInputAnswer
+                placeholder={tempObj.wordQuestion}
+                setWord={setWord}
+              ></TestInputAnswer>
+              <div className="online-test-required-title">정답</div>
+              <TestInputAnswer
+                placeholder={tempObj.wordAnswer}
+                setWord={setAnswer}
+              ></TestInputAnswer>
+            </div>
+          )}
+          {selectedOption === "listening" && (
+            <div className="online-test-content-write">
+              <div className="online-test-required-title">정답</div>
+              <input type="text" placeholder="정답을 입력해주세요."></input>
+            </div>
+          )}
+          <div className="button-section">
+            <button onClick={handleSave}>저장</button>
+            <button
+              onClick={() => {
+                modifyCancel("BasicModal");
+              }}
+            >
+              취소
+            </button>
           </div>
-        )}
-        {selectedOption === "listening" && (
-          <div className="online-test-content-write">
-            <div className="online-test-required-title">정답</div>
-            <input type="text" placeholder="정답을 입력해주세요."></input>
-          </div>
-        )}
-        <div className="button-section">
-          <button onClick={handleSave}>저장</button>
-          <button
-            onClick={() => {
-              modifyCancel("BasicModal");
-            }}
-          >
-            취소
-          </button>
         </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 };
 
