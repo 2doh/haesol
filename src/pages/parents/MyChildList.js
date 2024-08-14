@@ -10,6 +10,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { openModal, updateModalDate } from "slices/modalSlice";
 import { getCookie, setCookie } from "utils/cookie";
+import SocialLoginIntegration from "./SocialLoginIntegration";
 
 const PageWrapStyle = styled.div`
   position: relative;
@@ -303,6 +304,7 @@ const MyChildList = () => {
           </div>
           <div className="page-content-wrap">
             <div className="child-info-inner">
+              <SocialLoginIntegration />
               {myChildList.length !== 0 ? (
                 myChildList.map((item, index) => {
                   return (

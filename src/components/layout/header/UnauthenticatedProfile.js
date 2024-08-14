@@ -26,7 +26,7 @@ const UnauthenticatedProfile = () => {
       <div className="main-schedule-title-text">학교 일정</div>
     </div> */}
         <div className="main-inner-info-login">
-          <div className="login-inner">
+          <div className="login-inner main-login-inner">
             <button
               className="main-info-loginbt"
               onClick={() => {
