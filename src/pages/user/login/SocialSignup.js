@@ -38,7 +38,6 @@ const SocialSignup = () => {
   const [userConnet, setUserConnet] = useState("");
   const [userPhoneNum, setUserPhoneNum] = useState("");
   const [isRandCode, setIsRandCode] = useState(false);
-  const [userUId, setUserUid] = useState("");
 
   const {
     handleSubmit,
@@ -50,6 +49,8 @@ const SocialSignup = () => {
     mode: "onChange",
   });
 
+  const initData = JSON.parse(localStorage.getItem("sociallogin"));
+
   const handleOnSubmit = async data => {
     if (!isRandCode) {
       alert("자녀코드 확인을 해주세요");
@@ -60,27 +61,18 @@ const SocialSignup = () => {
     }
     console.log(data);
     const reqData = {
-      phoneNumber: data.phone,
+      phone: data.phone,
       connect: data.connet,
-      id: userUId,
-      randCode: data.childecode,
+      randomCode: data.childecode,
+      signInProviderType: initData.signInProviderType,
+      id: initData.id,
+      email: initData.email,
+      name: initData.name,
     };
     console.log(reqData);
     const result = await signupSocialCode(reqData);
-    const res = await signupSocialInfo(reqData);
-    // console.log(res, result);
+    localStorage.removeItem("sociallogin");
   };
-
-  useEffect(() => {
-    const userClientId = localStorage.getItem("clientid");
-    if (!userClientId) {
-      return;
-    }
-    setUserUid(userClientId);
-    if (userClientId) {
-      localStorage.removeItem("clientid");
-    }
-  }, []);
 
   return (
     <SigninShape>

@@ -1,4 +1,6 @@
 import axios from "axios";
+import { setCookie } from "utils/cookie";
+import base64 from "base-64";
 
 export const socialLogin = async data => {
   console.log(data);
@@ -7,6 +9,16 @@ export const socialLogin = async data => {
       `/api/user/parents/sign-in/social-login`,
       data,
     );
+    if (res.data.accessToken) {
+      let acTken = res.data.accessToken;
+      const payload = JSON.parse(
+        base64.decode(acTken.split(".")[1]),
+      ).signedUser;
+      const signedUser = JSON.parse(payload);
+      setCookie("userIdPk", signedUser.userId);
+      setCookie("userRole", signedUser.role);
+      setCookie("selectChildNum", 0);
+    }
     console.log(res);
     return res;
   } catch (error) {
@@ -33,7 +45,7 @@ export const googleToken = async token => {
   }
 };
 
-// 토큰 정보 불러오기
+// 토큰 정보 불러오기 구글
 export const fetchUserInfo = async token => {
   try {
     const response = await fetch(
@@ -49,6 +61,31 @@ export const fetchUserInfo = async token => {
     return userInfo;
   } catch (error) {
     console.error(error);
+  }
+};
+
+// 토큰 정보 불러오기 네이버
+export const getNaverUserInfo = async data => {
+  try {
+    const tokenResponse = await fetch(
+      `https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&client_id=${data.id}&client_secret=${data.secret}&code=${data.token}&state=${data.state}`,
+      {
+        method: "POST",
+      },
+    );
+    if (!tokenResponse.ok) {
+      throw new Error("토큰 요청 중 오류 발생");
+    }
+
+    const tokenData = await tokenResponse.json();
+    console.log("토큰 데이터:", tokenData);
+
+    // 액세스 토큰을 이용하여 사용자 정보 조회
+    const userInfo = await getNaverUserInfo(tokenData.access_token);
+    console.log("사용자 정보:", userInfo);
+    console.log(tokenResponse);
+  } catch (error) {
+    console.log(error);
   }
 };
 
