@@ -8,10 +8,12 @@ import Title from "components/Title";
 import wordtest from "./api/json/ENwordtest.json";
 import "../src/test.scss";
 import KakaoLogin from "react-kakao-login";
+import { async } from "q";
+import axios from "axios";
+import { userRoleState } from "atoms/userState";
+import { useRecoilState } from "recoil";
 
 const Test = () => {
-  // return <input classNameName="textinput-size-s"></input>;
-  // return <Title></Title>;
   // return (
   //   <>
   //     <Vocabulary></Vocabulary>
@@ -102,6 +104,22 @@ const Test = () => {
   //     <Chatting />
   //   </div>
   // );
+  //============================================
+  const [count, setCount] = useRecoilState(userRoleState);
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+      <div className="p-4 bg-white shadow-md rounded w-80">
+        <div className="mb-2">
+          <label className="block text-gray-700">이름</label>
+          <input
+            type="text"
+            placeholder="이름"
+            className="mt-1 p-2 border border-gray-300 rounder w-full"
+          />
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Test;

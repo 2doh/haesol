@@ -7,6 +7,7 @@ export const socialLogin = async data => {
       `/api/user/parents/sign-in/social-login`,
       data,
     );
+    console.log(res);
     return res;
   } catch (error) {
     console.log(error);

@@ -59,7 +59,7 @@ const VocaLearn = () => {
 
   // 말 듣 쓰 구분
   useEffect(() => {
-    const lcoationState = location.state.type;
+    const lcoationState = location?.state?.type;
     if (lcoationState === "말하기") {
       setLearnState("speaking");
       setGetObj(wordTest);

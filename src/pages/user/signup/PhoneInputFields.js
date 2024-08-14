@@ -17,7 +17,7 @@ const PhoneInputFields = ({ children, userPhoneNum, setUserPhoneNum }) => {
         <input
           className="fieleds-section-input"
           type="text"
-          value={children}
+          value={userPhoneNum}
           onChange={e => {
             setUserPhoneNum(e.target.value);
             handleOnChange(e);
