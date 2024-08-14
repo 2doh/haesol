@@ -137,7 +137,7 @@ const LoginUser = () => {
   const [countIndex, setCountIndex] = useState(0);
 
   // ROLE_ADMIN = 어드민;
-  // ROLE_TEAHCER = 교직원;
+  // ROLE_TEACHER = 교직원;
   // ROLE_PARENTS = 학부모;
   useEffect(() => {
     if (loginUserType === "ROLE_ADMIN") navigate("/admin/home");

@@ -27,7 +27,7 @@ export const getOnlineTest = async data => {
     .get(`/api/online/test?${url}`)
     .then(res => {
       // 성공 처리
-      console.log("성공 : ", res.data);
+      // console.log("성공 : ", res);
       return res.data;
     })
     .catch(error => {
@@ -35,7 +35,29 @@ export const getOnlineTest = async data => {
       return false;
       // return Promise.reject(error);
     });
+
+  return res;
 };
+
+/** 국어/수학 시험 post  */
+export const postOnlineTest = async data => {
+  console.log("data : ", data);
+  // const url = `subjectCode=${data}`;
+  let res = await jwtAxios
+    .post(`/api/online`, data)
+    .then(res => {
+      // 성공 처리
+      console.log("성공 : ", res);
+      // return res.data;
+    })
+    .catch(error => {
+      console.log("에러 : ", error);
+      // return false;
+      // return Promise.reject(error);
+    });
+  // return res;
+};
+
 // 영어 단어/말하기 시험 post
 export const onlineTestCreateEn = async formData => {
   const accessToken = getCookie("accessToken");

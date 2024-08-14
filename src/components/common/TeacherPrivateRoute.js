@@ -3,7 +3,7 @@ import { getCookie } from "utils/cookie";
 
 const TeacherPrivateRoute = ({ authenticated, component: Component }) => {
   return authenticated ? (
-    getCookie("userRole") === "ROLE_TEAHCER" ? (
+    getCookie("userRole") === "ROLE_TEACHER" ? (
       Component
     ) : (
       <Navigate to="/" {...alert("권한이 없습니다.")}></Navigate>

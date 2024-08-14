@@ -6,7 +6,7 @@ export const postParentSignin = async data => {
     const res = await axios.post(`/api/user/parents/sign-in`, data);
     setCookie("accessToken", res.data.accessToken);
     // ROLE_ADMIN = 어드민;
-    // ROLE_TEAHCER = 교직원;
+    // ROLE_TEACHER = 교직원;
     // ROLE_PARENTS = 학부모;
     let acTken = res.data.accessToken;
     // console.log("토큰 획득 : ", res);

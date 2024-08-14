@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { IoMdArrowDropdownCircle } from "react-icons/io";
 import { FaShare } from "react-icons/fa6";
+import { getCookie } from "utils/cookie";
 
 const HeaderMemuStyle = styled.div`
   font-size: 17px;
@@ -160,6 +161,9 @@ const HeaderMemuStyle = styled.div`
         .user-type-menu {
           left: -28px;
         }
+        .user-info-menu {
+          left: -38px;
+        }
         .online-menu {
           left: -28px;
         }
@@ -223,8 +227,11 @@ const HeaderMemu = () => {
     // 2n : 2번째 메뉴의 서브메뉴
 
     switch (pageNum) {
+      case 0:
+        // 로그인이 필요한 경우
+        navigate("/login");
+        break;
       case 1:
-        // navigate("/notice/list/classid");
         navigate("");
         break;
       case 2:
@@ -234,21 +241,19 @@ const HeaderMemu = () => {
         navigate("/online");
         break;
       case 4:
-        navigate("/online/test/create");
+        // 교직원 내정보
+        navigate("/teacher/teacherinfo");
         break;
       case 5:
-        // navigate("/");
+        // 학부모 내정보
+        navigate("/parents/childlist");
         break;
       case 10:
-        // navigate("/selftest");
         alert("준비중인 서비스입니다.");
-
-        // 추가하기
-        // navigate("/selftest");
         break;
       case 11:
         // 추가하기
-        navigate("/notice/list/classid");
+        navigate("/notice/list/:userClass");
         break;
       case 21:
         // 국어 문제 출제 페이지
@@ -261,6 +266,26 @@ const HeaderMemu = () => {
       case 23:
         // 수학 문제 출제 페이지
         navigate("/online/test/create/math");
+        break;
+      case 41:
+        // (교직원) 내 정보
+        navigate("/teacher/teacherinfo");
+        break;
+      case 42:
+        // 담당 이력
+        alert("준비중인 서비스입니다.");
+        break;
+      case 51:
+        // 자녀 목록
+        navigate("/parents/childlist");
+        break;
+      case 52:
+        // 자녀 정보
+        navigate("/parents/studentinfo");
+        break;
+      case 53:
+        // 자녀 성적 확인
+        navigate(`/grade/${getCookie("studentPk")}`);
         break;
       default:
         break;
@@ -392,37 +417,95 @@ const HeaderMemu = () => {
                 </li>
                 <li
                   onClick={() => {
-                    moveMyPage(4);
+                    switch (getCookie("userRole")) {
+                      case "ROLE_TEACHER":
+                        moveMyPage(4);
+                        break;
+                      case "ROLE_PARENTS":
+                        moveMyPage(5);
+                        break;
+                      default:
+                        moveMyPage(0);
+                        break;
+                    }
                   }}
                 >
                   <h2>
                     <a>나의 공간</a>
                   </h2>
-                  {/* <div className="navi_arrow_icon my-info-menu">
-                    <IoMdArrowDropdownCircle size={30} />
-                  </div>
-                  <div className="navi_sub">
-                    <ul className="depth2">
-                      <li
-                        onClick={() => {
-                          moveMyPage(10);
-                        }}
-                      >
-                        <a>
-                          <span>전체 일정</span>
-                        </a>
-                      </li>
-                      <li
-                        onClick={() => {
-                          moveMyPage(11);
-                        }}
-                      >
-                        <a>
-                          <span>알림장</span>
-                        </a>
-                      </li>
-                    </ul>
-                  </div> */}
+
+                  {getCookie("userRole") === "ROLE_TEACHER" ? (
+                    <>
+                      <div className="navi_arrow_icon">
+                        <IoMdArrowDropdownCircle size={30} />
+                      </div>
+                      <div className="navi_sub user-info-menu">
+                        <ul className="depth2">
+                          <li
+                            onClick={e => {
+                              e.stopPropagation();
+                              moveMyPage(41);
+                            }}
+                          >
+                            <a>
+                              <span>내 정보</span>
+                            </a>
+                          </li>
+                          <li
+                            onClick={e => {
+                              e.stopPropagation();
+                              moveMyPage(42);
+                            }}
+                          >
+                            <a>
+                              <span>담당 이력</span>
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </>
+                  ) : null}
+                  {getCookie("userRole") === "ROLE_PARENTS" ? (
+                    <>
+                      <div className="navi_arrow_icon">
+                        <IoMdArrowDropdownCircle size={30} />
+                      </div>
+                      <div className="navi_sub user-info-menu">
+                        <ul className="depth2">
+                          <li
+                            onClick={e => {
+                              e.stopPropagation();
+                              moveMyPage(51);
+                            }}
+                          >
+                            <a>
+                              <span>자녀 목록</span>
+                            </a>
+                          </li>
+                          <li
+                            onClick={e => {
+                              e.stopPropagation();
+                              moveMyPage(52);
+                            }}
+                          >
+                            <a>
+                              <span>자녀 정보</span>
+                            </a>
+                          </li>
+                          <li
+                            onClick={e => {
+                              e.stopPropagation();
+                              moveMyPage(53);
+                            }}
+                          >
+                            <a>
+                              <span>자녀 성적 확인</span>
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </>
+                  ) : null}
                 </li>
                 <li
                   onClick={() => {

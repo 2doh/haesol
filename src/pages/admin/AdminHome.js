@@ -189,7 +189,9 @@ const AdminHome = () => {
                         <use href="#check-4"></use>
                       </svg>
                     </span>
-                    <span>퇴사자 포함</span>
+                    <span>
+                      {nowSelectMemu === 2 ? "휴면 계정 포함" : "퇴사자 포함"}
+                    </span>
                   </label>
                   <svg className="inline-svg">
                     <symbol id="check-4" viewBox="0 0 12 10">

@@ -1,5 +1,9 @@
 import styled from "@emotion/styled";
-import { delectAwaitAccept, singupAccept } from "api/admin/adminapi";
+import {
+  delectAwaitAccept,
+  patchAdminUserUpdate,
+  singupAccept,
+} from "api/admin/adminapi";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal, logoutModal, updateModalDate } from "slices/modalSlice";
@@ -18,7 +22,8 @@ import {
 import NoticeList from "pages/notice/NoticeList";
 import { useNavigate } from "react-router";
 import { putChildInfo, putParentsPwChange } from "api/parents/mychildinfo";
-import { getChildList } from "api/signup/parentapi";
+import { getChild, getChildList, putChild } from "api/signup/parentapi";
+import { postOnlineTest } from "api/online/onlinetestapi";
 
 const ModalStyle = styled.div`
   position: fixed;
@@ -121,6 +126,7 @@ const Modal = () => {
   const [newPwRe, setNewPwRe] = useState();
 
   const modalState = useSelector(state => state.modalSlice);
+  const testStage = useSelector(state => state.testSlice);
   const dispatch = useDispatch();
   const navi = useNavigate();
 
@@ -283,7 +289,37 @@ const Modal = () => {
       // 온라인 시험 작성 후 제출 버튼
       if (modalState.modalRes[0] === 56) {
         // api 작성되면 추가하기
-        const res = true;
+        let testPk = [];
+        let testSelectNum = [];
+        // console.log("테스트 정보 : ", testStage);
+
+        testPk = testStage.questionAllPk.map((item, index) => {
+          console.log("index : ", index);
+          return [...testPk, item.questionPk];
+        });
+
+        testSelectNum = testStage.selectNumArr.map((item, index) => {
+          console.log("index : ", index);
+          return [...testSelectNum, item.selectNum];
+        });
+
+        const data = {
+          questionPk: testPk[0],
+          omrAnswer: testSelectNum[0],
+          title: testStage.testTitle,
+          subjectCode: testStage.subjectCode,
+        };
+
+        // console.log("data : ", data);
+        const res = postOnlineTest(data);
+        if (res) {
+          dispatch(closeModal());
+        }
+      }
+
+      // 어드민 : 퇴사/비활성화 처리
+      if (modalState.modalRes[0] === 911) {
+        const res = patchAdminUserUpdate(modalState.modalRes[1]);
         if (res) {
           dispatch(closeModal());
         }
@@ -315,7 +351,7 @@ const Modal = () => {
       ) {
         console.log("비밀번호 수정 처리 진입");
         // console.log(getCookie("userIdPk"));
-        if (getCookie("userRole") === "ROLE_TEAHCER") {
+        if (getCookie("userRole") === "ROLE_TEACHER") {
           putTeacherPwChange(newPw, modalState.bodyText);
         }
         if (getCookie("userRole") === "ROLE_PARENTS") {
@@ -372,7 +408,7 @@ const Modal = () => {
     try {
       const res = await singupAccept(
         modalState.bodyText[2],
-        modalState.bodyText[3],
+        modalState.bodyText[3] + 1,
       );
       if (res) {
         const data = {
@@ -425,7 +461,7 @@ const Modal = () => {
       console.log("값 없음.");
     } else {
       console.log("값 있음.");
-      const res = await getChildList({ searchWord: childCode.current.value });
+      const res = await putChild({ searchWord: childCode.current.value });
       console.log(res);
     }
 
@@ -443,6 +479,12 @@ const Modal = () => {
     // } catch (error) {
     //   console.log(error);
     // }
+  };
+
+  /** UserUpdateModal : 어드민 - 유저 정보 수정 */
+  const singUserInfoUpdate = e => {
+    e.preventDefault();
+    console.log("모달의 입력 데이터 입니다.", e.target);
   };
 
   return (
@@ -623,41 +665,91 @@ const Modal = () => {
               </div>
             </div>
           ) : null}
-          <div className="modal-footer">
-            <div className="modal-btn">
-              {modalState.buttonCnt === 1 ? (
-                <button
-                  onClick={() => {
-                    modalAccept();
-                  }}
-                  className="white-button"
-                >
-                  {/* 취소 */}
-                  {modalState.buttonText[0]}
-                </button>
-              ) : (
-                <>
+
+          {/* UserUpdateModal */}
+          {modalState.modalType === "UserUpdateModal" ? (
+            <form
+              onSubmit={e => {
+                singUserInfoUpdate(e);
+              }}
+            >
+              <div className="modal-body">
+                <div className="pw-modal-body-text-div">
+                  <div className="pw-modal-text">상태</div>
+                  <input type="text" id="stateDate" />
+                </div>
+                <div className="pw-modal-body-text-div">
+                  <div className="pw-modal-text">아이디</div>
+                  <input type="text" id="idDate" />
+                </div>
+                <div className="pw-modal-body-text-div">
+                  <div className="pw-modal-text">이름</div>
+                  <input type="text" id="nameDate" />
+                </div>
+                <div className="pw-modal-body-text-div">
+                  <div className="pw-modal-text">학년</div>
+                  <input type="text" id="gradeDate" />
+                </div>
+                <div className="pw-modal-body-text-div">
+                  <div className="pw-modal-text">학급</div>
+                  <input type="text" id="classDate" />
+                </div>
+              </div>
+              <div className="modal-footer">
+                <div className="modal-btn">
+                  <button type="submit" className="white-button">
+                    수정
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      modalClose();
+                    }}
+                  >
+                    취소
+                  </button>
+                </div>
+              </div>
+            </form>
+          ) : null}
+
+          {modalState.modalType === "UserUpdateModal" ? null : (
+            <div className="modal-footer">
+              <div className="modal-btn">
+                {modalState.buttonCnt === 1 ? (
                   <button
                     onClick={() => {
                       modalAccept();
                     }}
                     className="white-button"
                   >
-                    {modalState.buttonText[0]}
-                    {/* 완료 */}
-                  </button>
-                  <button
-                    onClick={() => {
-                      modalClose();
-                    }}
-                  >
                     {/* 취소 */}
-                    {modalState.buttonText[1]}
+                    {modalState.buttonText[0]}
                   </button>
-                </>
-              )}
+                ) : (
+                  <>
+                    <button
+                      onClick={() => {
+                        modalAccept();
+                      }}
+                      className="white-button"
+                    >
+                      {modalState.buttonText[0]}
+                      {/* 완료 */}
+                    </button>
+                    <button
+                      onClick={() => {
+                        modalClose();
+                      }}
+                    >
+                      {/* 취소 */}
+                      {modalState.buttonText[1]}
+                    </button>
+                  </>
+                )}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </ModalStyle>

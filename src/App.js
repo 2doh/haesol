@@ -136,7 +136,6 @@ function App() {
             <Route index element={<MainPage />}></Route>
           )}
           {/* 메인 화면 - end */}
-
           {/* Admin 계정의 경우 - START */}
           {getCookie("userRole") === "ROLE_ADMIN" ? (
             <>
@@ -149,7 +148,6 @@ function App() {
             <Route path="/admin/*" element={<SecureRoute />}></Route>
           )}
           {/* Admin 계정의 경우 - END */}
-
           {/* 로그인 & 회원가입 : 이후 진입시 Home으로 강제 이동 */}
           {accessToken ? (
             <>
@@ -191,16 +189,17 @@ function App() {
           )}
           {/* 로그인 & 회원가입 : end */}
 
+          {/* 영어 테스트 - start */}
           <Route path="/testcode" element={<Test />}></Route>
-          <Route path="/learn" element={<Learn />}></Route>
+          {/* <Route path="/learn" element={<Learn />}></Route> */}
           <Route path="/learn/voca" element={<VocaLearn />}></Route>
           <Route path="/signup/social" element={<SocialSignup />}></Route>
+          {/* 영어 테스트 - end */}
 
           <Route
             path="/chat/teacher/:선생님pk"
             element={<ChatParents />}
           ></Route>
-
           {/* 교직원 : 학생 리스트 */}
           <Route
             path="/students"
@@ -211,7 +210,6 @@ function App() {
               />
             }
           ></Route>
-
           <Route path="/online">
             {/* 과목 리스트 페이지 */}
             <Route index element={<OnlineMainPage />}></Route>
@@ -220,7 +218,6 @@ function App() {
             {/* 시험 설명 */}
             <Route path="test/ex" element={<TestExPage />}></Route>
           </Route>
-
           <Route path="/online/test/create">
             {/* <Route index element={<CreateTest />}></Route> */}
             {/* <Route path="korean" element={<CreateTestKo />}></Route> */}
@@ -257,16 +254,12 @@ function App() {
             <Route path="math" element={<CreateTestMath />}></Route>
             <Route path="english" element={<CreateTestEn />}></Route> */}
           </Route>
-
           {/* 온라인 학습 라우터 */}
           {/* <Route path="/online/test/create" element={<CreateTest />}></Route>
           <Route
             path="/online/test/create/english"
             element={<CreateTestEn />}
           ></Route> */}
-
-          <Route path="/childlist" element={<MyChildList />}></Route>
-
           {/* 학부모 : 성적 확인 페이지 - grade 페이지 진입시 세션에 중복 저장되는 오류 발생 */}
           {/* 해결한듯 */}
           {accessToken ? (
@@ -291,7 +284,6 @@ function App() {
             path="/grade/chart/:studentPk"
             element={<GradeChart />}
           ></Route>
-
           {/* 교직원 : 학급 학생 정보 수정 */}
           <Route
             path="/students/edit/:studentPk"
@@ -302,7 +294,6 @@ function App() {
               />
             }
           ></Route>
-
           {/* 교직원 : 정보 수정 페이지 */}
           {/* <Route
             path="/teacherinfo"
@@ -313,26 +304,41 @@ function App() {
               />
             }
           ></Route> */}
-          {/* <Route path="/teacherinfo" element={<TeacherEdit />}></Route> */}
-          <Route path="/teacherinfo" element={<TeacherInfoView />}></Route>
           {/* 학부모 - 학생 : 정보 수정 페이지 */}
-          <Route
-            path="/studentinfo"
-            element={
-              <ParentsPrivateRoute
-                component={<MyChildInfo />}
-                authenticated={accessToken}
-              />
-            }
-          ></Route>
-
+          <Route path="/teacher">
+            <Route index element={<TeacherInfoView />}></Route>
+            <Route path="teacherinfo" element={<TeacherInfoView />}></Route>
+            {/* <Route path="/teacherinfo" element={<TeacherEdit />}></Route> */}
+          </Route>
+          {/* 학부모 - start */}
+          <Route path="/parents">
+            <Route index element={<MyChildList />}></Route>
+            <Route
+              path="childlist"
+              element={
+                <PrivateRoute
+                  component={<MyChildList />}
+                  authenticated={accessToken}
+                />
+              }
+            ></Route>
+            <Route
+              path="studentinfo"
+              element={
+                <ParentsPrivateRoute
+                  component={<MyChildInfo />}
+                  authenticated={accessToken}
+                />
+              }
+            ></Route>
+          </Route>
+          {/* 학부모 - end */}
           {/* 3차는 아래로 추가 예정 (추측) */}
           <Route path="/students" element={<Navigate to="*" />}>
             {/* 경로 수정 후 아래로 변경 */}
             {/* <Route path="edit/:userid" element={<StudentEdit />}></Route> */}
             {/* <Route path="grade/:studntid" element={<StudentGrade />}></Route> */}
           </Route>
-
           {/* 교직원 : 알림장 리스트 */}
           <Route path="/notice">
             <Route
@@ -381,7 +387,6 @@ function App() {
               }
             />
           </Route>
-
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </Main>

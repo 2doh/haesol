@@ -170,6 +170,16 @@ const TestQuestion = ({ subjects }) => {
     if (subjects) {
       getDateQuestion(subjects);
     }
+
+    const data = {
+      subjectCode: subjects,
+    };
+
+    // console.log("formattedQuestions : ", formattedQuestions);
+    // console.log("questionsNumArr : ", questionsNumArr);
+    // console.log("data : ", data);
+
+    dispatch(updateTestDate(data));
   }, []);
 
   useEffect(() => {
@@ -183,6 +193,7 @@ const TestQuestion = ({ subjects }) => {
     switch (subjects) {
       case 1:
         res = await getOnlineTest(1);
+        console.log("res : ", res);
         break;
       case 2:
         res = await getOnlineTest(2);
@@ -206,6 +217,7 @@ const TestQuestion = ({ subjects }) => {
 
   /** 데이터 리덕스 툴킷에 저장 */
   const reGetDateQuestion = list => {
+    console.log("list : ", list);
     const formattedQuestions = list.map((item, index) => {
       /** 문제 번호 매기기, 문제 개별로 저장 */
       const formattedQuestion = {
@@ -232,9 +244,20 @@ const TestQuestion = ({ subjects }) => {
       return questionsNum;
     });
 
+    /** 문제 pk 저장 */
+    const questionsAllPk = list.map((item, index) => {
+      console.log("index : ", index);
+      const questionsPk = {
+        questionPk: item.queId,
+      };
+
+      return questionsPk;
+    });
+
     const listLength = list.length;
 
     const data = {
+      questionAllPk: questionsAllPk,
       questionAll: formattedQuestions,
       selectNumArr: questionsNumArr,
       nowQuestionsNum: 0,

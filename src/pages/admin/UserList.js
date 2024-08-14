@@ -61,12 +61,16 @@ const UserList = ({
   /** 가입한 유저 리스트 출력 함수 */
   const getUserList = async useNum => {
     const res = await getAwaitUserList(useNum, isCheck, searchKeyword);
+    // console.log("결과 : ", res);
     if (res) setAcceptUserList(res);
   };
 
   /** 메뉴 선택시, 모달 종료시 리스트, 체크박스 클릭시 리스트 재출력 */
   const listCall = () => {
     setClickSearchBtn(false);
+
+    // 학부모 : 열려 있는 아코디언 닫기
+    setOpenAccordionId(null);
 
     if (!clickSearchBtn) {
       setSearchKeyword("");
@@ -97,7 +101,7 @@ const UserList = ({
     listCall(nowSelectMemu);
   }, [nowSelectMemu, modalState.modalRes, clickSearchBtn, isCheck, resetBtn]);
 
-  /** 모달 호출 */
+  /** 회원가입 신청 모달 호출 */
   const showModal = (selectBtn, selectUserId, selectUserName, selectUserPk) => {
     /** (선택) 들어갈 내용 수정 */
     const data = {
@@ -115,6 +119,8 @@ const UserList = ({
 
   /** 아코디언 메뉴 : 학부모 1명 정보 */
   const accordionList = item => {
+    // console.log("item : ", item);
+    // console.log("nowSelectMemu : ", nowSelectMemu);
     const title = (
       <div className="item admin-user-list sing-user-list">
         <div className="grid-inner">
@@ -134,9 +140,25 @@ const UserList = ({
           </div>
           <div className="grid-inner-item">
             <div className="grid-inner-item-text sign-off-on-buttons">
-              <button className="accept-button" onClick={() => {}}>
-                휴먼 전환
-              </button>
+              {item.state === "활성화" ? (
+                <button
+                  className="accept-button"
+                  onClick={() => {
+                    deactivateModal(1, 2, item.pk);
+                  }}
+                >
+                  휴먼 전환
+                </button>
+              ) : (
+                <button
+                  className="accept-button"
+                  onClick={() => {
+                    deactivateModal(1, 1, item.pk);
+                  }}
+                >
+                  활성화
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -156,20 +178,28 @@ const UserList = ({
                   </div>
                 </div>
                 <div className="grid-inner-item">
-                  <div className="grid-inner-item-text">acahe1d3123</div>
-                </div>
-                <div className="grid-inner-item">
-                  <div className="grid-inner-item-text">길만기</div>
+                  <div className="grid-inner-item-text">{cItem.studentId}</div>
                 </div>
                 <div className="grid-inner-item">
                   <div className="grid-inner-item-text">
-                    학생 코드 : 000000000
+                    {cItem.studentName}
+                  </div>
+                </div>
+                <div className="grid-inner-item">
+                  <div className="grid-inner-item-text">
+                    학생 코드 : {cItem.studentCode}
                   </div>
                 </div>
                 <div className="grid-inner-item">
                   <div className="grid-inner-item-text sign-off-on-buttons">
-                    <button className="rejected-button">신청</button>
-                    <button className="accept-button">학적 변동</button>
+                    <button
+                      className="rejected-button"
+                      onClick={e => {
+                        e.stopPropagation();
+                      }}
+                    >
+                      학적 변동
+                    </button>
                   </div>
                 </div>
               </div>
@@ -189,151 +219,246 @@ const UserList = ({
     return { title, contents };
   };
 
+  // (학생/교직원) 정보 수정 모달 호출
+  const userUpdate = (userType, item) => {
+    // console.log("userType : ", userType);
+    // console.log("item : ", item);
+    let data = "";
+
+    // 교직원의 경우
+    if (userType === 2) {
+      data = {
+        headerText: "정보 수정",
+        buttonText: ["수정", "취소"],
+        modalRes: [userType, item],
+      };
+    }
+
+    // 학생의 경우
+    if (userType === 3) {
+      data = {
+        headerText: "학적 변동",
+        buttonText: ["수정", "취소"],
+        modalRes: [userType, item],
+      };
+    }
+
+    dispatch(updateModalDate(data));
+    dispatch(openModal("UserUpdateModal"));
+  };
+
+  /** (교직원/학부모) 퇴사/비활성화 복구/활성화 모달 호출 */
+  const deactivateModal = (userType, userState, userPk) => {
+    let data = "";
+    let userDate = {
+      p: userType,
+      pk: userPk,
+      state: userState,
+    };
+
+    if (userType === 1 && userState === 1) {
+      data = {
+        headerText: "계정 상태 변경",
+        bodyText: ["계정을 활성화 합니다."],
+        buttonText: ["확인", "취소"],
+        modalRes: [911, userDate],
+      };
+    }
+
+    if (userType === 1 && userState === 2) {
+      data = {
+        headerText: "계정 상태 변경",
+        bodyText: ["휴면 계정으로 전환합니다."],
+        buttonText: ["확인", "취소"],
+        modalRes: [911, userDate],
+      };
+    }
+
+    if (userType === 2 && userState === 1) {
+      data = {
+        headerText: "복구 처리",
+        bodyText: ["계정을 복구하겠습니까?"],
+        buttonText: ["확인", "취소"],
+        modalRes: [911, userDate],
+      };
+    }
+
+    if (userType === 2 && userState === 2) {
+      data = {
+        headerText: "퇴사 처리",
+        bodyText: ["퇴사 처리하겠습니까?\n\n처리 후 계정이 비활성화 됩니다."],
+        buttonText: ["확인", "취소"],
+        modalRes: [911, userDate],
+      };
+    }
+
+    dispatch(updateModalDate(data));
+    dispatch(openModal("BasicModal"));
+  };
+
+  const renderUserList = () => {
+    switch (nowSelectMemu) {
+      case 0:
+      case 1:
+        return acceptUserList.map((item, index) => (
+          <div className="item" key={index}>
+            <div className="grid-inner">
+              <div className="grid-inner-item">
+                <div className="grid-inner-item-text">{index + 1}</div>
+              </div>
+              <div className="grid-inner-item">
+                <div className="grid-inner-item-text">{item.id}</div>
+              </div>
+              <div className="grid-inner-item">
+                <div className="grid-inner-item-text">{item.name}</div>
+              </div>
+              <div className="grid-inner-item">
+                <div className="grid-inner-item-text">
+                  {item.grade === null ? (
+                    <div className="admin-no-list-style">미입력</div>
+                  ) : (
+                    item.grade
+                  )}
+                </div>
+              </div>
+              <div className="grid-inner-item">
+                <div className="grid-inner-item-text">
+                  {item.class === null ? (
+                    <div className="admin-no-list-style">미입력</div>
+                  ) : (
+                    item.class
+                  )}
+                </div>
+              </div>
+              <div className="grid-inner-item">
+                <div className="grid-inner-item-text">
+                  {moment(item.createdAt).format("YYYY-MM-DD HH:mm:ss")}
+                </div>
+              </div>
+              <div className="grid-inner-item">
+                <div className="grid-inner-item-text sign-off-on-buttons">
+                  <button
+                    className="rejected-button"
+                    onClick={() => {
+                      showModal("반려", item.id, item.name, item.pk);
+                    }}
+                  >
+                    반려
+                  </button>
+                  <button
+                    className="accept-button"
+                    onClick={() => {
+                      showModal("승인", item.id, item.name, item.pk);
+                    }}
+                  >
+                    승인
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        ));
+      case 2:
+        return acceptUserList.map((item, index) => {
+          return (
+            <Accordion
+              key={index}
+              viewContent={accordionList(item).title}
+              contents={accordionList(item).contents}
+              isOpen={openAccordionId === index}
+              topBackgroundColor={"rgba(222,232,233,0.7)"}
+              backgroundColor={"#dee8e9"}
+              onClick={() => handleAccordionClick(index)}
+            />
+          );
+        });
+      case 3:
+        return acceptUserList.map((item, index) => (
+          <div className="item" key={index}>
+            <div className="grid-inner">
+              <div className="grid-inner-item">
+                <div className="grid-inner-item-text">{item.state}</div>
+              </div>
+              <div className="grid-inner-item">
+                <div className="grid-inner-item-text">{item.id}</div>
+              </div>
+              <div className="grid-inner-item">
+                <div className="grid-inner-item-text">{item.name}</div>
+              </div>
+              <div className="grid-inner-item">
+                <div className="grid-inner-item-text">
+                  {item.grade === null ? (
+                    <div className="admin-no-list-style">미입력</div>
+                  ) : (
+                    item.grade
+                  )}
+                </div>
+              </div>
+              <div className="grid-inner-item">
+                <div className="grid-inner-item-text">
+                  {item.class === null ? (
+                    <div className="admin-no-list-style">미입력</div>
+                  ) : (
+                    item.class
+                  )}
+                </div>
+              </div>
+              <div className="grid-inner-item">
+                <div className="grid-inner-item-text">
+                  {moment(item.createdAt).format("YYYY-MM-DD HH:mm:ss")}
+                </div>
+              </div>
+              <div className="grid-inner-item">
+                <div className="grid-inner-item-text sign-off-on-buttons">
+                  {item.state === "활성화" ? (
+                    <>
+                      <button
+                        className="rejected-button"
+                        onClick={() => {
+                          userUpdate(2, item);
+                        }}
+                      >
+                        수정
+                      </button>
+                      <button
+                        className="accept-button"
+                        onClick={() => {
+                          deactivateModal(2, 2, item.pk);
+                        }}
+                      >
+                        퇴사
+                      </button>
+                    </>
+                  ) : (
+                    <button
+                      className="accept-button"
+                      onClick={() => {
+                        deactivateModal(2, 1, item.pk);
+                      }}
+                    >
+                      복구
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        ));
+      default:
+        return null;
+    }
+  };
+
   return (
     <UserListStyle>
       <div className="main-core admin-home-core">
         <div className="grid-frame">
           <UserListTop nowSelectMemu={nowSelectMemu} />
-
-          {/* <div className="item">
-            <div className="grid-inner">
-              <div className="grid-inner-item">
-                <div className="grid-inner-item-text">학부모</div>
-              </div>
-              <div className="grid-inner-item">
-                <div className="grid-inner-item-text">acahe1d3</div>
-              </div>
-              <div className="grid-inner-item">
-                <div className="grid-inner-item-text">길형태</div>
-              </div>
-              <div className="grid-inner-item">
-                <div className="grid-inner-item-text">4</div>
-              </div>
-              <div className="grid-inner-item">
-                <div className="grid-inner-item-text">2</div>
-              </div>
-              <div className="grid-inner-item">
-                <div className="grid-inner-item-text">2024.06.28</div>
-              </div>
-              <div className="grid-inner-item">
-                <div className="grid-inner-item-text sign-off-on-buttons">
-                  <button className="rejected-button">반려</button>
-                  <button className="accept-button">승인</button>
-                </div>
-              </div>
-            </div>
-          </div> */}
-
           {acceptUserList.length === 0 ? (
             <NoResults>검색결과가 없습니다.</NoResults>
-          ) : nowSelectMemu === 2 ? (
-            acceptUserList.map((item, index) => {
-              const list = accordionList(item);
-
-              return (
-                <Accordion
-                  key={index}
-                  viewContent={list.title}
-                  contents={list.contents}
-                  topBackgroundColor={"rgba(222,232,233,0.7)"}
-                  backgroundColor={"#dee8e9"}
-                  isOpen={openAccordionId === item.id}
-                  onClick={() => handleAccordionClick(item.id)}
-                />
-              );
-            })
           ) : (
-            acceptUserList.map((item, index) => {
-              return (
-                <div className="item" key={index}>
-                  <div className="grid-inner">
-                    <div className="grid-inner-item">
-                      <div className="grid-inner-item-text">{index + 1}</div>
-                    </div>
-                    <div className="grid-inner-item">
-                      <div className="grid-inner-item-text">{item.id}</div>
-                    </div>
-                    <div className="grid-inner-item">
-                      <div className="grid-inner-item-text">{item.name}</div>
-                    </div>
-                    <div className="grid-inner-item">
-                      <div className="grid-inner-item-text">
-                        {item.grade === null ? (
-                          <div className="admin-no-list-style">미입력</div>
-                        ) : (
-                          item.grade
-                        )}
-                      </div>
-                    </div>
-                    <div className="grid-inner-item">
-                      <div className="grid-inner-item-text">
-                        {item.class === null ? (
-                          <div className="admin-no-list-style">미입력</div>
-                        ) : (
-                          item.class
-                        )}
-                      </div>
-                    </div>
-                    <div className="grid-inner-item">
-                      <div className="grid-inner-item-text">
-                        {moment(item.createdAt).format("YYYY-MM-DD hh:mm:ss")}
-                      </div>
-                    </div>
-                    <div className="grid-inner-item">
-                      <div className="grid-inner-item-text sign-off-on-buttons">
-                        <button
-                          className="rejected-button"
-                          onClick={() => {
-                            showModal("반려", item.id, item.name, item.pk);
-                          }}
-                        >
-                          반려
-                        </button>
-                        <button
-                          className="accept-button"
-                          onClick={() => {
-                            showModal("승인", item.id, item.name, item.pk);
-                          }}
-                        >
-                          승인
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              );
-            })
+            renderUserList()
           )}
-
-          {/* 참고 */}
-          {/* <div className="item">
-            <div className="grid-inner">
-              <div className="grid-inner-item">
-                <div className="grid-inner-item-text">학부모</div>
-              </div>
-              <div className="grid-inner-item">
-                <div className="grid-inner-item-text">acahe1d3</div>
-              </div>
-              <div className="grid-inner-item">
-                <div className="grid-inner-item-text">길형태</div>
-              </div>
-              <div className="grid-inner-item">
-                <div className="grid-inner-item-text">4</div>
-              </div>
-              <div className="grid-inner-item">
-                <div className="grid-inner-item-text">2</div>
-              </div>
-              <div className="grid-inner-item">
-                <div className="grid-inner-item-text">2024.06.28</div>
-              </div>
-              <div className="grid-inner-item">
-                <div className="grid-inner-item-text sign-off-on-buttons">
-                  <button className="rejected-button">반려</button>
-                  <button className="accept-button">승인</button>
-                </div>
-              </div>
-            </div>
-          </div> */}
         </div>
       </div>
     </UserListStyle>

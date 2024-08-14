@@ -98,7 +98,7 @@ const Home = () => {
   return (
     <HomeStyle>
       {loginUserType === "ROLE_PARENTS" ? <LoginUser /> : null}
-      {loginUserType === "ROLE_TEAHCER" ? <LoginTeahcer /> : null}
+      {loginUserType === "ROLE_TEACHER" ? <LoginTeahcer /> : null}
 
       <div
         className={getCookie("accessToken") ? "access-login-main main" : "main"}
