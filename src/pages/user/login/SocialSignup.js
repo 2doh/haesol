@@ -4,10 +4,12 @@ import SignupBt from "components/user/SignupBt";
 import SignupChildInput from "components/user/SignupChildInput";
 import SignupDrop from "components/user/SignupDrop";
 import SignupPhone from "components/user/SignupPhone";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
+import axios from "axios";
+import { signupSocialCode, signupSocialInfo } from "api/signup/socialapi";
 
 const initSignupState = {
   phone: "",
@@ -20,14 +22,23 @@ const socialSignupSchema = yup.object().shape({
     .string()
     .required("휴대폰 번호를 입력해주세요.")
     .matches(/^[0-9]{3}-[0-9]{3,4}-[0-9]{4}$/, "유효한 전화번호를 입력하세요."),
-  connet: yup.string().required("가족관계를 선택해주세요"),
-  childecode: yup.string().required("자녀코드를 입력해주세요."),
+  connet: yup
+    .string()
+    .test("none", "가족관계를 선택해주세요", value => value !== "none")
+    .required("가족관계를 선택해주세요"),
+  childecode: yup
+    .string()
+    .min(6, "유효한 코드를 입력해주세요")
+    .max(8, "유효한 코드를 입력해주세요")
+    .required("자녀코드를 입력해주세요."),
 });
 
 const SocialSignup = () => {
   const [userChildrenCode, setUserChildrenCode] = useState("");
   const [userConnet, setUserConnet] = useState("");
   const [userPhoneNum, setUserPhoneNum] = useState("");
+  const [isRandCode, setIsRandCode] = useState(false);
+  const [userUId, setUserUid] = useState("");
 
   const {
     handleSubmit,
@@ -39,9 +50,37 @@ const SocialSignup = () => {
     mode: "onChange",
   });
 
-  const handleOnSubmit = data => {
+  const handleOnSubmit = async data => {
+    if (!isRandCode) {
+      alert("자녀코드 확인을 해주세요");
+      return;
+    }
+    if (isRandCode === true) {
+      setIsRandCode(false);
+    }
     console.log(data);
+    const reqData = {
+      phoneNumber: data.phone,
+      connect: data.connet,
+      id: userUId,
+      randCode: data.childecode,
+    };
+    console.log(reqData);
+    const result = await signupSocialCode(reqData);
+    const res = await signupSocialInfo(reqData);
+    // console.log(res, result);
   };
+
+  useEffect(() => {
+    const userClientId = localStorage.getItem("clientid");
+    if (!userClientId) {
+      return;
+    }
+    setUserUid(userClientId);
+    if (userClientId) {
+      localStorage.removeItem("clientid");
+    }
+  }, []);
 
   return (
     <SigninShape>
@@ -65,7 +104,9 @@ const SocialSignup = () => {
           )}
           <SignupChildInput
             setUserChildrenCode={setUserChildrenCode}
+            userChildrenCode={userChildrenCode}
             register={register}
+            setIsRandCode={setIsRandCode}
           >
             자녀코드
           </SignupChildInput>

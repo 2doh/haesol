@@ -1,12 +1,33 @@
 import styled from "@emotion/styled";
 import { calc } from "antd/es/theme/internal";
+import { getChildList } from "api/signup/parentapi";
 import MiniButtonVer01 from "components/common/style/MiniButtonVer01";
 import usePlaceholder from "hooks/common/usePlaceholder";
 import React from "react";
 
-const SignupChildInput = ({ children, setUserChildrenCode, register }) => {
+const SignupChildInput = ({
+  children,
+  setUserChildrenCode,
+  register,
+  userChildrenCode,
+  setIsRandCode,
+}) => {
   const { placeholder, handleFocus, handleBlur } =
-    usePlaceholder("자녀코드를 입력해주세요");
+    usePlaceholder("자녀코드를 입력해주세요(6~8자)");
+
+  const handleonClick = async e => {
+    const reqData = {
+      searchWord: userChildrenCode,
+    };
+    e.preventDefault();
+    const result = await getChildList(reqData);
+    alert(result.data.response);
+    if (result.data.response === "학생 코드를 찾을 수 없습니다.") {
+      setIsRandCode(false);
+    } else {
+      setIsRandCode(true);
+    }
+  };
 
   return (
     <WrapStyle>
@@ -22,7 +43,11 @@ const SignupChildInput = ({ children, setUserChildrenCode, register }) => {
               placeholder={placeholder}
               onFocus={() => handleFocus()}
               onBlur={() => handleBlur()}
-              onChange={e => setUserChildrenCode(e.target.value)}
+              onChange={e => {
+                setUserChildrenCode(e.target.value);
+                register("childecode").onChange(e);
+              }}
+              maxLength={8}
               style={{
                 width: "82%",
                 height: "100%",

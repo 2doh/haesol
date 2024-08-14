@@ -8,7 +8,10 @@ const SignupDrop = ({ setUserConnet, children, register }) => {
       </TitleWrap>
       <SelectStyle
         className="fields-section-drop"
-        onChange={e => setUserConnet(e.target.value)}
+        onChange={e => {
+          setUserConnet(e.target.value);
+          register("connet").onChange(e);
+        }}
         {...register("connet")}
       >
         <option value="none" hidden>

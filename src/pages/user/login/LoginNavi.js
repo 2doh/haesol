@@ -5,7 +5,13 @@ const LoginNavi = ({ setNaviState, naviState }) => {
     borderTopLeftRadius: "10px",
     borderRight: "0",
   };
-  
+
+  const LoginStudentWrapStyle = {
+    width: "100%",
+    borderLeft: "1px solid #886348",
+    borderTopLeftRadius: "10px",
+  };
+
   return (
     <div className="login-wrap-navi br10">
       <div
@@ -15,6 +21,17 @@ const LoginNavi = ({ setNaviState, naviState }) => {
         }}
       >
         학부모 로그인
+      </div>
+      <div
+        className={
+          naviState === "studentlogin" ? "studentnavi" : "unselectednavi"
+        }
+        onClick={() => {
+          setNaviState("studentlogin");
+        }}
+        style={naviState === "studentlogin" ? LoginStudentWrapStyle : null}
+      >
+        학생
       </div>
       <div
         className={

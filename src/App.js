@@ -192,7 +192,7 @@ function App() {
           {/* 로그인 & 회원가입 : end */}
 
           <Route path="/testcode" element={<Test />}></Route>
-          <Route path="/learn" element={<Learn />}></Route>
+          {/* <Route path="/learn" element={<Learn />}></Route> */}
           <Route path="/learn/voca" element={<VocaLearn />}></Route>
           <Route path="/signup/social" element={<SocialSignup />}></Route>
 

@@ -7,6 +7,7 @@ import { getCookie } from "utils/cookie";
 import cleanupBt from "../../../images/tabler_circle-x-filled.svg";
 import LoginIdField from "./LoginIdField";
 import SocialSignin from "../../../components/user/SocialSignin";
+import { studentsignin } from "api/login/childerenapi";
 
 const Signin = ({ children, naviState, setNaviState }) => {
   const [userId, setUserId] = useState("");
@@ -23,6 +24,10 @@ const Signin = ({ children, naviState, setNaviState }) => {
     const request = {
       uid: userId,
       upw: userPass,
+    };
+    const tempData = {
+      studentUid: userId,
+      studentPwd: userPass,
     };
     if (userId === "" || userPass === "") {
       setErrMsg("빈칸을 모두 입력해주세요");
@@ -49,6 +54,11 @@ const Signin = ({ children, naviState, setNaviState }) => {
       if (result === "error") {
         setErrMsg("아이디 혹은 비밀번호를 확인해주세요");
       }
+    }
+    if (naviState === "studentlogin") {
+      const result = await studentsignin(tempData);
+      console.log(result);
+      window.location.replace("/");
     }
   };
 

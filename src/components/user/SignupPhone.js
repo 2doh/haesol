@@ -31,6 +31,7 @@ const SignupPhone = ({ userPhoneNum, setUserPhoneNum, children, register }) => {
           // value={phoneNum}
           onChange={e => {
             handleOnChange(e);
+            register("phone").onChange(e);
           }}
           maxLength={13}
         ></FieldStyle>

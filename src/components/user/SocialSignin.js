@@ -34,6 +34,7 @@ const SocialSignin = () => {
     // console.log(reqData);
     const result = await socialLogin(reqData, socialType);
     const naviState = useSocialLogin(result);
+    localStorage.setItem("clientid", res.id);
     navi(naviState);
   };
 
@@ -54,6 +55,7 @@ const SocialSignin = () => {
     // console.log(reqData);
     const result = await socialLogin(reqData);
     const naviState = useSocialLogin(result);
+    navi(naviState);
   };
 
   const handleKkoFailure = error => {
@@ -74,18 +76,19 @@ const SocialSignin = () => {
   const handleNaverLogin = async data => {
     const reqData = {
       id: data,
+      providerType: 1,
     };
     const result = await socialLogin(reqData);
     console.log(result);
   };
 
-  // useEffect(() => {
-  //   let code = new URL(window.location.href).searchParams.get("code");
-  //   // console.log(code);
-  //   if (code) {
-  //     handleNaverLogin(code);
-  //   }
-  // }, []);
+  useEffect(() => {
+    let code = new URL(window.location.href).searchParams.get("code");
+    // console.log(code);
+    if (code) {
+      handleNaverLogin(code);
+    }
+  }, []);
 
   return (
     <div className="login-wrap-panel-social">

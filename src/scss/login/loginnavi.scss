@@ -30,4 +30,7 @@
   .unselectednavi {
     @include naviStyleUnselected();
   }
+  .studentnavi {
+    @include naviStyleSelected();
+  }
 }
