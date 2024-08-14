@@ -53,6 +53,7 @@ export const getAwaitUserList = async (userListType, check, searchKeyword) => {
     )
     .then(res => {
       // 성공 처리
+      // console.log("성공 : ", res);
       return res.data;
     })
     .catch(error => {
@@ -154,3 +155,24 @@ export const delectAwaitAccept = async (selectUserPk, userListType) => {
 //     console.log(error);
 //   }
 // };
+
+/** 회원가입한 유저의 정보 수정 및 활성화/비활성화 */
+export const patchAdminUserUpdate = async userDate => {
+  // const accessToken = getCookie("accessToken");
+  console.log("들어온 데이터 : ", userDate);
+
+  let res = await jwtAxios
+    .patch("/api/admin", userDate)
+    .then(res => {
+      // 성공 처리
+      console.log("성공 : ", res);
+      // return res.data.userList;
+    })
+    .catch(error => {
+      console.log("에러 : ", error);
+      // return false;
+      // return Promise.reject(error);
+    });
+
+  return res;
+};

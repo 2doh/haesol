@@ -20,7 +20,7 @@ const TeacherProfile = () => {
   const navigate = useNavigate();
   /** 마이페이지 이동 */
   const moveMyPage = () => {
-    navigate("/teacherinfo");
+    navigate("/teacher/teacherinfo");
   };
   /** 우리 학급 페이지 이동 */
   const moveMyStudentsPage = () => {

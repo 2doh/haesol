@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { setCookie } from "utils/cookie";
 
 const initialState = {
   // 자녀의 정보 배열
@@ -23,6 +24,7 @@ export const selectChildSlice = createSlice({
   initialState,
   reducers: {
     updateSelectChildInfo: (state, actions) => {
+      setCookie("studentPk", actions.payload.selectChildPk);
       return { ...state, ...actions.payload };
     },
   },

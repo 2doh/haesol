@@ -55,7 +55,7 @@ const QuickMenuStyle = styled.div`
         text-align: center;
       }
 
-      .hidden {
+      .quick-btn-text {
         color: #1b4957;
         font-size: 15px;
       }
@@ -137,8 +137,9 @@ const QuickMenu = () => {
               <span className="hidden">채팅</span>
             </a> */}
               <a className="qk qk01" data-num="01">
-                <span>채팅</span>
-                {/* <span className="hidden">채팅</span> */}
+
+                <span className="quick-btn-text">채팅</span>
+
               </a>
             </li>
             <li
@@ -152,8 +153,9 @@ const QuickMenu = () => {
               <span className="hidden">채팅</span>
             </a> */}
               <a className="qk qk01" data-num="01">
-                {/* <span className="hidden">(닫기)</span> */}
-                <span>(닫기)</span>
+
+                <span className="quick-btn-text">(닫기)</span>
+
               </a>
             </li>
             <li
@@ -167,7 +169,7 @@ const QuickMenu = () => {
               <span className="hidden">채팅</span>
             </a> */}
               <a className="qk qk01" data-num="01">
-                <span className="hidden">알림장</span>
+                <span className="quick-btn-text">알림장</span>
               </a>
             </li>
 
@@ -182,7 +184,7 @@ const QuickMenu = () => {
               <span className="hidden">채팅</span>
             </a> */}
               <a className="qk qk01" data-num="01">
-                <span className="hidden">시간표</span>
+                <span className="quick-btn-text">시간표</span>
               </a>
             </li>
           </div>

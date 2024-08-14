@@ -181,6 +181,9 @@ const PageWrapStyle = styled.div`
           align-items: center;
           font-size: 25px;
           color: gray;
+
+          min-height: 500px;
+          max-width: 750px;
         }
 
         .child-add-div {
@@ -293,7 +296,9 @@ const MyChildList = () => {
           <div className="page-menu-wrap">
             <div className="page-name">자녀 목록</div>
             <div className="page-menu">
-              <ThreeDimensionsAccordion menuList={myChildList} />
+              {myChildList.length !== 0 ? (
+                <ThreeDimensionsAccordion menuList={myChildList} />
+              ) : null}
             </div>
           </div>
           <div className="page-content-wrap">
