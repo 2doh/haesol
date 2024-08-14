@@ -190,7 +190,7 @@ const ClassNotice = () => {
     // 작성일 : createdAt, 내용 : content
 
     // console.log(getCookie("userRole"));
-    if (getCookie("userRole") === "ROLE_TEAHCER") {
+    if (getCookie("userRole") === "ROLE_TEACHER") {
       const res = await getRecentNoticeInfo(noticeMenuNum);
       setContentItem(res.item.content);
       setContentItemCreatedAt(moment(res.item.createdAt).format("YYYY-MM-DD"));
@@ -217,7 +217,7 @@ const ClassNotice = () => {
       getNotice(noticeMenuNum);
     }
 
-    if (getCookie("userRole") === "ROLE_TEAHCER") {
+    if (getCookie("userRole") === "ROLE_TEACHER") {
       getNotice(noticeMenuNum);
     }
   }, []);
@@ -269,7 +269,7 @@ const ClassNotice = () => {
               </div>
             </div>
           </div>
-          {loginUserType === "ROLE_TEAHCER" ? (
+          {loginUserType === "ROLE_TEACHER" ? (
             <div
               className="notice-write-icon"
               onClick={() => {

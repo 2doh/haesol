@@ -52,6 +52,7 @@ const TestEndBtn = () => {
         headerText: "주의",
         bodyText: [`남은 문제가 있습니다.\n\n답인지를 제출하시겠습니까?`],
         modalRes: [56],
+        buttonCnt: 2,
         buttonText: ["제출", "취소"],
       };
 
@@ -61,6 +62,7 @@ const TestEndBtn = () => {
         headerText: "확인",
         bodyText: [`답인지를 제출하시겠습니까?`],
         modalRes: [56],
+        buttonCnt: 2,
         buttonText: ["제출", "취소"],
       };
 

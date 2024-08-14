@@ -62,7 +62,7 @@ const ParentsChildProfile = ({ childNum, type }) => {
 
   /** 마이페이지 이동 */
   const moveMyPage = () => {
-    navigate(`/studentinfo`);
+    navigate(`/parents/studentinfo`);
   };
 
   /** 성적 확인 페이지 이동 */

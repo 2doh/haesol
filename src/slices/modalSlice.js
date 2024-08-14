@@ -7,6 +7,7 @@ const initialState = {
   // ArrValueModal: "ArrValueModal",
   // PasswordChangeModal: "PasswordChangeModal",
   // TelAcceptModal: "TelAcceptModal",
+  // UserUpdateModal: "UserUpdateModal",
   modalType: "",
   isOpen: false,
 

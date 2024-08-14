@@ -43,7 +43,7 @@ const Signin = ({ children, naviState, setNaviState }) => {
       if (result.status === 200 && getCookie("userRole") === "ROLE_ADMIN") {
         window.location.replace("/admin");
       }
-      if (result.status === 200 && getCookie("userRole") === "ROLE_TEAHCER") {
+      if (result.status === 200 && getCookie("userRole") === "ROLE_TEACHER") {
         window.location.replace("/");
       }
       if (result === "error") {
