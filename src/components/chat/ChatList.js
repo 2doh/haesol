@@ -4,37 +4,65 @@ import { BsFillChatRightDotsFill } from "react-icons/bs";
 import { FaUserPlus } from "react-icons/fa6";
 import { getCookie } from "utils/cookie";
 import "../../scss/chat/chat.css";
+import { IoClose } from "react-icons/io5";
+import CreateChatModal from "./CreateChatModal";
 
 const ChatWrapStyle = styled.div`
-  width: 800px;
-  height: 660px;
+  z-index: 100000;
+  position: fixed;
+  bottom: 0;
+  right: 70px;
   margin: 20px;
   display: flex;
+  flex-direction: row-reverse;
   align-items: flex-end;
   word-break: keep-all;
   .chat-inner {
+    background-color: #fff;
     position: relative;
     padding: 20px;
-    width: 420px;
-    height: 100%;
+    width: 360px;
+    height: 570px;
     overflow: hidden;
     border-radius: 20px;
     box-shadow:
       0px 3px 6px rgba(0, 0, 0, 0.16),
       0 3px 6px rgba(0, 0, 0, 0.23);
+    .chat-alpha {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1000;
+      background-color: transparent; /* 기본적으로 투명 */
+      transition: background-color 0.1s ease-in-out;
+      pointer-events: none; /* 이 요소를 클릭할 수 없도록 설정 */
+
+      ${({ chatMiniList }) =>
+        chatMiniList &&
+        `background-color: rgba(0, 0, 0, 0.4);`}/* chatMiniList가 true일 때 반투명 */
+    }
+
     .chat-header {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       height: 60px;
-      gap: 10px;
-      span {
-        font-size: 22px;
-        font-weight: 700;
+
+      .chat-header-inn {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        span {
+          font-size: 22px;
+          font-weight: 700;
+        }
       }
     }
 
     .chat-field {
-      height: 620px;
+      height: 90%;
       display: flex;
       justify-content: flex-start;
       overflow-y: auto;
@@ -62,14 +90,12 @@ const ChatWrapStyle = styled.div`
         }
         .chat-select-field {
           width: 95%;
-          min-height: 80px;
+          /* min-height: 80%; */
           border-radius: 10px;
           background-color: #fbfaf9;
-          margin-bottom: 10px;
           padding: 15px;
           display: flex;
-          /* justify-content: center; */
-          /* align-items: center; */
+          gap: 20px;
           flex-direction: column;
           box-shadow:
             0px 3px 6px rgba(0, 0, 0, 0.16),
@@ -77,29 +103,62 @@ const ChatWrapStyle = styled.div`
           .teacher-info {
             display: flex;
             flex-direction: column;
-            gap: 20px;
-            color: #033d46;
+            gap: 5px;
+            /* color: #033d46; */
             align-items: flex-start;
             span {
               font-size: 18px;
             }
             p {
               font-size: 15px;
+              color: #033d46;
             }
-            p:last-child {
+          }
+          .teacher-chat-contain {
+            width: 100%;
+            height: 20px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            word-break: break-all;
+            text-overflow: ellipsis;
+            display: flex;
+            justify-content: flex-end;
+            p {
+              font-size: 12px;
+              color: #9da2b9;
+              display: block;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              overflow: hidden;
+            }
+          }
+          .chat-null {
+            width: 90%;
+            span {
+              font-size: 12px;
+              font-weight: 300;
               color: #9da2b9;
             }
           }
+        }
+      }
+      /* 호버 시 배경색 변경 */
+      .chat-select-wrap:hover {
+        & > .chat-select-field {
+          background-color: #dee8e9;
         }
       }
       .chat-select-wrap:nth-child(1) {
         margin-top: 30px;
       }
       .chat-select-wrap:last-child {
-        margin-bottom: 60px;
+        margin-bottom: 30px;
       }
     }
-    .chat-field:before {
+    .chat-field::before {
+      pointer-events: none;
+
       content: "";
       position: absolute;
       left: 0px;
@@ -111,7 +170,9 @@ const ChatWrapStyle = styled.div`
         rgba(139, 167, 32, 0) 10%
       );
     }
-    .chat-field:after {
+    .chat-field::after {
+      pointer-events: none;
+
       content: "";
       position: absolute;
       left: 0px;
@@ -123,12 +184,15 @@ const ChatWrapStyle = styled.div`
         rgba(255, 255, 255, 1) 100%
       );
     }
+
     .chat-field-parents {
-      height: 620px;
+      max-height: 90%;
       display: flex;
+      position: relative;
       justify-content: flex-start;
       overflow-y: auto;
       align-items: center;
+      margin-top: 5px;
       /* gap: 5px; */
       flex-direction: column;
       /* 스크롤 바 숨기기 */
@@ -172,7 +236,8 @@ const ChatWrapStyle = styled.div`
           }
         }
         .chat-select-field-group {
-          width: 95%;
+          margin-bottom: 10px;
+          width: 100%;
           padding: 20px;
           background-color: #f6f7f9;
           /* border: solid 1px #1b4957; */
@@ -194,19 +259,31 @@ const ChatWrapStyle = styled.div`
             }
           }
           &:hover {
-            background-color: #c6dbda;
+            background-color: #d1ecff;
             span {
-              color: #fff;
+              /* color: #fff; */
             }
           }
         }
       }
       .chat-select-wrap-parents:nth-child(2) {
-        margin-top: 20px;
+        /* margin-top: 20px; */
+      }
+      .chat-select-wrap-parents {
+        .chat-null {
+          span {
+            font-size: 15px;
+            font-weight: 300;
+          }
+        }
       }
     }
   }
   .group-chat-button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    z-index: 10;
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -255,29 +332,52 @@ const ChatWrapStyle = styled.div`
     }
   }
   .parents-list-wrap {
-    width: 300px;
-    height: 480px;
+    position: absolute;
+    z-index: 100000;
+    bottom: 60px;
+    left: 350px;
+    background-color: #f3f9fa;
+    width: 240px;
+    max-height: 360px;
     display: flex;
     flex-direction: column;
     align-items: center;
     overflow: hidden;
-    /* background-color: #f3f9fa; */
-    border-radius: 5px;
+    overflow-y: auto;
+    border-radius: 20px;
     position: relative;
     box-shadow:
       0px 3px 6px rgba(0, 0, 0, 0.16),
       0 3px 6px rgba(0, 0, 0, 0.23);
+
+    /* 스크롤 바 숨기기 */
+    ::-webkit-scrollbar {
+      display: none; /* 크롬, 사파리, 엣지에서 스크롤 바 숨기기 */
+    }
+
+    -ms-overflow-style: none; /* IE에서 스크롤 바 숨기기 */
+    scrollbar-width: none; /* Firefox에서 스크롤 바 숨기기 */
     .chat-header {
+      border-bottom: solid 1px #dee8e9;
       width: 100%;
-      height: 60px;
-      background-color: #c6dbda;
+      height: 70px;
       display: flex;
       align-items: center;
+      justify-content: space-between;
+      padding: 20px;
       span {
-        color: #033d46;
-        font-size: 22px;
+        /* color: #fff; */
+        font-size: 18px;
         font-weight: 700;
-        margin-left: 10px;
+      }
+      button {
+        cursor: pointer;
+        margin-right: -10px;
+        &:hover {
+          path {
+            color: #add2d8;
+          }
+        }
       }
     }
     .parents-list-inner {
@@ -285,6 +385,7 @@ const ChatWrapStyle = styled.div`
       display: flex;
       flex-direction: column;
       .chat-select-wrap-parents {
+        padding: 10px;
         width: 100%;
         height: 50px;
         display: flex;
@@ -314,33 +415,59 @@ const ChatWrapStyle = styled.div`
         }
       }
     }
-    .create-group-chat-btn {
-      width: 60%;
-      min-height: 35px;
-      position: absolute;
-      bottom: 20px;
-      border-radius: 20px;
-      background-color: #8cc1d3;
-      display: flex;
-      flex-direction: column;
-      box-shadow:
-        0px 3px 6px rgba(0, 0, 0, 0.16),
-        0 3px 6px rgba(0, 0, 0, 0.23);
-      font-size: 18px;
-      font-weight: 700;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+
     .create-group-chat-btn:active {
       bottom: 18px;
     }
   }
+  .create-group-chat-btn {
+    z-index: 10000000;
+    width: 25%;
+    min-height: 35px;
+    position: absolute;
+    bottom: 10px;
+    right: 50px;
+    border-radius: 20px;
+    background-color: #8cc1d3;
+    display: flex;
+    flex-direction: column;
+    box-shadow:
+      0px 3px 6px rgba(0, 0, 0, 0.16),
+      0 3px 6px rgba(0, 0, 0, 0.23);
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* 호버 시 배경색 변경 */
+  /* .chat-select-wrap:hover {
+    & > .chat-select-field {
+      background-color: #c6dbda;
+    }
+  } */
 `;
 
-const ChatList = () => {
+const ChatList = ({ chatStartOpen, setChatOpen }) => {
+  // const [chatOpen, setChatOpen] = useState(false);
+  // 채팅 데이터 있 없
+  const [chatData, setChatData] = useState(true);
+  const [chatMiniList, setChatMiniList] = useState(false);
+
   const [loginUserType, setLoginUserType] = useState(getCookie("userRole"));
+
+  // const callStartChat = bool => {
+  //   console.log("여기니? :", bool);
+
+  //   setChatStartOpen(bool);
+  //   setChatOpen(bool);
+  // };
+  // const callChat = bool => {
+  //   console.log("여기니? 1:", bool);
+  //   setChatOpen(bool);
+  // };
 
   const teacherData = [
     { studentGrade: 1, studentClass: 2, teacherName: "김누구" },
@@ -356,6 +483,11 @@ const ChatList = () => {
     { studentName: "박누구" },
     { studentName: "정누구" },
     { studentName: "최누구" },
+    { studentName: "최누구" },
+    { studentName: "최누구" },
+    { studentName: "최누구" },
+    { studentName: "최누구" },
+    { studentName: "최누구" },
   ];
 
   const [checkedItems, setCheckedItems] = useState({});
@@ -368,85 +500,145 @@ const ChatList = () => {
   };
 
   return (
-    <ChatWrapStyle>
-      <div className="chat-inner">
-        <div className="chat-header">
-          <BsFillChatRightDotsFill size={30} />
-          <span>대화 시작하기</span>
-        </div>
+    <>
+      {/* <CreateChatModal /> */}
+      {chatStartOpen ? (
+        <ChatWrapStyle chatMiniList={chatMiniList}>
+          <div className="chat-inner">
+            <div className="chat-alpha"></div>
+            <div className="chat-header">
+              <div className="chat-header-inn">
+                <BsFillChatRightDotsFill size={30} />
+                <span>대화 시작하기</span>
+              </div>
+              <button
+                onClick={() => {
+                  // callStartChat(false);
+                  setChatOpen(false);
+                }}
+              >
+                <IoClose size={30} />
+              </button>
+            </div>
 
-        {loginUserType === "ROLE_PARENTS" ? (
-          <div className="chat-field">
-            {teacherData.map((item, index) => (
-              <div className="chat-select-wrap" key={index}>
-                <span>
-                  {item.studentGrade}학년 {item.studentClass}반
-                </span>
-                <div className="chat-select-field">
-                  <div className="teacher-info">
-                    <p>{item.teacherName} 선생님</p>
-                    <p>아직 대화내용이 없습니다.</p>
+            {loginUserType === "ROLE_PARENTS" ? (
+              <div className="chat-field">
+                {teacherData.map((item, index) => (
+                  <div className="chat-select-wrap" key={index}>
+                    <div className="chat-select-field">
+                      <div className="teacher-info">
+                        <span>
+                          {item.studentGrade}학년 {item.studentClass}반
+                        </span>
+                        <p>{item.teacherName} 선생님</p>
+                      </div>
+                      {chatData && teacherData.length > 0 ? (
+                        <div className="teacher-chat-contain">
+                          <p>
+                            여기 대화내용 출력 어쩌고저쩌고뭐시기저시기야 오늘의
+                            점심은 오므라이스입니다. 맛있었어요.
+                          </p>
+                        </div>
+                      ) : (
+                        <div className="chat-select-wrap-parents">
+                          <div className="chat-null">
+                            <span>아직 대화내용이 없습니다.</span>
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
+                ))}
               </div>
-            ))}
-          </div>
-        ) : (
-          <div className="chat-field-parents">
-            <div className="chat-select-wrap-parents">
-              <div className="chat-select-field-group">
-                <div className="group-chat">
-                  <span>1학년 5반 단체 채팅방</span>
-                  <p>아직 대화내용이 없습니다.</p>
-                </div>
-              </div>
-            </div>
-            {studentData.map((item, index) => (
-              <div className="chat-select-wrap-parents" key={index}>
-                <div className="chat-select-field-parents">
-                  <div className="parents-info">
-                    <span>{item.studentName} 학부모</span>
-                    <p>내일 어쩌구저쩌구 이거 내용이에요.</p>
+            ) : (
+              <div className="chat-field-parents">
+                {/* <div className="chat-select-wrap-parents">
+                  <div className="chat-select-field-group">
+                    <div className="group-chat">
+                      <span>1학년 5반 단체 채팅방</span>
+                      <p>아직 대화내용이 없습니다.</p>
+                    </div>
                   </div>
+                </div> */}
+                {chatData && studentData.length > 0 ? (
+                  studentData.map((item, index) => (
+                    <div className="chat-select-wrap-parents" key={index}>
+                      <div className="chat-select-field-parents">
+                        <div className="parents-info">
+                          <span>{item.studentName} 학부모</span>
+                          <p>내일 어쩌구저쩌구 이거 내용이에요.</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="chat-select-wrap-parents">
+                    <div className="chat-null">
+                      <span>
+                        아직 대화내용이 없습니다. <br />
+                        초대를 눌러 대화를 시작하세요.
+                      </span>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {loginUserType === "ROLE_Teacher" ? (
+              <div className="group-chat-button">
+                <button
+                  className="raise"
+                  onClick={() => {
+                    setChatMiniList(true);
+                  }}
+                >
+                  <div className="plus-button">
+                    <span>초대</span>
+                    <FaUserPlus size={20} className="plus-btn" />
+                  </div>
+                </button>
+              </div>
+            ) : null}
+          </div>
+
+          {chatMiniList ? (
+            <>
+              <div className="parents-list-wrap">
+                <div className="chat-header">
+                  <span>초대하기</span>
+                  <button
+                    onClick={() => {
+                      setChatMiniList(false);
+                    }}
+                  >
+                    <IoClose size={30} />
+                  </button>
+                </div>
+                <div className="parents-list-inner">
+                  {studentData.map((item, index) => (
+                    <div
+                      className="chat-select-wrap-parents"
+                      key={index}
+                      onClick={() => handleCheckboxChange(index)}
+                    >
+                      <div className="parents-info">
+                        <span>{item.studentName} 학부모</span>
+                        <input
+                          type="checkbox"
+                          checked={!!checkedItems[index]}
+                          readOnly
+                        />
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
-            ))}
-          </div>
-        )}
-      </div>
-      <div className="group-chat-button">
-        <button className="raise">
-          <div className="plus-button">
-            <span>초대</span>
-            <FaUserPlus size={20} className="plus-btn" />
-          </div>
-        </button>
-      </div>
-      <div className="parents-list-wrap">
-        <div className="chat-header">
-          <span>초대하기</span>
-        </div>
-        <div className="parents-list-inner">
-          {studentData.map((item, index) => (
-            <div
-              className="chat-select-wrap-parents"
-              key={index}
-              onClick={() => handleCheckboxChange(index)}
-            >
-              <div className="parents-info">
-                <span>{item.studentName} 학부모</span>
-                <input
-                  type="checkbox"
-                  checked={!!checkedItems[index]}
-                  readOnly
-                />
-              </div>
-            </div>
-          ))}
-        </div>
-        <button className="create-group-chat-btn">채팅방 만들기</button>
-      </div>
-    </ChatWrapStyle>
+              <button className="create-group-chat-btn">채팅방 만들기</button>
+            </>
+          ) : null}
+        </ChatWrapStyle>
+      ) : null}
+    </>
   );
 };
 

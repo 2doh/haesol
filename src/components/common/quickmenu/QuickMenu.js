@@ -3,6 +3,7 @@ import ChatParents from "components/chat/ChatParents";
 import { BiSolidArrowToTop } from "react-icons/bi";
 import Chat from "pages/Home/Chat";
 import { useEffect, useState } from "react";
+import ChatStart from "components/chat/ChatStart";
 
 const QuickMenuStyle = styled.div`
   .quick-menu-wrap {
@@ -84,6 +85,8 @@ const QuickMenuStyle = styled.div`
 const QuickMenu = () => {
   // 퀵메뉴 위치 저장
   const [barPosition, setBarPosition] = useState(510);
+
+  // 퀵메뉴 - 채팅 여닫기
   const [chatOpen, setChatOpen] = useState(false);
 
   /** 퀵메뉴 위치 계산 */
@@ -102,9 +105,9 @@ const QuickMenu = () => {
     };
   }, []);
 
-  const callChat = bool => {
-    setChatOpen(bool);
-  };
+  // const callChat = bool => {
+  //   setChatOpen(bool);
+  // };
 
   /** 페이지 맨 위로 이동 */
   const MoveToTop = () => {
@@ -114,7 +117,9 @@ const QuickMenu = () => {
 
   return (
     <>
-      {chatOpen ? <ChatParents /> : null}
+      {chatOpen ? (
+        <ChatStart chatOpen={chatOpen} setChatOpen={setChatOpen} />
+      ) : null}
       {/* {chatOpen ? <Chat /> : null} */}
       <QuickMenuStyle>
         <div className="quick-menu-wrap" style={{ top: barPosition }}>
@@ -124,7 +129,7 @@ const QuickMenu = () => {
             <li
               className="btn"
               onClick={() => {
-                callChat(true);
+                setChatOpen(true);
               }}
             >
               {/* 채팅 */}
@@ -132,13 +137,15 @@ const QuickMenu = () => {
               <span className="hidden">채팅</span>
             </a> */}
               <a className="qk qk01" data-num="01">
+
                 <span className="quick-btn-text">채팅</span>
+
               </a>
             </li>
             <li
               className="btn"
               onClick={() => {
-                callChat(false);
+                setChatOpen(false);
               }}
             >
               {/* 채팅 */}
@@ -146,7 +153,9 @@ const QuickMenu = () => {
               <span className="hidden">채팅</span>
             </a> */}
               <a className="qk qk01" data-num="01">
+
                 <span className="quick-btn-text">(닫기)</span>
+
               </a>
             </li>
             <li

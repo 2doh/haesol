@@ -20,6 +20,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: #fff;
   width: 100%;
   height: 100%;
 }
@@ -72,11 +73,12 @@
 }
 
 .chat-wrap-style {
+  background-color: #fff;
   word-break: keep-all;
   position: relative;
   margin: 20px;
-  width: 420px;
-  height: 660px;
+  width: 360px;
+  height: 570px;
   overflow: hidden;
   border-radius: 20px;
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
@@ -84,7 +86,7 @@
 .chat-wrap-style .chat-header {
   display: flex;
   align-items: center;
-  height: 60px;
+  height: 10%;
   padding-left: 20px;
   gap: 10px;
 }
@@ -94,7 +96,7 @@
 }
 .chat-wrap-style .chat-info-wrap {
   display: flex;
-  height: 100%;
+  height: 60%;
   gap: 30px;
   flex-direction: column;
   justify-content: flex-start;
@@ -127,8 +129,9 @@
   font-size: 16px;
 }
 .chat-wrap-style .chat-field {
+  height: 30%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   overflow-y: auto;
   align-items: center;
   flex-direction: column;
@@ -141,7 +144,7 @@
 }
 .chat-wrap-style .chat-field .chat-button {
   position: absolute;
-  bottom: 30px;
+  bottom: 20px;
   width: 85%;
   min-height: 60px;
   border-radius: 20px;
@@ -158,4 +161,7 @@
 }
 .chat-wrap-style .chat-field .chat-button:active {
   transform: translateY(2px);
+}
+.chat-wrap-style .chat-field .chat-start-non-popup {
+  display: flex;
 }/*# sourceMappingURL=chat.css.map */
