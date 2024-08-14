@@ -65,9 +65,6 @@ const ChatParents = () => {
   return (
     <>
       {/* 버튼 클릭하면 채팅창 나오게 */}
-      <ChatButton />
-      <ChatStart />
-      <ChatList />
       <ChatWrapStyle>
         <div className="chat-header">
           <span>몇 반 김누구 선생님</span>
