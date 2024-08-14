@@ -7,11 +7,7 @@ const useSocialLogin = result => {
     return "/signup/social";
   }
   if (result.data.parentsId !== -1) {
-    let acTken = result.data.accessToken;
-    const payload = JSON.parse(base64.decode(acTken.split(".")[1])).signedUser;
-    const signedUser = JSON.parse(payload);
-    setCookie("userRole", signedUser.role);
-    alert(signedUser.role);
+    alert("로그인 되었습니다");
     return "/";
   }
   return;

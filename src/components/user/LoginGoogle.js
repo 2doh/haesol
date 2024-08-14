@@ -1,4 +1,4 @@
-import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
+import { useGoogleLogin } from "@react-oauth/google";
 import google from "../../images/devicon_google.svg";
 
 const LoginGoogle = ({ onSuccess, onFailure }) => {
