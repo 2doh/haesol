@@ -158,4 +158,70 @@
 .modal-wrap .modal-inner .modal-footer .modal-btn > .white-button {
   color: #ffffff;
   background-color: #747474;
+}
+.modal-wrap .modal-inner .user-update-modal-wrap {
+  display: flex;
+  flex-direction: column;
+  padding: 45px 40px;
+}
+.modal-wrap .modal-inner .user-update-modal-wrap form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.modal-wrap .modal-inner .user-update-modal-wrap .user-update-modal-wrap-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+}
+.modal-wrap .modal-inner .user-update-modal-wrap .user-update-modal-wrap-inner > * {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+.modal-wrap .modal-inner .user-update-modal-wrap .user-update-modal-wrap-inner > div {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  width: 100%;
+  min-height: 35px;
+}
+.modal-wrap .modal-inner .user-update-modal-wrap .user-update-modal-wrap-inner > div > div:first-of-type {
+  min-width: 65px;
+}
+.modal-wrap .modal-inner .user-update-modal-wrap .user-update-modal-wrap-inner > div > div:not(:first-of-type) {
+  flex-grow: 1;
+  font-size: 15px;
+}
+.modal-wrap .modal-inner .user-update-modal-wrap .user-update-modal-wrap-inner > div .text-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.modal-wrap .modal-inner .user-update-modal-wrap .user-update-modal-wrap-inner > div .text-box > div {
+  display: flex;
+  align-items: center;
+}
+.modal-wrap .modal-inner .user-update-modal-wrap .user-update-modal-wrap-inner select,
+.modal-wrap .modal-inner .user-update-modal-wrap .user-update-modal-wrap-inner input[type=text] {
+  width: 100%;
+  height: 30px;
+  border-radius: 5px;
+  border: 1px solid #886348;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  font-size: 15px;
+  padding-left: 10px;
+}
+.modal-wrap .modal-inner .user-update-modal-wrap .user-update-modal-wrap-inner select {
+  width: 35%;
+}
+.modal-wrap .modal-inner .user-update-modal-wrap .modal-footer {
+  min-height: auto;
+}
+.modal-wrap .modal-inner .user-update-modal-wrap .modal-footer .modal-btn {
+  padding-bottom: 20px;
 }/*# sourceMappingURL=modal.css.map */

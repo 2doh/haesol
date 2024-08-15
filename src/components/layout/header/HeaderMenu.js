@@ -232,7 +232,9 @@ const HeaderMemu = () => {
         navigate("/login");
         break;
       case 1:
-        navigate("");
+        // navigate("");
+        navigate("/notice");
+
         break;
       case 2:
         navigate("/students");
@@ -249,11 +251,13 @@ const HeaderMemu = () => {
         navigate("/parents/childlist");
         break;
       case 10:
+        // 알림장
         alert("준비중인 서비스입니다.");
         break;
       case 11:
-        // 추가하기
-        navigate("/notice/list/:userClass");
+        // 알림장
+        navigate("/notice");
+
         break;
       case 21:
         // 국어 문제 출제 페이지
@@ -397,23 +401,6 @@ const HeaderMemu = () => {
                   <h2>
                     <a>온라인 학습</a>
                   </h2>
-                  {/* <div className="navi_arrow_icon">
-                    <IoMdArrowDropdownCircle size={30} />
-                  </div>
-                  <div className="navi_sub online-menu">
-                    <ul className="depth2">
-                      <li>
-                        <a>
-                          <span>전체 일정</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a>
-                          <span>알림장</span>
-                        </a>
-                      </li>
-                    </ul>
-                  </div> */}
                 </li>
                 <li
                   onClick={() => {

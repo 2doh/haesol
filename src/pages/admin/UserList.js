@@ -194,8 +194,8 @@ const UserList = ({
                   <div className="grid-inner-item-text sign-off-on-buttons">
                     <button
                       className="rejected-button"
-                      onClick={e => {
-                        e.stopPropagation();
+                      onClick={() => {
+                        userUpdate(3, cItem);
                       }}
                     >
                       학적 변동
@@ -221,28 +221,69 @@ const UserList = ({
 
   // (학생/교직원) 정보 수정 모달 호출
   const userUpdate = (userType, item) => {
-    // console.log("userType : ", userType);
-    // console.log("item : ", item);
+    console.log("userType : ", userType);
+    console.log("item : ", item);
+    let previousData = "";
     let data = "";
+    let stnStage = "";
 
     // 교직원의 경우
     if (userType === 2) {
+      // 교직원 활성화 상태에서만 수정가능
+      // 1 = "활성화"
+
+      previousData = {
+        p: 2,
+        pk: item.pk,
+        state: 1,
+        userName: item.name,
+        userGrade: item.grade,
+        userClass: item.class,
+      };
+
       data = {
         headerText: "정보 수정",
         buttonText: ["수정", "취소"],
-        modalRes: [userType, item],
+        modalRes: [userType, item, previousData, item.id],
       };
     }
 
     // 학생의 경우
     if (userType === 3) {
+      switch (item.studentState) {
+        case "재학중":
+          stnStage = 1;
+          break;
+        case "전학":
+          stnStage = 2;
+          break;
+        case "졸업":
+          stnStage = 3;
+          break;
+        case "퇴학":
+          stnStage = 4;
+          break;
+        default:
+          break;
+      }
+
+      previousData = {
+        p: 3,
+        pk: item.studentPK,
+        state: stnStage,
+        userName: item.studentName,
+        userGrade: item.studentGrade,
+        userClass: item.studentClass,
+      };
+
       data = {
         headerText: "학적 변동",
         buttonText: ["수정", "취소"],
-        modalRes: [userType, item],
+        modalRes: [userType, item, previousData, item.studentId],
       };
     }
 
+    console.log("data : ", previousData);
     dispatch(updateModalDate(data));
     dispatch(openModal("UserUpdateModal"));
   };

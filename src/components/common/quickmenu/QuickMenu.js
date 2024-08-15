@@ -137,25 +137,7 @@ const QuickMenu = () => {
               <span className="hidden">채팅</span>
             </a> */}
               <a className="qk qk01" data-num="01">
-
                 <span className="quick-btn-text">채팅</span>
-
-              </a>
-            </li>
-            <li
-              className="btn"
-              onClick={() => {
-                setChatOpen(false);
-              }}
-            >
-              {/* 채팅 */}
-              {/* <a href="/" className="qk qk01" data-num="01">
-              <span className="hidden">채팅</span>
-            </a> */}
-              <a className="qk qk01" data-num="01">
-
-                <span className="quick-btn-text">(닫기)</span>
-
               </a>
             </li>
             <li

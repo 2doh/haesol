@@ -158,19 +158,22 @@ export const delectAwaitAccept = async (selectUserPk, userListType) => {
 
 /** 회원가입한 유저의 정보 수정 및 활성화/비활성화 */
 export const patchAdminUserUpdate = async userDate => {
-  // const accessToken = getCookie("accessToken");
-  console.log("들어온 데이터 : ", userDate);
-
   let res = await jwtAxios
     .patch("/api/admin", userDate)
     .then(res => {
       // 성공 처리
       console.log("성공 : ", res);
-      // return res.data.userList;
+      return "";
     })
     .catch(error => {
-      console.log("에러 : ", error);
-      // return false;
+      // console.log("에러 : ", error.response.data);
+
+      if (error.response.data.result === "MULTIPLE_TEACHER_ERROR") {
+        return error.response.data.resultMsg;
+      } else {
+        return false;
+      }
+
       // return Promise.reject(error);
     });
 
