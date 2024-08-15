@@ -307,8 +307,8 @@ function App() {
           {/* 학부모 - 학생 : 정보 수정 페이지 */}
           <Route path="/teacher">
             <Route index element={<TeacherInfoView />}></Route>
-            <Route path="teacherinfo" element={<TeacherInfoView />}></Route>
-            {/* <Route path="/teacherinfo" element={<TeacherEdit />}></Route> */}
+            {/* <Route path="teacherinfo" element={<TeacherInfoView />}></Route> */}
+            <Route path="teacherinfo" element={<TeacherEdit />}></Route>
           </Route>
           {/* 학부모 - start */}
           <Route path="/parents">

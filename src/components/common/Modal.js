@@ -77,7 +77,7 @@ const ModalStyle = styled.div`
     justify-content: center;
     gap: 20px;
 
-    .text-box:nth-child(1) {
+    .text-box:nth-of-type(1) {
       padding-top: 20px;
       display: flex;
       flex-direction: row;
@@ -143,6 +143,33 @@ const Modal = () => {
   // const pwWarning = useRef();
   const [newPwWarningCheck, setNewPwWarningCheck] = useState(false);
   const [newPwReWarningCheck, setNewPwReWarningCheck] = useState(false);
+
+  // 정보 수정 모달
+  const [updateUserState, setUpdateUserState] = useState(
+    modalState.modalRes && modalState.modalRes[2]
+      ? modalState.modalRes[2].state
+      : "",
+  );
+  const [updateUserName, setUpdateUserName] = useState(
+    modalState.modalRes && modalState.modalRes[2]
+      ? modalState.modalRes[2].userName
+      : "",
+  );
+  const [updateUserGrade, setUpdateUserGrade] = useState(
+    modalState.modalRes && modalState.modalRes[2]
+      ? modalState.modalRes[2].userGrade
+      : "",
+  );
+  const [updateUserClass, setUpdateUserClass] = useState(
+    modalState.modalRes && modalState.modalRes[2]
+      ? modalState.modalRes[2].userClass
+      : "",
+  );
+  const [updataeUserMsg, setUpdataeUserMsg] = useState("");
+
+  useEffect(() => {
+    console.log("출력값 : ", updateUserName);
+  }, [updateUserState, updateUserName, updateUserGrade, updateUserClass]);
 
   const timerTime = () => {
     /** 타이머 리셋 : 추후 로그인 연장 기능 추가 예정 */
@@ -482,9 +509,24 @@ const Modal = () => {
   };
 
   /** UserUpdateModal : 어드민 - 유저 정보 수정 */
-  const singUserInfoUpdate = e => {
+  const singUserInfoUpdate = async e => {
     e.preventDefault();
-    console.log("모달의 입력 데이터 입니다.", e.target);
+    // console.log("모달의 입력 데이터 입니다.", e.target);
+
+    const newData = {
+      p: modalState.modalRes[0],
+      pk: modalState.modalRes[2].pk,
+      state: updateUserState,
+      userName: updateUserName,
+      userGrade: updateUserGrade,
+      userClass: updateUserClass,
+    };
+
+    const res = await patchAdminUserUpdate(newData);
+
+    if (res) {
+      setUpdataeUserMsg(res);
+    }
   };
 
   return (
@@ -668,49 +710,140 @@ const Modal = () => {
 
           {/* UserUpdateModal */}
           {modalState.modalType === "UserUpdateModal" ? (
-            <form
-              onSubmit={e => {
-                singUserInfoUpdate(e);
-              }}
-            >
-              <div className="modal-body">
-                <div className="pw-modal-body-text-div">
-                  <div className="pw-modal-text">상태</div>
-                  <input type="text" id="stateDate" />
+            <div className="user-update-modal-wrap">
+              <form
+                onSubmit={e => {
+                  singUserInfoUpdate(e);
+                }}
+              >
+                <div className="user-update-modal-wrap-inner">
+                  <div className="user-update-modal-body-text-div">
+                    <div className="user-update-modal-text">
+                      <div className="text-box">
+                        <div>상태</div>
+                        <div>:</div>
+                      </div>
+                    </div>
+                    {modalState.modalRes[0] === 2 ? (
+                      <div className="stateDate">재직</div>
+                    ) : null}
+                    {modalState.modalRes[0] === 3 ? (
+                      <select
+                        className="stateDate"
+                        onChange={e => {
+                          setUpdateUserState(e.target.value);
+                        }}
+                      >
+                        <>
+                          <option value="1">재학</option>
+                          <option value="2">전학</option>
+                          <option value="3">졸업</option>
+                          <option value="4">퇴학</option>
+                        </>
+                      </select>
+                    ) : null}
+                  </div>
+                  <div className="user-update-modal-body-text-div">
+                    <div className="user-update-modal-text">
+                      <div className="text-box">
+                        <div>아이디</div>
+                        <div>:</div>
+                      </div>
+                    </div>
+                    <div className="idDate">{modalState.modalRes[3]}</div>
+                  </div>
+                  <div className="user-update-modal-body-text-div">
+                    <div className="user-update-modal-text">
+                      <div className="text-box">
+                        <div>이름</div>
+                        <div>:</div>
+                      </div>
+                    </div>
+                    <input
+                      type="text"
+                      id="nameDate"
+                      value={updateUserName}
+                      onChange={e => {
+                        setUpdateUserName(e.target.value);
+                      }}
+                    />
+                  </div>
+                  <div className="user-update-modal-body-text-div">
+                    <div className="user-update-modal-text">
+                      <div className="text-box">
+                        <div>학년</div>
+                        <div>:</div>
+                      </div>
+                    </div>
+
+                    <select
+                      className="gradeDate"
+                      value={updateUserGrade}
+                      onChange={e => {
+                        setUpdateUserGrade(e.target.value);
+                      }}
+                    >
+                      <>
+                        <option value="1">1 학년</option>
+                        <option value="2">2 학년</option>
+                        <option value="3">3 학년</option>
+                        <option value="4">4 학년</option>
+                        <option value="5">5 학년</option>
+                        <option value="6">6 학년</option>
+                      </>
+                    </select>
+                  </div>
+                  <div className="user-update-modal-body-text-div">
+                    <div className="user-update-modal-text">
+                      <div className="text-box">
+                        <div>학급</div>
+                        <div>:</div>
+                      </div>
+                    </div>
+
+                    <select
+                      className="classDate"
+                      value={updateUserClass}
+                      onChange={e => {
+                        setUpdateUserClass(e.target.value);
+                      }}
+                    >
+                      <>
+                        <option value="1">1 반</option>
+                        <option value="2">2 반</option>
+                        <option value="3">3 반</option>
+                        <option value="4">4 반</option>
+                        <option value="5">5 반</option>
+                        <option value="6">6 반</option>
+                      </>
+                    </select>
+                  </div>
+                  {updataeUserMsg === "" ? null : (
+                    <div className="pw-modal-body-text-div pw-error-msg-div">
+                      <div className="pw-modal-text pw-error-msg">
+                        {updataeUserMsg}
+                      </div>
+                    </div>
+                  )}
                 </div>
-                <div className="pw-modal-body-text-div">
-                  <div className="pw-modal-text">아이디</div>
-                  <input type="text" id="idDate" />
+
+                <div className="modal-footer">
+                  <div className="modal-btn">
+                    <button type="submit" className="white-button">
+                      수정
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        modalClose();
+                      }}
+                    >
+                      취소
+                    </button>
+                  </div>
                 </div>
-                <div className="pw-modal-body-text-div">
-                  <div className="pw-modal-text">이름</div>
-                  <input type="text" id="nameDate" />
-                </div>
-                <div className="pw-modal-body-text-div">
-                  <div className="pw-modal-text">학년</div>
-                  <input type="text" id="gradeDate" />
-                </div>
-                <div className="pw-modal-body-text-div">
-                  <div className="pw-modal-text">학급</div>
-                  <input type="text" id="classDate" />
-                </div>
-              </div>
-              <div className="modal-footer">
-                <div className="modal-btn">
-                  <button type="submit" className="white-button">
-                    수정
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      modalClose();
-                    }}
-                  >
-                    취소
-                  </button>
-                </div>
-              </div>
-            </form>
+              </form>
+            </div>
           ) : null}
 
           {modalState.modalType === "UserUpdateModal" ? null : (

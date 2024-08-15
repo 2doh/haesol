@@ -259,11 +259,6 @@ const ParentsProfile = () => {
   //   page1Element.classList.add("animate");
   // };
 
-  // 확인용 삭제해
-  useEffect(() => {
-    console.log("값 확인 : ", childState);
-  }, [childState]);
-
   /** 메뉴 선택시 selectChildNum 변경 */
   const handleOnClick = (beforeIndex, idx, topPosition, prevPosition) => {
     // 학생 태그 높이 저장
@@ -392,7 +387,6 @@ const ParentsProfile = () => {
         {/* 스프링 영역 */}
         <section className="chainSection"></section>
       </div>
-      
     </ParentsProfileStyle>
   );
 };

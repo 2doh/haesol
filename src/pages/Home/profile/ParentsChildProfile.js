@@ -24,12 +24,11 @@ const ParentsChildProfile = ({ childNum, type }) => {
   const [studentPic, setStudentPic] = useState(null);
 
   useEffect(() => {
-    console.log("페이지 : ", childState.selectChildInfoList);
+    // console.log("페이지 : ", childState.selectChildInfoList);
   }, [childState]);
 
   const getProfile = () => {
     if (childState.selectChildInfoList.length !== 0) {
-      console.log("여기");
       setBirth(childState.selectChildInfoList[childNum].birth || "미등록");
       setClassId(
         childState.selectChildInfoList[childNum].classId.split(" ")[0] ||
@@ -69,8 +68,6 @@ const ParentsChildProfile = ({ childNum, type }) => {
   const moveMyGradePage = () => {
     navigate(`/grade/${studentPk}`);
   };
-
-  console.log(type);
 
   return (
     <div className="user-info">

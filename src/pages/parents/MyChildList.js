@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { openModal, updateModalDate } from "slices/modalSlice";
 import { getCookie, setCookie } from "utils/cookie";
 import SocialLoginIntegration from "./SocialLoginIntegration";
+import { useNavigate } from "react-router";
 
 const PageWrapStyle = styled.div`
   position: relative;
@@ -237,6 +238,7 @@ const TopDiv = styled.div`
 `;
 
 const MyChildList = () => {
+  const navigate = useNavigate();
   const [myChildList, setMyChildList] = useState([]);
   const [offUseEffect, setOffUseEffect] = useState(false);
 
@@ -285,6 +287,15 @@ const MyChildList = () => {
     dispatch(openModal("AddChildModal"));
   };
 
+  const movePage = item => {
+    console.log("item : ", item);
+    // navigate("/parents/studentinfo");
+
+    setCookie("studentPk", item.studentPk);
+    // navigate("/parents/studentinfo");
+    // navigate(`/grade/item.studentPk`);
+  };
+
   return (
     <>
       <HeaderTopPublic />
@@ -307,6 +318,7 @@ const MyChildList = () => {
               <SocialLoginIntegration />
               {myChildList.length !== 0 ? (
                 myChildList.map((item, index) => {
+                  console.log(item);
                   return (
                     <div className="child-info-div" key={index}>
                       {/* <div className="child-info-div"> */}
@@ -332,7 +344,13 @@ const MyChildList = () => {
                         </div>
                       </div>
                       <div className="child-btn-wrap">
-                        <button>상세정보</button>
+                        <button
+                          onClick={() => {
+                            movePage(item);
+                          }}
+                        >
+                          상세정보
+                        </button>
                         <button>성적확인</button>
                         <button
                           onClick={() => {
