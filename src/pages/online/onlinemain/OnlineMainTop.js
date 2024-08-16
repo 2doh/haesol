@@ -2,6 +2,9 @@ import styled from "@emotion/styled";
 import { FaSearch } from "react-icons/fa";
 
 const OnlineMainTopStyle = styled.div`
+  position: relative;
+  z-index: 999;
+
   min-height: 150px;
   width: 100%;
   display: flex;
@@ -36,6 +39,10 @@ const OnlineMainTopStyle = styled.div`
     font-weight: 500;
     font-size: 16px;
     transition: 0.8s;
+
+    &::placeholder {
+      color: gray;
+    }
   }
 
   .search-container .search-btn .fas {
@@ -47,9 +54,43 @@ const OnlineMainTopStyle = styled.div`
     height: 100px;
   }
 
-  .search-button {
+  .history-button {
     min-width: 70px;
   }
+
+  /* .search-button {
+    text-align: center;
+  }
+  .search-button button {
+    width: 48px;
+    height: 48px;
+    color: #61677c;
+    box-shadow:
+      -5px -5px 20px #ffffff,
+      5px 5px 20px #babecc;
+    border: none;
+    outline: none;
+    padding: 16px;
+    background: #ebecf0;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 8px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 19px;
+    transition: all 0.2s ease-in-out;
+  }
+  .search-button button:hover {
+    box-shadow:
+      -2px -2px 5px #fff,
+      2px 2px 5px #babecc;
+  }
+  .search-button button:active {
+    box-shadow:
+      inset -1px -1px 2px #babecc,
+      inset -1px -1px 2px #fff;
+  } */
 `;
 
 const OnlineMainTop = () => {
@@ -60,6 +101,14 @@ const OnlineMainTop = () => {
           <span className="button-51__Text text">Button 51</span>
         </span>
       </button> */}
+      <div className="history-button">
+        <button className="button-27" role="button">
+          <span className="text">
+            {/* <FaSearch /> */}
+            시험 기록
+          </span>
+        </button>
+      </div>
       <div className="search-container">
         <input
           type="text"
@@ -73,11 +122,13 @@ const OnlineMainTop = () => {
       </div>
       <div className="search-button">
         <button className="button-27" role="button">
-          <span className="text">
-            {/* <FaSearch /> */}
-            검색
-          </span>
+          <FaSearch />
         </button>
+        {/* <button>
+          <i className="fa fa-search">
+            <FaSearch />
+          </i>
+        </button> */}
       </div>
     </OnlineMainTopStyle>
   );

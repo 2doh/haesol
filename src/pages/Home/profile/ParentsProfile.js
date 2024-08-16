@@ -246,21 +246,13 @@ const ParentsProfile = () => {
     };
     dispatch(updateSelectChildInfo(data));
   };
-  // /** 메뉴 선택시 selectChildNum 변경 */
-  // const handleOnClick = (e, idx) => {
-  //   // console.log("들어옴.");
-  //   setCountIndex(idx);
-  //   setPrevChildNum(getCookie("studentPk"));
-  //   // setCookie("studentPk", idx);
-  //   // 강제로 애니메이션 재시작
-  //   const page1Element = page1Ref.current;
-  //   page1Element.classList.remove("animate");
-  //   void page1Element.offsetWidth; // Reflow
-  //   page1Element.classList.add("animate");
-  // };
 
   /** 메뉴 선택시 selectChildNum 변경 */
   const handleOnClick = (beforeIndex, idx, topPosition, prevPosition) => {
+    // setCookie("selectChildIndex",)
+
+    setCookie("selectChildNum", idx);
+
     // 학생 태그 높이 저장
     const data = {
       prevTopPosition: prevPosition,
@@ -284,6 +276,7 @@ const ParentsProfile = () => {
     const res = await getMyChildInfo();
     const num = childNum;
     // console.log("자녀 정보 : ", res);
+    // console.log("자녀 index : ", childNum);
 
     if (res === false) {
       console.log("자녀 없음.");
@@ -294,7 +287,7 @@ const ParentsProfile = () => {
       // 학생 PK 저장
       const data = {
         selectChildInfoList: res,
-        selectChildInfo: res[childState.selectChildIndex],
+        selectChildInfo: res[num],
         selectChildPk: res[num].studentPk,
       };
       dispatch(updateSelectChildInfo(data));
@@ -305,7 +298,8 @@ const ParentsProfile = () => {
 
   /** 최초 랜더링 */
   useEffect(() => {
-    myChildInfo(childState.selectChildIndex);
+    myChildInfo(getCookie("selectChildNum"));
+    // myChildInfo(childState.selectChildIndex);
   }, []);
 
   /** 프로필 html 코드 추가 */
@@ -360,6 +354,7 @@ const ParentsProfile = () => {
       })}
       {/* 자녀 메뉴 - end */}
 
+      {/* 이전 자녀(애니메이션용) */}
       <div className="user-info-wrap page page1" id="page1" ref={page1Ref}>
         <div className="user-info-inner content" id="content1">
           {childState.prevChildNum !== null ? (
@@ -370,17 +365,11 @@ const ParentsProfile = () => {
         <section className="chainSection"></section>
       </div>
 
-      <div
-        className="user-info-wrap page"
-        id="page2"
-        // ref={asdf213}
-        // onClick={() => {
-        //   asdf213.current.classList = "user-info-wrap page page2";
-        // }}
-      >
+      {/* 현재 자녀 */}
+      <div className="user-info-wrap page" id="page2">
         <div className="user-info-inner content" id="contents">
           <ParentsChildProfile
-            childNum={childState.selectChildIndex}
+            childNum={getCookie("selectChildNum")}
             type={2}
           />
         </div>

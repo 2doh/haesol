@@ -2,6 +2,7 @@ import LogoutButton from "components/common/LogoutButton";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import { getCookie } from "utils/cookie";
 
 const ParentsChildProfile = ({ childNum, type }) => {
   // pageType = "page1" 이전 페이지
@@ -25,6 +26,8 @@ const ParentsChildProfile = ({ childNum, type }) => {
 
   useEffect(() => {
     // console.log("페이지 : ", childState.selectChildInfoList);
+    console.log("선택되어 있는 자녀 Index : ", getCookie("selectChildNum"));
+    console.log("선택되어 있는 자녀 childNum : ", childNum);
   }, [childState]);
 
   const getProfile = () => {

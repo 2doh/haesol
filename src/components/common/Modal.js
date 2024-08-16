@@ -118,6 +118,19 @@ const ModalStyle = styled.div`
   .modal-inner {
     height: auto;
   }
+
+  #add-child-code-input {
+    width: 100%;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid #886348;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+
+    font-size: 15px;
+    padding-left: 10px;
+  }
 `;
 
 const Modal = () => {
@@ -131,7 +144,8 @@ const Modal = () => {
   const navi = useNavigate();
 
   // 자녀 코드
-  const childCode = useRef();
+  const [childCode, setChildCode] = useState();
+  const [addChildMsg, setAddChildMsg] = useState("");
 
   const [min, setMin] = useState(3);
   const [sec, setSec] = useState(0);
@@ -196,7 +210,10 @@ const Modal = () => {
 
   /** 확인 처리 : 기능 추가 */
   const modalAccept = async () => {
-    if (modalState.modalType === "BasicModal") {
+    if (
+      modalState.modalType === "BasicModal" ||
+      modalState.modalType === "AddChildModal"
+    ) {
       // 단순 true 출력
       if (modalState.modalRes[0] === 1) {
         // console.log("true 를 리턴합니다.");
@@ -242,6 +259,10 @@ const Modal = () => {
         if (res) {
           dispatch(closeModal());
         }
+      }
+      // 학부모 - 자녀 추가
+      if (modalState.modalRes[0] === 14) {
+        handleAddChild();
       }
 
       // 아이디 중복 확인
@@ -480,16 +501,17 @@ const Modal = () => {
     }
   };
 
-  const handleAddChild = async e => {
-    e.preventDefault();
-    // console.log("자녀 코드 : ", childCode.current.value);
+  /** 자녀 추가 */
+  const handleAddChild = async () => {
+    console.log("자녀 코드 : ", childCode);
 
-    if (!childCode.current.value) {
-      console.log("값 없음.");
+    if (!childCode) {
+      setAddChildMsg("자녀 코드를 확인 후 다시 입력해주세요.");
     } else {
-      console.log("값 있음.");
-      const res = await putChild({ searchWord: childCode.current.value });
-      console.log(res);
+      // console.log("값 있음.");
+      const res = await putChild({ searchWord: childCode });
+      dispatch(closeModal());
+      // console.log(res){}
     }
 
     // try {
@@ -580,26 +602,22 @@ const Modal = () => {
           {/* AddChildModal */}
           {modalState.modalType === "AddChildModal" ? (
             <div className="modal-body">
-              <div className="add-child-modal-body-text-div">
-                <div className="add-child-modal-text">자녀 코드</div>
-              </div>
-              <div className="add-child-modal-body-text-div add-child-modal-body-input-btn-div">
-                <form
-                  onSubmit={e => {
-                    handleAddChild(e);
-                  }}
-                >
-                  <input type="text" ref={childCode} />
-                  <button type="submit">인증</button>
-                </form>
-              </div>
               <div className="pw-modal-body-text-div">
-                <div className="pw-modal-text">인증 전</div>
+                <div className="pw-modal-text">자녀 코드</div>
+                <input
+                  type="text"
+                  id="add-child-code-input"
+                  value={childCode}
+                  onChange={e => {
+                    setChildCode(e.target.value);
+                  }}
+                />
               </div>
-              {validationConfirmMsg === "" ? null : (
+
+              {addChildMsg === "" ? null : (
                 <div className="pw-modal-body-text-div pw-error-msg-div">
                   <div className="pw-modal-text pw-error-msg">
-                    {validationConfirmMsg}
+                    {addChildMsg}
                   </div>
                 </div>
               )}
@@ -611,6 +629,7 @@ const Modal = () => {
             <div className="modal-body">
               <div className="pw-modal-body-text-div">
                 <div className="pw-modal-text">신규 비밀번호</div>
+
                 <ViewPw
                   setNewPw={setNewPw}
                   setNewPwWarningCheck={setNewPwWarningCheck}
