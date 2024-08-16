@@ -1,6 +1,8 @@
 import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+import { setCookie } from "utils/cookie";
 
 const AccordionStyle = styled.div`
   .wrapper {
@@ -133,6 +135,8 @@ const AccordionStyle = styled.div`
 `;
 
 const ThreeDimensionsAccordion = ({ menuList }) => {
+  const navigate = useNavigate();
+
   const handleClick = event => {
     event.preventDefault();
     const parentItem = event.currentTarget.parentElement;
@@ -144,6 +148,23 @@ const ThreeDimensionsAccordion = ({ menuList }) => {
   useEffect(() => {
     // console.log("메뉴 : ", menuList);
   }, [menuList]);
+
+  const movePage = (pageNum, item) => {
+    console.log("item : ", item);
+    // navigate("/parents/studentinfo");
+    setCookie("studentPk", item.studentPk);
+
+    switch (pageNum) {
+      case 1:
+        navigate("/parents/studentinfo");
+        break;
+      case 2:
+        navigate(`/grade/${item.studentPk}`);
+        break;
+      default:
+        break;
+    }
+  };
 
   return (
     <AccordionStyle>
@@ -157,8 +178,20 @@ const ThreeDimensionsAccordion = ({ menuList }) => {
                   {item.name}
                 </a>
                 <div className="subMenu open">
-                  <a href="">상세 정보</a>
-                  <a href="">성적 확인</a>
+                  <a
+                    onClick={() => {
+                      movePage(1, item);
+                    }}
+                  >
+                    상세 정보
+                  </a>
+                  <a
+                    onClick={() => {
+                      movePage(2, item);
+                    }}
+                  >
+                    성적 확인
+                  </a>
                   <a href="">자녀 선택</a>
                 </div>
               </li>

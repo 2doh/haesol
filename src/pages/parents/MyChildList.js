@@ -13,6 +13,8 @@ import { getCookie, setCookie } from "utils/cookie";
 import SocialLoginIntegration from "./SocialLoginIntegration";
 import { useNavigate } from "react-router";
 
+import defaultImg from "../../images/default_pic.png";
+
 const PageWrapStyle = styled.div`
   position: relative;
   width: 100vw;
@@ -123,10 +125,16 @@ const PageWrapStyle = styled.div`
               align-items: center;
 
               .child-img {
-                width: 120px;
-                height: 120px;
+                position: relative;
+                width: 140px;
+                height: 140px;
                 border-radius: 50%;
-                background-color: green;
+
+                img {
+                  position: absolute;
+                  width: 100%;
+                  height: 100%;
+                }
               }
             }
             .child-info {
@@ -200,16 +208,63 @@ const PageWrapStyle = styled.div`
 
           .child-add-icon {
             width: 33%;
-            /* padding: 20px; */
             display: flex;
             justify-content: center;
             align-items: center;
 
             .child-img {
-              width: 120px;
-              height: 120px;
-              border-radius: 50%;
-              background-color: green;
+              position: relative;
+              width: 100px;
+              height: 100px;
+              /* border-radius: 50%; */
+
+              .button_plus {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+
+                background: #fff;
+                cursor: pointer;
+                border: 2px solid #095776;
+
+                /* Mittig */
+                /* top: 50%; */
+                /* left: 50%; */
+              }
+
+              .button_plus:after {
+                content: "";
+                position: absolute;
+                transform: translate(-50%, -50%);
+                height: 4px;
+                width: 50%;
+                background: #095776;
+                top: 50%;
+                left: 50%;
+              }
+
+              .button_plus:before {
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: #095776;
+                height: 50%;
+                width: 4px;
+              }
+
+              .button_plus:hover:before,
+              .button_plus:hover:after {
+                background: #fff;
+                transition: 0.2s;
+              }
+
+              .button_plus:hover {
+                background-color: #095776;
+                transition: 0.2s;
+              }
             }
           }
           .child-add-text {
@@ -278,7 +333,7 @@ const MyChildList = () => {
     const data = {
       headerText: "자녀 추가",
       buttonText: ["추가", "취소"],
-      modalRes: [1],
+      modalRes: [14],
     };
 
     // addChildModal
@@ -287,14 +342,27 @@ const MyChildList = () => {
     dispatch(openModal("AddChildModal"));
   };
 
-  const movePage = item => {
+  const movePage = (pageNum, item) => {
     console.log("item : ", item);
     // navigate("/parents/studentinfo");
-
     setCookie("studentPk", item.studentPk);
-    // navigate("/parents/studentinfo");
-    // navigate(`/grade/item.studentPk`);
+
+    switch (pageNum) {
+      case 1:
+        navigate("/parents/studentinfo");
+        break;
+      case 2:
+        navigate(`/grade/${item.studentPk}`);
+        break;
+      default:
+        break;
+    }
   };
+
+  // const childImg = item => {
+  //   if (item) {
+  //   }
+  // };
 
   return (
     <>
@@ -325,7 +393,15 @@ const MyChildList = () => {
 
                       <div className="child-info-wrap">
                         <div className="child-img-wrap">
-                          <div className="child-img"></div>
+                          <div className="child-img">
+                            {item.pic === null ? (
+                              <img src={defaultImg} />
+                            ) : (
+                              <img
+                                src={`http://192.168.0.144:5121/pic/student/${item.parentsPK}/${item.pic}`}
+                              />
+                            )}
+                          </div>
                         </div>
                         <div className="child-info">
                           <div className="child-info-text">
@@ -346,12 +422,18 @@ const MyChildList = () => {
                       <div className="child-btn-wrap">
                         <button
                           onClick={() => {
-                            movePage(item);
+                            movePage(1, item);
                           }}
                         >
                           상세정보
                         </button>
-                        <button>성적확인</button>
+                        <button
+                          onClick={() => {
+                            movePage(2, item);
+                          }}
+                        >
+                          성적확인
+                        </button>
                         <button
                           onClick={() => {
                             setCookie("studentPk", item.studentPk);
@@ -379,7 +461,9 @@ const MyChildList = () => {
                   {/* <div className="child-info-div"> */}
 
                   <div className="child-add-icon">
-                    <div className="child-img"></div>
+                    <div className="child-img">
+                      <div className="button_plus"></div>
+                    </div>
                   </div>
                   <div className="child-add-text">자녀 추가하기</div>
                 </div>

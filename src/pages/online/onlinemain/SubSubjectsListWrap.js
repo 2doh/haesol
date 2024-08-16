@@ -6,16 +6,27 @@ const SubSubjectsListWrapStyle = styled.div`
   padding: 0 100px;
 
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   justify-content: space-between;
   gap: 80px;
 
-  & button {
+  .english-buttons {
+    min-height: 150px;
     width: 100%;
-    height: 100%;
-    /* height: 130px; */
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    gap: 80px;
+
+    & button {
+      width: 100%;
+      height: 100%;
+      /* height: 130px; */
+    }
   }
 `;
 
@@ -28,7 +39,9 @@ const SubSubjectsListWrap = () => {
 
   return (
     <SubSubjectsListWrapStyle>
-      {/* <button className="button-36" role="button">
+      <div className="">영어</div>
+      <div className="english-buttons">
+        {/* <button className="button-36" role="button">
         <span className="text">말하기</span>
       </button>
       <button className="button-36" role="button">
@@ -38,39 +51,40 @@ const SubSubjectsListWrap = () => {
         <span className="text">쓰기</span>
       </button> */}
 
-      <button
-        className="button-1"
-        role="button"
-        onClick={() => {
-          movePage("말하기");
-        }}
-      >
-        <span className="button-1-shadow"></span>
-        <span className="button-1-edge"></span>
-        <span className="button-1-front text">말하기</span>
-      </button>
-      <button
-        className="button-1"
-        role="button"
-        onClick={() => {
-          movePage("듣기");
-        }}
-      >
-        <span className="button-1-shadow"></span>
-        <span className="button-1-edge"></span>
-        <span className="button-1-front text">듣기</span>
-      </button>
-      <button
-        className="button-1"
-        role="button"
-        onClick={() => {
-          movePage("쓰기");
-        }}
-      >
-        <span className="button-1-shadow"></span>
-        <span className="button-1-edge"></span>
-        <span className="button-1-front text">쓰기</span>
-      </button>
+        <button
+          className="button-1"
+          role="button"
+          onClick={() => {
+            movePage("말하기");
+          }}
+        >
+          <span className="button-1-shadow"></span>
+          <span className="button-1-edge"></span>
+          <span className="button-1-front text">말하기</span>
+        </button>
+        <button
+          className="button-1"
+          role="button"
+          onClick={() => {
+            movePage("듣기");
+          }}
+        >
+          <span className="button-1-shadow"></span>
+          <span className="button-1-edge"></span>
+          <span className="button-1-front text">듣기</span>
+        </button>
+        <button
+          className="button-1"
+          role="button"
+          onClick={() => {
+            movePage("쓰기");
+          }}
+        >
+          <span className="button-1-shadow"></span>
+          <span className="button-1-edge"></span>
+          <span className="button-1-front text">쓰기</span>
+        </button>
+      </div>
 
       {/* <div className="sub-subjects">SubSubjectsListWrap</div>
       <div className="sub-subjects">ectsListWrap</div> */}
