@@ -1,6 +1,8 @@
 import styled from "@emotion/styled";
 import TodayLunch from "./TodayLunch";
 import moment from "moment";
+import img1 from "../../../images/home/spoon-and-chopsticks.png";
+import img2 from "../../../images/home/bibimbap.png";
 
 const LunchViewStyle = styled.div`
   padding: 20px 20px 0px 20px;
@@ -8,14 +10,40 @@ const LunchViewStyle = styled.div`
 
   .meals-title {
     width: 100%;
+
+    display: flex;
     height: 18%;
+    flex-direction: row;
+    padding: 25px 0 0cqmax 0;
+    /* padding: 10px 0 3cqmax 0; */
+    justify-content: center;
 
-    text-align: center;
-    font-size: 24px;
+    p {
+      position: relative;
+      left: -15px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: 600;
+      color: #5f909f;
+    }
 
-    padding: 10px 0 3cqmax 0;
-    font-weight: 600;
-    color: #5f909f;
+    #lunchImg01 {
+      width: 30px;
+      height: 30px;
+      transform: rotate(30deg);
+      position: relative;
+      z-index: 1;
+      left: -26px;
+    }
+    #lunchImg02 {
+      width: 60px;
+      height: 60px;
+      transform: rotate(30deg);
+      position: relative;
+      z-index: -1;
+      left: 8px;
+      top: -35px;
+    }
   }
 
   .meals {
@@ -54,7 +82,11 @@ const LunchView = () => {
 
   return (
     <LunchViewStyle>
-      <div className="meals-title">오늘의 급식</div>
+      <div className="meals-title">
+        <img src={img2} id="lunchImg02" />
+        <p>오늘의 급식</p>
+        <img src={img1} id="lunchImg01" />
+      </div>
       <div className="meals">
         <div className="today">{mlsvDay}</div>
         <div className="today-menu">

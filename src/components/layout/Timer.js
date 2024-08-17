@@ -131,6 +131,7 @@ const Timer = () => {
       navigate("/");
     } else {
       const res = await getReAccessToken();
+
       if (res) {
         clearInterval(timerId.current);
         time.current = 3600; // 재설정하고 싶은 초 단위 시간으로 변경
@@ -140,8 +141,10 @@ const Timer = () => {
     }
   };
 
+  /** 연장 버튼 */
   useEffect(() => {
-    console.log(btnClick);
+    // console.log(btnClick);
+    reAccessToken();
   }, [btnClick]);
 
   return (

@@ -3,7 +3,8 @@ import { FaSearch } from "react-icons/fa";
 
 const OnlineMainTopStyle = styled.div`
   position: relative;
-  z-index: 999;
+  /* z-index: 999; */
+  z-index: 0;
 
   min-height: 150px;
   width: 100%;
@@ -55,9 +56,11 @@ const OnlineMainTopStyle = styled.div`
   }
 
   .history-button {
-    min-width: 70px;
+    min-width: 100px;
   }
-
+  .search-button {
+    min-width: 52px;
+  }
   /* .search-button {
     text-align: center;
   }

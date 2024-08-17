@@ -5,6 +5,8 @@ import TestQuestion from "./TestQuestion";
 import TestAnswer from "./TestAnswer";
 import styled from "@emotion/styled";
 import { useLocation, useNavigate } from "react-router";
+import testExImg from "../../images/test-ex-img.png";
+import { getOnlineTest } from "api/online/onlinetestapi";
 
 const TestExWrap = styled.div`
   position: absolute;
@@ -22,10 +24,8 @@ const TestExWrap = styled.div`
 
     .test-ex-page-inner {
       width: 100%;
-      height: 100%;
-
-      /* 지우기 */
-      background-color: gray;
+      /* height: 100%; */
+      padding-bottom: 100px;
 
       .test-ex-header {
         width: 100%;
@@ -39,8 +39,8 @@ const TestExWrap = styled.div`
 
       .test-ex-buttons {
         width: 100%;
-        height: 150px;
-        background-color: lightcoral;
+        /* height: 150px; */
+        /* background-color: lightcoral; */
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -49,14 +49,87 @@ const TestExWrap = styled.div`
 
       .test-ex-explanation {
         width: 100%;
-        height: calc(100% - 300px);
+        min-height: calc(100% - 300px);
         /* background-color: lightcoral; */
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        /* padding: 40px 0; */
+
+        padding-bottom: 40px;
+
+        img {
+          width: 100%;
+        }
       }
     }
+  }
+
+  .button {
+    position: relative;
+    display: inline-block;
+    margin: 20px;
+  }
+
+  .button a {
+    color: white;
+    font-weight: bold;
+    font-size: 36px;
+    text-align: center;
+    text-decoration: none;
+    background-color: #ffa12b;
+    display: block;
+    position: relative;
+    padding: 30px 80px;
+
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    text-shadow: 0px 1px 0px #000;
+    filter: dropshadow(color=#000, offx=0px, offy=1px);
+
+    -webkit-box-shadow:
+      inset 0 1px 0 #ffe5c4,
+      0 10px 0 #915100;
+    -moz-box-shadow:
+      inset 0 1px 0 #ffe5c4,
+      0 10px 0 #915100;
+    box-shadow:
+      inset 0 1px 0 #ffe5c4,
+      0 10px 0 #915100;
+
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+  }
+
+  .button a:active {
+    top: 10px;
+    background-color: #f78900;
+
+    -webkit-box-shadow:
+      inset 0 1px 0 #ffe5c4,
+      inset 0 -3px 0 #915100;
+    -moz-box-shadow:
+      inset 0 1px 0 #ffe5c4,
+      inset 0 -3pxpx 0 #915100;
+    box-shadow:
+      inset 0 1px 0 #ffe5c4,
+      inset 0 -3px 0 #915100;
+  }
+
+  .button:after {
+    content: "";
+    height: 100%;
+    width: 100%;
+    padding: 4px;
+    position: absolute;
+    bottom: -15px;
+    left: -4px;
+    z-index: -1;
+    background-color: #2b1800;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
   }
 
   @media screen and (max-width: 1180px) {
@@ -85,16 +158,22 @@ export const TestExPage = () => {
   const subjectsName = location.state.subjectsName;
 
   /** 받은 과목 번호 */
-  useEffect(() => {
-    // console.log("subjectsNum : ", subjectsNum);
-    // console.log("subjectsName : ", subjectsName);
-  }, [subjectsNum, subjectsName]);
+  // useEffect(() => {
+  // console.log("subjectsNum : ", subjectsNum);
+  // console.log("subjectsName : ", subjectsName);
+  // }, [subjectsNum, subjectsName]);
 
-  const startTest = subjects => {
-    // console.log(subjects);
-    navigate("/online/test", {
-      state: { subjectsNum: subjectsNum, subjectsName: subjectsName },
-    });
+  const startTest = async subjects => {
+    const res = await getOnlineTest(subjectsNum);
+
+    if (res) {
+      navigate("/online/test", {
+        state: { subjectsNum: subjectsNum, subjectsName: subjectsName },
+      });
+    } else {
+      alert("시험 문제를 불러오지 못했습니다. 담당 학급 선생님께 문의하세요.");
+      navigate("/");
+    }
   };
 
   return (
@@ -103,22 +182,24 @@ export const TestExPage = () => {
       <TestExWrap>
         <div className="test-ex-page">
           <div className="test-ex-page-inner ">
-            <div className="test-ex-header">
-              <div>과목명</div>
-              <div>학년</div>
+            {/* <div className="test-ex-header">
+              <div>{subjectsName}</div>
+            </div> */}
+
+            <div className="test-ex-explanation">
+              <img src={testExImg} />
             </div>
 
             <div className="test-ex-buttons">
-              <button
+              <div
+                className="button"
                 onClick={() => {
-                  startTest(subjectsNum);
+                  startTest();
                 }}
               >
-                시작하기
-              </button>
-              <button>설명보기</button>
+                <a>시작하기</a>
+              </div>
             </div>
-            <div className="test-ex-explanation">시험에 대한 설명</div>
           </div>
         </div>
       </TestExWrap>

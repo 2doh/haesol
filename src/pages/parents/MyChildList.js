@@ -14,6 +14,8 @@ import SocialLoginIntegration from "./SocialLoginIntegration";
 import { useNavigate } from "react-router";
 
 import defaultImg from "../../images/default_pic.png";
+import { getParentsInfo } from "api/parents/parentsapi";
+import BoxTitle from "components/common/style/BoxTitle";
 
 const PageWrapStyle = styled.div`
   position: relative;
@@ -90,6 +92,11 @@ const PageWrapStyle = styled.div`
         z-index: 0;
         background-color: white;
         padding-bottom: 80px;
+
+        .sub-title {
+          padding-top: 20px;
+          width: 600px;
+        }
 
         .child-info-div,
         .no-child-info-div {
@@ -275,10 +282,61 @@ const PageWrapStyle = styled.div`
     }
   }
 
+  .parents-info-div {
+    padding: 0 20px;
+    min-height: 390px !important;
+
+    .parents-info-wrap {
+      flex-direction: column !important;
+      position: static !important;
+      border-radius: 20px;
+      width: 100%;
+      /* height: auto !important; */
+      padding: 30px;
+      background-color: lightgoldenrodyellow;
+
+      gap: 35px;
+    }
+
+    .parents-info {
+      width: 100% !important;
+      flex-wrap: wrap !important;
+      flex-direction: row !important;
+      justify-content: left !important;
+
+      .child-info-text:first-of-type,
+      .child-info-text:nth-of-type(2) {
+        max-width: 48%;
+        width: 48%;
+      }
+      .child-info-text:last-of-type,
+      .child-info-text:nth-of-type(3) {
+        max-width: 100%;
+        width: 100%;
+      }
+    }
+
+    .child-info-text {
+      display: flex;
+      flex-direction: row;
+
+      & p:first-of-type {
+        font-size: 18px;
+        padding-right: 10px;
+      }
+      & p:last-of-type {
+      }
+
+      .no-data {
+        color: #949494;
+      }
+    }
+  }
+
   @media screen and (max-width: 1023px) {
     .page-inner {
       .page-content-wrap {
-        background-color: red !important;
+        /* background-color: red !important; */
       }
     }
   }
@@ -294,6 +352,8 @@ const TopDiv = styled.div`
 
 const MyChildList = () => {
   const navigate = useNavigate();
+
+  const [myInfoData, setMyInfoData] = useState("");
   const [myChildList, setMyChildList] = useState([]);
   const [offUseEffect, setOffUseEffect] = useState(false);
 
@@ -321,8 +381,18 @@ const MyChildList = () => {
     }
   };
 
+  const myInfo = async () => {
+    const res = await getParentsInfo();
+
+    if (res) {
+      setMyInfoData(res);
+      console.log("부모 데이터 : ", res);
+    }
+  };
+
   useEffect(() => {
     myChildInfo(getCookie("selectChildNum"));
+    myInfo();
   }, []);
 
   useEffect(() => {
@@ -383,7 +453,52 @@ const MyChildList = () => {
           </div>
           <div className="page-content-wrap">
             <div className="child-info-inner">
-              <SocialLoginIntegration />
+              {myInfoData === "" ? null : (
+                <div className="child-info-div parents-info-div">
+                  <div className="child-info-wrap parents-info-wrap">
+                    <div className="child-info parents-info">
+                      <div className="child-info-text">
+                        <p>학부모 명 : </p>
+                        {myInfoData.nm ? (
+                          <p>{myInfoData.nm}</p>
+                        ) : (
+                          <p className="no-data">미등록</p>
+                        )}
+                      </div>
+                      <div className="child-info-text">
+                        <p>전화번호 : </p>
+                        {myInfoData.phone ? (
+                          <p>{myInfoData.phone}</p>
+                        ) : (
+                          <p className="no-data"> 미등록</p>
+                        )}
+                      </div>
+                      <div className="child-info-text">
+                        <p>이메일 :&nbsp;</p>
+                        {myInfoData.email ? (
+                          <p>{myInfoData.email}</p>
+                        ) : (
+                          <p className="no-data">미등록</p>
+                        )}
+                      </div>
+                      <div className="child-info-text">
+                        <p>주소 :</p>
+
+                        {myInfoData.zoneCode ? `(${myInfoData.email})` : null}
+                        {myInfoData.addr ? (
+                          <p>{myInfoData.addr}</p>
+                        ) : (
+                          <p className="no-data">미등록</p>
+                        )}
+                      </div>
+                    </div>
+                    <SocialLoginIntegration />
+                  </div>
+                </div>
+              )}
+              <div className="sub-title">
+                <BoxTitle>자녀 목록</BoxTitle>
+              </div>
               {myChildList.length !== 0 ? (
                 myChildList.map((item, index) => {
                   console.log(item);

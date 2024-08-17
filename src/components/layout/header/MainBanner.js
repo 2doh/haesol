@@ -6,6 +6,7 @@ import { Pagination, Autoplay } from "swiper/modules";
 import banner01 from "../../../images/home/main_banner_01.png";
 import banner02 from "../../../images/home/main_banner_02.png";
 import banner03 from "../../../images/home/main_banner_03.jpg";
+import banner04 from "../../../images/home/main_banner_04.gif";
 
 const MainBannerStyle = styled.div`
   .swiper {
@@ -27,6 +28,7 @@ const MainBannerStyle = styled.div`
   }
 
   @media screen and (max-width: 1023px) {
+    width: 100vw;
     .swiper {
       border-radius: 0px;
     }
@@ -80,7 +82,8 @@ const MainBanner = () => {
             movePage(2);
           }}
         >
-          <img src={banner02} />
+          <img src={banner04} />
+          {/* <img src={banner02} /> */}
         </SwiperSlide>
         <SwiperSlide
           className="move-page-div"
