@@ -92,7 +92,7 @@ const TestPage = () => {
           <TestTitle />
           <div className="test-page-inner">
             {/* <TestQuestion subjects={subjects} /> */}
-            <TestQuestion subjects={1} />
+            <TestQuestion subjects={subjectsNum} />
             <TestAnswer />
           </div>
         </div>

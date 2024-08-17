@@ -190,6 +190,7 @@ const TestQuestion = ({ subjects }) => {
   const getDateQuestion = async subjects => {
     let res = [];
 
+    console.log("subjects : ", subjects);
     switch (subjects) {
       case 1:
         res = await getOnlineTest(1);

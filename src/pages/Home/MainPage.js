@@ -13,6 +13,7 @@ import Footer from "components/layout/Footer";
 import ClassNotice from "./ClassNotice";
 import QuickMenu from "components/common/quickmenu/QuickMenu";
 import { useEffect, useState } from "react";
+import { getCookie } from "utils/cookie";
 
 const MainPageStyle = styled.div`
   width: 100%;
@@ -51,7 +52,7 @@ const MainPage = () => {
         </div>
 
         <div className="main-page-wrap">
-          <QuickMenu />
+          {getCookie("userRole") ? <QuickMenu /> : null}
 
           <MainPageContents>
             {/* <LoginUserMainPageContents>

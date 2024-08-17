@@ -8,6 +8,7 @@ import { getCookie, removeCookie, setCookie } from "utils/cookie";
 import ParentsChildProfile from "./ParentsChildProfile";
 import { useDispatch, useSelector } from "react-redux";
 import { updateSelectChildInfo } from "slices/selectChildSlice";
+import { getParentsInfo } from "api/parents/parentsapi";
 
 const ParentsProfileStyle = styled.div`
   position: relative;
@@ -260,6 +261,7 @@ const ParentsProfile = () => {
       selectChildIndex: idx,
       nowTopPosition: topPosition - 25,
     };
+
     dispatch(updateSelectChildInfo(data));
 
     reStudentPk(idx);
@@ -281,6 +283,8 @@ const ParentsProfile = () => {
     if (res === false) {
       console.log("자녀 없음.");
     } else {
+    setCookie("className", res.className);
+      
       // 자녀 리스트 저장
       setMyChildList(res);
 
@@ -290,6 +294,7 @@ const ParentsProfile = () => {
         selectChildInfo: res[num],
         selectChildPk: res[num].studentPk,
       };
+      
       dispatch(updateSelectChildInfo(data));
 
       setOffUseEffect(true);

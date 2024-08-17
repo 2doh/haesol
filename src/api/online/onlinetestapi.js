@@ -21,7 +21,13 @@ export const onlineTestCreate = async formData => {
 
 // 국어/수학 시험 get
 export const getOnlineTest = async data => {
-  const url = `subjectCode=${data}`;
+  let url = "";
+  // if(getCookie("userRole") === "ROLE_PARENTS" || getCookie("userRole") === "ROLE_PARENTS")
+  if (getCookie("userRole") === "ROLE_PARENTS") {
+    url = `studentPk=${getCookie("studentPk")}&subjectCode=${data}`;
+  } else {
+    url = `subjectCode=${data}`;
+  }
 
   let res = await jwtAxios
     .get(`/api/online/test?${url}`)

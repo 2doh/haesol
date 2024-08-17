@@ -1,13 +1,69 @@
 import styled from "@emotion/styled";
 import React, { useState } from "react";
+import googleIcon from "../../images/google-icon.png";
+import naverIcon from "../../images/naver-icon.png";
+import kakaoIcon from "../../images/kakao-icon.png";
 
 const SocialLoginIntegrationStyle = styled.div`
-  min-width: 600px;
+  /* min-width: 600px;
   min-height: 200px;
-  background-color: lightgoldenrodyellow;
+  background-color: lightgoldenrodyellow; */
+  h3 {
+    font-size: 18px;
+    font-weight: bold;
+    padding-bottom: 15px;
+  }
+
+  .social-login-div {
+    display: flex;
+    flex-wrap: row;
+    padding-left: 20px;
+    gap: 15px;
+    align-items: center;
+    padding-bottom: 10px;
+
+    .social-icon-div {
+      max-width: 40px;
+      max-height: 40px;
+      border-radius: 50px;
+      background-color: white;
+      padding: 10px;
+      overflow: hidden;
+
+      img {
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    .google-icon-div {
+      border: #c9c9c9 solid 1px;
+    }
+
+    .kakao-icon-div,
+    .naver-icon-div {
+      padding: 0px;
+
+      img {
+        width: 40px;
+        height: 40px;
+      }
+    }
+
+    /* .kakao-icon-div {
+      border: yellow solid 1px;
+    } */
+
+    p {
+      font-size: 15px;
+      width: 150px;
+    }
+  }
 
   .checkbox-wrapper {
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
+
+    padding-left: 20px;
   }
 
   .checkbox-wrapper .switch {
@@ -33,7 +89,9 @@ const SocialLoginIntegrationStyle = styled.div`
   }
 
   .checkbox-wrapper .switch + label::before {
-    background-color: #05012c;
+    /* background-color: #05012c; */
+    background-color: #757b98;
+
     border-radius: 500px;
     height: 15px;
     margin-right: 8px;
@@ -97,6 +155,7 @@ const SocialLoginIntegrationStyle = styled.div`
 
   .checkbox-wrapper .switch:checked + label::before {
     background-color: #ffb500;
+    /* background-color: #757b98; */
   }
 
   .checkbox-wrapper .switch:checked + label::after {
@@ -122,70 +181,84 @@ const SocialLoginIntegration = () => {
 
   return (
     <SocialLoginIntegrationStyle>
-      구글 :
-      <div className="checkbox-wrapper">
-        <input
-          checked={googleChecked}
-          onChange={() => setGoogleChecked(!googleChecked)}
-          id="switch-google"
-          type="checkbox"
-          className="switch"
-        />
-        <label htmlFor="switch-google">
-          <span className="switch-x-text">현재 연동</span>
-          <span className="switch-x-toggletext">
-            <span className="switch-x-unchecked">
-              <span className="switch-x-hiddenlabel">Unchecked: </span>해제
+      <h3>소셜 로그인 설정</h3>
+      <div className="social-login-div google-social-login-div">
+        <div className="social-icon-div google-icon-div">
+          <img src={googleIcon}></img>
+        </div>
+        <p>구글 계정으로 로그인 </p>
+        <div className="checkbox-wrapper">
+          <input
+            checked={googleChecked}
+            onChange={() => setGoogleChecked(!googleChecked)}
+            id="switch-google"
+            type="checkbox"
+            className="switch"
+          />
+          <label htmlFor="switch-google">
+            <span className="switch-x-text">현재 연동</span>
+            <span className="switch-x-toggletext">
+              <span className="switch-x-unchecked">
+                <span className="switch-x-hiddenlabel">Unchecked: </span>해제
+              </span>
+              <span className="switch-x-checked">
+                <span className="switch-x-hiddenlabel">Checked: </span>중
+              </span>
             </span>
-            <span className="switch-x-checked">
-              <span className="switch-x-hiddenlabel">Checked: </span>중
-            </span>
-          </span>
-        </label>
+          </label>
+        </div>
       </div>
-      <br />
-      네이버 :
-      <div className="checkbox-wrapper">
-        <input
-          checked={naverChecked}
-          onChange={() => setNaverChecked(!naverChecked)}
-          id="switch-naver"
-          type="checkbox"
-          className="switch"
-        />
-        <label htmlFor="switch-naver">
-          <span className="switch-x-text">현재 연동</span>
-          <span className="switch-x-toggletext">
-            <span className="switch-x-unchecked">
-              <span className="switch-x-hiddenlabel">Unchecked: </span>해제
+      <div className="social-login-div naver-social-login-div">
+        <div className="social-icon-div naver-icon-div">
+          <img src={naverIcon}></img>
+        </div>
+        <p>네이버 계정으로 로그인 </p>
+        <div className="checkbox-wrapper">
+          <input
+            checked={naverChecked}
+            onChange={() => setNaverChecked(!naverChecked)}
+            id="switch-naver"
+            type="checkbox"
+            className="switch"
+          />
+          <label htmlFor="switch-naver">
+            <span className="switch-x-text">현재 연동</span>
+            <span className="switch-x-toggletext">
+              <span className="switch-x-unchecked">
+                <span className="switch-x-hiddenlabel">Unchecked: </span>해제
+              </span>
+              <span className="switch-x-checked">
+                <span className="switch-x-hiddenlabel">Checked: </span>중
+              </span>
             </span>
-            <span className="switch-x-checked">
-              <span className="switch-x-hiddenlabel">Checked: </span>중
-            </span>
-          </span>
-        </label>
+          </label>
+        </div>
       </div>
-      <br />
-      카카오 :
-      <div className="checkbox-wrapper">
-        <input
-          checked={kakaoChecked}
-          onChange={() => setKakaoChecked(!kakaoChecked)}
-          id="switch-kakao"
-          type="checkbox"
-          className="switch"
-        />
-        <label htmlFor="switch-kakao">
-          <span className="switch-x-text">현재 연동</span>
-          <span className="switch-x-toggletext">
-            <span className="switch-x-unchecked">
-              <span className="switch-x-hiddenlabel">Unchecked: </span>해제
+      <div className="social-login-div kakao-social-login-div">
+        <div className="social-icon-div kakao-icon-div">
+          <img src={kakaoIcon}></img>
+        </div>
+        <p>카카오 계정으로 로그인 </p>
+        <div className="checkbox-wrapper">
+          <input
+            checked={kakaoChecked}
+            onChange={() => setKakaoChecked(!kakaoChecked)}
+            id="switch-kakao"
+            type="checkbox"
+            className="switch"
+          />
+          <label htmlFor="switch-kakao">
+            <span className="switch-x-text">현재 연동</span>
+            <span className="switch-x-toggletext">
+              <span className="switch-x-unchecked">
+                <span className="switch-x-hiddenlabel">Unchecked: </span>해제
+              </span>
+              <span className="switch-x-checked">
+                <span className="switch-x-hiddenlabel">Checked: </span>중
+              </span>
             </span>
-            <span className="switch-x-checked">
-              <span className="switch-x-hiddenlabel">Checked: </span>중
-            </span>
-          </span>
-        </label>
+          </label>
+        </div>
       </div>
     </SocialLoginIntegrationStyle>
   );
