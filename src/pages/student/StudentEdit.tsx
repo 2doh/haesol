@@ -1,36 +1,82 @@
 import styled from "@emotion/styled";
-import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router";
-import "../../scss/student/studentEdit.css";
-import PhoneInputFields from "./PhoneInputFields";
-import { getStudentInfo, modifyStudentInfo } from "api/student/studentapi";
+import { getStudentInfo } from "api/student/studentapi";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router";
 import { openModal, updateModalDate } from "slices/modalSlice";
+import "../../scss/student/studentEdit.css";
 
-import catPicture from "../../images/box-cat.jpg";
-import { getCookie } from "utils/cookie";
-import StudentImg from "./StudentImg";
-import HeaderTopPublic from "components/layout/header/HeaderTopPublic";
-import HeaderMemu from "components/layout/header/HeaderMenu";
-import Footer from "components/layout/Footer";
 import BoxTitle from "components/common/style/BoxTitle";
 import PageTitle from "components/common/style/PageTitle";
+import Footer from "components/layout/Footer";
+import HeaderMemu from "components/layout/header/HeaderMenu";
+import HeaderTopPublic from "components/layout/header/HeaderTopPublic";
+import StudentImg from "./StudentImg";
 
-const StudentEdit = () => {
-  const userClass = getCookie("userClass");
-  const userGrade = getCookie("userGrade");
+interface EtcItem {
+  uclass: string;
+  teacherName: string;
+  etc: string;
+}
+
+interface StudentInfo {
+  studentPk: number;
+  studentName: string;
+  studentPhone: string;
+  studentEtc: string;
+  studentBirth: string;
+  studentAddr: string;
+  studentZoneCode: string;
+  studentDetail: string;
+  studentGender?: string;
+  parentName?: string;
+  connet?: string;
+  parentPhone?: string;
+  studentPic?: string;
+  studentCreatedAt?: string;
+  parentId?: string;
+  studentGrade?: string;
+  studentClass?: string;
+  prevEtcList?: EtcItem[];
+}
+
+const StudentsInfoStyle = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 120px;
+  margin: 0 auto;
+  width: 1080px;
+  padding-top: 70px;
+  padding-bottom: 120px;
+  @media screen and (max-width: 1023px) {
+    // top: 70px;
+    padding-top: 70px;
+  }
+`;
+
+const PhoneInfoStyle = styled.input`
+  pointer-events: none;
+  background-color: #efece8 !important;
+`;
+
+const StudentEdit: React.FC = () => {
   // 네비게이트
   const navigate = useNavigate();
-  const { studentPk } = useParams();
+  const { studentPk } = useParams<{ studentPk: string }>();
+
   const handleClick = () => {
     navigate(`/grade/edit/${studentPk}`);
   };
 
-  const modalState = useSelector(state => state.modalSlice);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const modalState = useSelector((state: any) => state.modalSlice);
   const dispatch = useDispatch();
 
   // 학생 한 명 데이터
-  const [studentInfo, setStudentInfo] = useState({});
+  const [studentInfo, setStudentInfo] = useState<StudentInfo>(
+    {} as StudentInfo,
+  );
   const [studentName, setStudentName] = useState("");
   const [studentGender, setStudentGender] = useState("");
   const [studentBirth, setStudentBirth] = useState("");
@@ -43,13 +89,11 @@ const StudentEdit = () => {
   // 이미지 미리보기
   const [studentPic, setStudentPic] = useState("");
   // 서버에 POSt 할 파일을 관리할 변수
-  const [imgFile, setImgFile] = useState(null);
+  const [imgFile, setImgFile] = useState<File | null>(null);
 
   const [studentZoneCode, setStudentZoneCode] = useState("우편번호");
   const [studentAddr, setStudentAddr] = useState("주소");
 
-  // const [postCode, setPostCode] = useState("우편번호");
-  // const [address, setAddress] = useState("주소");
   // 주소 상세...
   const [studentDetail, setStudentDetail] = useState("");
 
@@ -65,7 +109,7 @@ const StudentEdit = () => {
   // 정보 불러오기
   const studentInfoData = async () => {
     try {
-      const response = await getStudentInfo(studentPk);
+      const response = await getStudentInfo(Number(studentPk));
       const result = response.data;
 
       setStudentInfo(result);
@@ -98,21 +142,21 @@ const StudentEdit = () => {
   }, [studentPk]);
 
   /** 모달 호출 */
-  const saveModifyInfo = selectModalType => {
-    /** (선택) 들어갈 내용 수정 */
+  const saveModifyInfo = (selectModalType: string) => {
+    const studentInfo = {
+      studentPk,
+      studentName,
+      studentPhone,
+      studentEtc,
+      studentBirth,
+      studentAddr,
+      studentZoneCode,
+      studentDetail,
+    };
     const data = {
       headerText: ["학생 정보 관리"],
       bodyText: ["내용을 수정하시겠습니까?"],
-      modalRes: [
-        45,
-        {
-          studentPk: studentPk,
-          studentName: studentName,
-          studentPhone: studentPhone,
-          studentEtc: studentEtc,
-          studentBirth: studentBirth,
-        },
-      ],
+      modalRes: [45, studentInfo, imgFile],
       buttonText: ["확인", "취소"],
     };
     dispatch(updateModalDate(data));
@@ -120,7 +164,7 @@ const StudentEdit = () => {
   };
 
   /** 취소 기능 */
-  const modifyCancel = selectModalType => {
+  const modifyCancel = (selectModalType: string) => {
     const data = {
       bodyText: ["정보 수정을 취소하시겠습니까?"],
       modalRes: [43],
@@ -137,42 +181,6 @@ const StudentEdit = () => {
       // console.log("완료.");
     }
   }, [modalState.modalRes[0]]);
-
-  const StudentsInfoStyle = styled.div`
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    margin-top: 120px;
-    margin: 0 auto;
-    width: 1080px;
-    padding-top: 70px;
-    padding-bottom: 120px;
-    @media screen and (max-width: 1023px) {
-      // top: 70px;
-      padding-top: 70px;
-    }
-  `;
-
-  const StudentsImeStyle = styled.div`
-    width: 100%;
-    height: 100%;
-    .img-contain {
-      display: flex;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-    }
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-  `;
-
-  const PhoneInfoStyle = styled.input`
-    pointer-events: none;
-    background-color: #efece8 !important;
-  `;
 
   return (
     <>
@@ -320,13 +328,20 @@ const StudentEdit = () => {
             </div>
             <div className="info-img">
               {/* 이미지 수정 필요 */}
-              {studentPic !== null ? (
+              {/* {studentPic !== null ? (
                 <StudentsImeStyle>
-                  <img src={studentPic} alt={studentPic} />
+                  <img
+                    src={`http://112.222.157.156:5121/pic/student/${studentPk}/${studentPic}`}
+                    alt={studentPic}
+                  />
                 </StudentsImeStyle>
-              ) : (
-                <StudentImg />
-              )}
+              ) : ( */}
+              <StudentImg
+                studentPk={studentPk}
+                studentPic={studentPic}
+                setImgFile={setImgFile}
+              />
+              {/* )} */}
             </div>
           </div>
           <div className="info-contain-mid">
@@ -407,8 +422,8 @@ const StudentEdit = () => {
               <BoxTitle>학생 기록 정보</BoxTitle>
             </div>
             <div className="grid-frame">
-              {prevEtcList.length > 0 ? (
-                prevEtcList.map((item, index) => (
+              {studentInfo.prevEtcList && studentInfo.prevEtcList.length > 0 ? (
+                studentInfo.prevEtcList.map((item, index) => (
                   <>
                     <div className="item" key={index}>
                       <div className="grid-inner">

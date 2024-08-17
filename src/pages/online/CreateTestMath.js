@@ -161,7 +161,7 @@ const CreateTestMath = () => {
       // 정답,
       answer: answer,
       // 해설
-      해설: explanation,
+      explanation: explanation,
     });
     console.log("onlineTestData : ", onlineTestData);
 

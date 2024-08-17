@@ -307,22 +307,45 @@ const Modal = () => {
         dispatch(updateModalDate(data));
         dispatch(closeModal());
       }
+
       // 학생 한 명 정보 수정 (선생님)
       if (modalState.modalRes[0] === 45) {
         console.log("수정처리를 하겠습니다.", modalState.modalRes[1]);
-        const res = modifyStudentInfo(modalState.modalRes[1]);
-        if (res) {
-          dispatch(closeModal());
-        }
+
+        // FormData 객체 생성
+        const formData = new FormData();
+        formData.append(
+          "p",
+          new Blob([JSON.stringify(modalState.modalRes[1])], {
+            type: "application/json",
+          }),
+        );
+        formData.append("pic", modalState.modalRes[2]); // 이미지 파일 추가
+
+        const handleModify = async () => {
+          const res = await modifyStudentInfo(formData);
+          if (res) {
+            dispatch(closeModal());
+          }
+        };
+
+        handleModify(); // 확인 버튼 클릭 시 데이터 전송
       }
 
       // 온라인 시험 제출 관련
       if (modalState.modalRes[0] === 50) {
         console.log("시험 제출 완!.", modalState.modalRes[1]);
-        const res = true;
-        if (res) {
-          dispatch(closeModal());
-        }
+        navi(0);
+        // const res = true;
+        // if (res) {
+        //   dispatch(updateModalDate(res));
+        //   dispatch(closeModal());
+        // }
+        const data = {
+          modalRes: [false],
+        };
+        dispatch(updateModalDate(data));
+        dispatch(closeModal());
       }
 
       // 온라인 시험 작성 후 저장 버튼

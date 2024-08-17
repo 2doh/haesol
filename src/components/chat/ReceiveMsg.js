@@ -1,0 +1,36 @@
+import styled from "@emotion/styled";
+import React, { useEffect, useState } from "react";
+
+const ChatWrapInner = styled.div`
+  font-size: 17px;
+  .receive-msg-wrap {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    margin-bottom: 20px;
+    .receivemsg-timewrap {
+      .receivemsg-time {
+        font-size: 11px;
+      }
+    }
+    .receivemsg-msg {
+      margin-left: 10px;
+    }
+  }
+`;
+
+// 대화 내용 반복 처리 필요
+const ReceiveMsg = ({ receiveMsg, receiveTime }) => {
+  return (
+    <ChatWrapInner>
+      <div className="receive-msg-wrap">
+        <div className="receivemsg-timewrap">
+          <div className="receivemsg-time">{receiveTime}</div>
+        </div>
+        <div className="receivemsg-msg">{receiveMsg}</div>
+      </div>
+    </ChatWrapInner>
+  );
+};
+
+export default ReceiveMsg;
