@@ -66,6 +66,7 @@ export const fetchUserInfo = async token => {
 
 // 토큰 정보 불러오기 네이버
 export const getNaverUserInfo = async data => {
+  console.log(data);
   try {
     const tokenResponse = await fetch(
       `https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&client_id=${data.id}&client_secret=${data.secret}&code=${data.token}&state=${data.state}`,
@@ -79,11 +80,7 @@ export const getNaverUserInfo = async data => {
 
     const tokenData = await tokenResponse.json();
     console.log("토큰 데이터:", tokenData);
-
-    // 액세스 토큰을 이용하여 사용자 정보 조회
-    const userInfo = await getNaverUserInfo(tokenData.access_token);
-    console.log("사용자 정보:", userInfo);
-    console.log(tokenResponse);
+    return tokenData;
   } catch (error) {
     console.log(error);
   }

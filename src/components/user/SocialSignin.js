@@ -99,12 +99,17 @@ const SocialSignin = () => {
       token: data,
       secret: CLIENT_SECRET,
     };
+    // 액세스 토큰을 이용하여 사용자 정보 조회
+
     try {
       const tokenResponse = await getNaverUserInfo(reqData);
       console.log(tokenResponse);
+      const result = tokenResponse;
+      console.log(result);
     } catch (error) {
       console.log(error);
     }
+
     console.log(data);
     getNaverUserInfo(data);
     // const reqData = {
