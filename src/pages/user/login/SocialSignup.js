@@ -49,7 +49,7 @@ const SocialSignup = () => {
     mode: "onChange",
   });
 
-  const initData = JSON.parse(localStorage.getItem("sociallogin"));
+  const initData = JSON.parse(sessionStorage.getItem("sociallogin"));
 
   const handleOnSubmit = async data => {
     if (!isRandCode) {
@@ -71,7 +71,7 @@ const SocialSignup = () => {
     };
     console.log(reqData);
     const result = await signupSocialCode(reqData);
-    localStorage.removeItem("sociallogin");
+    sessionStorage.removeItem("sociallogin");
   };
 
   return (

@@ -13,9 +13,10 @@ const Vocabulary = ({
   audioStream,
   setIsTranscript,
 }) => {
+  const initVolume = localStorage.getItem("initVolume");
   const voca = getObj[index];
   const [listen, setListen] = useState(false);
-  const [volume, setVolume] = useState(localStorage.getItem("initVolume"));
+  const [volume, setVolume] = useState(initVolume || 0.5);
   const [isVolume, setIsVolume] = useState(volume);
 
   localStorage.setItem("initVolume", volume);
@@ -101,7 +102,7 @@ const Vocabulary = ({
               min={0}
               max={1}
               color="gray"
-              step={0.02}
+              step={0.01}
               value={volume}
               onChange={event => {
                 setVolume(event.target.valueAsNumber);

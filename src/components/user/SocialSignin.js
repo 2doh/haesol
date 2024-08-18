@@ -40,11 +40,11 @@ const SocialSignin = () => {
       useremail: res.email,
       name: res.name,
     };
-    localStorage.setItem("sociallogin", JSON.stringify(tempObj));
-    // localStorage.setItem("clientid", res.id);
-    // localStorage.setItem("providerType", 0);
-    // localStorage.setItem("useremail", res.email);
-    // localStorage.setItem("name", res.name);
+    sessionStorage.setItem("sociallogin", JSON.stringify(tempObj));
+    // sessionStorage.setItem("clientid", res.id);
+    // sessionStorage.setItem("providerType", 0);
+    // sessionStorage.setItem("useremail", res.email);
+    // sessionStorage.setItem("name", res.name);
     navi(naviState);
   };
 
@@ -71,7 +71,7 @@ const SocialSignin = () => {
       useremail: response.profile.kakao_account.email,
       name: response.profile.properties.nickname,
     };
-    localStorage.setItem("sociallogin", JSON.stringify(tempObj));
+    sessionStorage.setItem("sociallogin", JSON.stringify(tempObj));
     navi(naviState);
   };
 
