@@ -37,6 +37,7 @@ const StudentClassInfo = () => {
       {studentName ? <p>{studentName}</p> : null}
     </>
   );
+  // 확인용
 };
 
 export default StudentClassInfo;
