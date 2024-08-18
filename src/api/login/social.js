@@ -10,6 +10,7 @@ export const socialLogin = async data => {
       data,
     );
     if (res.data.accessToken) {
+      setCookie("accessToken", res.data.accessToken);
       let acTken = res.data.accessToken;
       const payload = JSON.parse(
         base64.decode(acTken.split(".")[1]),
