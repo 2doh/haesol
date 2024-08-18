@@ -109,9 +109,6 @@ const TeacherInfoViewStyle = styled.div`
 const TeacherInfoView = () => {
   const navigate = useNavigate();
 
-  usePreventGoBack("페이지 이동 전 저장 버튼을 누르지 않으면 내용이 저장되지 않습니다.");
-  usePreventRefresh();
-
   const dispatch = useDispatch();
 
   const emailText = useRef();

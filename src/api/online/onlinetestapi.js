@@ -53,15 +53,15 @@ export const postOnlineTest = async data => {
     .post(`/api/online`, data)
     .then(res => {
       // 성공 처리
-      console.log("성공 : ", res);
-      // return res.data;
+      // console.log("성공 : ", res);
+      return res.data;
     })
     .catch(error => {
-      console.log("에러 : ", error);
-      // return false;
+      // console.log("에러 : ", error);
+      return false;
       // return Promise.reject(error);
     });
-  // return res;
+  return res;
 };
 
 // 영어 단어/말하기 시험 post

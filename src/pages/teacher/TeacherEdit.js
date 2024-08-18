@@ -9,6 +9,8 @@ import HeaderTopPublic from "components/layout/header/HeaderTopPublic";
 import HeaderMemu from "components/layout/header/HeaderMenu";
 import HeaderProfile from "components/layout/header/HeaderProfile";
 import Footer from "components/layout/Footer";
+import usePreventGoBack from "hooks/common/usePreventGoBack";
+import usePreventRefresh from "hooks/common/usePreventRefresh";
 
 const StudentsInfoStyle = styled.div`
   .Modal {
@@ -124,6 +126,11 @@ const TeacherEdit = () => {
   // 이메일 에러 메세지
   const [errMsg, setErrMsg] = useState("");
 
+  usePreventGoBack(
+    "페이지 이동 전 저장 버튼을 누르지 않으면 내용이 저장되지 않습니다.",
+  );
+  usePreventRefresh();
+
   /** 선생님 정보 추출 */
   const nowUserInfo = async () => {
     try {
@@ -145,8 +152,8 @@ const TeacherEdit = () => {
         setClassGrade("미등록");
         setClassNum("미등록");
       } else {
-        setClassGrade(res.data.class.split(" ")[0]);
-        setClassNum(res.data.class.split(" ")[1]);
+        setClassGrade(res.data.class);
+        setClassNum(res.data.grade);
       }
 
       setEmail(res.data.email);
@@ -243,7 +250,7 @@ const TeacherEdit = () => {
   const modifyCancel = selectModalType => {
     const data = {
       bodyText: ["수정한 내용을 되돌리겠습니까?"],
-      modalRes: [1],
+      modalRes: [10],
       buttonText: ["취소", "닫기"],
     };
 

@@ -11,6 +11,8 @@ const initialState = {
   // 1 : 국어
   // 2 : 수학
   subjectCode: 0,
+  // 과목명
+  subjectName: "",
   // 문제 타이틀
   testTitle: moment().format("YYYY년 MM월 DD일  HH시mm분"),
   // 모든 시험 문제 저장 배열
@@ -25,6 +27,9 @@ const initialState = {
   nowQuestionsNum: 0,
   // 남은 문제 수
   remainingQuestions: 20,
+
+  // 시험결과
+  incorrectAnswerNoteMain: [],
 };
 
 export const testSlice = createSlice({
