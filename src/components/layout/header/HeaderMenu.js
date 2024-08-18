@@ -244,7 +244,7 @@ const HeaderMemu = () => {
         break;
       case 4:
         // 교직원 내정보
-        navigate("/teacher/teacherinfo");
+        navigate("/teacher");
         break;
       case 5:
         // 학부모 내정보
@@ -273,7 +273,7 @@ const HeaderMemu = () => {
         break;
       case 41:
         // (교직원) 내 정보
-        navigate("/teacher/teacherinfo");
+        navigate("/teacher");
         break;
       case 42:
         // 담당 이력

@@ -199,6 +199,8 @@ const TestQuestion = ({ subjects, testName }) => {
         break;
       case 2:
         res = await getOnlineTest(2);
+        console.log("res : ", res);
+
         return;
       default:
         break;
@@ -274,9 +276,6 @@ const TestQuestion = ({ subjects, testName }) => {
     dispatch(updateTestDate(data));
   };
 
-  // 나중에 BE에서 불러오는 데이터로 변경하기(받아와야할 정보 : 문제 번호, 문제 내용, 답안 내용)
-  // 나중에 BE에서 불러오는 데이터로 변경하기(보내야할 정보 : 문제 번호, 문제 내용, 작성한 답안 내용)
-  // 문제 선택지는 정답 이외에는 랜덤이어야한다.(오답 선택지의 값이 랜덤이 아니더라도 최소 순서는 랜덤이어야한다.)
   /** 최소 랜더링 : JSON 불러오기 */
   const dataQuestion = () => {
     const formattedQuestions = items.map((item, index) => {
@@ -611,7 +610,6 @@ const TestQuestion = ({ subjects, testName }) => {
             </div>
           ))} */}
         </div>
-        <TestResultsPage />
 
         <div className="cbt_wrap">
           <div className="cbt_inner">
@@ -628,7 +626,8 @@ const TestQuestion = ({ subjects, testName }) => {
             )}
           </div>
           <div className="cbt_inner">
-            {testState.nowQuestionsNum >= 19 ? null : (
+            {testState.nowQuestionsNum >
+            testState.questionAll.length - 2 ? null : (
               <div
                 className="right-btn"
                 onClick={() => {

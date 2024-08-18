@@ -55,6 +55,7 @@ import SocialSignup from "pages/user/login/SocialSignup";
 import OnlineMainPage from "pages/online/onlinemain/OnlineMainPage";
 import MyChildList from "pages/parents/MyChildList";
 import { TestExPage } from "pages/online/onlinemain/TestExPage";
+import TestResultsPage from "pages/online/onlinetest/TestResultsPage";
 
 const Main = styled.div``;
 
@@ -215,6 +216,7 @@ function App() {
             <Route index element={<OnlineMainPage />}></Route>
             {/* 시험 페이지 */}
             <Route path="test" element={<TestPage />}></Route>
+            <Route path="test/grad" element={<TestResultsPage />}></Route>
             {/* 시험 설명 */}
             <Route path="test/ex" element={<TestExPage />}></Route>
           </Route>
@@ -308,7 +310,7 @@ function App() {
           <Route path="/teacher">
             <Route index element={<TeacherInfoView />}></Route>
             {/* <Route path="teacherinfo" element={<TeacherInfoView />}></Route> */}
-            <Route path="teacherinfo" element={<TeacherEdit />}></Route>
+            <Route path="infoedit" element={<TeacherEdit />}></Route>
           </Route>
           {/* 학부모 - start */}
           <Route path="/parents">
@@ -339,12 +341,12 @@ function App() {
             {/* <Route path="edit/:userid" element={<StudentEdit />}></Route> */}
             {/* <Route path="grade/:studntid" element={<StudentGrade />}></Route> */}
           </Route>
-          {/* 교직원 : 알림장 리스트 */}
+          {/* 알림장 리스트 */}
           <Route path="/notice">
             <Route
               index
               element={
-                <TeacherProtectedRoute
+                <PrivateRoute
                   component={<NoticeList />}
                   authenticated={accessToken}
                 />
@@ -353,7 +355,7 @@ function App() {
             <Route
               path="list/:userClass"
               element={
-                <TeacherProtectedRoute
+                <PrivateRoute
                   authenticated={accessToken}
                   component={<NoticeList />}
                 />
