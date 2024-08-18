@@ -115,12 +115,11 @@ export const singupAccept = async (selectUserPk, userListType) => {
 export const delectAwaitAccept = async (selectUserPk, userListType) => {
   const accessToken = getCookie("accessToken");
   // console.log(
-
   //   `선택한 유저 PK : ${selectUserPk}, 선택한 유저 타입 : ${userListType}`,
   // );
   try {
     const response = await axios.delete(
-      `/api/admin?p=${userListType}&pk=${selectUserPk}`,
+      `/api/admin?p=${userListType + 1}&pk=${selectUserPk}`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,

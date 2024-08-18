@@ -396,19 +396,21 @@ const Modal = () => {
         let testSelectNum = [];
         // console.log("테스트 정보 : ", testStage);
 
-        testPk = testStage.questionAllPk.map((item, index) => {
-          console.log("index : ", index);
-          return [...testPk, item.questionPk];
+        // questionAllPk 배열에서 questionPk 값을 추출하여 testPk 배열에 추가
+        testStage.questionAllPk.forEach(item => {
+          console.log("questionPk : ", item.questionPk);
+          testPk.push(item.questionPk); // 중첩 배열에서 첫 번째 값 추출
         });
 
-        testSelectNum = testStage.selectNumArr.map((item, index) => {
-          console.log("index : ", index);
-          return [...testSelectNum, item.selectNum];
+        // selectNumArr 배열에서 selectNum 값을 추출하여 testSelectNum 배열에 추가
+        testStage.selectNumArr.forEach(item => {
+          console.log("selectNum : ", item.selectNum);
+          testSelectNum.push(item.selectNum); // 중첩 배열에서 첫 번째 값 추출
         });
 
         const data = {
-          questionPk: testPk[0],
-          omrAnswer: testSelectNum[0],
+          questionPk: testPk,
+          omrAnswer: testSelectNum,
           title: testStage.testTitle,
           subjectCode: testStage.subjectCode,
         };
@@ -417,6 +419,7 @@ const Modal = () => {
         const res = postOnlineTest(data);
         if (res) {
           dispatch(closeModal());
+          navigate("/online/test/grad");
         }
       }
 
@@ -715,10 +718,7 @@ const Modal = () => {
                   시험명을 작성해주세요.
                   <br />
                   <br />
-                  시험명은 시험 내역에서 사용됩니다.
-                  <br />
-                  <br />
-                  작성하지 않을 경우에는
+                  시험명을 작성하지 않으면
                   <br />
                   현재 시간({moment().format("YYYY년 MM월 DD일  HH시mm분")})으로
                   <br /> 자동 설정됩니다.

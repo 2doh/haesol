@@ -5,6 +5,10 @@ import { getTeacherInfo } from "api/teacher/teacherapi";
 import PhoneInputFields from "pages/student/PhoneInputFields";
 import { useDispatch, useSelector } from "react-redux";
 import { openModal, updateModalDate } from "slices/modalSlice";
+import HeaderTopPublic from "components/layout/header/HeaderTopPublic";
+import HeaderMemu from "components/layout/header/HeaderMenu";
+import HeaderProfile from "components/layout/header/HeaderProfile";
+import Footer from "components/layout/Footer";
 
 const StudentsInfoStyle = styled.div`
   .Modal {
@@ -320,208 +324,214 @@ const TeacherEdit = () => {
   };
 
   return (
-    <StudentsInfoStyle>
-      <div className="main-core teacher-edit-wrap">
-        <div className="student-list-title">
-          <span>개인 정보 관리</span>
-        </div>
-        {/* <!-- 신상정보 전체 레이아웃 --> */}
-        <div className="user-info-wrap">
-          {/* <!-- 탭 선택 부분 --> */}
-          <div className="user-info-tap">
-            <div className="property">
-              <div className="frame">
-                <div className="text-wrapper">신상 정보</div>
+    <>
+      <HeaderTopPublic />
+      <HeaderMemu />
+      <HeaderProfile />
+      <StudentsInfoStyle>
+        <div className="main-core teacher-edit-wrap">
+          <div className="student-list-title">
+            <span>개인 정보 관리</span>
+          </div>
+          {/* <!-- 신상정보 전체 레이아웃 --> */}
+          <div className="user-info-wrap">
+            {/* <!-- 탭 선택 부분 --> */}
+            <div className="user-info-tap">
+              <div className="property">
+                <div className="frame">
+                  <div className="text-wrapper">신상 정보</div>
+                </div>
+                <div className="info-button .re-pw-btn">
+                  <button
+                    onClick={() => {
+                      showModal("PasswordChangeModal");
+                    }}
+                    className="re-pw-btn"
+                  >
+                    비밀번호 수정
+                  </button>
+                </div>
               </div>
-              <div className="info-button .re-pw-btn">
+              <div className="info-button">
                 <button
-                  onClick={() => {
-                    showModal("PasswordChangeModal");
+                  onClick={e => {
+                    cheackInfo(e);
                   }}
-                  className="re-pw-btn"
                 >
-                  비밀번호 수정
+                  저장
+                </button>
+                <button
+                  onClick={e => {
+                    modifyCancel("BasicModal");
+                  }}
+                >
+                  취소
                 </button>
               </div>
             </div>
-            <div className="info-button">
-              <button
-                onClick={e => {
-                  cheackInfo(e);
-                }}
-              >
-                저장
-              </button>
-              <button
-                onClick={e => {
-                  modifyCancel("BasicModal");
-                }}
-              >
-                취소
-              </button>
-            </div>
-          </div>
-          <div className="info-contain-top">
-            <div className="info-item-top">
-              <div className="info-title">
-                <span>교사명</span>
-                <input
-                  value={userName}
-                  type="text"
-                  name="text"
-                  placeholder="이름을 입력해주세요"
-                  onChange={e => {
-                    setUserName(e.target.value);
-                  }}
-                />
-                {/* 고정값 */}
-                <div className="form-check gender-style">
+            <div className="info-contain-top">
+              <div className="info-item-top">
+                <div className="info-title">
+                  <span>교사명</span>
                   <input
-                    className="no-edit-class"
+                    value={userName}
                     type="text"
                     name="text"
-                    value={gender}
+                    placeholder="이름을 입력해주세요"
+                    onChange={e => {
+                      setUserName(e.target.value);
+                    }}
+                  />
+                  {/* 고정값 */}
+                  <div className="form-check gender-style">
+                    <input
+                      className="no-edit-class"
+                      type="text"
+                      name="text"
+                      value={gender}
+                    />
+                  </div>
+                </div>
+                <div className="info-title">
+                  <span>생년월일</span>
+                  <input
+                    type="date"
+                    name="date"
+                    value={birth}
+                    className="no-edit-class"
+                    // onChange={e => setBirth(e.target.value)}
+                  />
+                </div>
+                <div className="info-title">
+                  <span>전화번호</span>
+                  <PhoneInputFields
+                    placeholder="전화번호를 입력하세요"
+                    phoneNum={phoneNum}
+                    setPhoneNum={setPhoneNum}
                   />
                 </div>
               </div>
-              <div className="info-title">
-                <span>생년월일</span>
-                <input
-                  type="date"
-                  name="date"
-                  value={birth}
-                  className="no-edit-class"
-                  // onChange={e => setBirth(e.target.value)}
-                />
-              </div>
-              <div className="info-title">
-                <span>전화번호</span>
-                <PhoneInputFields
-                  placeholder="전화번호를 입력하세요"
-                  phoneNum={phoneNum}
-                  setPhoneNum={setPhoneNum}
-                />
-              </div>
-            </div>
-            <div className="info-item-right">
-              <div className="info-title">
-                <span>아이디</span>
-                <input
-                  type="text"
-                  name="text"
-                  placeholder=""
-                  value={userId}
-                  className="no-edit-class"
-                  // onChange={e => setClassGrade(e.target.value)}
-                />
-              </div>
-              <div className="info-title">
-                <span>담당 학년</span>
-                <input
-                  type="text"
-                  name="text"
-                  placeholder=""
-                  value={classGrade}
-                  className="no-edit-class"
-                  // onChange={e => setClassGrade(e.target.value)}
-                />
-              </div>
-              <div className="info-title">
-                <span>담당 학급</span>
-                <input
-                  type="text"
-                  name="text"
-                  placeholder=""
-                  value={classNum}
-                  className="no-edit-class"
-                  // onChange={e => setClassNum(e.target.value)}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="info-contain-mid">
-            <div className="info-item-mid">
-              <div className="info-title email-title">
-                <span>이메일</span>
-                <div className="add-form">
-                  <div className="email-add-form">
-                    <input
-                      type="text"
-                      name="text"
-                      placeholder=""
-                      ref={emailText}
-                    />
-                    <div>@</div>
-                    <input
-                      className="box is-none"
-                      id="domain-txt"
-                      type="text"
-                      name="text"
-                      placeholder=""
-                      ref={emailDomainText}
-                    />
-                    <select
-                      className="edit-select"
-                      id="domain-list"
-                      ref={emailDomain}
-                      onChange={e => {
-                        changeEmailDomain(e);
-                      }}
-                    >
-                      <option value="type">직접 입력</option>
-                      <option value="naver.com">naver.com</option>
-                      <option value="google.com">google.com</option>
-                      <option value="hanmail.net">hanmail.net</option>
-                      <option value="nate.com">nate.com</option>
-                      <option value="kakao.com">kakao.com</option>
-                    </select>
-                    <div className="email-warn-msg">{errMsg}</div>
-                  </div>
-                </div>
-              </div>
-              <div className="info-title addr-title">
-                <span>주소</span>
-                <div className="add-form">
-                  <div>
-                    <input
-                      type="text"
-                      name="text"
-                      placeholder=""
-                      value={zoneCode}
-                    />
-                    <button
-                      type="button"
-                      onClick={e => {
-                        handleAddClick(e);
-                      }}
-                    >
-                      우편번호 찾기
-                    </button>
-                  </div>
+              <div className="info-item-right">
+                <div className="info-title">
+                  <span>아이디</span>
                   <input
                     type="text"
                     name="text"
                     placeholder=""
-                    className="info-add"
-                    value={addr}
+                    value={userId}
+                    className="no-edit-class"
+                    // onChange={e => setClassGrade(e.target.value)}
                   />
+                </div>
+                <div className="info-title">
+                  <span>담당 학년</span>
                   <input
                     type="text"
                     name="text"
-                    placeholder="상세주소를 입력해주세요."
-                    className="info-add"
-                    value={subAddr}
-                    onChange={e => {
-                      setSubAAddr(e.target.value);
-                    }}
+                    placeholder=""
+                    value={classGrade}
+                    className="no-edit-class"
+                    // onChange={e => setClassGrade(e.target.value)}
                   />
+                </div>
+                <div className="info-title">
+                  <span>담당 학급</span>
+                  <input
+                    type="text"
+                    name="text"
+                    placeholder=""
+                    value={classNum}
+                    className="no-edit-class"
+                    // onChange={e => setClassNum(e.target.value)}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="info-contain-mid">
+              <div className="info-item-mid">
+                <div className="info-title email-title">
+                  <span>이메일</span>
+                  <div className="add-form">
+                    <div className="email-add-form">
+                      <input
+                        type="text"
+                        name="text"
+                        placeholder=""
+                        ref={emailText}
+                      />
+                      <div>@</div>
+                      <input
+                        className="box is-none"
+                        id="domain-txt"
+                        type="text"
+                        name="text"
+                        placeholder=""
+                        ref={emailDomainText}
+                      />
+                      <select
+                        className="edit-select"
+                        id="domain-list"
+                        ref={emailDomain}
+                        onChange={e => {
+                          changeEmailDomain(e);
+                        }}
+                      >
+                        <option value="type">직접 입력</option>
+                        <option value="naver.com">naver.com</option>
+                        <option value="google.com">google.com</option>
+                        <option value="hanmail.net">hanmail.net</option>
+                        <option value="nate.com">nate.com</option>
+                        <option value="kakao.com">kakao.com</option>
+                      </select>
+                      <div className="email-warn-msg">{errMsg}</div>
+                    </div>
+                  </div>
+                </div>
+                <div className="info-title addr-title">
+                  <span>주소</span>
+                  <div className="add-form">
+                    <div>
+                      <input
+                        type="text"
+                        name="text"
+                        placeholder=""
+                        value={zoneCode}
+                      />
+                      <button
+                        type="button"
+                        onClick={e => {
+                          handleAddClick(e);
+                        }}
+                      >
+                        우편번호 찾기
+                      </button>
+                    </div>
+                    <input
+                      type="text"
+                      name="text"
+                      placeholder=""
+                      className="info-add"
+                      value={addr}
+                    />
+                    <input
+                      type="text"
+                      name="text"
+                      placeholder="상세주소를 입력해주세요."
+                      className="info-add"
+                      value={subAddr}
+                      onChange={e => {
+                        setSubAAddr(e.target.value);
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </StudentsInfoStyle>
+      </StudentsInfoStyle>
+      <Footer />
+    </>
   );
 };
 

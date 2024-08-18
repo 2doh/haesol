@@ -3,12 +3,15 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import iconStatic1 from "./icon/korean-icon-static.png";
 import iconGif1 from "./icon/korean-icon.gif";
-import iconStatic2 from "./icon/science-icon-static.png";
-import iconGif2 from "./icon/science-icon.gif";
+import iconStatic2 from "./icon/math-icon-static.png";
+import iconGif2 from "./icon/math-icon.gif";
+
 import iconStatic3 from "./icon/english-icon-static.png";
 import iconGif3 from "./icon/english-icon.gif";
-import iconStatic4 from "./icon/math-icon-static.png";
-import iconGif4 from "./icon/math-icon.gif";
+
+import iconStatic4 from "./icon/science-icon-static.png";
+import iconGif4 from "./icon/science-icon.gif";
+
 import iconStatic5 from "./icon/art-icon-static.png";
 import iconGif5 from "./icon/art-icon.gif";
 import iconStatic6 from "./icon/sports-icon-static.png";
@@ -17,6 +20,7 @@ import iconStatic7 from "./icon/morality-icon-static.png";
 import iconGif7 from "./icon/morality-icon.gif";
 import iconStatic8 from "./icon/music-icon-static.png";
 import iconGif8 from "./icon/music-icon.gif";
+import { getCookie } from "utils/cookie";
 
 const iconStaticMap = {
   0: iconStatic1,
@@ -71,8 +75,8 @@ const SubjectsListWrapStyle = styled.div`
 
 const SubjectsListWrap = () => {
   const navigate = useNavigate();
-  const [subjectsList1, setSubjectsList1] = useState(["국어", "과학", "영어"]);
-  const [subjectsList2, setSubjectsList2] = useState(["수학", "미술", "체육"]);
+  const [subjectsList1, setSubjectsList1] = useState(["국어", "수학", "영어"]);
+  const [subjectsList2, setSubjectsList2] = useState(["과학", "미술", "체육"]);
   const [subjectsList3, setSubjectsList3] = useState([
     "바른생활",
     "음악",
@@ -80,12 +84,17 @@ const SubjectsListWrap = () => {
   ]);
 
   const movePage = (pageNum, pageName) => {
-    if (pageNum === 1 || pageNum === 4) {
-      navigate("/online/test/ex", {
-        state: { subjectsNum: pageNum, subjectsName: pageName },
-      });
+    if (getCookie("accessToken")) {
+      if (pageNum === 1 || pageNum === 2) {
+        navigate("/online/test/ex", {
+          state: { subjectsNum: pageNum, subjectsName: pageName },
+        });
+      } else {
+        alert("준비중인 서비스입니다.");
+      }
     } else {
-      alert("준비중인 서비스입니다.");
+      navigate("/login");
+      alert("로그인이 필요합니다.");
     }
   };
 
