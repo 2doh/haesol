@@ -59,19 +59,26 @@ const SocialSignup = () => {
     if (isRandCode === true) {
       setIsRandCode(false);
     }
-    console.log(data);
+    // console.log(data);
+    // console.log(initData);
     const reqData = {
       phone: data.phone,
       connect: data.connet,
       randomCode: data.childecode,
-      signInProviderType: initData.signInProviderType,
-      id: initData.id,
-      email: initData.email,
+      signInProviderType: initData.providerType,
+      id: initData.clientid,
+      email: initData.useremail,
       name: initData.name,
     };
-    console.log(reqData);
+    // console.log(reqData);
     const result = await signupSocialCode(reqData);
     sessionStorage.removeItem("sociallogin");
+    // 회원가입 성공시 처리
+    // console.log(result);
+    if (result === 1) {
+      alert("회원등록 되었습니다.");
+      window.location.reload("/");
+    }
   };
 
   return (
