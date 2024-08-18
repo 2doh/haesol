@@ -25,6 +25,8 @@ const VocaLearn = () => {
   const [onListening, setOnListening] = useState(false);
   const [isTranscript, setIsTranscript] = useState("");
   const [audioStream, setAudioStream] = useState(null);
+  const [correctAnswers, setCorrectAnswers] = useState([]);
+  const [incorrectAnswers, setIncorrectAnswers] = useState([]);
 
   const location = useLocation();
 
