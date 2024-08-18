@@ -18,8 +18,8 @@ import {
   nowQuestionsNumSub,
   updateTestDate,
 } from "slices/testSlice";
-import items from "../../api/json/gisa2020_01.json";
-import answerSelect from "./answerSelect";
+import items from "../../../api/json/gisa2020_01.json";
+import answerSelect from "../answerSelect";
 
 import { FaArrowLeft } from "react-icons/fa6";
 import { FaArrowRight } from "react-icons/fa6";
@@ -28,7 +28,8 @@ import { PiNumberCircleTwoDuotone } from "react-icons/pi";
 import { switchCase } from "@babel/types";
 import { getOnlineTest } from "api/online/onlinetestapi";
 import StudentImg from "pages/student/StudentImg";
-import { TestPreviewImage } from "./TestPreviewImage";
+import { TestPreviewImage } from "../TestPreviewImage";
+import TestResultsPage from "./TestResultsPage";
 
 const TestQuestionWrap = styled.div`
   height: 100%;
@@ -156,7 +157,7 @@ const TestQuestionWrap = styled.div`
   }
 `;
 
-const TestQuestion = ({ subjects }) => {
+const TestQuestion = ({ subjects, testName }) => {
   const dispatch = useDispatch();
   const testState = useSelector(state => state.testSlice);
 
@@ -258,6 +259,7 @@ const TestQuestion = ({ subjects }) => {
     const listLength = list.length;
 
     const data = {
+      testTitle: testName,
       questionAllPk: questionsAllPk,
       questionAll: formattedQuestions,
       selectNumArr: questionsNumArr,
@@ -344,7 +346,9 @@ const TestQuestion = ({ subjects }) => {
               <div className="cbt__question__img">
                 <div className="question-pic">
                   {testState.questionAll[testState.nowQuestionsNum]
-                    .questionImg === "DEFAULT_PICTURE_DATA" ? null : (
+                    .questionImg === "DEFAULT_PICTURE_DATA" ||
+                  testState.questionAll[testState.nowQuestionsNum]
+                    .questionImg === null ? null : (
                     <TestPreviewImage
                       imgUrl={
                         testState.questionAll[testState.nowQuestionsNum]
@@ -607,6 +611,7 @@ const TestQuestion = ({ subjects }) => {
             </div>
           ))} */}
         </div>
+        <TestResultsPage />
 
         <div className="cbt_wrap">
           <div className="cbt_inner">

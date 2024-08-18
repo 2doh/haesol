@@ -224,4 +224,21 @@
 }
 .modal-wrap .modal-inner .user-update-modal-wrap .modal-footer .modal-btn {
   padding-bottom: 20px;
+}
+
+.test-title-input-div {
+  width: 100%;
+  height: 30px;
+  border-radius: 5px;
+  border: 1px solid #886348;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+}
+.test-title-input-div #testTitleInput {
+  font-size: 15px;
+  width: 100%;
+  height: 100%;
+  padding-left: 10px;
+  border: none;
 }/*# sourceMappingURL=modal.css.map */

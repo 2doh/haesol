@@ -3,6 +3,7 @@
 @import "../mixin";
 
 .admin-home-core {
+  width: 100% !important;
   .property > div {
     @include box-shadow;
   }

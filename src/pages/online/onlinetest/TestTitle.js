@@ -15,9 +15,13 @@ const TestTitleStyle = styled.div`
   font-weight: bold;
 `;
 
-const TestTitle = () => {
+const TestTitle = ({ subjectsName, testName }) => {
   // 나중에 데이터 받아노는 걸로 수정
-  return <TestTitleStyle>학년 : 5학년 | 과목 : 국어</TestTitleStyle>;
+  return (
+    <TestTitleStyle>
+      과목 : {subjectsName} | 시험명 : {testName}
+    </TestTitleStyle>
+  );
 };
 
 export default TestTitle;
