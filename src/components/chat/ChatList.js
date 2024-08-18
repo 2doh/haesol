@@ -6,6 +6,7 @@ import { getCookie } from "utils/cookie";
 import "../../scss/chat/chat.css";
 import { IoClose } from "react-icons/io5";
 import CreateChatModal from "./CreateChatModal";
+import ChatParents from "./ChatParents";
 
 const ChatWrapStyle = styled.div`
   z-index: 100000;
@@ -441,33 +442,15 @@ const ChatWrapStyle = styled.div`
     align-items: center;
     justify-content: center;
   }
-
-  /* 호버 시 배경색 변경 */
-  /* .chat-select-wrap:hover {
-    & > .chat-select-field {
-      background-color: #c6dbda;
-    }
-  } */
 `;
 
 const ChatList = ({ chatStartOpen, setChatOpen }) => {
-  // const [chatOpen, setChatOpen] = useState(false);
   // 채팅 데이터 있 없
   const [chatData, setChatData] = useState(true);
   const [chatMiniList, setChatMiniList] = useState(false);
+  const [chatRoomOpen, setChatRoomOpen] = useState(false);
 
   const [loginUserType, setLoginUserType] = useState(getCookie("userRole"));
-
-  // const callStartChat = bool => {
-  //   console.log("여기니? :", bool);
-
-  //   setChatStartOpen(bool);
-  //   setChatOpen(bool);
-  // };
-  // const callChat = bool => {
-  //   console.log("여기니? 1:", bool);
-  //   setChatOpen(bool);
-  // };
 
   const teacherData = [
     { studentGrade: 1, studentClass: 2, teacherName: "김누구" },
@@ -501,7 +484,6 @@ const ChatList = ({ chatStartOpen, setChatOpen }) => {
 
   return (
     <>
-      {/* <CreateChatModal /> */}
       {chatStartOpen ? (
         <ChatWrapStyle chatMiniList={chatMiniList}>
           <div className="chat-inner">
@@ -552,17 +534,15 @@ const ChatList = ({ chatStartOpen, setChatOpen }) => {
               </div>
             ) : (
               <div className="chat-field-parents">
-                {/* <div className="chat-select-wrap-parents">
-                  <div className="chat-select-field-group">
-                    <div className="group-chat">
-                      <span>1학년 5반 단체 채팅방</span>
-                      <p>아직 대화내용이 없습니다.</p>
-                    </div>
-                  </div>
-                </div> */}
                 {chatData && studentData.length > 0 ? (
                   studentData.map((item, index) => (
-                    <div className="chat-select-wrap-parents" key={index}>
+                    <div
+                      className="chat-select-wrap-parents"
+                      key={index}
+                      onClick={() => {
+                        setChatRoomOpen(true);
+                      }}
+                    >
                       <div className="chat-select-field-parents">
                         <div className="parents-info">
                           <span>{item.studentName} 학부모</span>
@@ -584,7 +564,7 @@ const ChatList = ({ chatStartOpen, setChatOpen }) => {
               </div>
             )}
 
-            {loginUserType === "ROLE_Teacher" ? (
+            {loginUserType === "ROLE_TEACHER" ? (
               <div className="group-chat-button">
                 <button
                   className="raise"
@@ -638,6 +618,7 @@ const ChatList = ({ chatStartOpen, setChatOpen }) => {
           ) : null}
         </ChatWrapStyle>
       ) : null}
+      {chatRoomOpen ? <ChatParents setChatRoomOpen={setChatRoomOpen} /> : null}
     </>
   );
 };

@@ -13,14 +13,16 @@ import Footer from "components/layout/Footer";
 
 const NoticeEditWrapStyle = styled.div`
   max-width: 1180px;
+  width: 100%;
   margin: 0 auto;
-  background-color: #f3f9fa;
+  /* background-color: #f3f9fa; */
   min-height: calc(100vh - 328px);
   padding: 0 30px;
 `;
 
 const NoticeEdit = () => {
   const userClass = getCookie("userClass");
+  const userGrade = getCookie("userGrade");
   const navigate = useNavigate();
   const modalState = useSelector(state => state.modalSlice);
   const dispatch = useDispatch();
@@ -94,11 +96,12 @@ const NoticeEdit = () => {
     <>
       <HeaderTopPublic />
       <HeaderMemu />
-      <NoticeEditWrapStyle>
-        <div className="main-core">
+      <div className="main-core">
+        <NoticeEditWrapStyle>
           <div className="student-list-title">
-            {/* 제목 위치 */}
-            <span>{userClass}</span>
+            <span>
+              {userGrade}학년 {userClass}반
+            </span>
             <p>알림장 작성</p>
           </div>
           <div className="write-notice-wrap">
@@ -157,8 +160,8 @@ const NoticeEdit = () => {
               />
             </div>
           </div>
-        </div>
-      </NoticeEditWrapStyle>
+        </NoticeEditWrapStyle>
+      </div>
       <Footer />
     </>
   );

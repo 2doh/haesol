@@ -139,7 +139,7 @@ const CreateTestKo = () => {
       // 정답,
       answer: answer,
       // 해설
-      해설: explanation,
+      explanation: explanation,
     });
     console.log("onlineTestData : ", onlineTestData);
 
@@ -157,7 +157,7 @@ const CreateTestKo = () => {
     } else {
       // 빈 Blob을 파일처럼 추가 (빈 파일을 나타냄)
       formData.append("pic", new Blob([]), "empty.jpg");
-      console.log("pic", "empty.jpg (빈 파일 추가)");
+      // console.log("pic", "empty.jpg (빈 파일 추가)");
     }
 
     try {
