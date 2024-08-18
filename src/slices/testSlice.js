@@ -1,4 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+import moment from "moment";
+
+// const defaultTitle = moment().format("YYYY년 MM월 DD일  HH시mm분");
 
 const initialState = {
   // questionSubject: "",
@@ -9,7 +12,7 @@ const initialState = {
   // 2 : 수학
   subjectCode: 0,
   // 문제 타이틀
-  testTitle: "2024-08-14 첫번째 테스트",
+  testTitle: moment().format("YYYY년 MM월 DD일  HH시mm분"),
   // 모든 시험 문제 저장 배열
   questionAll: [],
   // omr 기록 배열

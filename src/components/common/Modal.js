@@ -23,7 +23,8 @@ import NoticeList from "pages/notice/NoticeList";
 import { useNavigate } from "react-router";
 import { putChildInfo, putParentsPwChange } from "api/parents/mychildinfo";
 import { getChild, getChildList, putChild } from "api/signup/parentapi";
-import { postOnlineTest } from "api/online/onlinetestapi";
+import { getOnlineTest, postOnlineTest } from "api/online/onlinetestapi";
+import moment from "moment";
 
 const ModalStyle = styled.div`
   position: fixed;
@@ -134,6 +135,8 @@ const ModalStyle = styled.div`
 `;
 
 const Modal = () => {
+  const navigate = useNavigate();
+
   // 비밀번호 받아올 변수
   const [newPw, setNewPw] = useState();
   const [newPwRe, setNewPwRe] = useState();
@@ -181,8 +184,14 @@ const Modal = () => {
   );
   const [updataeUserMsg, setUpdataeUserMsg] = useState("");
 
+  // 온라인 시험 타이틀명
+  const [testNameData, setTestNameData] = useState(
+    moment().format("YYYY년 MM월 DD일  HH시mm분"),
+  );
+
   useEffect(() => {
-    console.log("출력값 : ", updateUserName);
+    // console.log("출력값 : ", updateUserName);
+    // console.log("출력값 : ", modalState.modalRes);
   }, [updateUserState, updateUserName, updateUserGrade, updateUserClass]);
 
   const timerTime = () => {
@@ -212,7 +221,8 @@ const Modal = () => {
   const modalAccept = async () => {
     if (
       modalState.modalType === "BasicModal" ||
-      modalState.modalType === "AddChildModal"
+      modalState.modalType === "AddChildModal" ||
+      modalState.modalType === "TestTitlelModal"
     ) {
       // 단순 true 출력
       if (modalState.modalRes[0] === 1) {
@@ -325,6 +335,28 @@ const Modal = () => {
         }
       }
 
+      // 온라인 시험 전 시험명 작성
+      if (modalState.modalRes[0] === 54) {
+        console.log("여기");
+        const res = await getOnlineTest(modalState.modalRes[1]);
+        dispatch(closeModal());
+        console.log(modalState.modalRes);
+
+        if (res) {
+          navigate("/online/test", {
+            state: {
+              subjectsNum: modalState.modalRes[1],
+              subjectsName: modalState.modalRes[2],
+              testName: testNameData,
+            },
+          });
+        } else {
+          alert(
+            "시험 문제를 불러오지 못했습니다. 담당 학급 선생님께 문의하세요.",
+          );
+          navigate("/");
+        }
+      }
       // 온라인 시험 작성 후 저장 버튼
       if (modalState.modalRes[0] === 55) {
         // api 작성되면 추가하기
@@ -649,6 +681,41 @@ const Modal = () => {
                   </div>
                 </div>
               )}
+            </div>
+          ) : null}
+
+          {/* TestTitlelModal  */}
+          {modalState.modalType === "TestTitlelModal" ? (
+            <div className="modal-body">
+              <div className="modal-body-text-div basic-modal-div">
+                <div className="modal-text">
+                  시험명을 작성해주세요.
+                  <br />
+                  <br />
+                  시험명은 시험 내역에서 사용됩니다.
+                  <br />
+                  <br />
+                  작성하지 않을 경우에는
+                  <br />
+                  현재 시간({moment().format("YYYY년 MM월 DD일  HH시mm분")})으로
+                  <br /> 자동 설정됩니다.
+                  <br />
+                  <br />
+                </div>
+              </div>
+              <div className="pw-modal-body-text-div">
+                <div className="modal-text">시험명</div>
+                <div className="test-title-input-div">
+                  <input
+                    id="testTitleInput"
+                    type="text"
+                    placeholder="시험명을 입력해주세요."
+                    onChange={e => {
+                      setTestNameData(e.target.value);
+                    }}
+                  />
+                </div>
+              </div>
             </div>
           ) : null}
 

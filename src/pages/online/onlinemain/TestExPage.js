@@ -1,12 +1,14 @@
 import GreenHeaderNoOption from "components/layout/header/GreenHeaderNoOption";
 import React, { useEffect } from "react";
-import TestTitle from "./TestTitle";
-import TestQuestion from "./TestQuestion";
-import TestAnswer from "./TestAnswer";
+import TestTitle from "../onlinetest/TestTitle";
+import TestQuestion from "../onlinetest/TestQuestion";
+import TestAnswer from "../onlinetest/TestAnswer";
 import styled from "@emotion/styled";
 import { useLocation, useNavigate } from "react-router";
-import testExImg from "../../images/test-ex-img.png";
+import testExImg from "../../../images/test-ex-img.png";
 import { getOnlineTest } from "api/online/onlinetestapi";
+import { useDispatch } from "react-redux";
+import { openModal, updateModalDate } from "slices/modalSlice";
 
 const TestExWrap = styled.div`
   position: absolute;
@@ -15,7 +17,7 @@ const TestExWrap = styled.div`
 
   .test-ex-page {
     width: 1180px;
-    height: 100%;
+    /* height: 100%; */
     background-color: #f3f9fa;
     margin: 0 auto;
     min-width: 440px;
@@ -70,6 +72,7 @@ const TestExWrap = styled.div`
     position: relative;
     display: inline-block;
     margin: 20px;
+    z-index: 1;
   }
 
   .button a {
@@ -153,6 +156,8 @@ export const TestExPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const dispatch = useDispatch();
+
   // 받은 과목 번호
   const subjectsNum = location.state.subjectsNum;
   const subjectsName = location.state.subjectsName;
@@ -164,16 +169,15 @@ export const TestExPage = () => {
   // }, [subjectsNum, subjectsName]);
 
   const startTest = async subjects => {
-    const res = await getOnlineTest(subjectsNum);
+    const data = {
+      headerText: "시험명 작성",
+      buttonCnt: 1,
+      buttonText: ["확인"],
+      modalRes: [54, subjectsNum, subjectsName],
+    };
 
-    if (res) {
-      navigate("/online/test", {
-        state: { subjectsNum: subjectsNum, subjectsName: subjectsName },
-      });
-    } else {
-      alert("시험 문제를 불러오지 못했습니다. 담당 학급 선생님께 문의하세요.");
-      navigate("/");
-    }
+    dispatch(updateModalDate(data));
+    dispatch(openModal("TestTitlelModal"));
   };
 
   return (

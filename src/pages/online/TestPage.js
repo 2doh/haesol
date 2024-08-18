@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
 import GreenHeaderNoOption from "components/layout/header/GreenHeaderNoOption";
-import TestTitle from "./TestTitle";
-import TestQuestion from "./TestQuestion";
-import TestAnswer from "./TestAnswer";
+import TestTitle from "./onlinetest/TestTitle";
+import TestQuestion from "./onlinetest/TestQuestion";
+import TestAnswer from "./onlinetest/TestAnswer";
 import { useEffect, useState } from "react";
 import usePreventRefresh from "hooks/common/usePreventRefresh";
 import usePreventGoBack from "hooks/common/usePreventGoBack";
@@ -61,18 +61,21 @@ const TestPage = () => {
   const location = useLocation();
   const subjectsNum = location.state?.subjectsNum;
   const subjectsName = location.state?.subjectsName;
+  const testName = location.state?.testName;
 
   /** 받은 과목 번호 */
   useEffect(() => {
     if (!subjectsNum || !subjectsName) {
+      // console.log("데이터 없음. 처리하기");
       console.log("subjectsNum : ", subjectsNum);
       console.log("subjectsName : ", subjectsName);
-      console.log("데이터 없음. 처리하기");
+      console.log("testName : ", testName);
       navigate("/");
     } else {
       console.log("subjectsNum : ", subjectsNum);
       console.log("subjectsName : ", subjectsName);
-      console.log("데이터 있음. ");
+      console.log("testName : ", testName);
+      // console.log("데이터 있음. ");
     }
   }, [subjectsNum, subjectsName]);
 
@@ -89,10 +92,10 @@ const TestPage = () => {
       <GreenHeaderNoOption />
       <TestWrap>
         <div className="test-page">
-          <TestTitle />
+          <TestTitle subjectsName={subjectsName} testName={testName} />
           <div className="test-page-inner">
             {/* <TestQuestion subjects={subjects} /> */}
-            <TestQuestion subjects={subjectsNum} />
+            <TestQuestion subjects={subjectsNum} testName={testName} />
             <TestAnswer />
           </div>
         </div>

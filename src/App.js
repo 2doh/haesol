@@ -54,7 +54,7 @@ import ChatParents from "components/chat/ChatParents";
 import SocialSignup from "pages/user/login/SocialSignup";
 import OnlineMainPage from "pages/online/onlinemain/OnlineMainPage";
 import MyChildList from "pages/parents/MyChildList";
-import { TestExPage } from "pages/online/TestExPage";
+import { TestExPage } from "pages/online/onlinemain/TestExPage";
 
 const Main = styled.div``;
 

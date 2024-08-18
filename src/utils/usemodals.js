@@ -6,4 +6,5 @@ export const MODAL_TYPES = {
   PasswordChangeModal: "PasswordChangeModal",
   TelAcceptModal: "TelAcceptModal",
   UserUpdateModal: "UserUpdateModal",
+  TestTitlelModal: "TestTitlelModal ",
 };

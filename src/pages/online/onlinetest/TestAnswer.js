@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
-import TestEndBtn from "./TestEndBtn";
-import TestOmr from "./TestOmr";
+import TestEndBtn from "../TestEndBtn";
+import TestOmr from "../TestOmr";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { remainingQuestionsCount, updateTestDate } from "slices/testSlice";

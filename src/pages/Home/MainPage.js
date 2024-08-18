@@ -52,7 +52,7 @@ const MainPage = () => {
         </div>
 
         <div className="main-page-wrap">
-          {getCookie("userRole") ? <QuickMenu /> : null}
+          {getCookie("accessToken") ? <QuickMenu /> : null}
 
           <MainPageContents>
             {/* <LoginUserMainPageContents>
