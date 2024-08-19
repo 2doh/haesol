@@ -276,8 +276,9 @@ const CreateTestKo = () => {
                   handleSelectTagType(e);
                 }}
               >
-                <option value="11">독해</option>
-                <option value="12">문법</option>
+                <option value="11">읽기</option>
+                <option value="12">쓰기</option>
+                <option value="13">문법</option>
                 <option value="13">문학</option>
               </select>
             </div>

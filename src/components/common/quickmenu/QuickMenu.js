@@ -1,9 +1,10 @@
 import styled from "@emotion/styled";
-import ChatParents from "components/chat/ChatParents";
+import ChatParents from "components/chat/ChatRoom";
 import { BiSolidArrowToTop } from "react-icons/bi";
 import Chat from "pages/Home/Chat";
 import { useEffect, useState } from "react";
 import ChatStart from "components/chat/ChatStart";
+import ClassSchedule from "pages/Home/ClassSchedule";
 
 const QuickMenuStyle = styled.div`
   .quick-menu-wrap {
@@ -89,6 +90,9 @@ const QuickMenu = () => {
   // 퀵메뉴 - 채팅 여닫기
   const [chatOpen, setChatOpen] = useState(false);
 
+  // 퀵메뉴 - 채팅 여닫기
+  const [classScheduleOpen, setClassScheduleOpen] = useState(false);
+
   /** 퀵메뉴 위치 계산 */
   const handleScroll = () => {
     const position = 510 + window.scrollY;
@@ -120,6 +124,8 @@ const QuickMenu = () => {
       {chatOpen ? (
         <ChatStart chatOpen={chatOpen} setChatOpen={setChatOpen} />
       ) : null}
+      {classScheduleOpen ? <ClassSchedule /> : null}
+
       {/* {chatOpen ? <Chat /> : null} */}
       <QuickMenuStyle>
         <div className="quick-menu-wrap" style={{ top: barPosition }}>
@@ -158,7 +164,7 @@ const QuickMenu = () => {
             <li
               className="btn"
               onClick={() => {
-                callChat(false);
+                setClassScheduleOpen(!classScheduleOpen);
               }}
             >
               {/* 채팅 */}

@@ -1,12 +1,12 @@
 import styled from "@emotion/styled";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BsFillChatRightDotsFill } from "react-icons/bs";
 import { FaUserPlus } from "react-icons/fa6";
 import { getCookie } from "utils/cookie";
 import "../../scss/chat/chat.css";
 import { IoClose } from "react-icons/io5";
-import CreateChatModal from "./CreateChatModal";
-import ChatParents from "./ChatParents";
+import ChatParents from "./ChatRoom";
+import { getChatParentsList, getChatTeacherList } from "api/chat/chatapi";
 
 const ChatWrapStyle = styled.div`
   z-index: 100000;
@@ -150,7 +150,7 @@ const ChatWrapStyle = styled.div`
           background-color: #dee8e9;
         }
       }
-      .chat-select-wrap:nth-child(1) {
+      .chat-select-wrap:nth-of-type(1) {
         margin-top: 30px;
       }
       .chat-select-wrap:last-child {
@@ -267,7 +267,7 @@ const ChatWrapStyle = styled.div`
           }
         }
       }
-      .chat-select-wrap-parents:nth-child(2) {
+      .chat-select-wrap-parents:nth-of-type(2) {
         /* margin-top: 20px; */
       }
       .chat-select-wrap-parents {
@@ -445,35 +445,46 @@ const ChatWrapStyle = styled.div`
 `;
 
 const ChatList = ({ chatStartOpen, setChatOpen }) => {
-  // 채팅 데이터 있 없
-  const [chatData, setChatData] = useState(true);
+  const [chatData, setChatData] = useState([]);
   const [chatMiniList, setChatMiniList] = useState(false);
   const [chatRoomOpen, setChatRoomOpen] = useState(false);
 
   const [loginUserType, setLoginUserType] = useState(getCookie("userRole"));
 
-  const teacherData = [
-    { studentGrade: 1, studentClass: 2, teacherName: "김누구" },
-    { studentGrade: 2, studentClass: 6, teacherName: "곽두팔" },
-    { studentGrade: 3, studentClass: 1, teacherName: "이민엽" },
-    { studentGrade: 5, studentClass: 6, teacherName: "김곽팔" },
-  ];
-
-  const studentData = [
-    { studentName: "김누구" },
-    { studentName: "이누구" },
-    { studentName: "강누구" },
-    { studentName: "박누구" },
-    { studentName: "정누구" },
-    { studentName: "최누구" },
-    { studentName: "최누구" },
-    { studentName: "최누구" },
-    { studentName: "최누구" },
-    { studentName: "최누구" },
-    { studentName: "최누구" },
-  ];
-
   const [checkedItems, setCheckedItems] = useState({});
+
+  const [roomId, setRoomId] = useState(null);
+  const [teaId, setTeaId] = useState(null);
+  const [parentId, setParentId] = useState(null);
+
+  const fetchChatData = async () => {
+    try {
+      if (loginUserType === "ROLE_TEACHER") {
+        const response = await getChatParentsList();
+        setChatData(response);
+      } else if (loginUserType === "ROLE_PARENTS") {
+        const response = await getChatTeacherList();
+        setChatData(response);
+      }
+    } catch (error) {
+      console.error("채팅 데이터를 불러오는 중 오류 발생:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchChatData();
+  }, [loginUserType]);
+
+  const handleOpenChatRoom = (
+    selectedRoomId,
+    selectedTeaId,
+    selectedParentId,
+  ) => {
+    setRoomId(selectedRoomId);
+    setTeaId(selectedTeaId);
+    setParentId(selectedParentId);
+    setChatRoomOpen(true);
+  };
 
   const handleCheckboxChange = index => {
     setCheckedItems(prevState => ({
@@ -505,16 +516,25 @@ const ChatList = ({ chatStartOpen, setChatOpen }) => {
 
             {loginUserType === "ROLE_PARENTS" ? (
               <div className="chat-field">
-                {teacherData.map((item, index) => (
+                {chatData.map((item, index) => (
                   <div className="chat-select-wrap" key={index}>
-                    <div className="chat-select-field">
+                    <div
+                      className="chat-select-field"
+                      onClick={() =>
+                        handleOpenChatRoom(
+                          item.roomId,
+                          item.teaId,
+                          item.parentId,
+                        )
+                      }
+                    >
                       <div className="teacher-info">
                         <span>
                           {item.studentGrade}학년 {item.studentClass}반
                         </span>
                         <p>{item.teacherName} 선생님</p>
                       </div>
-                      {chatData && teacherData.length > 0 ? (
+                      {chatData.length > 0 ? (
                         <div className="teacher-chat-contain">
                           <p>
                             여기 대화내용 출력 어쩌고저쩌고뭐시기저시기야 오늘의
@@ -534,18 +554,25 @@ const ChatList = ({ chatStartOpen, setChatOpen }) => {
               </div>
             ) : (
               <div className="chat-field-parents">
-                {chatData && studentData.length > 0 ? (
-                  studentData.map((item, index) => (
+                {chatData.length > 0 ? (
+                  chatData.map((item, index) => (
                     <div
                       className="chat-select-wrap-parents"
                       key={index}
-                      onClick={() => {
-                        setChatRoomOpen(true);
-                      }}
+                      // onClick={() => {
+                      //   setChatRoomOpen(true);
+                      // }}
+                      onClick={() =>
+                        handleOpenChatRoom(
+                          item.roomId,
+                          item.teaId,
+                          item.parentId,
+                        )
+                      }
                     >
                       <div className="chat-select-field-parents">
                         <div className="parents-info">
-                          <span>{item.studentName} 학부모</span>
+                          <span>{item.parentId} 학부모</span>
                           <p>내일 어쩌구저쩌구 이거 내용이에요.</p>
                         </div>
                       </div>
@@ -595,14 +622,14 @@ const ChatList = ({ chatStartOpen, setChatOpen }) => {
                   </button>
                 </div>
                 <div className="parents-list-inner">
-                  {studentData.map((item, index) => (
+                  {chatData.map((item, index) => (
                     <div
                       className="chat-select-wrap-parents"
                       key={index}
                       onClick={() => handleCheckboxChange(index)}
                     >
                       <div className="parents-info">
-                        <span>{item.studentName} 학부모</span>
+                        <span>{item.parentId} 학부모</span>
                         <input
                           type="checkbox"
                           checked={!!checkedItems[index]}
@@ -618,7 +645,14 @@ const ChatList = ({ chatStartOpen, setChatOpen }) => {
           ) : null}
         </ChatWrapStyle>
       ) : null}
-      {chatRoomOpen ? <ChatParents setChatRoomOpen={setChatRoomOpen} /> : null}
+      {chatRoomOpen ? (
+        <ChatParents
+          setChatRoomOpen={setChatRoomOpen}
+          roomId={roomId}
+          teaId={teaId}
+          parentId={parentId}
+        />
+      ) : null}
     </>
   );
 };

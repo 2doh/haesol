@@ -1,13 +1,12 @@
+import useLogout from "hooks/common/useLogout";
 import { MdOutlineLogout } from "react-icons/md";
-import { logout } from "./Logout";
-import styled from "@emotion/styled";
 
 const LogoutButton = () => {
   return (
     <div
       className="logout-icon"
       onClick={() => {
-        logout();
+        useLogout();
       }}
     >
       <MdOutlineLogout size="100%" title="로그아웃" />

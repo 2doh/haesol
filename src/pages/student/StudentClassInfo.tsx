@@ -10,8 +10,8 @@ const StudentClassInfo = () => {
   const { studentPk } = useParams();
   // const [studentInfo, setStudentInfo] = useState({});
   const [studentName, setStudentName] = useState("");
-  // const [studentClass, setStudentClass] = useState("");
-  // const [studentGrade, setStudentGrade] = useState("");
+  const [studentClass, setStudentClass] = useState("");
+  const [studentGrade, setStudentGrade] = useState("");
 
   // 학생 정보 불러오기
   const studentInfoData = async () => {
@@ -19,6 +19,8 @@ const StudentClassInfo = () => {
       const response = await getStudentInfo(studentPk);
       const result = response.data;
 
+      setStudentClass(result.studentClass);
+      setStudentGrade(result.studentGrade);
       setStudentName(result.studentName);
     } catch (error) {
       console.log(error);
@@ -32,7 +34,7 @@ const StudentClassInfo = () => {
   return (
     <>
       <span>
-        {userGrade}학년 {userClass}반
+        {userGrade || studentGrade}학년 {userClass || studentClass}반
       </span>
       {studentName ? <p>{studentName}</p> : null}
     </>

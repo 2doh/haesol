@@ -4,6 +4,8 @@ import "../../scss/chat/chat.scss";
 import SendMsg from "./SendMsg";
 import { IoClose } from "react-icons/io5";
 import ReceiveMsg from "./ReceiveMsg";
+import { getCookie } from "utils/cookie";
+import { getChatRoom, postCreateChat } from "api/chat/chatapi";
 
 const ChatWrapStyle = styled.div`
   position: relative;
@@ -37,6 +39,7 @@ const ChatWrapStyle = styled.div`
     }
   }
   .chat-field {
+    overflow-y: scroll;
     height: 70%;
     padding: 15px;
     background-color: #dee8e9;
@@ -52,35 +55,31 @@ const ChatWrapStyle = styled.div`
   }
 `;
 
-const ChatParents = ({ setChatRoomOpen }) => {
+const ChatParents = ({ setChatRoomOpen, roomId, parentId, teaId }) => {
+  const [loginUserType, setLoginUserType] = useState(getCookie("userRole"));
   // const [myMsg, setMyMsg] = useState("");
   const [sandingMsg, setSendingMsg] = useState("");
   const [receiveMsg, setReceiveMsg] = useState("");
   const [nowTime, setNowTime] = useState("");
   const [receiveTime, setReceiveTime] = useState("");
 
+  useEffect(() => {
+    console.log("roomId : ", roomId);
+  }, [roomId]);
+
   // 채팅 목록
   const [chatList, setChatList] = useState([]);
   // 키값 변경해서 넣기
 
   // 전체 채팅 목록 부르기
-  // const 전체대화내역 = async () => {
-  //   const result = await 채팅getapi();
-  //   setChatList(result.data.resultData)
-  // }
-  // useEffect(() => {
-  //   전체대화내역();
-  // }, []);
-
-  // 채팅 추가 함수
-  // const addChat = async () => {
-  //   const sendChatData = {
-  //     키값 : 키명,
-  //     키값 : 키명,
-  //   }
-  //   const result = await post채팅추가api();
-  //   전체대화내역();
-  // };
+  const getAllChatList = async () => {
+    const result = await getChatRoom();
+    console.log(result);
+    setChatList();
+  };
+  useEffect(() => {
+    getAllChatList();
+  }, [chatList]);
 
   // const sendTime = () => {
   //   const now = new Date();
@@ -96,11 +95,19 @@ const ChatParents = ({ setChatRoomOpen }) => {
   //   }
   // };
 
-  const sendTime = () => {
+  // 채팅 보내기
+  const sendChat = async () => {
     if (sandingMsg.trim() === "") {
       // 빈 메시지나 공백만 있는 메시지는 전송하지 않음
       return;
     }
+
+    const postChatData = {
+      msg: sandingMsg,
+      roomId,
+    };
+    const result = await postCreateChat(postChatData);
+    console.log(result);
 
     const now = new Date();
     const nowhours = String(now.getHours()).padStart(2, "0");
@@ -127,7 +134,12 @@ const ChatParents = ({ setChatRoomOpen }) => {
       {/* 버튼 클릭하면 채팅창 나오게 */}
       <ChatWrapStyle>
         <div className="chat-header">
-          <span>몇 반 김누구 선생님</span>
+          {loginUserType === "ROLE_TEACHER" ? (
+            <span>{parentId} 학부모</span>
+          ) : (
+            <span>{teaId} 선생님</span>
+          )}
+
           <IoClose
             size={30}
             className="close-icon"
@@ -159,7 +171,7 @@ const ChatParents = ({ setChatRoomOpen }) => {
             className="chat-wrap"
             onSubmit={e => {
               e.preventDefault();
-              sendTime();
+              sendChat();
             }}
           >
             <textarea
@@ -172,7 +184,7 @@ const ChatParents = ({ setChatRoomOpen }) => {
             <div
               className="chat-sendbtn br5"
               onClick={() => {
-                sendTime();
+                sendChat();
               }}
             >
               전송

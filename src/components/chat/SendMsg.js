@@ -6,16 +6,21 @@ const ChatWrapInner = styled.div`
   .send-msg-wrap {
     display: flex;
     width: 100%;
-    align-items: center;
+    align-items: flex-end;
     justify-content: flex-end;
     margin-bottom: 20px;
     .sendmsg-timewrap {
       .sendmsg-time {
-        font-size: 11px;
+        white-space: nowrap;
+        font-size: 12px;
       }
     }
     .sendmsg-msg {
-      margin-right: 10px;
+      background-color: #add2d8;
+      border: solid 1px #1b4957;
+      border-radius: 15px;
+      margin-left: 10px;
+      padding: 8px;
     }
   }
 `;
@@ -25,10 +30,10 @@ const SendMsg = ({ sandingMsg, nowTime }) => {
   return (
     <ChatWrapInner>
       <div className="send-msg-wrap">
-        <div className="sendmsg-msg">{sandingMsg}</div>
         <div className="sendmsg-timewrap">
           <div className="sendmsg-time">{nowTime}</div>
         </div>
+        <div className="sendmsg-msg">{sandingMsg}</div>
       </div>
     </ChatWrapInner>
   );

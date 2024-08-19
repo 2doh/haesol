@@ -1,5 +1,9 @@
 import { getScoreDetail, getStudentInfo } from "api/student/studentapi";
 import Chart from "components/chart/Chart";
+import Footer from "components/layout/Footer";
+import HeaderMemu from "components/layout/header/HeaderMenu";
+import HeaderTopPublic from "components/layout/header/HeaderTopPublic";
+import StudentClassInfo from "pages/student/StudentClassInfo";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router";
@@ -99,108 +103,113 @@ const StudentGradeChart = () => {
   }, [modalText]);
 
   return (
-    <div className="main-core">
-      <div className="student-list-title">
-        {/* <!-- 제목 위치 --> */}
-        <span>{studentClass}</span>
-        <p>{studentName} 성적확인</p>
-      </div>
-      <div className="user-info-wrap">
-        {/* <!-- 탭 선택 부분 --> */}
-        <div className="user-info-tap">
-          <div className="property">
-            <div className="div-wrapper">
+    <>
+      <HeaderTopPublic />
+      <HeaderMemu />
+      <div className="main-core">
+        <div className="student-list-title">
+          {/* <!-- 제목 위치 --> */}
+          <StudentClassInfo />
+          <p>성적확인</p>
+        </div>
+        <div className="user-info-wrap">
+          {/* <!-- 탭 선택 부분 --> */}
+          <div className="user-info-tap">
+            <div className="property">
               <div
-                className="info-subtitle"
+                className="div-wrapper"
                 onClick={() => navigate("/parents/studentinfo")}
               >
-                신상 정보
+                <div className="info-subtitle">신상 정보</div>
+              </div>
+              <div className="div-wrapper" onClick={() => handleOnGrade()}>
+                <div className="text-wrapper">성적 확인</div>
+              </div>
+              <div className="frame">
+                <div className="info-subtitle">차트</div>
               </div>
             </div>
-            <div className="div-wrapper" onClick={() => handleOnGrade()}>
-              <div className="text-wrapper">성적 확인</div>
-            </div>
-            <div className="frame">
-              <div className="info-subtitle">차트</div>
-            </div>
-          </div>
-          <div className="info-button">
-            <button
-              onClick={() => {
-                handleClick();
-              }}
-            >
-              조회
-            </button>
-          </div>
-        </div>
-        <div className="info-contain-top">
-          <div className="info-item-top">
-            <div className="info-title" id="info-grade-select">
-              <span style={{ width: "161px" }}>학기 선택</span>
-              <div className="select-grade" style={{ width: "60%" }}>
-                <select
-                  name="grade"
-                  onChange={e => {
-                    handleGradeChange(e);
-                  }}
-                  value={grade}
-                >
-                  <option value="" hidden>
-                    학년
-                  </option>
-                  <option value="1">1학년</option>
-                  <option value="2">2학년</option>
-                  <option value="3">3학년</option>
-                  <option value="4">4학년</option>
-                  <option value="5">5학년</option>
-                  <option value="6">6학년</option>
-                </select>
-                <select
-                  name="semester"
-                  onChange={e => {
-                    handleSemesterChange(e);
-                  }}
-                  value={semester}
-                >
-                  <option value="" hidden>
-                    학기
-                  </option>
-                  <option value="1">1학기</option>
-                  <option value="2">2학기</option>
-                </select>
-                <select
-                  name="exam"
-                  onChange={e => {
-                    handleExamChange(e);
-                  }}
-                  value={exam}
-                >
-                  <option value="" hidden>
-                    시험
-                  </option>
-                  <option value="1">중간고사</option>
-                  <option value="2">기말고사</option>
-                </select>
-              </div>
-              <div
-                className="total-student"
-                style={{
-                  margin: "0 auto",
-                  justifyContent: "left",
+            <div className="info-button">
+              <button
+                onClick={() => {
+                  handleClick();
                 }}
               >
-                <p style={{ height: "100%", width: "auto" }}>
-                  반/학년 전체 인원
-                </p>
-                <input readOnly value={count} />명
+                조회
+              </button>
+            </div>
+          </div>
+          <div className="info-contain-top">
+            <div className="info-item-top">
+              <div className="info-title" id="info-grade-select">
+                <span style={{ width: "161px" }}>학기 선택</span>
+                <div className="select-grade" style={{ width: "60%" }}>
+                  <select
+                    name="grade"
+                    onChange={e => {
+                      handleGradeChange(e);
+                    }}
+                    value={grade}
+                  >
+                    <option value="" hidden>
+                      학년
+                    </option>
+                    <option value="1">1학년</option>
+                    <option value="2">2학년</option>
+                    <option value="3">3학년</option>
+                    <option value="4">4학년</option>
+                    <option value="5">5학년</option>
+                    <option value="6">6학년</option>
+                  </select>
+                  <select
+                    name="semester"
+                    onChange={e => {
+                      handleSemesterChange(e);
+                    }}
+                    value={semester}
+                  >
+                    <option value="" hidden>
+                      학기
+                    </option>
+                    <option value="1">1학기</option>
+                    <option value="2">2학기</option>
+                  </select>
+                  <select
+                    name="exam"
+                    onChange={e => {
+                      handleExamChange(e);
+                    }}
+                    value={exam}
+                  >
+                    <option value="" hidden>
+                      시험
+                    </option>
+                    <option value="1">중간고사</option>
+                    <option value="2">기말고사</option>
+                  </select>
+                </div>
+                <div
+                  className="total-student"
+                  style={{
+                    margin: "0 auto",
+                    justifyContent: "left",
+                  }}
+                >
+                  <p style={{ height: "100%", width: "auto" }}>
+                    반/학년 전체 인원
+                  </p>
+                  <input readOnly value={count} />명
+                </div>
               </div>
             </div>
           </div>
         </div>
+        {showChart ? (
+          <Chart recentExam={recentExam.list}>평균 성적</Chart>
+        ) : null}
       </div>
-      {showChart ? <Chart recentExam={recentExam.list}>평균 성적</Chart> : null}
-    </div>
+      <Footer />
+    </>
   );
 };
 
