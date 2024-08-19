@@ -40,7 +40,7 @@
     height: 60px;
   }
 
-  & .item:nth-child(1) {
+  & .item:nth-of-type(1) {
     background-color: $bp;
     // border-bottom: 1px solid $pc-line-p;
   }

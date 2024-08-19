@@ -45,11 +45,18 @@ export const testSlice = createSlice({
     nowQuestionsNumSub: (state, actions) => {
       state.nowQuestionsNum--;
     },
+    nowQuestionsNumReset: (state, actions) => {
+      state.nowQuestionsNum = 0;
+    },
   },
 });
 
-export const { updateTestDate, nowQuestionsNumAdd, nowQuestionsNumSub } =
-  testSlice.actions;
+export const {
+  updateTestDate,
+  nowQuestionsNumAdd,
+  nowQuestionsNumSub,
+  nowQuestionsNumReset,
+} = testSlice.actions;
 // export const selectModal = state => state.test;
 
 export default testSlice.reducer;

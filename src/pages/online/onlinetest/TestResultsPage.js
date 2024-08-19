@@ -16,7 +16,8 @@ const TestGradWrap = styled.div`
 
   .test-grad-page {
     width: 1180px;
-    height: fit-content;
+    /* height: fit-content; */
+    height: 100%;
     background-color: #f3f9fa;
     margin: 0 auto;
     min-width: 440px;

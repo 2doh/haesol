@@ -128,19 +128,15 @@ const StudentProfile = () => {
   const childState = useSelector(state => state.selectChildSlice);
   const [myInfo, setMyInfo] = useState([]);
 
-  // 임시
-  const studentPk = 32;
-
   /** 최초 랜더링 */
   useEffect(() => {
-    studentInfo(studentPk);
-    // studentInfo(getCookie("selectChildNum"));
+    studentInfo();
   }, []);
 
   /** 학생 자신 정보 불러오기 */
-  const studentInfo = async studentPk => {
-    const res = await getStudentInfo(studentPk);
-
+  const studentInfo = async () => {
+    const res = await getStudentInfo(getCookie("studentPk"));
+    console.log(res);
     if (res === false) {
       console.log("정보 없음");
     } else {
@@ -150,12 +146,14 @@ const StudentProfile = () => {
 
   /** 마이페이지 이동 */
   const moveMyPage = () => {
-    navigate(`/parents/studentinfo`);
+    // navigate(`/parents/studentinfo`);
+    alert("준비중입니다.");
   };
 
   /** 성적 확인 페이지 이동 */
   const moveMyGradePage = () => {
-    navigate(`/grade/${studentPk}`);
+    // navigate(`/grade/${studentPk}`);
+    alert("준비중입니다.");
   };
 
   /** 프로필 html 코드 추가 */
@@ -177,90 +175,7 @@ const StudentProfile = () => {
     }
   }, []);
 
-  return (
-    <ParentsProfileStyle>
-      <div className="user-info-wrap page" id="page2">
-        <div className="user-info-inner content" id="contents">
-          <div className="user-info">
-            {/* 유저 정보 start */}
-            <div className="top-user-info">
-              <div className="user-pic"></div>
-
-              <div className="user-info-div">
-                <div className="user-info-label-box">
-                  <div className="user-info-label">학생 이름</div>
-                  <div className="user-info-label">생일</div>
-                  <div className="user-info-label">학급</div>
-                  <div className="user-info-label">선생님 성함</div>
-                </div>
-                <div className="user-info-text-box">
-                  <div className="login-user-info-text">
-                    {name === "" || name === null || name === 0 ? (
-                      <div className="no-info">미등록</div>
-                    ) : (
-                      name
-                    )}
-                  </div>
-                  <div className="login-user-info-text">
-                    {birth === "" || birth === null || birth === 0 ? (
-                      <div className="no-info">미등록</div>
-                    ) : (
-                      birth
-                    )}
-                  </div>
-                  <div className="login-user-info-text">
-                    {className === "" ||
-                    className === null ||
-                    className === 0 ||
-                    classId === "" ||
-                    classId === null ||
-                    classId === 0 ? (
-                      <div className="no-info">미등록</div>
-                    ) : (
-                      `${className} 학년 ${classId} 반`
-                    )}
-                  </div>
-                  <div className="login-user-info-text">
-                    {teacherName === "" || teacherName === null ? (
-                      <div className="no-info">미등록</div>
-                    ) : (
-                      teacherName
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              <LogoutButton />
-            </div>
-            {/* 유저 정보 end */}
-            {/* 버튼 start */}
-            <div className="bottom-user-btn">
-              <button
-                className="subject-grade-btn"
-                onClick={() => {
-                  moveMyGradePage();
-                }}
-              >
-                과목별 성적
-              </button>
-
-              <button
-                className="my-page-btn"
-                onClick={() => {
-                  moveMyPage();
-                }}
-              >
-                마이페이지
-              </button>
-            </div>
-            {/* 버튼 end */}
-          </div>
-        </div>
-        {/* 스프링 영역 */}
-        <section className="chainSection"></section>
-      </div>
-    </ParentsProfileStyle>
-  );
+  return <ParentsProfileStyle></ParentsProfileStyle>;
 };
 
 export default StudentProfile;

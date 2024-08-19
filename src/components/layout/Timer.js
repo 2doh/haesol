@@ -1,12 +1,15 @@
 import styled from "@emotion/styled";
 import { getReAccessToken } from "api/user";
 import MiniButtonVer01 from "components/common/style/MiniButtonVer01";
+import useLogout from "hooks/common/useLogout";
+import moment from "moment";
 import { useEffect, useRef, useState } from "react";
 import { FiClock } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { openModal, updateModalDate } from "slices/modalSlice";
 import { getCookie, removeCookie, setCookie } from "utils/cookie";
+import { setSession } from "utils/session";
 
 const TimerStyle = styled.div`
   min-width: 80px;
@@ -41,9 +44,10 @@ const Timer = () => {
 
   const [btnClick, setBtnClick] = useState(false);
 
-  const [min, setMin] = useState(getCookie("timerMin") || 60);
-  const [sec, setSec] = useState(getCookie("timerSec") || 0);
-  const time = useRef(getCookie("timerTime") || 3600); // 3600초
+  const [min, setMin] = useState(getCookie("timerMin"));
+  const [sec, setSec] = useState(getCookie("timerSec"));
+  const time = useRef(getCookie("timerTime")); // 초기값 : 3600
+
   const timerId = useRef(null);
   const alertShown = useRef(false); // 이전에 알림을 보여줬는지 여부를 추적하기 위한 useRef
 
@@ -60,6 +64,15 @@ const Timer = () => {
         alertShown.current = true; // 알림을 한 번 보였음을 표시
       }
 
+      // const nowDate = moment().format("YYYYMMDDHHmmss");
+      // const reTime = moment().format(getCookie("loginTime"));
+
+      // if (nowDate > getCookie("loginTime")) {
+      //   console.log("시간이 지났다.");
+      // } else {
+      //   console.log("시간이 남았다.");
+      // }
+
       if (time.current <= -1) {
         // time.current <= 0 으로 설정하면 마지막에 00:01에서 정지하기 때문에
         // time.current <= -1 로 설정
@@ -72,15 +85,13 @@ const Timer = () => {
         return;
       }
 
-      setMin(parseInt(time.current / 60));
-      setSec(time.current % 60);
+      setMin(getCookie("timerMin"));
+      setSec(getCookie("timerSec"));
+      setCookie("timerMin", parseInt(time.current / 60));
+      setCookie("timerSec", time.current % 60);
+      setCookie("timerTime", time.current);
       time.current -= 1;
-      setCookie("timerMin", min); // 로컬스토리지에 저장
-      setCookie("timerSec", sec); // 로컬스토리지에 저장
-      setCookie("timerTime", time.current); // 로컬스토리지에 저장
     }, 1000);
-
-    // return () => clearInterval(timerId.current);
   };
 
   useEffect(() => {
@@ -119,7 +130,7 @@ const Timer = () => {
   /** 로그인 시간 만료 알림 모달 종료 후 새로고침 갱신 */
   useEffect(() => {
     if (modalState.modalRes[0] === false && time.current <= 0) {
-      window.location.reload("/");
+      useLogout();
     }
   }, [modalState.modalRes[0]]);
 
@@ -134,7 +145,18 @@ const Timer = () => {
 
       if (res) {
         clearInterval(timerId.current);
-        time.current = 3600; // 재설정하고 싶은 초 단위 시간으로 변경
+
+        // 로그인 만료 시간 저장
+        setCookie("loginTime", moment().add(1, "h").format("YYYYMMDDHHmmss"));
+
+        // 타이머 표시 시간 초기 설정
+        setCookie("timerMin", 60);
+        setCookie("timerSec", 0);
+        setCookie("timerTime", 3600);
+        setMin(getCookie("timerMin"));
+        setSec(getCookie("timerSec"));
+        time.current = getCookie("timerTime");
+
         alertShown.current = false;
         timerTime();
       }
@@ -144,7 +166,7 @@ const Timer = () => {
   /** 연장 버튼 */
   useEffect(() => {
     // console.log(btnClick);
-    reAccessToken();
+    if (btnClick === true) reAccessToken();
   }, [btnClick]);
 
   return (

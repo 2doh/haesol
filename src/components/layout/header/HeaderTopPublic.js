@@ -1,15 +1,14 @@
 import styled from "@emotion/styled";
+import useLogout from "hooks/common/useLogout";
 import useWindowDimensions from "hooks/common/useWindowDimensions";
 import { useEffect, useRef, useState } from "react";
+import { BiSolidArrowToTop } from "react-icons/bi";
 import { CgMenuGridO } from "react-icons/cg";
-import { FiSearch } from "react-icons/fi";
+import { HiMenu } from "react-icons/hi";
+import { MdOutlineLogout } from "react-icons/md";
 import { useNavigate } from "react-router";
 import { getCookie } from "utils/cookie";
-import { BiSolidArrowToTop } from "react-icons/bi";
-import { HiMenu } from "react-icons/hi";
 import Timer from "../Timer";
-import { MdOutlineLogout } from "react-icons/md";
-import { logout } from "components/common/Logout";
 
 const HeaderTopStyle = styled.div`
   font-size: 17px;
@@ -305,7 +304,7 @@ const HeaderTopPublic = () => {
               <div
                 className="logout-icon"
                 onClick={() => {
-                  logout();
+                  useLogout();
                 }}
               >
                 <MdOutlineLogout size="22px" title="로그아웃" />

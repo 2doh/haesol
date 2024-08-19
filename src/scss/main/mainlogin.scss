@@ -45,7 +45,7 @@
   }
 }
 
-.access-login-main:nth-child(2) {
+.access-login-main:nth-of-type(2) {
   border: 2px solid $pc-line-p;
   border-radius: 10px;
   overflow: hidden;
@@ -326,7 +326,7 @@
       margin: 1px;
     }
 
-    & .grid-inner-item:nth-child(1) {
+    & .grid-inner-item:nth-of-type(1) {
       .grid-inner-item-text {
         // @include text-n-box-shadow;
         width: 70%;
@@ -338,12 +338,12 @@
       }
     }
 
-    & .item:nth-child(1) {
+    & .item:nth-of-type(1) {
       background-color: $grid-color-w;
     }
 
-    & .item:nth-child(2) {
-      .grid-inner-item:nth-child(1) {
+    & .item:nth-of-type(2) {
+      .grid-inner-item:nth-of-type(1) {
         background-color: $period-1;
 
         .grid-inner-item-text {
@@ -352,8 +352,8 @@
       }
     }
 
-    & .item:nth-child(3) {
-      .grid-inner-item:nth-child(1) {
+    & .item:nth-of-type(3) {
+      .grid-inner-item:nth-of-type(1) {
         background-color: $period-2;
         .grid-inner-item-text {
           border-color: darken($period-2, 50%);
@@ -361,8 +361,8 @@
       }
     }
 
-    & .item:nth-child(4) {
-      .grid-inner-item:nth-child(1) {
+    & .item:nth-of-type(4) {
+      .grid-inner-item:nth-of-type(1) {
         background-color: $period-3;
         .grid-inner-item-text {
           border-color: darken($period-3, 50%);
@@ -370,8 +370,8 @@
       }
     }
 
-    & .item:nth-child(5) {
-      .grid-inner-item:nth-child(1) {
+    & .item:nth-of-type(5) {
+      .grid-inner-item:nth-of-type(1) {
         background-color: $period-4;
         .grid-inner-item-text {
           border-color: darken($period-4, 50%);
@@ -379,8 +379,8 @@
       }
     }
 
-    & .item:nth-child(6) {
-      .grid-inner-item:nth-child(1) {
+    & .item:nth-of-type(6) {
+      .grid-inner-item:nth-of-type(1) {
         background-color: $period-5;
         .grid-inner-item-text {
           border-color: darken($period-5, 50%);
@@ -388,8 +388,8 @@
       }
     }
 
-    & .item:nth-child(7) {
-      .grid-inner-item:nth-child(1) {
+    & .item:nth-of-type(7) {
+      .grid-inner-item:nth-of-type(1) {
         background-color: $period-6;
         .grid-inner-item-text {
           border-color: darken($period-6, 50%);
@@ -397,8 +397,8 @@
       }
     }
 
-    & .item:nth-child(8) {
-      .grid-inner-item:nth-child(1) {
+    & .item:nth-of-type(8) {
+      .grid-inner-item:nth-of-type(1) {
         background-color: $period-7;
         .grid-inner-item-text {
           border-color: darken($period-7, 50%);
@@ -431,35 +431,35 @@
         @include text-n-box-shadow;
       }
 
-      .grid-inner-item:nth-child(2) {
+      .grid-inner-item:nth-of-type(2) {
         background-color: $monday-c;
 
         .grid-inner-item-text {
           border-color: darken($monday-c, 50%);
         }
       }
-      .grid-inner-item:nth-child(3) {
+      .grid-inner-item:nth-of-type(3) {
         background-color: $tuesday-c;
 
         .grid-inner-item-text {
           border-color: darken($tuesday-c, 50%);
         }
       }
-      .grid-inner-item:nth-child(4) {
+      .grid-inner-item:nth-of-type(4) {
         background-color: $wednesday-c;
 
         .grid-inner-item-text {
           border-color: darken($wednesday-c, 50%);
         }
       }
-      .grid-inner-item:nth-child(5) {
+      .grid-inner-item:nth-of-type(5) {
         background-color: $thursday-c;
 
         .grid-inner-item-text {
           border-color: darken($thursday-c, 50%);
         }
       }
-      .grid-inner-item:nth-child(6) {
+      .grid-inner-item:nth-of-type(6) {
         background-color: $friday-c;
 
         .grid-inner-item-text {
@@ -488,7 +488,7 @@
           text-align: right;
           width: 70px;
         }
-        .login-teahcer-info-label-box:nth-child(2) {
+        .login-teahcer-info-label-box:nth-of-type(2) {
         }
       }
     }

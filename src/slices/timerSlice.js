@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { getCookie } from "utils/cookie";
 
 const initialState = {
-  min: 60,
-  sec: 0,
+  min: getCookie("timerMin"),
+  sec: getCookie("timerSec"),
   running: false,
 };
 

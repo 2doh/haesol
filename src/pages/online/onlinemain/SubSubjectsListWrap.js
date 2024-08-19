@@ -104,7 +104,7 @@ const SubSubjectsListWrapStyle = styled.div`
         transform-origin: 0 0;
       }
 
-      &:nth-child(even) {
+      &:nth-of-type(even) {
         background-color: darken(${defaultBg}, ${contrast});
         transform: skewY(${skewAngle});
         transform-origin: 100% 100%;
@@ -128,7 +128,7 @@ const SubSubjectsListWrapStyle = styled.div`
           transform: skewY(0);
         }
 
-        &:nth-child(even) {
+        &:nth-of-type(even) {
           &:after {
             background-color: ${defaultBg};
           }
@@ -140,14 +140,14 @@ const SubSubjectsListWrapStyle = styled.div`
           background-color: ${altBg1};
         }
 
-        &:nth-child(even) {
+        &:nth-of-type(even) {
           &:after {
             background-color: darken(${altBg1}, ${contrast});
           }
         }
 
         &.flat {
-          &:nth-child(even) {
+          &:nth-of-type(even) {
             &:after {
               background-color: ${altBg1};
             }

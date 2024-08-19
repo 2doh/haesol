@@ -150,7 +150,7 @@ const ChatWrapStyle = styled.div`
           background-color: #dee8e9;
         }
       }
-      .chat-select-wrap:nth-child(1) {
+      .chat-select-wrap:nth-of-type(1) {
         margin-top: 30px;
       }
       .chat-select-wrap:last-child {
@@ -267,7 +267,7 @@ const ChatWrapStyle = styled.div`
           }
         }
       }
-      .chat-select-wrap-parents:nth-child(2) {
+      .chat-select-wrap-parents:nth-of-type(2) {
         /* margin-top: 20px; */
       }
       .chat-select-wrap-parents {

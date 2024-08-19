@@ -50,13 +50,13 @@
   margin-top: 40px;
 }
 
-.access-login-main:nth-child(2) {
+.access-login-main:nth-of-type(2) {
   border: 2px solid #886348;
   border-radius: 10px;
   overflow: hidden;
   background-clip: content-box;
 }
-.access-login-main:nth-child(2) .main-inner {
+.access-login-main:nth-of-type(2) .main-inner {
   padding: 40px 0 80px 0;
   background-color: #f3f9fa;
 }
@@ -67,7 +67,8 @@
   font-size: 36px;
   color: #1b4957;
 }
-.main .main-class-schedule, .main .main-schedule-calendar {
+.main .main-class-schedule,
+.main .main-schedule-calendar {
   height: auto;
 }
 .main .main-class-schedule {
@@ -98,7 +99,11 @@
   line-height: 1.4em;
   gap: 10px;
 }
-.main .main-inner-info .login-user-info .login-user-info-div .login-user-info-label-box {
+.main
+  .main-inner-info
+  .login-user-info
+  .login-user-info-div
+  .login-user-info-label-box {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -106,10 +111,19 @@
   width: 100%;
   height: 100%;
 }
-.main .main-inner-info .login-user-info .login-user-info-div .login-user-info-label-box:first-child {
+.main
+  .main-inner-info
+  .login-user-info
+  .login-user-info-div
+  .login-user-info-label-box:first-child {
   text-align: center;
 }
-.main .main-inner-info .login-user-info .login-user-info-div .login-user-info-text .home-my-info-no-style {
+.main
+  .main-inner-info
+  .login-user-info
+  .login-user-info-div
+  .login-user-info-text
+  .home-my-info-no-style {
   color: #9da2b9;
   font-size: 12px;
 }
@@ -191,7 +205,12 @@
   height: 100%;
   padding: 20px 30px;
 }
-.main .main-notice .class-notice-inner .notice-inner .notice-text-div .notice-text-flex {
+.main
+  .main-notice
+  .class-notice-inner
+  .notice-inner
+  .notice-text-div
+  .notice-text-flex {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -201,10 +220,22 @@
   /* 스크롤바 막대 설정*/
   /* 스크롤바 뒷 배경 설정*/
 }
-.main .main-notice .class-notice-inner .notice-inner .notice-text-div .notice-text-flex .notice-text {
+.main
+  .main-notice
+  .class-notice-inner
+  .notice-inner
+  .notice-text-div
+  .notice-text-flex
+  .notice-text {
   text-overflow: ellipsis;
 }
-.main .main-notice .class-notice-inner .notice-inner .notice-text-div .notice-text-flex .notice-main-contents {
+.main
+  .main-notice
+  .class-notice-inner
+  .notice-inner
+  .notice-text-div
+  .notice-text-flex
+  .notice-main-contents {
   display: flex;
   width: 100%;
   height: 100%;
@@ -212,13 +243,26 @@
   justify-content: center;
   overflow: auto;
 }
-.main .main-notice .class-notice-inner .notice-inner .notice-text-div .notice-text-flex .notice-main-contents {
+.main
+  .main-notice
+  .class-notice-inner
+  .notice-inner
+  .notice-text-div
+  .notice-text-flex
+  .notice-main-contents {
   width: 100%; /* 원하는 너비 설정 */
   height: 125px; /* 원하는 높이 설정 */
   position: relative;
   overflow-y: auto;
 }
-.main .main-notice .class-notice-inner .notice-inner .notice-text-div .notice-text-flex .notice-main-contents .content-item-style {
+.main
+  .main-notice
+  .class-notice-inner
+  .notice-inner
+  .notice-text-div
+  .notice-text-flex
+  .notice-main-contents
+  .content-item-style {
   position: absolute;
   width: 100%;
   max-height: 125px;
@@ -228,16 +272,34 @@
   transform: translate(-50%, -50%);
   text-align: center;
 }
-.main .main-notice .class-notice-inner .notice-inner .notice-text-div .notice-text-flex .notice-main-contents::-webkit-scrollbar {
+.main
+  .main-notice
+  .class-notice-inner
+  .notice-inner
+  .notice-text-div
+  .notice-text-flex
+  .notice-main-contents::-webkit-scrollbar {
   width: 10px;
 }
-.main .main-notice .class-notice-inner .notice-inner .notice-text-div .notice-text-flex .notice-main-contents::-webkit-scrollbar-thumb {
+.main
+  .main-notice
+  .class-notice-inner
+  .notice-inner
+  .notice-text-div
+  .notice-text-flex
+  .notice-main-contents::-webkit-scrollbar-thumb {
   background-color: #92adb6;
   /* 스크롤바 둥글게 설정    */
   border-radius: 10px;
   border: 1px solid #dee8e9;
 }
-.main .main-notice .class-notice-inner .notice-inner .notice-text-div .notice-text-flex .notice-main-contents::-webkit-scrollbar-track {
+.main
+  .main-notice
+  .class-notice-inner
+  .notice-inner
+  .notice-text-div
+  .notice-text-flex
+  .notice-main-contents::-webkit-scrollbar-track {
   background-color: rgba(0, 0, 0, 0);
 }
 .main .main-notice .class-notice-inner .notice-inner .notice-write-icon * {
@@ -257,7 +319,10 @@
   height: 45px;
   margin: 1px;
 }
-.class-schedule-inner .grid-frame .grid-inner-item:nth-child(1) .grid-inner-item-text {
+.class-schedule-inner
+  .grid-frame
+  .grid-inner-item:nth-of-type(1)
+  .grid-inner-item-text {
   width: 70%;
   height: 50%;
   display: flex;
@@ -265,49 +330,98 @@
   align-items: center;
   background-color: red;
 }
-.class-schedule-inner .grid-frame .item:nth-child(1) {
+.class-schedule-inner .grid-frame .item:nth-of-type(1) {
   background-color: #fbfaf9;
 }
-.class-schedule-inner .grid-frame .item:nth-child(2) .grid-inner-item:nth-child(1) {
+.class-schedule-inner
+  .grid-frame
+  .item:nth-of-type(2)
+  .grid-inner-item:nth-of-type(1) {
   background-color: #f9957f;
 }
-.class-schedule-inner .grid-frame .item:nth-child(2) .grid-inner-item:nth-child(1) .grid-inner-item-text {
+.class-schedule-inner
+  .grid-frame
+  .item:nth-of-type(2)
+  .grid-inner-item:nth-of-type(1)
+  .grid-inner-item-text {
   border-color: #741905;
 }
-.class-schedule-inner .grid-frame .item:nth-child(3) .grid-inner-item:nth-child(1) {
+.class-schedule-inner
+  .grid-frame
+  .item:nth-of-type(3)
+  .grid-inner-item:nth-of-type(1) {
   background-color: #abcfd1;
 }
-.class-schedule-inner .grid-frame .item:nth-child(3) .grid-inner-item:nth-child(1) .grid-inner-item-text {
+.class-schedule-inner
+  .grid-frame
+  .item:nth-of-type(3)
+  .grid-inner-item:nth-of-type(1)
+  .grid-inner-item-text {
   border-color: #2c4f51;
 }
-.class-schedule-inner .grid-frame .item:nth-child(4) .grid-inner-item:nth-child(1) {
+.class-schedule-inner
+  .grid-frame
+  .item:nth-of-type(4)
+  .grid-inner-item:nth-of-type(1) {
   background-color: #d4e6c4;
 }
-.class-schedule-inner .grid-frame .item:nth-child(4) .grid-inner-item:nth-child(1) .grid-inner-item-text {
+.class-schedule-inner
+  .grid-frame
+  .item:nth-of-type(4)
+  .grid-inner-item:nth-of-type(1)
+  .grid-inner-item-text {
   border-color: #537833;
 }
-.class-schedule-inner .grid-frame .item:nth-child(5) .grid-inner-item:nth-child(1) {
+.class-schedule-inner
+  .grid-frame
+  .item:nth-of-type(5)
+  .grid-inner-item:nth-of-type(1) {
   background-color: #ffcfcb;
 }
-.class-schedule-inner .grid-frame .item:nth-child(5) .grid-inner-item:nth-child(1) .grid-inner-item-text {
+.class-schedule-inner
+  .grid-frame
+  .item:nth-of-type(5)
+  .grid-inner-item:nth-of-type(1)
+  .grid-inner-item-text {
   border-color: #cb1000;
 }
-.class-schedule-inner .grid-frame .item:nth-child(6) .grid-inner-item:nth-child(1) {
+.class-schedule-inner
+  .grid-frame
+  .item:nth-of-type(6)
+  .grid-inner-item:nth-of-type(1) {
   background-color: #f4c464;
 }
-.class-schedule-inner .grid-frame .item:nth-child(6) .grid-inner-item:nth-child(1) .grid-inner-item-text {
+.class-schedule-inner
+  .grid-frame
+  .item:nth-of-type(6)
+  .grid-inner-item:nth-of-type(1)
+  .grid-inner-item-text {
   border-color: #533906;
 }
-.class-schedule-inner .grid-frame .item:nth-child(7) .grid-inner-item:nth-child(1) {
+.class-schedule-inner
+  .grid-frame
+  .item:nth-of-type(7)
+  .grid-inner-item:nth-of-type(1) {
   background-color: #abbeec;
 }
-.class-schedule-inner .grid-frame .item:nth-child(7) .grid-inner-item:nth-child(1) .grid-inner-item-text {
+.class-schedule-inner
+  .grid-frame
+  .item:nth-of-type(7)
+  .grid-inner-item:nth-of-type(1)
+  .grid-inner-item-text {
   border-color: #1c387c;
 }
-.class-schedule-inner .grid-frame .item:nth-child(8) .grid-inner-item:nth-child(1) {
+.class-schedule-inner
+  .grid-frame
+  .item:nth-of-type(8)
+  .grid-inner-item:nth-of-type(1) {
   background-color: #8cc1d3;
 }
-.class-schedule-inner .grid-frame .item:nth-child(8) .grid-inner-item:nth-child(1) .grid-inner-item-text {
+.class-schedule-inner
+  .grid-frame
+  .item:nth-of-type(8)
+  .grid-inner-item:nth-of-type(1)
+  .grid-inner-item-text {
   border-color: #1b3b45;
 }
 .class-schedule-inner .grid-frame .grid-inner {
@@ -317,7 +431,11 @@
   padding: 1px 2px;
   background-clip: content-box;
 }
-.class-schedule-inner .grid-frame .grid-inner .grid-inner-item .grid-inner-item-text {
+.class-schedule-inner
+  .grid-frame
+  .grid-inner
+  .grid-inner-item
+  .grid-inner-item-text {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -327,50 +445,100 @@
 }
 .class-schedule-inner .grid-frame .class-schedule-week .grid-inner-item-text {
   text-shadow: 0 1.5px 0 rgba(0, 0, 0, 0.15);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.34) inset, 0 2px 0 -1px rgba(0, 0, 0, 0.13), 0 3px 0 -1px rgba(0, 0, 0, 0.08), 0 3px 13px -1px rgba(0, 0, 0, 0.21);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.34) inset,
+    0 2px 0 -1px rgba(0, 0, 0, 0.13),
+    0 3px 0 -1px rgba(0, 0, 0, 0.08),
+    0 3px 13px -1px rgba(0, 0, 0, 0.21);
 }
-.class-schedule-inner .grid-frame .class-schedule-week .grid-inner-item:nth-child(2) {
+.class-schedule-inner
+  .grid-frame
+  .class-schedule-week
+  .grid-inner-item:nth-of-type(2) {
   background-color: #c6dbda;
 }
-.class-schedule-inner .grid-frame .class-schedule-week .grid-inner-item:nth-child(2) .grid-inner-item-text {
+.class-schedule-inner
+  .grid-frame
+  .class-schedule-week
+  .grid-inner-item:nth-of-type(2)
+  .grid-inner-item-text {
   border-color: #3f6362;
 }
-.class-schedule-inner .grid-frame .class-schedule-week .grid-inner-item:nth-child(3) {
+.class-schedule-inner
+  .grid-frame
+  .class-schedule-week
+  .grid-inner-item:nth-of-type(3) {
   background-color: #ffc5bf;
 }
-.class-schedule-inner .grid-frame .class-schedule-week .grid-inner-item:nth-child(3) .grid-inner-item-text {
+.class-schedule-inner
+  .grid-frame
+  .class-schedule-week
+  .grid-inner-item:nth-of-type(3)
+  .grid-inner-item-text {
   border-color: #bf1200;
 }
-.class-schedule-inner .grid-frame .class-schedule-week .grid-inner-item:nth-child(4) {
+.class-schedule-inner
+  .grid-frame
+  .class-schedule-week
+  .grid-inner-item:nth-of-type(4) {
   background-color: #ecd5e3;
 }
-.class-schedule-inner .grid-frame .class-schedule-week .grid-inner-item:nth-child(4) .grid-inner-item-text {
+.class-schedule-inner
+  .grid-frame
+  .class-schedule-week
+  .grid-inner-item:nth-of-type(4)
+  .grid-inner-item-text {
   border-color: #863c69;
 }
-.class-schedule-inner .grid-frame .class-schedule-week .grid-inner-item:nth-child(5) {
+.class-schedule-inner
+  .grid-frame
+  .class-schedule-week
+  .grid-inner-item:nth-of-type(5) {
   background-color: #fae39d;
 }
-.class-schedule-inner .grid-frame .class-schedule-week .grid-inner-item:nth-child(5) .grid-inner-item-text {
+.class-schedule-inner
+  .grid-frame
+  .class-schedule-week
+  .grid-inner-item:nth-of-type(5)
+  .grid-inner-item-text {
   border-color: #916f07;
 }
-.class-schedule-inner .grid-frame .class-schedule-week .grid-inner-item:nth-child(6) {
+.class-schedule-inner
+  .grid-frame
+  .class-schedule-week
+  .grid-inner-item:nth-of-type(6) {
   background-color: #99aa8c;
 }
-.class-schedule-inner .grid-frame .class-schedule-week .grid-inner-item:nth-child(6) .grid-inner-item-text {
+.class-schedule-inner
+  .grid-frame
+  .class-schedule-week
+  .grid-inner-item:nth-of-type(6)
+  .grid-inner-item-text {
   border-color: #1b2017;
 }
 
 .access-teahcer-main {
   margin-top: 50px;
 }
-.access-teahcer-main .main-inner-info-teahcer .login-inner .login-teahcer-info-div {
+.access-teahcer-main
+  .main-inner-info-teahcer
+  .login-inner
+  .login-teahcer-info-div {
   width: 100%;
   gap: 25px;
 }
-.access-teahcer-main .main-inner-info-teahcer .login-inner .login-teahcer-info-div .login-teahcer-info-label-box {
+.access-teahcer-main
+  .main-inner-info-teahcer
+  .login-inner
+  .login-teahcer-info-div
+  .login-teahcer-info-label-box {
   gap: 5px;
 }
-.access-teahcer-main .main-inner-info-teahcer .login-inner .login-teahcer-info-div .login-teahcer-info-label-box:first-child {
+.access-teahcer-main
+  .main-inner-info-teahcer
+  .login-inner
+  .login-teahcer-info-div
+  .login-teahcer-info-label-box:first-child {
   text-align: right;
   width: 70px;
-}/*# sourceMappingURL=mainlogin.css.map */
+} /*# sourceMappingURL=mainlogin.css.map */

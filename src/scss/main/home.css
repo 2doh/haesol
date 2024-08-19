@@ -82,7 +82,11 @@
 }
 .main-inner-info .main-login-user-info .main-inner-info-login {
   text-shadow: 0 1.5px 0 rgba(0, 0, 0, 0.15);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.34) inset, 0 2px 0 -1px rgba(0, 0, 0, 0.13), 0 3px 0 -1px rgba(0, 0, 0, 0.08), 0 3px 13px -1px rgba(0, 0, 0, 0.21);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.34) inset,
+    0 2px 0 -1px rgba(0, 0, 0, 0.13),
+    0 3px 0 -1px rgba(0, 0, 0, 0.08),
+    0 3px 13px -1px rgba(0, 0, 0, 0.21);
   margin-top: 35px;
   border-radius: 10px;
   border: 2px solid #1b4957;
@@ -93,12 +97,24 @@
   width: 100%;
   padding: 20px 25px;
 }
-.main-inner-info .main-login-user-info .main-inner-info-login .login-inner .main-info-loginbt {
+.main-inner-info
+  .main-login-user-info
+  .main-inner-info-login
+  .login-inner
+  .main-info-loginbt {
   text-shadow: 0 1.5px 0 rgba(0, 0, 0, 0.15);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.34) inset, 0 2px 0 -1px rgba(0, 0, 0, 0.13), 0 3px 0 -1px rgba(0, 0, 0, 0.08), 0 3px 13px -1px rgba(0, 0, 0, 0.21);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.34) inset,
+    0 2px 0 -1px rgba(0, 0, 0, 0.13),
+    0 3px 0 -1px rgba(0, 0, 0, 0.08),
+    0 3px 13px -1px rgba(0, 0, 0, 0.21);
   display: inline-block;
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.34) inset, 0 2px 0 -1px rgba(0, 0, 0, 0.13), 0 3px 0 -1px rgba(0, 0, 0, 0.08), 0 3px 13px -1px rgba(0, 0, 0, 0.21);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.34) inset,
+    0 2px 0 -1px rgba(0, 0, 0, 0.13),
+    0 3px 0 -1px rgba(0, 0, 0, 0.08),
+    0 3px 13px -1px rgba(0, 0, 0, 0.21);
   border-radius: 10px;
   border: 2px solid #1b4957;
   width: 290px;
@@ -111,13 +127,23 @@
   font-weight: bold;
   color: #ffffff;
 }
-.main-inner-info .main-login-user-info .main-inner-info-login .login-inner .main-info-loginbt:active {
+.main-inner-info
+  .main-login-user-info
+  .main-inner-info-login
+  .login-inner
+  .main-info-loginbt:active {
   top: 1px;
   border-color: rgba(0, 0, 0, 0.34) rgba(0, 0, 0, 0.21) rgba(0, 0, 0, 0.21);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.89), 0 1px rgba(0, 0, 0, 0.05) inset;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.89),
+    0 1px rgba(0, 0, 0, 0.05) inset;
   position: relative;
 }
-.main-inner-info .main-login-user-info .main-inner-info-login .login-inner .main-info-login-menu {
+.main-inner-info
+  .main-login-user-info
+  .main-inner-info-login
+  .login-inner
+  .main-info-login-menu {
   display: flex;
   justify-content: center;
   margin-top: 20px;
@@ -126,20 +152,36 @@
   font-size: 13px;
   color: #5c554c;
 }
-.main-inner-info .main-login-user-info .main-inner-info-login .login-inner .main-info-login-menu > div {
+.main-inner-info
+  .main-login-user-info
+  .main-inner-info-login
+  .login-inner
+  .main-info-login-menu
+  > div {
   cursor: pointer;
 }
-.main-inner-info .main-login-user-info .main-inner-info-login .main-login-inner {
+.main-inner-info
+  .main-login-user-info
+  .main-inner-info-login
+  .main-login-inner {
   min-height: auto;
 }
 .main-inner-info .main-inner-info-teahcer .login-inner .login-teahcer-info-div {
   width: 100%;
   gap: 25px;
 }
-.main-inner-info .main-inner-info-teahcer .login-inner .login-teahcer-info-div .login-teahcer-info-label-box {
+.main-inner-info
+  .main-inner-info-teahcer
+  .login-inner
+  .login-teahcer-info-div
+  .login-teahcer-info-label-box {
   gap: 5px;
 }
-.main-inner-info .main-inner-info-teahcer .login-inner .login-teahcer-info-div .login-teahcer-info-label-box:first-child {
+.main-inner-info
+  .main-inner-info-teahcer
+  .login-inner
+  .login-teahcer-info-div
+  .login-teahcer-info-label-box:first-child {
   text-align: right;
 }
 .main-inner-info .main-info-lunch {
@@ -148,7 +190,11 @@
 }
 .main-inner-info .main-info-lunch .main-info-lunch-menu {
   text-shadow: 0 1.5px 0 rgba(0, 0, 0, 0.15);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.34) inset, 0 2px 0 -1px rgba(0, 0, 0, 0.13), 0 3px 0 -1px rgba(0, 0, 0, 0.08), 0 3px 13px -1px rgba(0, 0, 0, 0.21);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.34) inset,
+    0 2px 0 -1px rgba(0, 0, 0, 0.13),
+    0 3px 0 -1px rgba(0, 0, 0, 0.08),
+    0 3px 13px -1px rgba(0, 0, 0, 0.21);
   border-radius: 10px;
   overflow: hidden;
   border: 2px solid #886348;
@@ -162,7 +208,11 @@
 }
 .main-inner-info .main-info-lunch .main-info-lunch-menu .lunch-today-day {
   text-shadow: 0 1.5px 0 rgba(0, 0, 0, 0.15);
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.34) inset, 0 2px 0 -1px rgba(0, 0, 0, 0.13), 0 3px 0 -1px rgba(0, 0, 0, 0.08), 0 3px 13px -1px rgba(0, 0, 0, 0.21);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.34) inset,
+    0 2px 0 -1px rgba(0, 0, 0, 0.13),
+    0 3px 0 -1px rgba(0, 0, 0, 0.08),
+    0 3px 13px -1px rgba(0, 0, 0, 0.21);
   z-index: 1;
   height: 100px;
   background-color: #e7d9d9;
@@ -172,10 +222,18 @@
   flex-direction: column;
   gap: 8px;
 }
-.main-inner-info .main-info-lunch .main-info-lunch-menu .lunch-today-day p:nth-child(1) {
+.main-inner-info
+  .main-info-lunch
+  .main-info-lunch-menu
+  .lunch-today-day
+  p:nth-of-type(1) {
   font-size: 15px;
 }
-.main-inner-info .main-info-lunch .main-info-lunch-menu .lunch-today-day p:nth-child(2) {
+.main-inner-info
+  .main-info-lunch
+  .main-info-lunch-menu
+  .lunch-today-day
+  p:nth-of-type(2) {
   font-size: 22px;
 }
 .main-inner-info .main-info-lunch .main-info-lunch-menu .lunch-today-menu {
@@ -188,12 +246,19 @@
   flex-direction: column;
   gap: 5px;
 }
-.main-inner-info .main-info-lunch .main-info-lunch-menu .lunch-today-menu .sub-menu {
+.main-inner-info
+  .main-info-lunch
+  .main-info-lunch-menu
+  .lunch-today-menu
+  .sub-menu {
   font-size: 15px;
 }
 
 .main-activity-wrap .main-activity-slide-zone {
-  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  box-shadow:
+    rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px,
+    rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
   border-radius: 10px;
   width: 100%;
   padding: 15px 55px 30px 55px;
@@ -342,4 +407,4 @@
   justify-content: center;
   background: no-repeat center;
   background-size: cover;
-}/*# sourceMappingURL=home.css.map */
+} /*# sourceMappingURL=home.css.map */

@@ -63,18 +63,19 @@ const TestPage = () => {
   const subjectsName = location.state?.subjectsName;
   const testName = location.state?.testName;
 
-  /** 받은 과목 번호 */
+  /** 받은 과목 번호와 새로고침으로 데이터 없을시 처리 */
   useEffect(() => {
     if (!subjectsNum || !subjectsName) {
       // console.log("데이터 없음. 처리하기");
-      console.log("subjectsNum : ", subjectsNum);
-      console.log("subjectsName : ", subjectsName);
-      console.log("testName : ", testName);
+      // console.log("subjectsNum : ", subjectsNum);
+      // console.log("subjectsName : ", subjectsName);
+      // console.log("testName : ", testName);
       navigate("/");
+      // window.location.reload("/");
     } else {
-      console.log("subjectsNum : ", subjectsNum);
-      console.log("subjectsName : ", subjectsName);
-      console.log("testName : ", testName);
+      // console.log("subjectsNum : ", subjectsNum);
+      // console.log("subjectsName : ", subjectsName);
+      // console.log("testName : ", testName);
       // console.log("데이터 있음. ");
     }
   }, [subjectsNum, subjectsName]);
@@ -84,7 +85,9 @@ const TestPage = () => {
     "저장하기 또는 제출하기 버튼을 눌러주세요.",
   );
 
+  /** 새로고침 방지 */
   usePreventRefresh();
+  /** 뒤로가기 방지 */
   usePreventGoBack(alertMessage);
 
   return (
