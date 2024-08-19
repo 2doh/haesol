@@ -7,16 +7,17 @@ import {
 } from "api/student/studentapi";
 
 import styled from "@emotion/styled";
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router";
-import "../../scss/student/grade.css";
-import "../../scss/student/studentEdit.css";
-import moment from "moment";
-import StudentClassInfo from "pages/student/StudentClassInfo";
-import { getCookie } from "utils/cookie";
+import Footer from "components/layout/Footer";
 import HeaderMemu from "components/layout/header/HeaderMenu";
 import HeaderTopPublic from "components/layout/header/HeaderTopPublic";
-import Footer from "components/layout/Footer";
+import usePreventRefresh from "hooks/common/usePreventRefresh";
+import moment from "moment";
+import StudentClassInfo from "pages/student/StudentClassInfo";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router";
+import { getCookie } from "utils/cookie";
+import "../../scss/student/grade.css";
+import "../../scss/student/studentEdit.css";
 
 const initData = [
   {
@@ -168,8 +169,10 @@ const Grade = () => {
   const navigate = useNavigate();
   const { studentPk } = useParams();
   const handleClick = () => {
-    navigate(`/students/edit/${studentPk}`);
+    navigate(`/students/${studentPk}`);
   };
+  usePreventRefresh();
+  // usePreventGoBack("입력한 성적을 저장해주세요.");
 
   const [selectGrade, setSelectGrade] = useState(true);
   const [classStudentCount, setClassStudentCount] = useState("-");

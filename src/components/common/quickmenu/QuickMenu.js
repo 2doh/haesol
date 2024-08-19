@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import ChatParents from "components/chat/ChatParents";
+import ChatParents from "components/chat/ChatRoom";
 import { BiSolidArrowToTop } from "react-icons/bi";
 import Chat from "pages/Home/Chat";
 import { useEffect, useState } from "react";

@@ -31,6 +31,7 @@ const NoticeListStyle = styled.div`
 
 const NoticeList = () => {
   const [loginUserType, setLoginUserType] = useState(getCookie("userRole"));
+  const studentPk = getCookie("studentPk");
   const userClass = getCookie("userClass");
   const userGrade = getCookie("userGrade");
   // 네비게이트
@@ -151,7 +152,11 @@ const NoticeList = () => {
                 <div
                   className="div-wrapper"
                   onClick={() => {
-                    handleItemClick();
+                    if (loginUserType === "ROLE_TEACHER") {
+                      navigate(`/notice/item/${userClass}`);
+                    } else if (loginUserType === "ROLE_PARENTS") {
+                      navigate(`/notice/item/${studentPk}`);
+                    }
                   }}
                 >
                   <div className="info-subtitle">준비물</div>

@@ -279,6 +279,7 @@ const Modal = () => {
         const res = modifyStudentInfo(modalState.modalRes[1]);
         if (res) {
           dispatch(closeModal());
+          alert("수정이 완료되었습니다!");
         }
       }
       // 학부모 - 자녀 추가
@@ -347,6 +348,7 @@ const Modal = () => {
           const res = await modifyStudentInfo(formData);
           if (res) {
             dispatch(closeModal());
+            alert("수정이 완료되었습니다!");
           }
         };
 

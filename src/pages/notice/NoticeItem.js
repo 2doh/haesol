@@ -29,13 +29,15 @@ const NoticeListStyle = styled.div`
 
 const NoticeItem = () => {
   const [loginUserType, setLoginUserType] = useState(getCookie("userRole"));
+  const studentPk = getCookie("studentPk");
+  console.log("studentPk : ", studentPk);
   const userClass = getCookie("userClass");
   const userGrade = getCookie("userGrade");
   // 네비게이트
   const navigate = useNavigate();
-  const handleListClick = () => {
-    navigate(`/notice/list/${userClass}`);
-  };
+  // const handleListClick = () => {
+  //   navigate(`/notice/list/${userClass}`);
+  // };
   const handleEditClick = () => {
     navigate(`/notice/edit`);
   };
@@ -135,7 +137,11 @@ const NoticeItem = () => {
                 <div
                   className="div-wrapper"
                   onClick={() => {
-                    handleListClick();
+                    if (loginUserType === "ROLE_TEACHER") {
+                      navigate(`/notice/list/${userClass}`);
+                    } else if (loginUserType === "ROLE_PARENTS") {
+                      navigate(`/notice/list/${studentPk}`);
+                    }
                   }}
                 >
                   <div className="info-subtitle">알림장</div>

@@ -16,6 +16,9 @@ import styled from "@emotion/styled";
 import Signature2 from "./Signature2";
 import moment from "moment";
 import StudentClassInfo from "pages/student/StudentClassInfo";
+import Footer from "components/layout/Footer";
+import HeaderTopPublic from "components/layout/header/HeaderTopPublic";
+import HeaderMemu from "components/layout/header/HeaderMenu";
 
 const initData = [
   {
@@ -488,68 +491,71 @@ const GradeView = () => {
   `;
 
   return (
-    <div className="main-core">
-      <div className="student-list-title">
-        {/* <!-- 제목 위치 --> */}
-        <StudentClassInfo />
-      </div>
-      <div className="user-info-wrap">
-        {/* <!-- 탭 선택 부분 --> */}
-        <div className="user-info-tap">
-          <div className="property">
-            <div
-              className="div-wrapper"
-              onClick={() => {
-                handleClick();
-              }}
-            >
-              <div className="info-subtitle">신상 정보</div>
-            </div>
-            <div className="frame">
-              <div className="text-wrapper">성적 확인</div>
-            </div>
-            {/* <div className="div-wrapper"> */}
-            <div
-              className="div-wrapper"
-              onClick={() => {
-                handleClickChart();
-              }}
-            >
-              <div className="info-subtitle">차트</div>
+    <>
+      <HeaderTopPublic />
+      <HeaderMemu />
+      <div className="main-core">
+        <div className="student-list-title">
+          {/* <!-- 제목 위치 --> */}
+          <StudentClassInfo />
+        </div>
+        <div className="user-info-wrap">
+          {/* <!-- 탭 선택 부분 --> */}
+          <div className="user-info-tap">
+            <div className="property">
+              <div
+                className="div-wrapper"
+                onClick={() => {
+                  handleClick();
+                }}
+              >
+                <div className="info-subtitle">신상 정보</div>
+              </div>
+              <div className="frame">
+                <div className="text-wrapper">성적 확인</div>
+              </div>
+              {/* <div className="div-wrapper"> */}
+              <div
+                className="div-wrapper"
+                onClick={() => {
+                  handleClickChart();
+                }}
+              >
+                <div className="info-subtitle">차트</div>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="info-contain-top">
-          <div className="info-item-top">
-            <div className="info-title" id="info-grade-select">
-              <span>학기 선택</span>
-              <div className="select-grade">
-                <select
-                  name="grade"
-                  onChange={e => {
-                    handleGradeChange(e);
-                  }}
-                  value={latestGrade}
-                >
-                  <option value="1">1학년</option>
-                  <option value="2">2학년</option>
-                  <option value="3">3학년</option>
-                  <option value="4">4학년</option>
-                  <option value="5">5학년</option>
-                  <option value="6">6학년</option>
-                </select>
-                <select
-                  name="semester"
-                  onChange={e => {
-                    handleSemesterChange(e);
-                  }}
-                  value={latestSemester}
-                >
-                  <option value="1">1학기</option>
-                  <option value="2">2학기</option>
-                </select>
-              </div>
-              {/* <div className="total-student">
+          <div className="info-contain-top">
+            <div className="info-item-top">
+              <div className="info-title" id="info-grade-select">
+                <span>학기 선택</span>
+                <div className="select-grade">
+                  <select
+                    name="grade"
+                    onChange={e => {
+                      handleGradeChange(e);
+                    }}
+                    value={latestGrade}
+                  >
+                    <option value="1">1학년</option>
+                    <option value="2">2학년</option>
+                    <option value="3">3학년</option>
+                    <option value="4">4학년</option>
+                    <option value="5">5학년</option>
+                    <option value="6">6학년</option>
+                  </select>
+                  <select
+                    name="semester"
+                    onChange={e => {
+                      handleSemesterChange(e);
+                    }}
+                    value={latestSemester}
+                  >
+                    <option value="1">1학기</option>
+                    <option value="2">2학기</option>
+                  </select>
+                </div>
+                {/* <div className="total-student">
                 <p>년도 선택</p>
                 <select
                   id="year"
@@ -565,136 +571,140 @@ const GradeView = () => {
                   ))}
                 </select>
               </div> */}
+              </div>
             </div>
           </div>
-        </div>
-        <div className="exam-table">
-          <div className="property">
-            <div className="frame">
-              <div className="text-wrapper">중간고사</div>
+          <div className="exam-table">
+            <div className="property">
+              <div className="frame">
+                <div className="text-wrapper">중간고사</div>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="info-contain-top">
-          <div className="info-item-top">
-            {examListOne.map((item, index) => (
-              <div className="info-title" id="info-grade-select" key={index}>
-                <span>{item.name}</span>
-                <div className="grade-info-section">
-                  <div className="grade-info">
-                    <p>원점수</p>
-                    <input disabled placeholder="-" value={item.mark || ""} />점
-                  </div>
-                  <div className="grade-info">
-                    <p>반/전체 평균</p>
-                    <input
-                      disabled
-                      value={`${Math.trunc(item.classAvg) || "-"} / ${Math.trunc(item.gradeAvg) || "-"}`}
-                    />
-                    점
-                  </div>
-                  <div className="grade-info">
-                    <p>반/전체 등수</p>
-                    <input
-                      disabled
-                      value={`${item.subjectClassRank || "-"} / ${item.subjectGradeRank || "-"}`}
-                    />
-                    등
+          <div className="info-contain-top">
+            <div className="info-item-top">
+              {examListOne.map((item, index) => (
+                <div className="info-title" id="info-grade-select" key={index}>
+                  <span>{item.name}</span>
+                  <div className="grade-info-section">
+                    <div className="grade-info">
+                      <p>원점수</p>
+                      <input disabled placeholder="-" value={item.mark || ""} />
+                      점
+                    </div>
+                    <div className="grade-info">
+                      <p>반/전체 평균</p>
+                      <input
+                        disabled
+                        value={`${Math.trunc(item.classAvg) || "-"} / ${Math.trunc(item.gradeAvg) || "-"}`}
+                      />
+                      점
+                    </div>
+                    <div className="grade-info">
+                      <p>반/전체 등수</p>
+                      <input
+                        disabled
+                        value={`${item.subjectClassRank || "-"} / ${item.subjectGradeRank || "-"}`}
+                      />
+                      등
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="all-grade">
-          <div className="grade-rank">
-            학년 전체 등수 <input disabled value={gradeRank} /> /{" "}
-            {gradeStudentCount} 등
-          </div>
-          <div className="grade-rank">
-            반 등수 <input disabled value={classRank} /> / {classStudentCount}{" "}
-            등
-          </div>
-        </div>
-
-        {signResultPic1 ? (
-          <ParentCheckStyle>
-            <button className="is-sign">
-              학부모 확인
-              <div className="sign-view"></div>
-            </button>
-          </ParentCheckStyle>
-        ) : (
-          <Signature
-            studentPk={studentPk}
-            latestSemester={latestSemester}
-            latestYear={latestYear}
-            nowTime={nowTime}
-          />
-        )}
-
-        <div className="exam-table">
-          <div className="property">
-            <div className="frame">
-              <div className="text-wrapper">기말고사</div>
+              ))}
             </div>
           </div>
-        </div>
-        <div className="info-contain-top">
-          <div className="info-item-top">
-            {examListTwo.map((item, index) => (
-              <div className="info-title" id="info-grade-select" key={index}>
-                <span>{item.name}</span>
-                <div className="grade-info-section">
-                  <div className="grade-info">
-                    <p>원점수</p>
-                    <input disabled placeholder="-" value={item.mark || ""} />점
-                  </div>
-                  <div className="grade-info">
-                    <p>반/전체 평균</p>
-                    <input
-                      disabled
-                      value={`${Math.trunc(item.classAvg) || "-"} / ${Math.trunc(item.gradeAvg) || "-"}`}
-                    />
-                    점
-                  </div>
-                  <div className="grade-info">
-                    <p>반/전체 등수</p>
-                    <input
-                      disabled
-                      value={`${item.subjectClassRank || "-"} / ${item.subjectGradeRank || "-"}`}
-                    />
-                    등
+          <div className="all-grade">
+            <div className="grade-rank">
+              학년 전체 등수 <input disabled value={gradeRank} /> /{" "}
+              {gradeStudentCount} 등
+            </div>
+            <div className="grade-rank">
+              반 등수 <input disabled value={classRank} /> / {classStudentCount}{" "}
+              등
+            </div>
+          </div>
+
+          {signResultPic1 ? (
+            <ParentCheckStyle>
+              <button className="is-sign">
+                학부모 확인
+                <div className="sign-view"></div>
+              </button>
+            </ParentCheckStyle>
+          ) : (
+            <Signature
+              studentPk={studentPk}
+              latestSemester={latestSemester}
+              latestYear={latestYear}
+              nowTime={nowTime}
+            />
+          )}
+
+          <div className="exam-table">
+            <div className="property">
+              <div className="frame">
+                <div className="text-wrapper">기말고사</div>
+              </div>
+            </div>
+          </div>
+          <div className="info-contain-top">
+            <div className="info-item-top">
+              {examListTwo.map((item, index) => (
+                <div className="info-title" id="info-grade-select" key={index}>
+                  <span>{item.name}</span>
+                  <div className="grade-info-section">
+                    <div className="grade-info">
+                      <p>원점수</p>
+                      <input disabled placeholder="-" value={item.mark || ""} />
+                      점
+                    </div>
+                    <div className="grade-info">
+                      <p>반/전체 평균</p>
+                      <input
+                        disabled
+                        value={`${Math.trunc(item.classAvg) || "-"} / ${Math.trunc(item.gradeAvg) || "-"}`}
+                      />
+                      점
+                    </div>
+                    <div className="grade-info">
+                      <p>반/전체 등수</p>
+                      <input
+                        disabled
+                        value={`${item.subjectClassRank || "-"} / ${item.subjectGradeRank || "-"}`}
+                      />
+                      등
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
+          <div className="all-grade">
+            <div className="grade-rank">
+              학년 전체 등수 <input disabled value={gradeRank} /> /{" "}
+              {gradeStudentCount} 등
+            </div>
+            <div className="grade-rank">
+              반 등수 <input disabled value={classRank} /> / {classStudentCount}{" "}
+              등
+            </div>
+          </div>
+          {signResultPic2 ? (
+            <ParentCheckStyle>
+              <button className="is-sign">학부모 확인</button>
+            </ParentCheckStyle>
+          ) : (
+            <Signature2
+              studentPk={studentPk}
+              latestSemester={latestSemester}
+              latestYear={latestYear}
+              nowTime={nowTime}
+            />
+          )}
         </div>
-        <div className="all-grade">
-          <div className="grade-rank">
-            학년 전체 등수 <input disabled value={gradeRank} /> /{" "}
-            {gradeStudentCount} 등
-          </div>
-          <div className="grade-rank">
-            반 등수 <input disabled value={classRank} /> / {classStudentCount}{" "}
-            등
-          </div>
-        </div>
-        {signResultPic2 ? (
-          <ParentCheckStyle>
-            <button className="is-sign">학부모 확인</button>
-          </ParentCheckStyle>
-        ) : (
-          <Signature2
-            studentPk={studentPk}
-            latestSemester={latestSemester}
-            latestYear={latestYear}
-            nowTime={nowTime}
-          />
-        )}
       </div>
-    </div>
+      <Footer />
+    </>
   );
 };
 

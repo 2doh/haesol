@@ -50,7 +50,7 @@ import Learn from "pages/learn/Learn";
 import TeacherInfoView from "pages/teacher/TeacherInfoView";
 import ModalView from "components/common/modal/ModalView";
 import CreateTestMath from "pages/online/CreateTestMath";
-import ChatParents from "components/chat/ChatParents";
+import ChatParents from "components/chat/ChatRoom";
 import SocialSignup from "pages/user/login/SocialSignup";
 import OnlineMainPage from "pages/online/onlinemain/OnlineMainPage";
 import MyChildList from "pages/parents/MyChildList";
@@ -58,6 +58,7 @@ import { TestExPage } from "pages/online/onlinemain/TestExPage";
 import TestResultsPage from "pages/online/onlinetest/TestResultsPage";
 import IncorrectAnswerNoteMain from "pages/online/incorrectanswernote/IncorrectAnswerNoteMain";
 import MyChildInfoView from "pages/parents/MyChildInfoView";
+import StudentInfoViewTeacher from "pages/student/StudentInfoViewTeacher";
 
 const Main = styled.div``;
 
@@ -293,6 +294,15 @@ function App() {
             element={<GradeChart />}
           ></Route>
           {/* 교직원 : 학급 학생 정보 수정 */}
+          <Route
+            path="/students/:studentPk"
+            element={
+              <TeacherProtectedRoute
+                authenticated={accessToken}
+                component={<StudentInfoViewTeacher />}
+              />
+            }
+          ></Route>
           <Route
             path="/students/edit/:studentPk"
             element={
