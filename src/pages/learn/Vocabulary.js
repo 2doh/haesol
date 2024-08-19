@@ -14,7 +14,6 @@ const Vocabulary = ({
   resetTranscript,
   audioStream,
   setIsTranscript,
-  listening,
 }) => {
   const initVolume = localStorage.getItem("initVolume");
   const voca = getObj?.data?.result[index];
@@ -25,7 +24,7 @@ const Vocabulary = ({
   localStorage.setItem("initVolume", volume);
 
   const tempObj = {
-    speechword: voca?.data,
+    speechword: voca?.word,
     speechlang: "en-US",
     speechvolume: volume,
   };
@@ -34,23 +33,36 @@ const Vocabulary = ({
     speechlang: "en-US",
     speechvolume: volume,
   };
-
+  // console.log(tempObj);
   // console.log(getObj);
   // console.log(voca);
   // console.log(index);
 
   const onSpeak = () => {
-    setListen(true);
-    speak(tempObj, () => setListen(false));
+    if (!listen) {
+      setListen(true);
+      speak(tempObj, () => setListen(false), false); // 음성 시작
+    } else {
+      // 이미 음성이 재생 중일 때 음성을 중단합니다.
+      speak(tempObj, () => setListen(false), true); // 음성 중단
+      setListen(false);
+    }
   };
 
+  // console.log(listen);
   const onClick = () => {
-    setListen(true);
-    speak(temp, () => setListen(false));
+    if (!listen) {
+      setListen(true);
+      speak(temp, () => setListen(false), false); // 음성 시작
+    } else {
+      // 이미 음성이 재생 중일 때 음성을 중단합니다.
+      speak(temp, () => setListen(false), true); // 음성 중단
+      setListen(false);
+    }
   };
 
   const onNext = () => {
-    if (index === getObj.length - 1) {
+    if (index === getObj.data.result.length - 1) {
       return;
     }
     setIndex(index + 1);
@@ -137,7 +149,7 @@ const Vocabulary = ({
           />
           {/* <div className="voca-bottom-word">{voca.word}</div> */}
           <div className="voca-bottom-word">
-            {learnState === "listening" ? voca?.question : voca?.word}
+            {learnState === "listening" ? voca.question : voca.word}
           </div>
           <IoIosArrowForward
             size={30}
