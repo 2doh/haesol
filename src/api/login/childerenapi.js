@@ -17,7 +17,6 @@ export const studentsignin = async data => {
     setCookie("userIdPk", signedUser.userId);
     setCookie("userRole", signedUser.role);
     // 선택한 학생 번호 쿠키에 저장
-    setCookie("selectChildNum", 0);
     // console.log("권한 :", signedUser.role);
     // console.log("유저 PK :", signedUser.userId);
     // alert(signedUser.role);
