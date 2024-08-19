@@ -1,6 +1,7 @@
 import axios from "axios";
 import { setCookie } from "utils/cookie";
 import base64 from "base-64";
+import useLoginTimerStart from "hooks/common/useLoginTimerStart";
 export const postParentSignin = async data => {
   try {
     const res = await axios.post(`/api/user/parents/sign-in`, data);
@@ -19,6 +20,8 @@ export const postParentSignin = async data => {
     // console.log("권한 :", signedUser.role);
     // console.log("유저 PK :", signedUser.userId);
     // alert(signedUser.role);
+    useLoginTimerStart();
+
     return res;
   } catch (error) {
     if (error.response && error.response.status === 400) {

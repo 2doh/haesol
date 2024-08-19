@@ -63,21 +63,10 @@ const TestAnswerStyle = styled.div`
   }
 `;
 
-const NoteAnswer = () => {
+const NoteAnswer = ({ studentOmr, realAnswerOmr }) => {
   const testState = useSelector(state => state.testSlice);
-  const dispatch = useDispatch();
 
   const questionAllNum = testState.questionAll.length;
-
-  // 학생이 체크한 OMR
-  const [studentOmr, setStudentOmr] = useState(
-    testState.incorrectAnswerNoteMain.studentOmr.omrAnswer,
-  );
-
-  // 정답 배열
-  const [realAnswerOmr, setRealAnswerOmr] = useState(
-    testState.incorrectAnswerNoteMain.realAnswer,
-  );
 
   // 맞춘 문제 개수
   const [questionsWrongNum, setQuestionsWrongNum] = useState(0);
@@ -113,7 +102,7 @@ const NoteAnswer = () => {
       </div>
 
       <div className="omr-wrap">
-        <NoteOmr />
+        <NoteOmr studentOmr={studentOmr} realAnswerOmr={realAnswerOmr} />
       </div>
     </TestAnswerStyle>
   );

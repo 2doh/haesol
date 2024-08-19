@@ -40,6 +40,7 @@ const NoteEndBtn = () => {
 
   const homeBtn = () => {
     navigate("/");
+    // window.location.reload("/");
   };
 
   return (

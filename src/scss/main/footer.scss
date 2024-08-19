@@ -47,8 +47,8 @@
       border: none;
     }
 
-    .nav-text:nth-child(2),
-    .nav-text:nth-child(3) {
+    .nav-text:nth-of-type(2),
+    .nav-text:nth-of-type(3) {
       white-space: nowrap;
     }
   }
@@ -137,12 +137,12 @@
 
       transition: all 0.2s;
 
-      .nav-text:nth-child(4),
-      .nav-text:nth-child(5) {
+      .nav-text:nth-of-type(4),
+      .nav-text:nth-of-type(5) {
         // visibility: hidden;
       }
 
-      .nav-text:nth-child(4) {
+      .nav-text:nth-of-type(4) {
         padding-left: 0px;
         padding-right: 36px;
       }

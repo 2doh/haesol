@@ -9,14 +9,12 @@
     flex-direction: row;
 
     // 너비 조절
-    & > div:nth-child(1) {
+    & > div:nth-of-type(1) {
       flex-grow: 1;
     }
 
     .hide-pw-div {
     }
-
-
 
     input[type="password"],
     input[type="text"] {

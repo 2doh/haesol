@@ -17,6 +17,10 @@ import answerSelect from "../answerSelect";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 import { TestPreviewImage } from "../TestPreviewImage";
 
+import correctlyImg from "../../../images/online/note/3.png";
+import wrongImg from "../../../images/online/note/4.png";
+import { useState } from "react";
+
 const TestQuestionWrap = styled.div`
   height: 100%;
   padding: 20px;
@@ -46,6 +50,26 @@ const TestQuestionWrap = styled.div`
         gap: 30px;
 
         .cbt__question {
+          span {
+            position: relative;
+            img {
+              position: absolute;
+              opacity: 0.7;
+            }
+
+            #correctlyImg {
+              top: -88px;
+              left: -76px;
+              width: 170px;
+              height: 190px;
+            }
+            #wrongImg {
+              width: 130px;
+              height: 130px;
+              top: -75px;
+              left: -51px;
+            }
+          }
         }
 
         .cbt__question__img {
@@ -143,8 +167,7 @@ const TestQuestionWrap = styled.div`
   }
 `;
 
-const NoteQuestion = () => {
-  const dispatch = useDispatch();
+const NoteQuestion = ({ studentOmr, realAnswerOmr }) => {
   const testState = useSelector(state => state.testSlice);
 
   return (
@@ -155,6 +178,12 @@ const NoteQuestion = () => {
             <div className="cbt">
               <div className="cbt__question">
                 <span>
+                  {studentOmr[testState.nowQuestionsNum] ===
+                  realAnswerOmr[testState.nowQuestionsNum] ? (
+                    <img src={correctlyImg} id="correctlyImg" />
+                  ) : (
+                    <img src={wrongImg} id="wrongImg" />
+                  )}
                   {testState.questionAll[testState.nowQuestionsNum].number}.
                 </span>
                 &nbsp; &nbsp;
@@ -183,7 +212,7 @@ const NoteQuestion = () => {
               <div className="cbt__selects">
                 <input
                   type="radio"
-                  checked={
+                  defaultChecked={
                     testState.selectedValue ===
                     `${testState.questionAll[testState.nowQuestionsNum].number}_1`
                   }
@@ -207,7 +236,7 @@ const NoteQuestion = () => {
                 </label>
                 <input
                   type="radio"
-                  checked={
+                  defaultChecked={
                     testState.selectedValue ===
                     `${testState.questionAll[testState.nowQuestionsNum].number}_2`
                   }
@@ -231,7 +260,7 @@ const NoteQuestion = () => {
 
                 <input
                   type="radio"
-                  checked={
+                  defaultChecked={
                     testState.selectedValue ===
                     `${testState.questionAll[testState.nowQuestionsNum].number}_3`
                   }
@@ -255,7 +284,7 @@ const NoteQuestion = () => {
                 </label>
                 <input
                   type="radio"
-                  checked={
+                  defaultChecked={
                     testState.selectedValue ===
                     `${testState.questionAll[testState.nowQuestionsNum].number}_4`
                   }
@@ -279,7 +308,7 @@ const NoteQuestion = () => {
                 </label>
                 <input
                   type="radio"
-                  checked={
+                  defaultChecked={
                     testState.selectedValue ===
                     `${testState.questionAll[testState.nowQuestionsNum].number}_5`
                   }

@@ -38,8 +38,8 @@
 .footer-inner .footer-info-nav .nav-text:last-child {
   border: none;
 }
-.footer-inner .footer-info-nav .nav-text:nth-child(2),
-.footer-inner .footer-info-nav .nav-text:nth-child(3) {
+.footer-inner .footer-info-nav .nav-text:nth-of-type(2),
+.footer-inner .footer-info-nav .nav-text:nth-of-type(3) {
   white-space: nowrap;
 }
 .footer-inner .footer-info-text {
@@ -104,8 +104,8 @@
     gap: 15px 0px;
     transition: all 0.2s;
   }
-  .footer-inner .footer-info-nav .nav-text:nth-child(4) {
+  .footer-inner .footer-info-nav .nav-text:nth-of-type(4) {
     padding-left: 0px;
     padding-right: 36px;
   }
-}/*# sourceMappingURL=footer.css.map */
+} /*# sourceMappingURL=footer.css.map */
