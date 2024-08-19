@@ -50,7 +50,7 @@ import Learn from "pages/learn/Learn";
 import TeacherInfoView from "pages/teacher/TeacherInfoView";
 import ModalView from "components/common/modal/ModalView";
 import CreateTestMath from "pages/online/CreateTestMath";
-import ChatParents from "components/chat/ChatRoom";
+import ChatRoom from "components/chat/ChatRoom";
 import SocialSignup from "pages/user/login/SocialSignup";
 import OnlineMainPage from "pages/online/onlinemain/OnlineMainPage";
 import MyChildList from "pages/parents/MyChildList";
@@ -60,7 +60,6 @@ import IncorrectAnswerNoteMain from "pages/online/incorrectanswernote/IncorrectA
 import MyChildInfoView from "pages/parents/MyChildInfoView";
 import StudentInfoViewTeacher from "pages/student/StudentInfoViewTeacher";
 import useLogout from "hooks/common/useLogout";
-
 
 const Main = styled.div``;
 
@@ -203,10 +202,7 @@ function App() {
           <Route path="/signup/social" element={<SocialSignup />}></Route>
           {/* 영어 테스트 - end */}
 
-          <Route
-            path="/chat/teacher/:선생님pk"
-            element={<ChatParents />}
-          ></Route>
+          <Route path="/chat/teacher/:선생님pk" element={<ChatRoom />}></Route>
           {/* 교직원 : 학생 리스트 */}
           <Route
             path="/students"

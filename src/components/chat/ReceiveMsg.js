@@ -26,11 +26,10 @@ const ChatWrapInner = styled.div`
 
 // 대화 내용 반복 처리 필요
 const ReceiveMsg = ({ receiveMsg, receiveTime }) => {
-  const [aaa, setAaa] = useState("tlqkf!");
   return (
     <ChatWrapInner>
       <div className="receive-msg-wrap">
-        <div className="receivemsg-msg">{setAaa}</div>
+        <div className="receivemsg-msg">{receiveMsg}</div>
         <div className="receivemsg-timewrap">
           <div className="receivemsg-time">{receiveTime}</div>
         </div>

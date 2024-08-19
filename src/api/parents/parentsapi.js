@@ -1,4 +1,5 @@
 import jwtAxios from "api/jwtUtil";
+import { getCookie } from "utils/cookie";
 
 /** 학부모 정보 획득 */
 export const getParentsInfo = async () => {
@@ -16,4 +17,19 @@ export const getParentsInfo = async () => {
     });
 
   return res;
+};
+
+// 선생님 담당 학급 학부모 조회
+export const getParentsListInfo = async () => {
+  const accessToken = getCookie("accessToken");
+  try {
+    const response = await jwtAxios.get(`/api/user/parents/detail`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
 };

@@ -5,8 +5,9 @@ import { FaUserPlus } from "react-icons/fa6";
 import { getCookie } from "utils/cookie";
 import "../../scss/chat/chat.css";
 import { IoClose } from "react-icons/io5";
-import ChatParents from "./ChatRoom";
+import ChatRoom from "./ChatRoom";
 import { getChatParentsList, getChatTeacherList } from "api/chat/chatapi";
+import { getParentsListInfo } from "api/parents/parentsapi";
 
 const ChatWrapStyle = styled.div`
   z-index: 100000;
@@ -446,6 +447,7 @@ const ChatWrapStyle = styled.div`
 
 const ChatList = ({ chatStartOpen, setChatOpen }) => {
   const [chatData, setChatData] = useState([]);
+  const [parentsList, setParentsList] = useState([]);
   const [chatMiniList, setChatMiniList] = useState(false);
   const [chatRoomOpen, setChatRoomOpen] = useState(false);
 
@@ -456,6 +458,8 @@ const ChatList = ({ chatStartOpen, setChatOpen }) => {
   const [roomId, setRoomId] = useState(null);
   const [teaId, setTeaId] = useState(null);
   const [parentId, setParentId] = useState(null);
+  const [sender, setSender] = useState("");
+  const [sendTime, setSendTime] = useState("");
 
   const fetchChatData = async () => {
     try {
@@ -471,9 +475,24 @@ const ChatList = ({ chatStartOpen, setChatOpen }) => {
     }
   };
 
+  const getParentsList = async () => {
+    try {
+      const response = await getParentsListInfo();
+      console.log(response);
+      setParentsList(response);
+    } catch (error) {
+      console.log("error :", error);
+    }
+  };
+
   useEffect(() => {
     fetchChatData();
   }, [loginUserType]);
+
+  // useEffect(() => {
+  //   console.log("getParentsList : ", getParentsList.data);
+  //   getParentsList();
+  // }, []);
 
   const handleOpenChatRoom = (
     selectedRoomId,
@@ -481,8 +500,8 @@ const ChatList = ({ chatStartOpen, setChatOpen }) => {
     selectedParentId,
   ) => {
     setRoomId(selectedRoomId);
-    setTeaId(selectedTeaId);
-    setParentId(selectedParentId);
+    setTeaId(selectedTeaId.name);
+    setParentId(selectedParentId.name);
     setChatRoomOpen(true);
   };
 
@@ -572,7 +591,7 @@ const ChatList = ({ chatStartOpen, setChatOpen }) => {
                     >
                       <div className="chat-select-field-parents">
                         <div className="parents-info">
-                          <span>{item.parentId} 학부모</span>
+                          <span>{item.parentId.name} 학부모</span>
                           <p>내일 어쩌구저쩌구 이거 내용이에요.</p>
                         </div>
                       </div>
@@ -597,6 +616,7 @@ const ChatList = ({ chatStartOpen, setChatOpen }) => {
                   className="raise"
                   onClick={() => {
                     setChatMiniList(true);
+                    getParentsList();
                   }}
                 >
                   <div className="plus-button">
@@ -622,14 +642,14 @@ const ChatList = ({ chatStartOpen, setChatOpen }) => {
                   </button>
                 </div>
                 <div className="parents-list-inner">
-                  {chatData.map((item, index) => (
+                  {parentsList.map((item, index) => (
                     <div
                       className="chat-select-wrap-parents"
                       key={index}
                       onClick={() => handleCheckboxChange(index)}
                     >
                       <div className="parents-info">
-                        <span>{item.parentId} 학부모</span>
+                        <span>{item.name} 학부모</span>
                         <input
                           type="checkbox"
                           checked={!!checkedItems[index]}
@@ -646,11 +666,13 @@ const ChatList = ({ chatStartOpen, setChatOpen }) => {
         </ChatWrapStyle>
       ) : null}
       {chatRoomOpen ? (
-        <ChatParents
+        <ChatRoom
           setChatRoomOpen={setChatRoomOpen}
           roomId={roomId}
           teaId={teaId}
           parentId={parentId}
+          sender={sender}
+          sendTime={sendTime}
         />
       ) : null}
     </>
