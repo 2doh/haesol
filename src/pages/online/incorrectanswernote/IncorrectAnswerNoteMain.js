@@ -20,8 +20,7 @@ const NoteWrap = styled.div`
 
     .note-page-inner {
       width: 100%;
-      /* height: calc(100% - 60px); */
-      height: 1500px;
+      height: calc(100% - 60px);
       display: flex;
       flex-direction: row;
 

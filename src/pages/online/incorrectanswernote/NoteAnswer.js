@@ -69,14 +69,46 @@ const NoteAnswer = () => {
 
   const questionAllNum = testState.questionAll.length;
 
+  // 학생이 체크한 OMR
+  const [studentOmr, setStudentOmr] = useState(
+    testState.incorrectAnswerNoteMain.studentOmr.omrAnswer,
+  );
+
+  // 정답 배열
+  const [realAnswerOmr, setRealAnswerOmr] = useState(
+    testState.incorrectAnswerNoteMain.realAnswer,
+  );
+
+  // 맞춘 문제 개수
+  const [questionsWrongNum, setQuestionsWrongNum] = useState(0);
+
+  /** 맞춘 문제 개수 계산 */
+  const questionsWrongNumCnt = () => {
+    console.log("studentOmr : ", studentOmr);
+    console.log("realAnswerOmr : ", realAnswerOmr);
+
+    let cnt = 0;
+
+    studentOmr.map((item, index) => {
+      if (studentOmr[index] === realAnswerOmr[index]) {
+        cnt++;
+      }
+    });
+
+    setQuestionsWrongNum(cnt);
+  };
+
+  useEffect(() => {
+    questionsWrongNumCnt();
+  }, []);
+
   return (
     <TestAnswerStyle>
       <div className="btn-wrap">
         <NoteEndBtn />
         <div className="cbt__remainder">
-          {questionAllNum} / &nbsp;&nbsp;&nbsp;
-          <p>(틀린 문제수)</p>
-          &nbsp;&nbsp;
+          {questionAllNum} 문제 중 &nbsp;<p>{questionsWrongNum}</p> &nbsp;
+          문제를 맞췄어요. &nbsp;&nbsp;
         </div>
       </div>
 

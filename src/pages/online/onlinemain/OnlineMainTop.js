@@ -1,5 +1,7 @@
 import styled from "@emotion/styled";
 import { FaSearch } from "react-icons/fa";
+import { useNavigate } from "react-router";
+import { getCookie } from "utils/cookie";
 
 const OnlineMainTopStyle = styled.div`
   position: relative;
@@ -97,6 +99,17 @@ const OnlineMainTopStyle = styled.div`
 `;
 
 const OnlineMainTop = () => {
+  const navigate = useNavigate();
+
+  const movePage = (pageNum, pageName) => {
+    if (getCookie("accessToken")) {
+      alert("준비중인 서비스입니다.");
+    } else {
+      navigate("/login");
+      alert("로그인이 필요합니다.");
+    }
+  };
+
   return (
     <OnlineMainTopStyle>
       {/* <button className="button-51" role="button">
@@ -104,7 +117,12 @@ const OnlineMainTop = () => {
           <span className="button-51__Text text">Button 51</span>
         </span>
       </button> */}
-      <div className="history-button">
+      <div
+        className="history-button"
+        onClick={() => {
+          movePage();
+        }}
+      >
         <button className="button-27" role="button">
           <span className="text">
             {/* <FaSearch /> */}
@@ -123,7 +141,12 @@ const OnlineMainTop = () => {
           <i className="fas fa-search"></i>
         </a>
       </div>
-      <div className="search-button">
+      <div
+        className="search-button"
+        onClick={() => {
+          movePage();
+        }}
+      >
         <button className="button-27" role="button">
           <FaSearch />
         </button>
