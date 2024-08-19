@@ -55,31 +55,35 @@ const ChatWrapStyle = styled.div`
   }
 `;
 
-const ChatParents = ({ setChatRoomOpen, roomId, parentId, teaId }) => {
+const ChatRoom = ({ setChatRoomOpen, roomId, sender, teaId, parentId }) => {
   const [loginUserType, setLoginUserType] = useState(getCookie("userRole"));
   // const [myMsg, setMyMsg] = useState("");
   const [sandingMsg, setSendingMsg] = useState("");
   const [receiveMsg, setReceiveMsg] = useState("");
   const [nowTime, setNowTime] = useState("");
   const [receiveTime, setReceiveTime] = useState("");
+  // 채팅 목록
+  const [chatList, setChatList] = useState([]);
 
   useEffect(() => {
     console.log("roomId : ", roomId);
   }, [roomId]);
 
-  // 채팅 목록
-  const [chatList, setChatList] = useState([]);
   // 키값 변경해서 넣기
 
-  // 전체 채팅 목록 부르기
+  // 특정 채팅방 내용 get
   const getAllChatList = async () => {
-    const result = await getChatRoom();
-    console.log(result);
-    setChatList();
+    try {
+      const result = await getChatRoom(roomId);
+      setChatList(result);
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   useEffect(() => {
     getAllChatList();
-  }, [chatList]);
+  }, [roomId]);
 
   // const sendTime = () => {
   //   const now = new Date();
@@ -106,8 +110,7 @@ const ChatParents = ({ setChatRoomOpen, roomId, parentId, teaId }) => {
       msg: sandingMsg,
       roomId,
     };
-    const result = await postCreateChat(postChatData);
-    console.log(result);
+    await postCreateChat(postChatData);
 
     const now = new Date();
     const nowhours = String(now.getHours()).padStart(2, "0");
@@ -135,9 +138,9 @@ const ChatParents = ({ setChatRoomOpen, roomId, parentId, teaId }) => {
       <ChatWrapStyle>
         <div className="chat-header">
           {loginUserType === "ROLE_TEACHER" ? (
-            <span>{parentId} 학부모</span>
+            <span>{parentId.name} 학부모</span>
           ) : (
-            <span>{teaId} 선생님</span>
+            <span>{teaId.name} 선생님</span>
           )}
 
           <IoClose
@@ -149,20 +152,25 @@ const ChatParents = ({ setChatRoomOpen, roomId, parentId, teaId }) => {
           />
         </div>
         <div className="chat-field">
-          {chatList.map((item, index) =>
-            item.isSender ? (
-              <SendMsg
-                sandingMsg={item.message}
-                nowTime={item.time}
-                key={index} // 채팅 하나하나 구분하는 pk 값 넣기
-              />
-            ) : (
-              <ReceiveMsg
-                receiveMsg={item.message}
-                receiveTime={item.time}
-                key={index} // 채팅 하나하나 구분하는 pk 값 넣기
-              />
-            ),
+          {Array.isArray(chatList) && chatList.length > 0 ? (
+            chatList.map((item, index) =>
+              item.isSender ? (
+                <SendMsg
+                  sender={sender}
+                  sandingMsg={item.msg}
+                  nowTime={item.sendTime}
+                  key={index}
+                />
+              ) : (
+                <ReceiveMsg
+                  receiveMsg={item.message}
+                  receiveTime={item.time}
+                  key={index}
+                />
+              ),
+            )
+          ) : (
+            <p>채팅 내역이 없습니다.</p>
           )}
         </div>
 
@@ -196,4 +204,4 @@ const ChatParents = ({ setChatRoomOpen, roomId, parentId, teaId }) => {
   );
 };
 
-export default ChatParents;
+export default ChatRoom;
