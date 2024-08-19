@@ -35,7 +35,7 @@ const Login = ({ setOnHeader, onHedaer }) => {
   useEffect(() => {
     // 뒤로가기를 눌렀을 때 호출될 함수
     const handlePopState = event => {
-      console.log("뒤로가기를 눌렀습니다.", event);
+      // console.log("뒤로가기를 눌렀습니다.", event);
       setOnHeader(true);
       // 원하는 상태로 변경
     };

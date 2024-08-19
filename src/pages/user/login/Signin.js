@@ -39,9 +39,6 @@ const Signin = ({ children, naviState, setNaviState }) => {
         // console.log(result);
         window.location.replace("/");
       }
-      if (result === "error") {
-        setErrMsg("아이디 혹은 비밀번호를 확인해주세요");
-      }
     }
     if (naviState === "teacherlogin") {
       const result = await postTeacherSignin(reqData);
@@ -50,9 +47,6 @@ const Signin = ({ children, naviState, setNaviState }) => {
       }
       if (result.status === 200 && getCookie("userRole") === "ROLE_TEACHER") {
         window.location.replace("/");
-      }
-      if (result === "error") {
-        setErrMsg("아이디 혹은 비밀번호를 확인해주세요");
       }
     }
     if (naviState === "studentlogin") {

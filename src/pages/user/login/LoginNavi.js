@@ -20,7 +20,7 @@ const LoginNavi = ({ setNaviState, naviState }) => {
           setNaviState("signin");
         }}
       >
-        학부모 로그인
+        학부모
       </div>
       <div
         className={

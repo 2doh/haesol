@@ -22,7 +22,10 @@ export const postTeacherSignin = async data => {
     // alert(signedUser.role);
     return res;
   } catch (error) {
-    // console.log(error);
-    return "error";
+    if (error.response && error.response.status === 400) {
+      const { resultMsg } = error.response.data;
+      alert(`로그인 실패: ${resultMsg}`);
+      return resultMsg;
+    }
   }
 };

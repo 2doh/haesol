@@ -11,5 +11,6 @@ export const signupSocialCode = async data => {
     return response;
   } catch (error) {
     alert("회원가입에 실패하셨습니다 다시 시도해주세요.");
+    return "fail";
   }
 };
