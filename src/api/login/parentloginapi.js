@@ -18,7 +18,7 @@ export const postParentSignin = async data => {
     // 선택한 학생 번호 쿠키에 저장
     // console.log("권한 :", signedUser.role);
     // console.log("유저 PK :", signedUser.userId);
-    alert(signedUser.role);
+    // alert(signedUser.role);
     return res;
   } catch (error) {
     console.log(error);

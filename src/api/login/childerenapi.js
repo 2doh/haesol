@@ -20,7 +20,7 @@ export const studentsignin = async data => {
     setCookie("selectChildNum", 0);
     // console.log("권한 :", signedUser.role);
     // console.log("유저 PK :", signedUser.userId);
-    alert(signedUser.role);
+    // alert(signedUser.role);
     return response;
   } catch (error) {
     console.log(error);
