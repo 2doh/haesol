@@ -57,6 +57,7 @@ import MyChildList from "pages/parents/MyChildList";
 import { TestExPage } from "pages/online/onlinemain/TestExPage";
 import TestResultsPage from "pages/online/onlinetest/TestResultsPage";
 import IncorrectAnswerNoteMain from "pages/online/incorrectanswernote/IncorrectAnswerNoteMain";
+import MyChildInfoView from "pages/parents/MyChildInfoView";
 
 const Main = styled.div``;
 
@@ -331,6 +332,15 @@ function App() {
             ></Route>
             <Route
               path="studentinfo"
+              element={
+                <PrivateRoute
+                  component={<MyChildInfoView />}
+                  authenticated={accessToken}
+                />
+              }
+            ></Route>
+            <Route
+              path="studentinfo/edit"
               element={
                 <ParentsPrivateRoute
                   component={<MyChildInfo />}

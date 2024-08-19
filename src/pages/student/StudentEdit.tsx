@@ -327,21 +327,11 @@ const StudentEdit: React.FC = () => {
               </div>
             </div>
             <div className="info-img">
-              {/* 이미지 수정 필요 */}
-              {/* {studentPic !== null ? (
-                <StudentsImeStyle>
-                  <img
-                    src={`http://112.222.157.156:5121/pic/student/${studentPk}/${studentPic}`}
-                    alt={studentPic}
-                  />
-                </StudentsImeStyle>
-              ) : ( */}
               <StudentImg
                 studentPk={studentPk}
                 studentPic={studentPic}
                 setImgFile={setImgFile}
               />
-              {/* )} */}
             </div>
           </div>
           <div className="info-contain-mid">
