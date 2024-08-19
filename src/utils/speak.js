@@ -1,27 +1,27 @@
-export const speak = (tempObj, onEndCallback) => {
+export const speak = (tempObj, onEndCallback, listen) => {
   if ("speechSynthesis" in window) {
+    // 음성 중단
+    if (listen) {
+      window.speechSynthesis.cancel();
+      return; // 음성을 중단한 후 함수 종료
+    }
+
+    // 새 음성을 생성
     const speech = new SpeechSynthesisUtterance(tempObj.speechword);
-    // const speechkr = new SpeechSynthesisUtterance(voca.krword);
-    // console.log(speech);
     speech.lang = tempObj.speechlang;
     speech.rate = 0.7;
-
-    // 볼륨 조절
     speech.volume = tempObj.speechvolume;
 
-    // 음성 종료되었을 때 호출될 콜백
+    // 음성 종료 시 호출될 콜백
     speech.onend = () => {
       if (onEndCallback) {
         onEndCallback();
       }
     };
 
-    // speech.lang = "kr";
-    // speech.pitch = 1;
-    // speechkr.lang = "kr";
-    // speechkr.rate = 3;
+    // 음성 재생
     window.speechSynthesis.speak(speech);
   } else {
-    alert("해당 브라우저는 음성이 지원되지 않습니다");
+    alert("해당 브라우저는 음성을 지원하지 않습니다");
   }
 };

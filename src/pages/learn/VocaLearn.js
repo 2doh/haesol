@@ -73,14 +73,14 @@ const VocaLearn = () => {
       alert("정답");
       setOnAnswer("");
       // console.log(index);
-      if (index < getObj.length - 1) {
+      if (index < getObj.data.result.length - 1) {
         setIndex(index + 1);
       }
     } else {
       alert(`오답`);
       setOnAnswer("");
       resetTranscript();
-      if (index < getObj.length - 1) {
+      if (index < getObj.data.result.length - 1) {
         setIndex(index + 1);
       }
     }
@@ -197,7 +197,6 @@ const VocaLearn = () => {
               audioStream={audioStream}
               resetTranscript={resetTranscript}
               setIsTranscript={setIsTranscript}
-              listening={listening}
             />
             <VocaBottomWrap>
               {learnState === "speaking" ? (
@@ -206,7 +205,7 @@ const VocaLearn = () => {
                     size={40}
                     cursor={"pointer"}
                     onClick={() => {
-                      micHandler();
+                      micHandler(onListening);
                     }}
                     style={{
                       filter: onListening
