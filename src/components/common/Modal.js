@@ -373,8 +373,8 @@ const Modal = () => {
 
       // 온라인 시험 전 시험명 작성
       if (modalState.modalRes[0] === 54) {
-        console.log("여기");
         const res = await getOnlineTest(modalState.modalRes[1]);
+
         dispatch(closeModal());
         console.log(modalState.modalRes);
 

@@ -124,36 +124,36 @@ const ParentsProfileStyle = styled.div`
 
 const StudentProfile = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const childState = useSelector(state => state.selectChildSlice);
   const [myInfo, setMyInfo] = useState([]);
+  const studentPk = getCookie("studentPk");
 
   /** 최초 랜더링 */
   useEffect(() => {
     studentInfo();
   }, []);
 
+  useEffect(() => {
+    console.log("학생 정보 : ", myInfo);
+  }, []);
+
   /** 학생 자신 정보 불러오기 */
   const studentInfo = async () => {
-    const res = await getStudentInfo(getCookie("studentPk"));
-    console.log(res);
+    const res = await getStudentInfo(studentPk);
     if (res === false) {
       console.log("정보 없음");
     } else {
-      setMyInfo(res);
+      setMyInfo(res.data);
     }
   };
 
   /** 마이페이지 이동 */
   const moveMyPage = () => {
-    // navigate(`/parents/studentinfo`);
-    alert("준비중입니다.");
+    navigate(`/parents/studentinfo`);
   };
 
   /** 성적 확인 페이지 이동 */
   const moveMyGradePage = () => {
-    // navigate(`/grade/${studentPk}`);
-    alert("준비중입니다.");
+    navigate(`/grade/${studentPk}`);
   };
 
   /** 프로필 html 코드 추가 */
@@ -175,7 +175,95 @@ const StudentProfile = () => {
     }
   }, []);
 
-  return <ParentsProfileStyle></ParentsProfileStyle>;
+  return (
+    <ParentsProfileStyle>
+      <div className="user-info-wrap page" id="page2">
+        <div className="user-info-inner content" id="contents">
+          <div className="user-info">
+            {/* 유저 정보 start */}
+            <div className="top-user-info">
+              <div className="user-pic"></div>
+
+              <div className="user-info-div">
+                <div className="user-info-label-box">
+                  <div className="user-info-label">이름</div>
+                  <div className="user-info-label">생일</div>
+                  <div className="user-info-label">학급</div>
+                  <div className="user-info-label">선생님 성함</div>
+                </div>
+                <div className="user-info-text-box">
+                  <div className="login-user-info-text">
+                    {myInfo.studentName === "" ||
+                    myInfo.studentName === null ||
+                    myInfo.studentName === 0 ? (
+                      <div className="no-info">미등록</div>
+                    ) : (
+                      myInfo.studentName
+                    )}
+                  </div>
+                  <div className="login-user-info-text">
+                    {myInfo.studentBirth === "" ||
+                    myInfo.studentBirth === null ||
+                    myInfo.studentBirth === 0 ? (
+                      <div className="no-info">미등록</div>
+                    ) : (
+                      myInfo.studentBirth
+                    )}
+                  </div>
+                  <div className="login-user-info-text">
+                    {myInfo.studentGrade === "" ||
+                    myInfo.studentGrade === null ||
+                    myInfo.studentGrade === 0 ||
+                    myInfo.studentClass === "" ||
+                    myInfo.studentClass === null ||
+                    myInfo.studentClass === 0 ? (
+                      <div className="no-info">미등록</div>
+                    ) : (
+                      `${myInfo.studentGrade} 학년 ${myInfo.studentClass} 반`
+                    )}
+                  </div>
+                  <div className="login-user-info-text">
+                    {myInfo.teacherName === "" ||
+                    myInfo.teacherName === null ? (
+                      <div className="no-info">미등록</div>
+                    ) : (
+                      myInfo.teacherName
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              <LogoutButton />
+            </div>
+            {/* 유저 정보 end */}
+            {/* 버튼 start */}
+            <div className="bottom-user-btn">
+              <button
+                className="subject-grade-btn"
+                onClick={() => {
+                  moveMyGradePage();
+                }}
+              >
+                과목별 성적
+              </button>
+
+              <button
+                className="my-page-btn"
+                onClick={() => {
+                  moveMyPage();
+                }}
+              >
+                마이페이지
+              </button>
+            </div>
+            {/* 버튼 end */}
+          </div>
+        </div>
+        {/* 스프링 영역 */}
+        <section className="chainSection"></section>
+      </div>
+    </ParentsProfileStyle>
+  );
 };
 
 export default StudentProfile;

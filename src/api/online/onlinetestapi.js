@@ -22,8 +22,10 @@ export const onlineTestCreate = async formData => {
 // 국어/수학 시험 get
 export const getOnlineTest = async data => {
   let url = "";
-  // if(getCookie("userRole") === "ROLE_PARENTS" || getCookie("userRole") === "ROLE_PARENTS")
-  if (getCookie("userRole") === "ROLE_PARENTS") {
+  if (
+    getCookie("userRole") === "ROLE_PARENTS" ||
+    getCookie("userRole") === "ROLE_STUDENT"
+  ) {
     url = `studentPk=${getCookie("studentPk")}&subjectCode=${data}`;
   } else {
     url = `subjectCode=${data}`;
