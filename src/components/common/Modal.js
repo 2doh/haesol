@@ -25,6 +25,7 @@ import { putChildInfo, putParentsPwChange } from "api/parents/mychildinfo";
 import { getChild, getChildList, putChild } from "api/signup/parentapi";
 import { getOnlineTest, postOnlineTest } from "api/online/onlinetestapi";
 import moment from "moment";
+import { updateTestDate } from "slices/testSlice";
 
 const ModalStyle = styled.div`
   position: fixed;
@@ -244,12 +245,22 @@ const Modal = () => {
         dispatch(logoutModal());
       }
 
+      // 교직원 : 취소
+      if (modalState.modalRes[0] === 10) {
+        const data = {
+          modalRes: [false],
+        };
+        navigate("/teacher");
+        dispatch(closeModal());
+      }
+
       // 교직원 : 정보 수정 페이지 처리
       if (modalState.modalRes[0] === 11) {
         console.log("수정처리를 하겠습니다.", modalState.modalRes[1]);
         const res = patchTeacherInfo(modalState.modalRes[1]);
         if (res) {
           dispatch(closeModal());
+          navigate("/teacher");
         }
       }
 
@@ -416,8 +427,12 @@ const Modal = () => {
         };
 
         // console.log("data : ", data);
-        const res = postOnlineTest(data);
+        const res = await postOnlineTest(data);
+
         if (res) {
+          const newData = { incorrectAnswerNoteMain: res };
+          dispatch(updateTestDate(newData));
+
           dispatch(closeModal());
           navigate("/online/test/grad");
         }

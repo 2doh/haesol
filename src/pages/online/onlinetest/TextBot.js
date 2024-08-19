@@ -5,6 +5,7 @@ import usePreventGoBack from "hooks/common/usePreventGoBack";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import botImg from "../../../images/graidentairobot.jpg";
+import { useNavigate } from "react-router";
 
 const TextBotWrap = styled.div`
   width: 100%;
@@ -12,13 +13,23 @@ const TextBotWrap = styled.div`
   flex-direction: row;
   gap: 60px;
 
-  img {
-    border-radius: 50px;
-    width: 300px;
-    height: 300px;
+  .bot-img-div {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    img {
+      border-radius: 50px;
+      width: 300px;
+      height: 300px;
+    }
+    a {
+      text-align: center;
+    }
   }
 
   p {
+    width: 100%;
     min-height: 173px;
     height: fit-content;
     // layout
@@ -64,6 +75,8 @@ const TextBotWrap = styled.div`
 `;
 
 const TextBot = () => {
+  const navigate = useNavigate();
+
   const [inputValue, setInputValue] = useState("");
   const [promptResponses, setpromptResponses] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -92,6 +105,10 @@ const TextBot = () => {
       console.log("문제가 생겼어요");
       setLoading(false);
     }
+  };
+
+  const movePage = () => {
+    navigate("/online/test/note");
   };
 
   return (
@@ -146,7 +163,13 @@ const TextBot = () => {
         </div>
         <div>
           <div>책 추천</div>
-          <div>오답노트</div>
+          <div
+            onClick={() => {
+              movePage();
+            }}
+          >
+            오답노트
+          </div>
         </div>
       </p>
     </TextBotWrap>

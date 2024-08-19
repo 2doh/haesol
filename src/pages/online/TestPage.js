@@ -95,7 +95,11 @@ const TestPage = () => {
           <TestTitle subjectsName={subjectsName} testName={testName} />
           <div className="test-page-inner">
             {/* <TestQuestion subjects={subjects} /> */}
-            <TestQuestion subjects={subjectsNum} testName={testName} />
+            <TestQuestion
+              subjects={subjectsNum}
+              subjectsName={subjectsName}
+              testName={testName}
+            />
             <TestAnswer />
           </div>
         </div>

@@ -56,6 +56,7 @@ import OnlineMainPage from "pages/online/onlinemain/OnlineMainPage";
 import MyChildList from "pages/parents/MyChildList";
 import { TestExPage } from "pages/online/onlinemain/TestExPage";
 import TestResultsPage from "pages/online/onlinetest/TestResultsPage";
+import IncorrectAnswerNoteMain from "pages/online/incorrectanswernote/IncorrectAnswerNoteMain";
 
 const Main = styled.div``;
 
@@ -217,6 +218,10 @@ function App() {
             {/* 시험 페이지 */}
             <Route path="test" element={<TestPage />}></Route>
             <Route path="test/grad" element={<TestResultsPage />}></Route>
+            <Route
+              path="test/note"
+              element={<IncorrectAnswerNoteMain />}
+            ></Route>
             {/* 시험 설명 */}
             <Route path="test/ex" element={<TestExPage />}></Route>
           </Route>
