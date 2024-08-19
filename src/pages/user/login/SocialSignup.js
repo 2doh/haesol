@@ -70,8 +70,11 @@ const SocialSignup = () => {
       email: initData.useremail,
       name: initData.name,
     };
-    // console.log(reqData);
+    console.log(reqData);
     const result = await signupSocialCode(reqData);
+    if (result === "fail") {
+      return;
+    }
     sessionStorage.removeItem("sociallogin");
     // 회원가입 성공시 처리
     // console.log(result);
