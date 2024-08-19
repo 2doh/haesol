@@ -311,11 +311,11 @@ const CreateTestMath = () => {
                   handleSelectTagType(e);
                 }}
               >
-                <option value="21">사칙연산</option>
-                <option value="22">단위환산</option>
-                <option value="23">그래프</option>
-                <option value="24">규칙찾기</option>
-                <option value="25">도형 넓이 계산</option>
+                <option value="21">수와 연산</option>
+                <option value="22">도형</option>
+                <option value="23">측정</option>
+                <option value="24">규칙성</option>
+                <option value="25">자료와 가능성</option>
               </select>
             </div>
             <form>

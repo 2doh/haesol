@@ -12,6 +12,8 @@ import Footer from "components/layout/Footer";
 import HeaderMemu from "components/layout/header/HeaderMenu";
 import HeaderTopPublic from "components/layout/header/HeaderTopPublic";
 import StudentImg from "./StudentImg";
+import StudentsPrevInfo from "./StudentsPrevInfo";
+import usePreventRefresh from "hooks/common/usePreventRefresh";
 
 interface EtcItem {
   uclass: string;
@@ -20,6 +22,7 @@ interface EtcItem {
 }
 
 interface StudentInfo {
+  teacherName: string;
   studentPk: number;
   studentName: string;
   studentPhone: string;
@@ -68,6 +71,7 @@ const StudentEdit: React.FC = () => {
   const handleClick = () => {
     navigate(`/grade/edit/${studentPk}`);
   };
+  usePreventRefresh();
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const modalState = useSelector((state: any) => state.modalSlice);
@@ -188,9 +192,6 @@ const StudentEdit: React.FC = () => {
       <HeaderMemu />
       <div className="main-core">
         {/* <!-- 제목 위치 --> */}
-        {/* <PageTitle>
-            {userGrade}학년 {userClass}반
-          </PageTitle> */}
         <PageTitle>학생 정보 관리</PageTitle>
         {/* <!-- 신상정보 전체 레이아웃 --> */}
         <div className="user-info-wrap">
@@ -400,74 +401,14 @@ const StudentEdit: React.FC = () => {
               <div className="info-title">
                 <span>현재 학급</span>
                 <div>
-                  {studentGrade}학년 {studentClass}반
+                  {studentGrade}학년 {studentClass}반 | 담임 :{" "}
+                  {studentInfo.teacherName}
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <StudentsInfoStyle>
-          <div className="student-info">
-            <div className="main-schedule-title main-contents-title">
-              <BoxTitle>학생 기록 정보</BoxTitle>
-            </div>
-            <div className="grid-frame">
-              {studentInfo.prevEtcList && studentInfo.prevEtcList.length > 0 ? (
-                studentInfo.prevEtcList.map((item, index) => (
-                  <>
-                    <div className="item" key={index}>
-                      <div className="grid-inner">
-                        <div className="grid-inner-item">
-                          <div className="grid-inner-item-text">학급</div>
-                        </div>
-                        <div className="grid-inner-item1">
-                          <div className="grid-inner-item-text">
-                            {item.uclass}
-                          </div>
-                        </div>
-                        <div className="grid-inner-item">
-                          <div className="grid-inner-item-text">
-                            담당 교직원
-                          </div>
-                        </div>
-                        <div className="grid-inner-item1">
-                          <div className="grid-inner-item-text">
-                            {item.teacherName}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="student-info-readonly">
-                      {item.etc || "기록된 정보가 없습니다."}
-                    </div>
-                  </>
-                ))
-              ) : (
-                <>
-                  <div className="item">
-                    <div className="grid-inner">
-                      <div className="grid-inner-info">
-                        <div className="grid-inner-item-text">학급</div>
-                      </div>
-                      <div className="grid-inner-info1">
-                        <div className="grid-inner-item-text">-</div>
-                      </div>
-                      <div className="grid-inner-info">
-                        <div className="grid-inner-item-text">담당 교직원</div>
-                      </div>
-                      <div className="grid-inner-info1">
-                        <div className="grid-inner-item-text">-</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="student-info-readonly">
-                    이전 학기 정보가 없습니다.
-                  </div>
-                </>
-              )}
-            </div>
-          </div>
-        </StudentsInfoStyle>
+        <StudentsPrevInfo />
       </div>
       <Footer />
     </>
