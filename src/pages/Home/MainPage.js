@@ -14,6 +14,7 @@ import ClassNotice from "./ClassNotice";
 import QuickMenu from "components/common/quickmenu/QuickMenu";
 import { useEffect, useState } from "react";
 import { getCookie } from "utils/cookie";
+import ClassSchedule from "./ClassSchedule";
 
 const MainPageStyle = styled.div`
   width: 100%;

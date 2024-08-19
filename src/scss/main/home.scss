@@ -204,11 +204,11 @@
         flex-direction: column;
         gap: 8px;
 
-        p:nth-child(1) {
+        p:nth-of-type(1) {
           font-size: 15px;
         }
 
-        p:nth-child(2) {
+        p:nth-of-type(2) {
           font-size: 22px;
         }
       }

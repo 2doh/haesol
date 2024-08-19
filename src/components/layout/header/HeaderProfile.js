@@ -257,8 +257,7 @@ const HeaderProfile = () => {
           ) : null}
 
           {!getCookie("accessToken") ? <UnauthenticatedProfile /> : null}
-          {/* {getCookie("userRole") === "ROLE_PARENTS" ? <ParentsProfile /> : null} */}
-          {/* <StudentProfile /> */}
+          {getCookie("userRole") === "ROLE_STUDENT" ? <StudentProfile /> : null}
           {getCookie("userRole") === "ROLE_PARENTS" ? <ParentsProfile /> : null}
           {getCookie("userRole") === "ROLE_TEACHER" ? <TeacherProfile /> : null}
         </section>

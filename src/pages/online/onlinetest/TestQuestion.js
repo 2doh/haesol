@@ -161,9 +161,6 @@ const TestQuestion = ({ subjects, subjectsName, testName }) => {
   const dispatch = useDispatch();
   const testState = useSelector(state => state.testSlice);
 
-  // 문제 리스트
-  // const [questionList, setQuestionList] = useState([]);
-
   const [isQuestions, setIsQuestions] = useState(false);
 
   useEffect(() => {
@@ -175,10 +172,6 @@ const TestQuestion = ({ subjects, subjectsName, testName }) => {
       subjectCode: subjects,
       subjectName: subjectsName,
     };
-
-    // console.log("formattedQuestions : ", formattedQuestions);
-    // console.log("questionsNumArr : ", questionsNumArr);
-    // console.log("data : ", data);
 
     dispatch(updateTestDate(data));
   }, []);
@@ -200,8 +193,7 @@ const TestQuestion = ({ subjects, subjectsName, testName }) => {
       case 2:
         res = await getOnlineTest(2);
         console.log("res : ", res);
-
-        return;
+        break;
       default:
         break;
     }
@@ -212,12 +204,8 @@ const TestQuestion = ({ subjects, subjectsName, testName }) => {
   };
 
   useEffect(() => {
-    console.log("testState : ", testState);
+    console.log("testState 결과 : ", testState);
   }, [testState]);
-
-  // useEffect(() => {
-  //   if (questionList.length !== 0) reGetDateQuestion();
-  // }, [questionList]);
 
   /** 데이터 리덕스 툴킷에 저장 */
   const reGetDateQuestion = list => {

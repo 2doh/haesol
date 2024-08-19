@@ -59,6 +59,8 @@ import TestResultsPage from "pages/online/onlinetest/TestResultsPage";
 import IncorrectAnswerNoteMain from "pages/online/incorrectanswernote/IncorrectAnswerNoteMain";
 import MyChildInfoView from "pages/parents/MyChildInfoView";
 import StudentInfoViewTeacher from "pages/student/StudentInfoViewTeacher";
+import useLogout from "hooks/common/useLogout";
+
 
 const Main = styled.div``;
 
@@ -98,6 +100,7 @@ function App() {
 
   /** 모달 상태 관리 */
   const modalState = useSelector(state => state.modalSlice);
+
   // console.log("권한 : ", loginUserType);
   // // 토큰 디코딩
   // const decoded = jwt.decode(token, { complete: true });

@@ -19,6 +19,9 @@ import answerSelect from "../answerSelect";
 import { useEffect, useState } from "react";
 import useWindowDimensions from "hooks/common/useWindowDimensions";
 
+import correctlyImg from "../../../images/online/note/3.png";
+import wrongImg from "../../../images/online/note/4.png";
+
 const TestOmrStyle = styled.div`
   display: flex;
   flex-direction: column;
@@ -111,6 +114,12 @@ const TestOmrStyle = styled.div`
         strong {
           color: #fff;
         }
+
+        img {
+          width: 50px;
+          height: 50px;
+          position: absolute;
+        }
       }
       .omr-select {
         justify-content: space-evenly;
@@ -176,12 +185,27 @@ const TestOmrStyle = styled.div`
   }
 `;
 
-const NoteOmr = () => {
+const NoteOmr = ({ studentOmr, realAnswerOmr }) => {
   const dispatch = useDispatch();
   const testState = useSelector(state => state.testSlice);
   const [changeStyle, setChangeStyle] = useState(true);
   const { height, width } = useWindowDimensions();
 
+  /** 받은 과목 번호 */
+  useEffect(() => {
+    if (
+      !testState.incorrectAnswerNoteMain.studentOmr.omrAnswer ||
+      !testState.incorrectAnswerNoteMain.realAnswer
+    ) {
+      console.log("데이터 없음. 처리하기");
+      navigate("/");
+      // window.location.reload("/");
+    } else {
+      console.log("데이터 있음. ");
+    }
+  }, [studentOmr, realAnswerOmr]);
+
+  /** 반응형 시 */
   useEffect(() => {
     if (width < 1180) {
       setChangeStyle(false);
@@ -225,12 +249,17 @@ const NoteOmr = () => {
         {testState.questionAll.map((item, index) => (
           <div className="omr-box-inner" key={index}>
             <div className="omr-num" onClick={() => questionsNumChange(index)}>
+              {studentOmr[index] === realAnswerOmr[index] ? (
+                <img src={correctlyImg} />
+              ) : (
+                <img src={wrongImg} />
+              )}
               <strong>{item.number}</strong>
             </div>
             <div className="omr-select">
               <input
                 type="radio"
-                checked={testState.selectedValue === `${item.number}_1`}
+                defaultChecked={testState.selectedValue === `${item.number}_1`}
                 id={`omr${item.number}_1`}
                 name={`omr${item.number}`}
                 value={`${item.number}_1`}
@@ -252,7 +281,7 @@ const NoteOmr = () => {
               </label>
               <input
                 type="radio"
-                checked={testState.selectedValue === `${item.number}_2`}
+                defaultChecked={testState.selectedValue === `${item.number}_2`}
                 id={`omr${item.number}_2`}
                 name={`omr${item.number}`}
                 value={`${item.number}_2`}
@@ -272,7 +301,7 @@ const NoteOmr = () => {
               </label>
               <input
                 type="radio"
-                checked={testState.selectedValue === `${item.number}_3`}
+                defaultChecked={testState.selectedValue === `${item.number}_3`}
                 id={`omr${item.number}_3`}
                 name={`omr${item.number}`}
                 value={`${item.number}_3`}
@@ -292,7 +321,7 @@ const NoteOmr = () => {
               </label>
               <input
                 type="radio"
-                checked={testState.selectedValue === `${item.number}_4`}
+                defaultChecked={testState.selectedValue === `${item.number}_4`}
                 id={`omr${item.number}_4`}
                 name={`omr${item.number}`}
                 value={`${item.number}_4`}
@@ -313,7 +342,7 @@ const NoteOmr = () => {
               </label>
               <input
                 type="radio"
-                checked={testState.selectedValue === `${item.number}_5`}
+                defaultChecked={testState.selectedValue === `${item.number}_5`}
                 id={`omr${item.number}_5`}
                 name={`omr${item.number}`}
                 value={`${item.number}_5`}

@@ -1,10 +1,13 @@
 import styled from "@emotion/styled";
 import GreenHeaderNoOption from "components/layout/header/GreenHeaderNoOption";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import TestTitle from "../onlinetest/TestTitle";
 import NoteQuestion from "./NoteQuestion";
 import NoteAnswer from "./NoteAnswer";
+import { nowQuestionsNumReset } from "slices/testSlice";
+import { useNavigate } from "react-router";
+import usePreventRefresh from "hooks/common/usePreventRefresh";
 
 const NoteWrap = styled.div`
   position: absolute;
@@ -38,26 +41,64 @@ const NoteWrap = styled.div`
   }
 `;
 const IncorrectAnswerNoteMain = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const testState = useSelector(state => state.testSlice);
 
+  // 학생이 체크한 OMR
+  const [studentOmr, setStudentOmr] = useState("");
+
+  // 정답 배열
+  const [realAnswerOmr, setRealAnswerOmr] = useState("");
+
+  // 데이터가 있음/없음(새로고침 또는 뒤로가기 처리)
+  const [isDate, setIsDate] = useState(false);
+
   useEffect(() => {
-    console.log(testState);
+    // console.log(testState);
+
+    /** 오답노트 첫 진입시 1번 문제부터 출력되도록 리셋 */
+    dispatch(nowQuestionsNumReset());
+  }, []);
+
+  // 새로고침 경고 메세지
+  usePreventRefresh();
+
+  useEffect(() => {
+    if (testState.questionAll.length === 0) {
+      alert("종료된 시험을 확인할 수 없습니다.");
+      navigate("/");
+      // window.location.reload("/");
+    } else {
+      setIsDate(true);
+      console.log("정보 : ", testState);
+      setStudentOmr(testState.incorrectAnswerNoteMain.studentOmr.omrAnswer);
+      setRealAnswerOmr(testState.incorrectAnswerNoteMain.realAnswer);
+    }
   }, []);
 
   return (
     <>
       <GreenHeaderNoOption />
       <NoteWrap>
-        <div className="note-page">
-          <TestTitle
-            subjectsName={testState.subjectName}
-            testName={testState.testTitle}
-          />
-          <div className="note-page-inner">
-            <NoteQuestion />
-            <NoteAnswer />
+        {isDate ? (
+          <div className="note-page">
+            <TestTitle
+              subjectsName={testState.subjectName}
+              testName={testState.testTitle}
+            />
+            <div className="note-page-inner">
+              <NoteQuestion
+                studentOmr={studentOmr}
+                realAnswerOmr={realAnswerOmr}
+              />
+              <NoteAnswer
+                studentOmr={studentOmr}
+                realAnswerOmr={realAnswerOmr}
+              />
+            </div>
           </div>
-        </div>
+        ) : null}
       </NoteWrap>
     </>
   );

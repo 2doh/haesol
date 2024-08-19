@@ -110,7 +110,7 @@
       }
     }
 
-    & .item:nth-child(odd) {
+    & .item:nth-of-type(odd) {
       background-color: $b100;
     }
 
