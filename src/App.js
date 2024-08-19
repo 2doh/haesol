@@ -364,7 +364,7 @@ function App() {
             <Route
               path="item/:userClass"
               element={
-                <TeacherProtectedRoute
+                <PrivateRoute
                   authenticated={accessToken}
                   component={<NoticeItem />}
                 />
