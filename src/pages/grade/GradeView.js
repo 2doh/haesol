@@ -165,7 +165,7 @@ const GradeView = () => {
   const navigate = useNavigate();
   const { studentPk } = useParams();
   const handleClick = () => {
-    navigate(`/studentinfo`);
+    navigate(`/parents/studentinfo`);
   };
   const handleClickChart = () => {
     navigate(`/grade/chart/${studentPk}`);

@@ -112,7 +112,7 @@ const StudentGradeChart = () => {
             <div className="div-wrapper">
               <div
                 className="info-subtitle"
-                onClick={() => navigate("/studentinfo")}
+                onClick={() => navigate("/parents/studentinfo")}
               >
                 신상 정보
               </div>

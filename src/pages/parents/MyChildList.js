@@ -513,7 +513,7 @@ const MyChildList = () => {
                               <img src={defaultImg} />
                             ) : (
                               <img
-                                src={`http://192.168.0.144:5121/pic/student/${item.parentsPK}/${item.pic}`}
+                                src={`http://112.222.157.156:5121/pic/student/${item.studentPk}/${item.pic}`}
                               />
                             )}
                           </div>

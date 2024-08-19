@@ -28,6 +28,7 @@ const NoticeListStyle = styled.div`
 `;
 
 const NoticeItem = () => {
+  const [loginUserType, setLoginUserType] = useState(getCookie("userRole"));
   const userClass = getCookie("userClass");
   const userGrade = getCookie("userGrade");
   // 네비게이트
@@ -141,14 +142,16 @@ const NoticeItem = () => {
                 </div>
               </div>
 
-              <div
-                className="alart-button"
-                onClick={() => {
-                  handleEditClick();
-                }}
-              >
-                <button>알림 작성</button>
-              </div>
+              {loginUserType === "ROLE_TEACHER" ? (
+                <div
+                  className="alart-button"
+                  onClick={() => {
+                    handleEditClick();
+                  }}
+                >
+                  <button>알림 작성</button>
+                </div>
+              ) : null}
             </div>
           </div>
           <div className="notice-select">

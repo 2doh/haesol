@@ -45,6 +45,7 @@ const MyShildInfo = styled.div`
 `;
 
 const MyChildInfo = () => {
+  const studentPk = getCookie("studentPk");
   // 네비게이트
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -176,30 +177,7 @@ const MyChildInfo = () => {
           studentAddr: studentAddr,
           studentDetail: studentDetail,
           studentPk: getCookie("studentPk"),
-          // stuEtc: studentEtc,
-          // nm: "string",
-          // email: "string",
-          // stuEngNm: "string",
         },
-        //         {
-        //           "stuNm": "studentName",
-        //           // "nm": "string", ?
-        //           "connet": "connet",
-        //           "phone": "parentPhone",
-        //           // "subPhone": "string",
-        //           "stuPhone": "studentPhone",
-        //           // "email": "string",
-        //           // "stuEngNm": "string",
-        //           "addr": "studentAddr",
-        //           "detail": "studentDetail",
-        //           "stuEtc": "studentEtc",
-        //           "zoneCode": "studentZoneCode"
-        //         }
-        //         const [studentBirth, setStudentBirth] = useState("");
-        // const [parentName, setParentName] = useState("");
-        // // 추가
-        // // const [studentGender, setStudentGender] = useState("");
-        // const [studentPic, setStudentPic] = useState("");
       ],
       buttonText: ["수정", "취소"],
     };
@@ -207,53 +185,6 @@ const MyChildInfo = () => {
 
     dispatch(openModal(selectModalType));
   };
-
-  /** API 문제 */
-  // const saveInfo = selectModalType => {
-  //   // 기본 이메일과 중복 확인
-  //   const data = {
-  //     bodyText: ["정보를 수정하시겠습니까?"],
-  //     modalRes: [
-  //       12,
-  //       {
-  //         stuNm: studentName,
-  //         connet,
-  //         phone: parentPhone,
-  //         stuPhone: studentPhone,
-  //         zoneCode: studentZoneCode,
-  //         addr: studentAddr,
-  //         detail: studentDetail,
-  //         // stuEtc: studentEtc,
-  //         // nm: "string",
-  //         // email: "string",
-  //         // stuEngNm: "string",
-  //       },
-  //       //         {
-  //       //           "stuNm": "studentName",
-  //       //           // "nm": "string", ?
-  //       //           "connet": "connet",
-  //       //           "phone": "parentPhone",
-  //       //           // "subPhone": "string",
-  //       //           "stuPhone": "studentPhone",
-  //       //           // "email": "string",
-  //       //           // "stuEngNm": "string",
-  //       //           "addr": "studentAddr",
-  //       //           "detail": "studentDetail",
-  //       //           "stuEtc": "studentEtc",
-  //       //           "zoneCode": "studentZoneCode"
-  //       //         }
-  //       //         const [studentBirth, setStudentBirth] = useState("");
-  //       // const [parentName, setParentName] = useState("");
-  //       // // 추가
-  //       // // const [studentGender, setStudentGender] = useState("");
-  //       // const [studentPic, setStudentPic] = useState("");
-  //     ],
-  //     buttonText: ["수정", "취소"],
-  //   };
-  //   dispatch(updateModalDate(data));
-
-  //   dispatch(openModal(selectModalType));
-  // };
 
   const StudentsInfoStyle = styled.div`
     display: flex;
@@ -310,7 +241,7 @@ const MyChildInfo = () => {
               >
                 <div className="info-subtitle">차트</div>
               </div>
-              <div className="info-button re-pw-btn">
+              {/* <div className="info-button re-pw-btn">
                 <button
                   onClick={() => {
                     showModal("PasswordChangeModal");
@@ -319,7 +250,7 @@ const MyChildInfo = () => {
                 >
                   비밀번호 수정
                 </button>
-              </div>
+              </div> */}
             </div>
 
             <div className="info-button">
@@ -428,18 +359,16 @@ const MyChildInfo = () => {
                     value={parentPhone}
                     className="no-edit-class"
                   />
-                  {/* <PhoneInputFields
-                    placeholder="전화번호를 입력하세요"
-                    phoneNum={parentPhone}
-                    setPhoneNum={setParentPhone}
-                  /> */}
                 </div>
               </div>
             </div>
             <div className="info-img">
               {studentPic !== null ? (
                 <StudentsImeStyle>
-                  <img src={studentPic} alt={studentPic} />
+                  <img
+                    src={`http://112.222.157.156:5121/pic/student/${studentPk}/${studentPic}`}
+                    alt="StudentImg"
+                  />
                 </StudentsImeStyle>
               ) : (
                 <StudentsImeStyle>

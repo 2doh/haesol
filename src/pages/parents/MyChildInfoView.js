@@ -48,6 +48,7 @@ const MyShildInfo = styled.div`
 `;
 
 const MyChildInfoView = () => {
+  const studentPk = getCookie("studentPk");
   // 네비게이트
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -55,12 +56,12 @@ const MyChildInfoView = () => {
 
   /** 성적 확인 페이지로 이동 */
   const handleClick = () => {
-    navigate(`/grade/${getCookie("studentPk")}`);
+    navigate(`/grade/${studentPk}`);
   };
 
   /** 차트 페이지로 이동 */
   const handleChart = () => {
-    navigate(`/grade/chart/${getCookie("studentPk")}`);
+    navigate(`/grade/chart/${studentPk}`);
   };
 
   const [studentBirth, setStudentBirth] = useState("");
@@ -179,30 +180,7 @@ const MyChildInfoView = () => {
           studentAddr: studentAddr,
           studentDetail: studentDetail,
           studentPk: getCookie("studentPk"),
-          // stuEtc: studentEtc,
-          // nm: "string",
-          // email: "string",
-          // stuEngNm: "string",
         },
-        //         {
-        //           "stuNm": "studentName",
-        //           // "nm": "string", ?
-        //           "connet": "connet",
-        //           "phone": "parentPhone",
-        //           // "subPhone": "string",
-        //           "stuPhone": "studentPhone",
-        //           // "email": "string",
-        //           // "stuEngNm": "string",
-        //           "addr": "studentAddr",
-        //           "detail": "studentDetail",
-        //           "stuEtc": "studentEtc",
-        //           "zoneCode": "studentZoneCode"
-        //         }
-        //         const [studentBirth, setStudentBirth] = useState("");
-        // const [parentName, setParentName] = useState("");
-        // // 추가
-        // // const [studentGender, setStudentGender] = useState("");
-        // const [studentPic, setStudentPic] = useState("");
       ],
       buttonText: ["수정", "취소"],
     };
@@ -210,53 +188,6 @@ const MyChildInfoView = () => {
 
     dispatch(openModal(selectModalType));
   };
-
-  /** API 문제 */
-  // const saveInfo = selectModalType => {
-  //   // 기본 이메일과 중복 확인
-  //   const data = {
-  //     bodyText: ["정보를 수정하시겠습니까?"],
-  //     modalRes: [
-  //       12,
-  //       {
-  //         stuNm: studentName,
-  //         connet,
-  //         phone: parentPhone,
-  //         stuPhone: studentPhone,
-  //         zoneCode: studentZoneCode,
-  //         addr: studentAddr,
-  //         detail: studentDetail,
-  //         // stuEtc: studentEtc,
-  //         // nm: "string",
-  //         // email: "string",
-  //         // stuEngNm: "string",
-  //       },
-  //       //         {
-  //       //           "stuNm": "studentName",
-  //       //           // "nm": "string", ?
-  //       //           "connet": "connet",
-  //       //           "phone": "parentPhone",
-  //       //           // "subPhone": "string",
-  //       //           "stuPhone": "studentPhone",
-  //       //           // "email": "string",
-  //       //           // "stuEngNm": "string",
-  //       //           "addr": "studentAddr",
-  //       //           "detail": "studentDetail",
-  //       //           "stuEtc": "studentEtc",
-  //       //           "zoneCode": "studentZoneCode"
-  //       //         }
-  //       //         const [studentBirth, setStudentBirth] = useState("");
-  //       // const [parentName, setParentName] = useState("");
-  //       // // 추가
-  //       // // const [studentGender, setStudentGender] = useState("");
-  //       // const [studentPic, setStudentPic] = useState("");
-  //     ],
-  //     buttonText: ["수정", "취소"],
-  //   };
-  //   dispatch(updateModalDate(data));
-
-  //   dispatch(openModal(selectModalType));
-  // };
 
   const StudentsInfoStyle = styled.div`
     display: flex;
@@ -318,7 +249,7 @@ const MyChildInfoView = () => {
                 >
                   <div className="info-subtitle">차트</div>
                 </div>
-                <div className="info-button re-pw-btn">
+                {/* <div className="info-button re-pw-btn">
                   <button
                     onClick={() => {
                       showModal("PasswordChangeModal");
@@ -327,23 +258,16 @@ const MyChildInfoView = () => {
                   >
                     비밀번호 수정
                   </button>
-                </div>
+                </div> */}
               </div>
 
               <div className="info-button">
                 <button
-                  onClick={e => {
-                    saveInfo("BasicModal");
+                  onClick={() => {
+                    navigate("/parents/studentinfo/edit");
                   }}
                 >
-                  저장
-                </button>
-                <button
-                  onClick={e => {
-                    modifyCancel("BasicModal");
-                  }}
-                >
-                  취소
+                  수정
                 </button>
               </div>
             </div>
@@ -353,13 +277,15 @@ const MyChildInfoView = () => {
                 <div className="info-title">
                   <span>학생명</span>
                   <input
+                    className="no-edit-class"
                     type="text"
                     name="text"
                     value={studentName}
                     placeholder="이름을 입력해주세요"
-                    onChange={e => {
-                      setStudentName(e.target.value);
-                    }}
+                    disabled
+                    // onChange={e => {
+                    //   setStudentName(e.target.value);
+                    // }}
                   />
                   <div className="form-check gender-style ">
                     <input
@@ -377,18 +303,17 @@ const MyChildInfoView = () => {
                     name="date"
                     value={studentBirth}
                     className="no-edit-class"
-                    // onChange={e => {
-                    //   setStudentBirth(e.target.value);
-                    // }}
                   />
                 </div>
                 <div className="info-title">
                   <span>전화번호</span>
 
-                  <PhoneInputFields
+                  <input
+                    className="no-edit-class"
+                    disabled
                     placeholder="전화번호를 입력하세요"
-                    phoneNum={studentPhone}
-                    setPhoneNum={setStudentPhone}
+                    value={studentPhone}
+                    // setPhoneNum={setStudentPhone}
                   />
                 </div>
               </div>
@@ -412,9 +337,6 @@ const MyChildInfoView = () => {
                     className="no-edit-class"
                     name="family-info"
                     value={connet}
-                    // onChange={e => {
-                    //   setConnet(e.target.value);
-                    // }}
                   >
                     <option value="none" disabled selected>
                       == 항목을 선택하세요 ==
@@ -436,18 +358,16 @@ const MyChildInfoView = () => {
                       value={parentPhone}
                       className="no-edit-class"
                     />
-                    {/* <PhoneInputFields
-                    placeholder="전화번호를 입력하세요"
-                    phoneNum={parentPhone}
-                    setPhoneNum={setParentPhone}
-                  /> */}
                   </div>
                 </div>
               </div>
               <div className="info-img">
                 {studentPic !== null ? (
                   <StudentsImeStyle>
-                    <img src={studentPic} alt={studentPic} />
+                    <img
+                      src={`http://112.222.157.156:5121/pic/student/${studentPk}/${studentPic}`}
+                      alt="StudentImg"
+                    />
                   </StudentsImeStyle>
                 ) : (
                   <StudentsImeStyle>
@@ -528,29 +448,6 @@ const MyChildInfoView = () => {
                 </div>
               </div>
             </div>
-            {/* <div className="info-contain-top">
-            <div className="info-none-modify">
-              <div className="info-title">
-                <span className="prev-class-item-span">이전 학급</span>
-                <div className="prev-class-item">
-                  {prevEtcList.length > 0 ? (
-                    prevEtcList.map((item, index) => (
-                      <>
-                        <div key={index} className="no-padding">
-                          {item.uclass} | 담임 : {item.teacherName}
-                        </div>
-                        <div key={index} className="no-padding">
-                          {item.uclass} | 담임 : {item.teacherName}
-                        </div>
-                      </>
-                    ))
-                  ) : (
-                    <div className="no-data">정보 없음</div>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div> */}
             <div className="info-contain-top">
               <div className="info-none-modify" id="info-none-modify-last">
                 <div className="info-title">
