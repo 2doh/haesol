@@ -16,7 +16,7 @@ const NoteWrap = styled.div`
 
   .note-page {
     width: 1180px;
-    height: 100%;
+    /* height: 100%; */
     background-color: #f3f9fa;
     margin: 0 auto;
     min-width: 440px;

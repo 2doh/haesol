@@ -27,11 +27,12 @@
   height: 100%;
   background-color: #f3f9fa;
   margin: 0 auto;
-  min-height: 850px;
+  // min-height: 850px;
+  min-height: calc(100vh - 193px);
 }
 .login-inner {
   width: 688px;
-  min-height: calc(100vh - 193px);
+  // min-height: calc(100vh - 193px);
   margin: 0 auto;
   padding-top: 50px;
 }

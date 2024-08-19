@@ -105,6 +105,7 @@ const TestOmrStyle = styled.div`
       .omr-num {
         cursor: pointer;
         width: 15%;
+        max-width: 42px;
         background-color: #5f909f;
 
         span,
@@ -112,7 +113,8 @@ const TestOmrStyle = styled.div`
           color: #fff;
         }
       }
-      .omr-select {
+      .omr-select,
+      .omr__input {
         justify-content: space-evenly;
         width: 90%;
         background-color: #add2d8;
@@ -130,6 +132,18 @@ const TestOmrStyle = styled.div`
               opacity: 1;
             }
           }
+        }
+      }
+
+      .omr__input {
+        padding: 0 20px;
+
+        input[type="text"] {
+          width: 100%;
+          text-align: center;
+        }
+        input[type="text"]::placeholder {
+          color: #c2c2c2;
         }
       }
     }
@@ -182,6 +196,27 @@ const TestOmr = () => {
   const [changeStyle, setChangeStyle] = useState(true);
   const { height, width } = useWindowDimensions();
 
+  // 주관식 답 저장
+  const [questionsInputAnswer, setQuestionsInputAnswer] = useState("");
+
+  useEffect(() => {
+    if (testState.selectNumArr.length === 0) {
+      console.log("초기화");
+      setQuestionsInputAnswer("");
+    } else {
+      console.log("초기화 이후");
+      setQuestionsInputAnswer(
+        testState.selectNumArr[testState.nowQuestionsNum].selectNum,
+      );
+    }
+  }, [testState.nowQuestionsNum, testState.selectNumArr]);
+
+  useEffect(() => {
+    if (questionsInputAnswer !== "") {
+      questionsNumCheck(questionsInputAnswer, testState.nowQuestionsNum);
+    }
+  }, [questionsInputAnswer]);
+
   useEffect(() => {
     if (width < 1180) {
       setChangeStyle(false);
@@ -202,7 +237,11 @@ const TestOmr = () => {
   const questionsNumCheck = (e, num) => {
     if (num === testState.nowQuestionsNum) {
       // console.log("일치 한다");
-      answerSelect(e, dispatch, testState);
+      if (testState.questionAll[testState.nowQuestionsNum].queTag === 2) {
+        answerSelect(questionsInputAnswer, dispatch, testState, num);
+      } else {
+        answerSelect(e, dispatch, testState);
+      }
     } else {
       const data = {
         headerText: "주의",
@@ -246,123 +285,140 @@ const TestOmr = () => {
             <div className="omr-num" onClick={() => questionsNumChange(index)}>
               <strong>{item.number}</strong>
             </div>
-            <div className="omr-select">
-              <input
-                type="radio"
-                checked={testState.selectedValue === `${item.number}_1`}
-                id={`omr${item.number}_1`}
-                name={`omr${item.number}`}
-                value={`${item.number}_1`}
-                onChange={e => {
-                  questionsNumCheck(e, index);
-                }}
-              />
-              <label
-                htmlFor={`omr${item.number}_1`}
-                // onClick={() => questionsNumCheck(index)}
-              >
-                {testState.selectNumArr[index].selectNum === 1 ? (
-                  <div className="circle-fill">
-                    <PiNumberCircleOneFill />
-                  </div>
-                ) : (
-                  <div className="circle-duotone">
-                    <PiNumberCircleOneDuotone />
-                  </div>
-                )}
-                <span className="label-inner"></span>
-              </label>
-              <input
-                type="radio"
-                checked={testState.selectedValue === `${item.number}_2`}
-                id={`omr${item.number}_2`}
-                name={`omr${item.number}`}
-                value={`${item.number}_2`}
-                onChange={e => {
-                  questionsNumCheck(e, index);
-                }} // onChange 핸들러 추가
-              />
-              <label htmlFor={`omr${item.number}_2`}>
-                {testState.selectNumArr[index].selectNum === 2 ? (
-                  <div className="circle-fill">
-                    <PiNumberCircleTwoFill />
-                  </div>
-                ) : (
-                  <div className="circle-duotone">
-                    <PiNumberCircleTwoDuotone />
-                  </div>
-                )}
-                <span className="label-inner"></span>
-              </label>
-              <input
-                type="radio"
-                checked={testState.selectedValue === `${item.number}_3`}
-                id={`omr${item.number}_3`}
-                name={`omr${item.number}`}
-                value={`${item.number}_3`}
-                onChange={e => {
-                  questionsNumCheck(e, index);
-                }} // onChange 핸들러 추가
-              />
-              <label htmlFor={`omr${item.number}_3`}>
-                {testState.selectNumArr[index].selectNum === 3 ? (
-                  <div className="circle-fill">
-                    <PiNumberCircleThreeFill />
-                  </div>
-                ) : (
-                  <div className="circle-duotone">
-                    <PiNumberCircleThreeDuotone />
-                  </div>
-                )}
-                <span className="label-inner"></span>
-              </label>
-              <input
-                type="radio"
-                checked={testState.selectedValue === `${item.number}_4`}
-                id={`omr${item.number}_4`}
-                name={`omr${item.number}`}
-                value={`${item.number}_4`}
-                onChange={e => {
-                  questionsNumCheck(e, index);
-                }} // onChange 핸들러 추가
-              />
-              <label htmlFor={`omr${item.number}_4`}>
-                {testState.selectNumArr[index].selectNum === 4 ? (
-                  <div className="circle-fill">
-                    <PiNumberCircleFourFill />
-                  </div>
-                ) : (
-                  <div className="circle-duotone">
-                    <PiNumberCircleFourDuotone />
-                  </div>
-                )}
+            {testState.questionAll[index].queTag === 2 ? (
+              <div className="omr__input">
+                <input
+                  type="text"
+                  placeholder="정답을 입력해주세요"
+                  value={
+                    testState.nowQuestionsNum === index
+                      ? questionsInputAnswer
+                      : null
+                  }
+                  onChange={e => {
+                    setQuestionsInputAnswer(e.target.value);
+                  }} // onChange 핸들러 추가
+                />
+              </div>
+            ) : (
+              <div className="omr-select">
+                <input
+                  type="radio"
+                  checked={testState.selectedValue === `${item.number}_1`}
+                  id={`omr${item.number}_1`}
+                  name={`omr${item.number}`}
+                  value={`${item.number}_1`}
+                  onChange={e => {
+                    questionsNumCheck(e, index);
+                  }}
+                />
+                <label
+                  htmlFor={`omr${item.number}_1`}
+                  // onClick={() => questionsNumCheck(index)}
+                >
+                  {testState.selectNumArr[index].selectNum === 1 ? (
+                    <div className="circle-fill">
+                      <PiNumberCircleOneFill />
+                    </div>
+                  ) : (
+                    <div className="circle-duotone">
+                      <PiNumberCircleOneDuotone />
+                    </div>
+                  )}
+                  <span className="label-inner"></span>
+                </label>
+                <input
+                  type="radio"
+                  checked={testState.selectedValue === `${item.number}_2`}
+                  id={`omr${item.number}_2`}
+                  name={`omr${item.number}`}
+                  value={`${item.number}_2`}
+                  onChange={e => {
+                    questionsNumCheck(e, index);
+                  }} // onChange 핸들러 추가
+                />
+                <label htmlFor={`omr${item.number}_2`}>
+                  {testState.selectNumArr[index].selectNum === 2 ? (
+                    <div className="circle-fill">
+                      <PiNumberCircleTwoFill />
+                    </div>
+                  ) : (
+                    <div className="circle-duotone">
+                      <PiNumberCircleTwoDuotone />
+                    </div>
+                  )}
+                  <span className="label-inner"></span>
+                </label>
+                <input
+                  type="radio"
+                  checked={testState.selectedValue === `${item.number}_3`}
+                  id={`omr${item.number}_3`}
+                  name={`omr${item.number}`}
+                  value={`${item.number}_3`}
+                  onChange={e => {
+                    questionsNumCheck(e, index);
+                  }} // onChange 핸들러 추가
+                />
+                <label htmlFor={`omr${item.number}_3`}>
+                  {testState.selectNumArr[index].selectNum === 3 ? (
+                    <div className="circle-fill">
+                      <PiNumberCircleThreeFill />
+                    </div>
+                  ) : (
+                    <div className="circle-duotone">
+                      <PiNumberCircleThreeDuotone />
+                    </div>
+                  )}
+                  <span className="label-inner"></span>
+                </label>
+                <input
+                  type="radio"
+                  checked={testState.selectedValue === `${item.number}_4`}
+                  id={`omr${item.number}_4`}
+                  name={`omr${item.number}`}
+                  value={`${item.number}_4`}
+                  onChange={e => {
+                    questionsNumCheck(e, index);
+                  }} // onChange 핸들러 추가
+                />
+                <label htmlFor={`omr${item.number}_4`}>
+                  {testState.selectNumArr[index].selectNum === 4 ? (
+                    <div className="circle-fill">
+                      <PiNumberCircleFourFill />
+                    </div>
+                  ) : (
+                    <div className="circle-duotone">
+                      <PiNumberCircleFourDuotone />
+                    </div>
+                  )}
 
-                <span className="label-inner"></span>
-              </label>
-              <input
-                type="radio"
-                checked={testState.selectedValue === `${item.number}_5`}
-                id={`omr${item.number}_5`}
-                name={`omr${item.number}`}
-                value={`${item.number}_5`}
-                onChange={e => {
-                  questionsNumCheck(e, index);
-                }} // onChange 핸들러 추가
-              />
-              <label htmlFor={`omr${item.number}_5`}>
-                {testState.selectNumArr[index].selectNum === 5 ? (
-                  <div className="circle-fill">
-                    <PiNumberCircleFiveFill />
-                  </div>
-                ) : (
-                  <div className="circle-duotone">
-                    <PiNumberCircleFiveDuotone />
-                  </div>
-                )}
+                  <span className="label-inner"></span>
+                </label>
+                <input
+                  type="radio"
+                  checked={testState.selectedValue === `${item.number}_5`}
+                  id={`omr${item.number}_5`}
+                  name={`omr${item.number}`}
+                  value={`${item.number}_5`}
+                  onChange={e => {
+                    questionsNumCheck(e, index);
+                  }} // onChange 핸들러 추가
+                />
+                <label htmlFor={`omr${item.number}_5`}>
+                  {testState.selectNumArr[index].selectNum === 5 ? (
+                    <div className="circle-fill">
+                      <PiNumberCircleFiveFill />
+                    </div>
+                  ) : (
+                    <div className="circle-duotone">
+                      <PiNumberCircleFiveDuotone />
+                    </div>
+                  )}
 
-                <span className="label-inner"></span>
-              </label>
-            </div>
+                  <span className="label-inner"></span>
+                </label>
+              </div>
+            )}
           </div>
         ))}
       </div>

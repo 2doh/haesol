@@ -35,11 +35,7 @@
 }
 .main-core .grid-frame {
   text-shadow: 0 1.5px 0 rgba(0, 0, 0, 0.15);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.34) inset,
-    0 2px 0 -1px rgba(0, 0, 0, 0.13),
-    0 3px 0 -1px rgba(0, 0, 0, 0.08),
-    0 3px 13px -1px rgba(0, 0, 0, 0.21);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.34) inset, 0 2px 0 -1px rgba(0, 0, 0, 0.13), 0 3px 0 -1px rgba(0, 0, 0, 0.08), 0 3px 13px -1px rgba(0, 0, 0, 0.21);
   width: 100%;
   display: grid;
   border-radius: 5px;
@@ -58,18 +54,12 @@
 .main-core .grid-frame button {
   display: inline-block;
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.34) inset,
-    0 2px 0 -1px rgba(0, 0, 0, 0.13),
-    0 3px 0 -1px rgba(0, 0, 0, 0.08),
-    0 3px 13px -1px rgba(0, 0, 0, 0.21);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.34) inset, 0 2px 0 -1px rgba(0, 0, 0, 0.13), 0 3px 0 -1px rgba(0, 0, 0, 0.08), 0 3px 13px -1px rgba(0, 0, 0, 0.21);
 }
 .main-core .grid-frame button:active {
   top: 1px;
   border-color: rgba(0, 0, 0, 0.34) rgba(0, 0, 0, 0.21) rgba(0, 0, 0, 0.21);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.89),
-    0 1px rgba(0, 0, 0, 0.05) inset;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.89), 0 1px rgba(0, 0, 0, 0.05) inset;
   position: relative;
 }
 .main-core .grid-frame .grid-inner {
@@ -100,4 +90,4 @@
 }
 .main-core .grid-frame #grid-content:hover {
   background: #c6dbda;
-} /*# sourceMappingURL=studentList.css.map */
+}/*# sourceMappingURL=studentList.css.map */

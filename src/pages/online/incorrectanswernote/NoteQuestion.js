@@ -22,7 +22,8 @@ import wrongImg from "../../../images/online/note/4.png";
 import { useState } from "react";
 
 const TestQuestionWrap = styled.div`
-  height: 100%;
+  min-height: 100%;
+  height: fit-content;
   padding: 20px;
 
   input[type="radio"] {
@@ -32,7 +33,8 @@ const TestQuestionWrap = styled.div`
 
   .test-question-inner {
     width: 100%;
-    height: 100%;
+    min-height: 100%;
+    height: fit-content;
     border: 1px solid #1b6a78;
     padding: 20px;
 
@@ -73,17 +75,19 @@ const TestQuestionWrap = styled.div`
         }
 
         .cbt__question__img {
-          width: 100%;
           display: flex;
           justify-content: center;
-          max-height: 350px;
+          /* max-height: 350px; */
 
           .question-pic {
             display: flex;
             justify-content: center;
 
             img {
+              width: 100%;
               height: 100%;
+              width: 100%;
+
               object-fit: cover;
             }
           }
@@ -105,6 +109,26 @@ const TestQuestionWrap = styled.div`
 
             span {
             }
+          }
+        }
+
+        .cbt__input {
+          display: flex;
+          justify-content: center;
+          padding: 40px 0 50px 0;
+
+          input[type="text"] {
+            width: 60%;
+            height: 65px;
+            text-align: center;
+
+            border: 3px solid #1b6a78;
+            border-radius: 5px;
+            padding: 10px 15px;
+            font-size: 20px;
+          }
+          input[type="text"]::placeholder {
+            color: gray;
           }
         }
       }
@@ -168,6 +192,7 @@ const TestQuestionWrap = styled.div`
 `;
 
 const NoteQuestion = ({ studentOmr, realAnswerOmr }) => {
+  const dispatch = useDispatch();
   const testState = useSelector(state => state.testSlice);
 
   return (
@@ -209,128 +234,142 @@ const NoteQuestion = ({ studentOmr, realAnswerOmr }) => {
                   )}
                 </div>
               </div>
-              <div className="cbt__selects">
-                <input
-                  type="radio"
-                  defaultChecked={
-                    testState.selectedValue ===
-                    `${testState.questionAll[testState.nowQuestionsNum].number}_1`
-                  }
-                  id={`select${testState.questionAll[testState.nowQuestionsNum].number}_1`}
-                  name={`select${testState.questionAll[testState.nowQuestionsNum].number}`}
-                  value={`${testState.questionAll[testState.nowQuestionsNum].number}_1`}
-                />
-                <label
-                  htmlFor={`select${testState.questionAll[testState.nowQuestionsNum].number}_1`}
-                >
-                  {testState.selectNumArr[testState.nowQuestionsNum]
-                    .selectNum === 1 ? (
-                    <PiNumberCircleOneFill />
-                  ) : (
-                    // <PiNumberCircleTwoDuotone />
-                    <PiNumberCircleOneBold />
-                  )}
-                  <span>
-                    {testState.questionAll[testState.nowQuestionsNum].choice1}
-                  </span>
-                </label>
-                <input
-                  type="radio"
-                  defaultChecked={
-                    testState.selectedValue ===
-                    `${testState.questionAll[testState.nowQuestionsNum].number}_2`
-                  }
-                  id={`select${testState.questionAll[testState.nowQuestionsNum].number}_2`}
-                  name={`select${testState.questionAll[testState.nowQuestionsNum].number}`}
-                  value={`${testState.questionAll[testState.nowQuestionsNum].number}_2`}
-                />
-                <label
-                  htmlFor={`select${testState.questionAll[testState.nowQuestionsNum].number}_2`}
-                >
-                  {testState.selectNumArr[testState.nowQuestionsNum]
-                    .selectNum === 2 ? (
-                    <PiNumberCircleTwoFill />
-                  ) : (
-                    <PiNumberCircleTwoBold />
-                  )}
-                  <span>
-                    {testState.questionAll[testState.nowQuestionsNum].choice2}
-                  </span>
-                </label>
 
-                <input
-                  type="radio"
-                  defaultChecked={
-                    testState.selectedValue ===
-                    `${testState.questionAll[testState.nowQuestionsNum].number}_3`
-                  }
-                  id={`select${testState.questionAll[testState.nowQuestionsNum].number}_3`}
-                  name={`select${testState.questionAll[testState.nowQuestionsNum].number}`}
-                  value={`${testState.questionAll[testState.nowQuestionsNum].number}_3`}
-                />
-                <label
-                  htmlFor={`select${testState.questionAll[testState.nowQuestionsNum].number}_3`}
-                >
-                  {testState.selectNumArr[testState.nowQuestionsNum]
-                    .selectNum === 3 ? (
-                    <PiNumberCircleThreeFill />
-                  ) : (
-                    <PiNumberCircleThreeBold />
-                  )}
+              {testState.questionAll[testState.nowQuestionsNum].queTag === 2 ? (
+                <div className="cbt__input">
+                  <input
+                    disabled
+                    type="text"
+                    placeholder="정답을 입력해주세요"
+                    value={
+                      testState.questionAll[testState.nowQuestionsNum].selectNum
+                    }
+                  />
+                </div>
+              ) : (
+                <div className="cbt__selects">
+                  <input
+                    type="radio"
+                    defaultChecked={
+                      testState.selectedValue ===
+                      `${testState.questionAll[testState.nowQuestionsNum].number}_1`
+                    }
+                    id={`select${testState.questionAll[testState.nowQuestionsNum].number}_1`}
+                    name={`select${testState.questionAll[testState.nowQuestionsNum].number}`}
+                    value={`${testState.questionAll[testState.nowQuestionsNum].number}_1`}
+                  />
+                  <label
+                    htmlFor={`select${testState.questionAll[testState.nowQuestionsNum].number}_1`}
+                  >
+                    {testState.selectNumArr[testState.nowQuestionsNum]
+                      .selectNum === 1 ? (
+                      <PiNumberCircleOneFill />
+                    ) : (
+                      // <PiNumberCircleTwoDuotone />
+                      <PiNumberCircleOneBold />
+                    )}
+                    <span>
+                      {testState.questionAll[testState.nowQuestionsNum].choice1}
+                    </span>
+                  </label>
+                  <input
+                    type="radio"
+                    defaultChecked={
+                      testState.selectedValue ===
+                      `${testState.questionAll[testState.nowQuestionsNum].number}_2`
+                    }
+                    id={`select${testState.questionAll[testState.nowQuestionsNum].number}_2`}
+                    name={`select${testState.questionAll[testState.nowQuestionsNum].number}`}
+                    value={`${testState.questionAll[testState.nowQuestionsNum].number}_2`}
+                  />
+                  <label
+                    htmlFor={`select${testState.questionAll[testState.nowQuestionsNum].number}_2`}
+                  >
+                    {testState.selectNumArr[testState.nowQuestionsNum]
+                      .selectNum === 2 ? (
+                      <PiNumberCircleTwoFill />
+                    ) : (
+                      <PiNumberCircleTwoBold />
+                    )}
+                    <span>
+                      {testState.questionAll[testState.nowQuestionsNum].choice2}
+                    </span>
+                  </label>
 
-                  <span>
-                    {testState.questionAll[testState.nowQuestionsNum].choice3}
-                  </span>
-                </label>
-                <input
-                  type="radio"
-                  defaultChecked={
-                    testState.selectedValue ===
-                    `${testState.questionAll[testState.nowQuestionsNum].number}_4`
-                  }
-                  id={`select${testState.questionAll[testState.nowQuestionsNum].number}_4`}
-                  name={`select${testState.questionAll[testState.nowQuestionsNum].number}`}
-                  value={`${testState.questionAll[testState.nowQuestionsNum].number}_4`}
-                />
-                <label
-                  htmlFor={`select${testState.questionAll[testState.nowQuestionsNum].number}_4`}
-                >
-                  {testState.selectNumArr[testState.nowQuestionsNum]
-                    .selectNum === 4 ? (
-                    <PiNumberCircleFourFill />
-                  ) : (
-                    <PiNumberCircleFourBold />
-                  )}
+                  <input
+                    type="radio"
+                    defaultChecked={
+                      testState.selectedValue ===
+                      `${testState.questionAll[testState.nowQuestionsNum].number}_3`
+                    }
+                    id={`select${testState.questionAll[testState.nowQuestionsNum].number}_3`}
+                    name={`select${testState.questionAll[testState.nowQuestionsNum].number}`}
+                    value={`${testState.questionAll[testState.nowQuestionsNum].number}_3`}
+                  />
+                  <label
+                    htmlFor={`select${testState.questionAll[testState.nowQuestionsNum].number}_3`}
+                  >
+                    {testState.selectNumArr[testState.nowQuestionsNum]
+                      .selectNum === 3 ? (
+                      <PiNumberCircleThreeFill />
+                    ) : (
+                      <PiNumberCircleThreeBold />
+                    )}
 
-                  <span>
-                    {testState.questionAll[testState.nowQuestionsNum].choice4}
-                  </span>
-                </label>
-                <input
-                  type="radio"
-                  defaultChecked={
-                    testState.selectedValue ===
-                    `${testState.questionAll[testState.nowQuestionsNum].number}_5`
-                  }
-                  id={`select${testState.questionAll[testState.nowQuestionsNum].number}_5`}
-                  name={`select${testState.questionAll[testState.nowQuestionsNum].number}`}
-                  value={`${testState.questionAll[testState.nowQuestionsNum].number}_5`}
-                />
-                <label
-                  htmlFor={`select${testState.questionAll[testState.nowQuestionsNum].number}_5`}
-                >
-                  {testState.selectNumArr[testState.nowQuestionsNum]
-                    .selectNum === 5 ? (
-                    <PiNumberCircleFiveFill />
-                  ) : (
-                    <PiNumberCircleFiveBold />
-                  )}
+                    <span>
+                      {testState.questionAll[testState.nowQuestionsNum].choice3}
+                    </span>
+                  </label>
+                  <input
+                    type="radio"
+                    defaultChecked={
+                      testState.selectedValue ===
+                      `${testState.questionAll[testState.nowQuestionsNum].number}_4`
+                    }
+                    id={`select${testState.questionAll[testState.nowQuestionsNum].number}_4`}
+                    name={`select${testState.questionAll[testState.nowQuestionsNum].number}`}
+                    value={`${testState.questionAll[testState.nowQuestionsNum].number}_4`}
+                  />
+                  <label
+                    htmlFor={`select${testState.questionAll[testState.nowQuestionsNum].number}_4`}
+                  >
+                    {testState.selectNumArr[testState.nowQuestionsNum]
+                      .selectNum === 4 ? (
+                      <PiNumberCircleFourFill />
+                    ) : (
+                      <PiNumberCircleFourBold />
+                    )}
 
-                  <span>
-                    {testState.questionAll[testState.nowQuestionsNum].choice5}
-                  </span>
-                </label>
-              </div>
+                    <span>
+                      {testState.questionAll[testState.nowQuestionsNum].choice4}
+                    </span>
+                  </label>
+                  <input
+                    type="radio"
+                    defaultChecked={
+                      testState.selectedValue ===
+                      `${testState.questionAll[testState.nowQuestionsNum].number}_5`
+                    }
+                    id={`select${testState.questionAll[testState.nowQuestionsNum].number}_5`}
+                    name={`select${testState.questionAll[testState.nowQuestionsNum].number}`}
+                    value={`${testState.questionAll[testState.nowQuestionsNum].number}_5`}
+                  />
+                  <label
+                    htmlFor={`select${testState.questionAll[testState.nowQuestionsNum].number}_5`}
+                  >
+                    {testState.selectNumArr[testState.nowQuestionsNum]
+                      .selectNum === 5 ? (
+                      <PiNumberCircleFiveFill />
+                    ) : (
+                      <PiNumberCircleFiveBold />
+                    )}
+
+                    <span>
+                      {testState.questionAll[testState.nowQuestionsNum].choice5}
+                    </span>
+                  </label>
+                </div>
+              )}
             </div>
           ) : (
             console.log("로딩중")

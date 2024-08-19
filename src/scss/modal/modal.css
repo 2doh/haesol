@@ -24,11 +24,7 @@
 }
 .modal-wrap .modal-inner {
   text-shadow: 0 1.5px 0 rgba(0, 0, 0, 0.15);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.34) inset,
-    0 2px 0 -1px rgba(0, 0, 0, 0.13),
-    0 3px 0 -1px rgba(0, 0, 0, 0.08),
-    0 3px 13px -1px rgba(0, 0, 0, 0.21);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.34) inset, 0 2px 0 -1px rgba(0, 0, 0, 0.13), 0 3px 0 -1px rgba(0, 0, 0, 0.08), 0 3px 13px -1px rgba(0, 0, 0, 0.21);
   width: 100%;
   height: 100%;
   position: absolute;
@@ -87,11 +83,7 @@
   display: flex;
   flex-direction: row;
 }
-.modal-wrap
-  .modal-inner
-  .modal-body
-  .add-child-modal-body-input-btn-div
-  input[type="text"] {
+.modal-wrap .modal-inner .modal-body .add-child-modal-body-input-btn-div input[type=text] {
   width: 100%;
 }
 .modal-wrap .modal-inner .arr-value-modal-body {
@@ -103,74 +95,32 @@
 .modal-wrap .modal-inner .tel-accept-modal-body .tel-accept-modal-wrap {
   gap: 30px;
 }
-.modal-wrap
-  .modal-inner
-  .tel-accept-modal-body
-  .tel-accept-modal-wrap
-  .text-box {
+.modal-wrap .modal-inner .tel-accept-modal-body .tel-accept-modal-wrap .text-box {
   width: 65%;
 }
-.modal-wrap
-  .modal-inner
-  .tel-accept-modal-body
-  .tel-accept-modal-wrap
-  .text-box
-  .modal-body-text-div:nth-of-type(1) {
+.modal-wrap .modal-inner .tel-accept-modal-body .tel-accept-modal-wrap .text-box .modal-body-text-div:nth-of-type(1) {
   width: 60px;
 }
-.modal-wrap
-  .modal-inner
-  .tel-accept-modal-body
-  .tel-accept-modal-wrap
-  .text-box
-  .modal-body-text-div:nth-of-type(2) {
+.modal-wrap .modal-inner .tel-accept-modal-body .tel-accept-modal-wrap .text-box .modal-body-text-div:nth-of-type(2) {
   width: 10px;
 }
-.modal-wrap
-  .modal-inner
-  .tel-accept-modal-body
-  .tel-accept-modal-wrap
-  .text-box
-  .modal-body-text-div:nth-of-type(3) {
+.modal-wrap .modal-inner .tel-accept-modal-body .tel-accept-modal-wrap .text-box .modal-body-text-div:nth-of-type(3) {
   width: 100%;
 }
-.modal-wrap
-  .modal-inner
-  .tel-accept-modal-body
-  .tel-accept-modal-wrap
-  .text-box
-  .modal-body-text-div {
+.modal-wrap .modal-inner .tel-accept-modal-body .tel-accept-modal-wrap .text-box .modal-body-text-div {
   gap: 10px;
 }
-.modal-wrap
-  .modal-inner
-  .tel-accept-modal-body
-  .tel-accept-modal-wrap
-  .tel-input-box
-  h3 {
+.modal-wrap .modal-inner .tel-accept-modal-body .tel-accept-modal-wrap .tel-input-box h3 {
   text-align: left;
   padding-bottom: 10px;
 }
-.modal-wrap
-  .modal-inner
-  .tel-accept-modal-body
-  .tel-accept-modal-wrap
-  .tel-input-box
-  .tel-box-inner
-  > form {
+.modal-wrap .modal-inner .tel-accept-modal-body .tel-accept-modal-wrap .tel-input-box .tel-box-inner > form {
   display: flex;
   flex-direction: row;
   align-items: center;
   width: 100%;
 }
-.modal-wrap
-  .modal-inner
-  .tel-accept-modal-body
-  .tel-accept-modal-wrap
-  .tel-input-box
-  .tel-box-inner
-  > form
-  p {
+.modal-wrap .modal-inner .tel-accept-modal-body .tel-accept-modal-wrap .tel-input-box .tel-box-inner > form p {
   padding: 0 10px;
 }
 .modal-wrap .modal-inner .pw-modal-text,
@@ -226,73 +176,36 @@
   gap: 15px;
   width: 100%;
 }
-.modal-wrap
-  .modal-inner
-  .user-update-modal-wrap
-  .user-update-modal-wrap-inner
-  > * {
+.modal-wrap .modal-inner .user-update-modal-wrap .user-update-modal-wrap-inner > * {
   display: flex;
   align-items: center;
   height: 100%;
 }
-.modal-wrap
-  .modal-inner
-  .user-update-modal-wrap
-  .user-update-modal-wrap-inner
-  > div {
+.modal-wrap .modal-inner .user-update-modal-wrap .user-update-modal-wrap-inner > div {
   display: flex;
   flex-direction: row;
   gap: 20px;
   width: 100%;
   min-height: 35px;
 }
-.modal-wrap
-  .modal-inner
-  .user-update-modal-wrap
-  .user-update-modal-wrap-inner
-  > div
-  > div:first-of-type {
+.modal-wrap .modal-inner .user-update-modal-wrap .user-update-modal-wrap-inner > div > div:first-of-type {
   min-width: 65px;
 }
-.modal-wrap
-  .modal-inner
-  .user-update-modal-wrap
-  .user-update-modal-wrap-inner
-  > div
-  > div:not(:first-of-type) {
+.modal-wrap .modal-inner .user-update-modal-wrap .user-update-modal-wrap-inner > div > div:not(:first-of-type) {
   flex-grow: 1;
   font-size: 15px;
 }
-.modal-wrap
-  .modal-inner
-  .user-update-modal-wrap
-  .user-update-modal-wrap-inner
-  > div
-  .text-box {
+.modal-wrap .modal-inner .user-update-modal-wrap .user-update-modal-wrap-inner > div .text-box {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
-.modal-wrap
-  .modal-inner
-  .user-update-modal-wrap
-  .user-update-modal-wrap-inner
-  > div
-  .text-box
-  > div {
+.modal-wrap .modal-inner .user-update-modal-wrap .user-update-modal-wrap-inner > div .text-box > div {
   display: flex;
   align-items: center;
 }
-.modal-wrap
-  .modal-inner
-  .user-update-modal-wrap
-  .user-update-modal-wrap-inner
-  select,
-.modal-wrap
-  .modal-inner
-  .user-update-modal-wrap
-  .user-update-modal-wrap-inner
-  input[type="text"] {
+.modal-wrap .modal-inner .user-update-modal-wrap .user-update-modal-wrap-inner select,
+.modal-wrap .modal-inner .user-update-modal-wrap .user-update-modal-wrap-inner input[type=text] {
   width: 100%;
   height: 30px;
   border-radius: 5px;
@@ -303,11 +216,7 @@
   font-size: 15px;
   padding-left: 10px;
 }
-.modal-wrap
-  .modal-inner
-  .user-update-modal-wrap
-  .user-update-modal-wrap-inner
-  select {
+.modal-wrap .modal-inner .user-update-modal-wrap .user-update-modal-wrap-inner select {
   width: 35%;
 }
 .modal-wrap .modal-inner .user-update-modal-wrap .modal-footer {
@@ -332,4 +241,4 @@
   height: 100%;
   padding-left: 10px;
   border: none;
-} /*# sourceMappingURL=modal.css.map */
+}/*# sourceMappingURL=modal.css.map */
