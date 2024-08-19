@@ -5,6 +5,7 @@ import useLoginTimerStart from "hooks/common/useLoginTimerStart";
 export const postParentSignin = async data => {
   try {
     const res = await axios.post(`/api/user/parents/sign-in`, data);
+    // console.log(res);
     setCookie("accessToken", res.data.accessToken);
     // ROLE_ADMIN = 어드민;
     // ROLE_TEACHER = 교직원;
@@ -13,6 +14,7 @@ export const postParentSignin = async data => {
     // console.log("토큰 획득 : ", res);
     const payload = JSON.parse(base64.decode(acTken.split(".")[1])).signedUser;
     const signedUser = JSON.parse(payload);
+    // console.log(signedUser);
     setCookie("userIdPk", signedUser.userId);
     setCookie("userRole", signedUser.role);
     setCookie("selectChildNum", 0);

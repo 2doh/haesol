@@ -8,11 +8,14 @@ import cleanupBt from "../../../images/tabler_circle-x-filled.svg";
 import LoginIdField from "./LoginIdField";
 import SocialSignin from "../../../components/user/SocialSignin";
 import { studentsignin } from "api/login/childerenapi";
+import { useRecoilState } from "recoil";
+import { userRoleState } from "atoms/userState";
 
 const Signin = ({ children, naviState, setNaviState }) => {
   const [userId, setUserId] = useState("");
   const [userPass, setUserPass] = useState("");
   const [errMsg, setErrMsg] = useState("");
+  const [userRole, setUserRole] = useRecoilState(userRoleState);
   const navi = useNavigate();
 
   const login = async e => {
@@ -35,9 +38,12 @@ const Signin = ({ children, naviState, setNaviState }) => {
     }
     if (naviState === "signin") {
       const result = await postParentSignin(request);
-      if (result.status === 200) {
-        // console.log(result);
+      // console.log(result);
+      if (result) {
+        // console.log(result.data.studentList);
         window.location.replace("/");
+        // console.log(userRole);
+        // navi("/");
       }
     }
     if (naviState === "teacherlogin") {

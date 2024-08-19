@@ -15,8 +15,13 @@ import Title from "components/Title";
 import GreenHeaderNoOption from "components/layout/header/GreenHeaderNoOption";
 import Footer from "components/layout/Footer";
 import AudioRender from "components/learn/AudioRender";
+import { userRoleState } from "atoms/userState";
+import { useRecoilState } from "recoil";
+import jwtAxios from "api/jwtUtil";
+import { words } from "api/online/envocaapi";
 
 const VocaLearn = () => {
+  const location = useLocation();
   const [learnState, setLearnState] = useState("");
   const [getObj, setGetObj] = useState([]);
   const [onAnswer, setOnAnswer] = useState("");
@@ -25,10 +30,24 @@ const VocaLearn = () => {
   const [onListening, setOnListening] = useState(false);
   const [isTranscript, setIsTranscript] = useState("");
   const [audioStream, setAudioStream] = useState(null);
-  const [correctAnswers, setCorrectAnswers] = useState([]);
-  const [incorrectAnswers, setIncorrectAnswers] = useState([]);
+  const [userRole, setUserRole] = useRecoilState(userRoleState);
 
-  const location = useLocation();
+  console.log(userRole);
+
+  const getVocaList = async state => {
+    console.log(state);
+    const reqData = {
+      studentPk: userRole.data.userIdPk,
+    };
+    if (state === "speaking" || state === "voca") {
+      const result = await words(reqData.studentPk);
+      console.log(result);
+    }
+    if (state === "listening") {
+      const result = await listening(reqData.studentPk);
+      console.log(result);
+    }
+  };
 
   const {
     transcript,
@@ -49,6 +68,8 @@ const VocaLearn = () => {
     if (onAnswer === currentWord) {
       alert("정답");
       setOnAnswer("");
+      // console.log(index);
+      handleCheck(index);
       if (index < getObj.length - 1) {
         setIndex(index + 1);
       }
@@ -56,6 +77,9 @@ const VocaLearn = () => {
       alert(`오답`);
       setOnAnswer("");
       resetTranscript();
+      if (index < getObj.length - 1) {
+        setIndex(index + 1);
+      }
     }
   };
 
@@ -64,14 +88,17 @@ const VocaLearn = () => {
     const lcoationState = location?.state?.type;
     if (lcoationState === "말하기") {
       setLearnState("speaking");
+      getVocaList("speaking");
       setGetObj(wordTest);
     }
     if (lcoationState === "듣기") {
       setLearnState("listening");
+      getVocaList("listening");
       setGetObj(listeningTest);
     }
     if (lcoationState === "쓰기") {
       setLearnState("voca");
+      getVocaList("voca");
       setGetObj(wordTest);
     }
     setLoading(false);
@@ -167,6 +194,7 @@ const VocaLearn = () => {
               audioStream={audioStream}
               resetTranscript={resetTranscript}
               setIsTranscript={setIsTranscript}
+              listening={listening}
             />
             <VocaBottomWrap>
               {learnState === "speaking" ? (

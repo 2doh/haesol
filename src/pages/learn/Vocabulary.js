@@ -1,7 +1,9 @@
 import styled from "@emotion/styled";
+import { userRoleState } from "atoms/userState";
 import { useState } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { PiSpeakerHighFill, PiSpeakerXFill } from "react-icons/pi";
+import { useRecoilState } from "recoil";
 import { speak } from "utils/speak";
 
 const Vocabulary = ({
@@ -12,6 +14,7 @@ const Vocabulary = ({
   resetTranscript,
   audioStream,
   setIsTranscript,
+  listening,
 }) => {
   const initVolume = localStorage.getItem("initVolume");
   const voca = getObj[index];

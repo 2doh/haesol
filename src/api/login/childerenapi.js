@@ -20,6 +20,7 @@ export const studentsignin = async data => {
     // ROLE_STUDENT = 학생;
     setCookie("studentPk", response.data.studentPk);
     setCookie("userRole", signedUser.role);
+
     // console.log("권한 :", signedUser.role);
     // console.log("유저 PK :", signedUser.userId);
     // alert(signedUser.role);
