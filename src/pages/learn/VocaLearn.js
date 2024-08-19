@@ -18,7 +18,7 @@ import AudioRender from "components/learn/AudioRender";
 import { userRoleState } from "atoms/userState";
 import { useRecoilState } from "recoil";
 import jwtAxios from "api/jwtUtil";
-import { words } from "api/online/envocaapi";
+import { listeningList, words } from "api/online/envocaapi";
 
 const VocaLearn = () => {
   const location = useLocation();
@@ -32,20 +32,23 @@ const VocaLearn = () => {
   const [audioStream, setAudioStream] = useState(null);
   const [userRole, setUserRole] = useRecoilState(userRoleState);
 
-  console.log(userRole);
+  // console.log(userRole);
+  // console.log(getObj);
 
   const getVocaList = async state => {
-    console.log(state);
+    // console.log(state);
     const reqData = {
-      studentPk: userRole.data.userIdPk,
+      studentPk: userRole.data.userChild,
     };
     if (state === "speaking" || state === "voca") {
       const result = await words(reqData.studentPk);
       console.log(result);
+      setGetObj(result);
     }
     if (state === "listening") {
-      const result = await listening(reqData.studentPk);
+      const result = await listeningList(reqData.studentPk);
       console.log(result);
+      setGetObj(result);
     }
   };
 
@@ -63,13 +66,13 @@ const VocaLearn = () => {
   // 듣기 쓰기
   const handleOnSubmit = e => {
     e.preventDefault();
-    const currentWord = getObj[index]?.answer;
-    // console.log(currentWord);
+    // console.log(getObj.data.result[index].answer);
+    const currentWord = getObj.data.result[index].answer;
+    console.log(currentWord);
     if (onAnswer === currentWord) {
       alert("정답");
       setOnAnswer("");
       // console.log(index);
-      handleCheck(index);
       if (index < getObj.length - 1) {
         setIndex(index + 1);
       }
@@ -89,17 +92,17 @@ const VocaLearn = () => {
     if (lcoationState === "말하기") {
       setLearnState("speaking");
       getVocaList("speaking");
-      setGetObj(wordTest);
+      // setGetObj(wordTest);
     }
     if (lcoationState === "듣기") {
       setLearnState("listening");
       getVocaList("listening");
-      setGetObj(listeningTest);
+      // setGetObj(listeningTest);
     }
     if (lcoationState === "쓰기") {
       setLearnState("voca");
       getVocaList("voca");
-      setGetObj(wordTest);
+      // setGetObj(wordTest);
     }
     setLoading(false);
   }, [location]);
@@ -184,7 +187,7 @@ const VocaLearn = () => {
         <Title></Title>
         {loading ? (
           <Loading></Loading>
-        ) : (
+        ) : getObj?.data?.result?.length > 0 ? (
           <ContentWrapStyle>
             <Vocabulary
               getObj={getObj}
@@ -228,7 +231,7 @@ const VocaLearn = () => {
               )}
             </VocaBottomWrap>
           </ContentWrapStyle>
-        )}
+        ) : null}
       </VocaWrapStyle>
       <Footer></Footer>
     </>

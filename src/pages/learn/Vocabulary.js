@@ -17,7 +17,7 @@ const Vocabulary = ({
   listening,
 }) => {
   const initVolume = localStorage.getItem("initVolume");
-  const voca = getObj[index];
+  const voca = getObj?.data?.result[index];
   const [listen, setListen] = useState(false);
   const [volume, setVolume] = useState(initVolume || 0.5);
   const [isVolume, setIsVolume] = useState(volume);
@@ -25,12 +25,12 @@ const Vocabulary = ({
   localStorage.setItem("initVolume", volume);
 
   const tempObj = {
-    speechword: voca.word,
+    speechword: voca?.data,
     speechlang: "en-US",
     speechvolume: volume,
   };
   const temp = {
-    speechword: voca.listening,
+    speechword: voca?.sentence,
     speechlang: "en-US",
     speechvolume: volume,
   };
@@ -75,7 +75,7 @@ const Vocabulary = ({
       <div className="voca-wrap">
         <div className="voca-top">
           <div className="voca-top-totalword">
-            {index + 1} / {getObj.length}
+            {index + 1} / {getObj.data.result.length}
           </div>
           <div className="voca-top-soundwrap">
             {volume === 0 ? (
@@ -117,7 +117,7 @@ const Vocabulary = ({
         <div className="voca-main">
           <img
             className="voca-main-card"
-            src={voca.pic}
+            src={voca?.pic}
             onClick={() => {
               learnState === "listening" ? onClick() : onSpeak();
             }}
@@ -137,7 +137,7 @@ const Vocabulary = ({
           />
           {/* <div className="voca-bottom-word">{voca.word}</div> */}
           <div className="voca-bottom-word">
-            {learnState === "listening" ? voca.sentence : voca.word}
+            {learnState === "listening" ? voca?.question : voca?.word}
           </div>
           <IoIosArrowForward
             size={30}
