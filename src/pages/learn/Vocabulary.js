@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { userRoleState } from "atoms/userState";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { PiSpeakerHighFill, PiSpeakerXFill } from "react-icons/pi";
 import { useRecoilState } from "recoil";
@@ -129,7 +129,11 @@ const Vocabulary = ({
         <div className="voca-main">
           <img
             className="voca-main-card"
-            src={voca?.pic}
+            src={
+              learnState === "listening"
+                ? `http://112.222.157.156:5121/pic/onlineEngLis/${voca?.queId}/${voca?.pic}`
+                : `http://112.222.157.156:5121/pic/onlineEngWord/${voca?.wordQuePk}/${voca?.pic}`
+            }
             onClick={() => {
               learnState === "listening" ? onClick() : onSpeak();
             }}

@@ -25,6 +25,7 @@ ldh tsx 적용해야할 페이지 파일 목록
 - /src/components/AudioRender
 - /src/utils/speak.js
 - /src/utils/learn
+- /src/store/zustandStore.js
 
 SigninShape.js  아이디찾기, 비번찾기에 적용
 

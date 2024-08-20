@@ -60,6 +60,7 @@ import IncorrectAnswerNoteMain from "pages/online/incorrectanswernote/IncorrectA
 import MyChildInfoView from "pages/parents/MyChildInfoView";
 import StudentInfoViewTeacher from "pages/student/StudentInfoViewTeacher";
 import useLogout from "hooks/common/useLogout";
+import VocaResult from "pages/learn/VocaResult";
 
 const Main = styled.div``;
 
@@ -199,6 +200,7 @@ function App() {
           <Route path="/testcode" element={<Test />}></Route>
           {/* <Route path="/learn" element={<Learn />}></Route> */}
           <Route path="/learn/voca" element={<VocaLearn />}></Route>
+          {/* <Route path="/learn/result" element={<VocaResult />}></Route> */}
           <Route path="/signup/social" element={<SocialSignup />}></Route>
           {/* 영어 테스트 - end */}
 
