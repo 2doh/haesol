@@ -139,8 +139,16 @@ const Modal = () => {
   const navigate = useNavigate();
 
   // 비밀번호 받아올 변수
+  const [nowPw, setNowPw] = useState();
   const [newPw, setNewPw] = useState();
   const [newPwRe, setNewPwRe] = useState();
+
+  const [nowPwWarningCheck, setNowPwWarningCheck] = useState(false);
+  const [newPwWarningCheck, setNewPwWarningCheck] = useState(false);
+  const [newPwReWarningCheck, setNewPwReWarningCheck] = useState(false);
+
+  const [validationMsg, setValidationMsg] = useState("");
+  const [validationConfirmMsg, setValidationConfirmMsg] = useState("");
 
   const modalState = useSelector(state => state.modalSlice);
   const testStage = useSelector(state => state.testSlice);
@@ -155,12 +163,6 @@ const Modal = () => {
   const [sec, setSec] = useState(0);
   const time = useRef(180); // 180초
   const timerId = useRef(null);
-
-  const [validationMsg, setValidationMsg] = useState("");
-  const [validationConfirmMsg, setValidationConfirmMsg] = useState("");
-  // const pwWarning = useRef();
-  const [newPwWarningCheck, setNewPwWarningCheck] = useState(false);
-  const [newPwReWarningCheck, setNewPwReWarningCheck] = useState(false);
 
   // 정보 수정 모달
   const [updateUserState, setUpdateUserState] = useState(
@@ -460,9 +462,12 @@ const Modal = () => {
       }
     }
     if (modalState.modalType === "PasswordChangeModal") {
-      console.log(`신규 비밀번호 : ${newPw}, 재입력 : ${newPwRe}`);
+      console.log(
+        `기존 비밀번호 : ${nowPw}, 신규 비밀번호 : ${newPw}, 재입력 : ${newPwRe}`,
+      );
 
       const pwOk = pwCheck();
+      let res = "";
 
       if (pwOk === true) {
         console.log("일치");
@@ -470,17 +475,28 @@ const Modal = () => {
       if (
         newPwWarningCheck === true ||
         newPwReWarningCheck === true ||
+        nowPwWarningCheck === true ||
         pwOk === true
       ) {
         console.log("비밀번호 수정 처리 진입");
-        // console.log(getCookie("userIdPk"));
+
         if (getCookie("userRole") === "ROLE_TEACHER") {
-          putTeacherPwChange(newPw, modalState.bodyText);
+          console.log("교직원 비밀번호 변경");
+          res = await putTeacherPwChange(nowPw, newPw, modalState.bodyText);
         }
         if (getCookie("userRole") === "ROLE_PARENTS") {
-          putParentsPwChange(newPw, modalState.bodyText);
+          console.log("학부모 비밀번호 변경");
+
+          res = await putParentsPwChange(nowPw, newPw, modalState.bodyText);
         }
-        dispatch(closeModal());
+
+        if (res.data === 1) {
+          // 비밀번호가 바뀌었다는 모달 추가
+          console.log("처리됨 : ", res);
+        } else {
+          console.log("오류");
+          // dispatch(closeModal());
+        }
       }
     }
 
@@ -565,14 +581,27 @@ const Modal = () => {
   //   // newPwReWarningCheck
   // }, [newPwWarningCheck, newPwReWarningCheck]);
 
+  /** 새로운 비밀번호 일치 여부 확인 */
   const pwCheck = () => {
-    if (newPwRe === newPw) {
-      console.log("확인중");
+    let check01 = false;
+    let check02 = false;
+
+    // 새로운 비밀번호 일치 하지 않을 경우
+    if (newPwRe !== newPw) {
+      setValidationConfirmMsg("비밀번호가 일치하지 않습니다");
+      check01 = false;
+    } else if (nowPw == newPwRe || nowPw == newPw) {
       setValidationConfirmMsg("");
-      return true;
-    } else {
+      check01 = true;
+    }
+
+    // 새로운 비밀번호 일치 하지 않을 경우
+    if (nowPw == newPwRe || nowPw == newPw) {
       setValidationConfirmMsg("비밀번호가 일치하지 않습니다");
       return false;
+    } else {
+      setValidationConfirmMsg("");
+      return true;
     }
   };
 
@@ -702,6 +731,13 @@ const Modal = () => {
           {/* PasswordChangeModal */}
           {modalState.modalType === "PasswordChangeModal" ? (
             <div className="modal-body">
+              <div className="pw-modal-body-text-div">
+                <div className="pw-modal-text">기존 비밀번호</div>
+                <ViewPw
+                  setNewPw={setNowPw}
+                  setNewPwWarningCheck={setNowPwWarningCheck}
+                ></ViewPw>
+              </div>
               <div className="pw-modal-body-text-div">
                 <div className="pw-modal-text">신규 비밀번호</div>
 

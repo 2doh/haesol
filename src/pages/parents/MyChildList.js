@@ -333,6 +333,36 @@ const PageWrapStyle = styled.div`
     }
   }
 
+  .info-button {
+    display: flex;
+    gap: 15px;
+    button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 50px;
+      min-height: 25px;
+      background: #efece8;
+      border-radius: 5px;
+      border: solid 2px #886348;
+      cursor: pointer;
+
+      position: relative !important;
+      margin-left: 10px !important;
+      min-width: 110px !important;
+      top: 7px !important;
+      padding: 5px 0;
+
+      font-size: 16px;
+
+      &:hover {
+        background: #dd838f;
+        border: solid 2px #a8172a;
+        color: #efece8;
+      }
+    }
+  }
+
   @media screen and (max-width: 1023px) {
     .page-inner {
       .page-content-wrap {
@@ -429,10 +459,14 @@ const MyChildList = () => {
     }
   };
 
-  // const childImg = item => {
-  //   if (item) {
-  //   }
-  // };
+  /** 비밀번호 수정 모달 호출 */
+  const showModal = selectModalType => {
+    const data = { bodyText: [myInfoData.uid], buttonText: ["수정", "취소"] };
+
+    dispatch(updateModalDate(data));
+
+    dispatch(openModal(selectModalType));
+  };
 
   return (
     <>
@@ -454,47 +488,59 @@ const MyChildList = () => {
           <div className="page-content-wrap">
             <div className="child-info-inner">
               {myInfoData === "" ? null : (
-                <div className="child-info-div parents-info-div">
-                  <div className="child-info-wrap parents-info-wrap">
-                    <div className="child-info parents-info">
-                      <div className="child-info-text">
-                        <p>학부모 명 : </p>
-                        {myInfoData.nm ? (
-                          <p>{myInfoData.nm}</p>
-                        ) : (
-                          <p className="no-data">미등록</p>
-                        )}
-                      </div>
-                      <div className="child-info-text">
-                        <p>전화번호 : </p>
-                        {myInfoData.phone ? (
-                          <p>{myInfoData.phone}</p>
-                        ) : (
-                          <p className="no-data"> 미등록</p>
-                        )}
-                      </div>
-                      <div className="child-info-text">
-                        <p>이메일 :&nbsp;</p>
-                        {myInfoData.email ? (
-                          <p>{myInfoData.email}</p>
-                        ) : (
-                          <p className="no-data">미등록</p>
-                        )}
-                      </div>
-                      <div className="child-info-text">
-                        <p>주소 :</p>
-
-                        {myInfoData.zoneCode ? `(${myInfoData.email})` : null}
-                        {myInfoData.addr ? (
-                          <p>{myInfoData.addr}</p>
-                        ) : (
-                          <p className="no-data">미등록</p>
-                        )}
-                      </div>
-                    </div>
-                    <SocialLoginIntegration />
+                <>
+                  <div className="info-button re-pw-btn">
+                    <button
+                      onClick={() => {
+                        showModal("PasswordChangeModal");
+                      }}
+                      className="re-pw-btn"
+                    >
+                      비밀번호 수정
+                    </button>
                   </div>
-                </div>
+                  <div className="child-info-div parents-info-div">
+                    <div className="child-info-wrap parents-info-wrap">
+                      <div className="child-info parents-info">
+                        <div className="child-info-text">
+                          <p>학부모 명 : </p>
+                          {myInfoData.nm ? (
+                            <p>{myInfoData.nm}</p>
+                          ) : (
+                            <p className="no-data">미등록</p>
+                          )}
+                        </div>
+                        <div className="child-info-text">
+                          <p>전화번호 : </p>
+                          {myInfoData.phone ? (
+                            <p>{myInfoData.phone}</p>
+                          ) : (
+                            <p className="no-data"> 미등록</p>
+                          )}
+                        </div>
+                        <div className="child-info-text">
+                          <p>이메일 :&nbsp;</p>
+                          {myInfoData.email ? (
+                            <p>{myInfoData.email}</p>
+                          ) : (
+                            <p className="no-data">미등록</p>
+                          )}
+                        </div>
+                        <div className="child-info-text">
+                          <p>주소 :</p>
+
+                          {myInfoData.zoneCode ? `(${myInfoData.email})` : null}
+                          {myInfoData.addr ? (
+                            <p>{myInfoData.addr}</p>
+                          ) : (
+                            <p className="no-data">미등록</p>
+                          )}
+                        </div>
+                      </div>
+                      <SocialLoginIntegration />
+                    </div>
+                  </div>
+                </>
               )}
               <div className="sub-title">
                 <BoxTitle>자녀 목록</BoxTitle>
