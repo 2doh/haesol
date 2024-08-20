@@ -19,11 +19,7 @@
   width: 100% !important;
 }
 .admin-home-core .property > div {
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.34) inset,
-    0 2px 0 -1px rgba(0, 0, 0, 0.13),
-    0 3px 0 -1px rgba(0, 0, 0, 0.08),
-    0 3px 13px -1px rgba(0, 0, 0, 0.21);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.34) inset, 0 2px 0 -1px rgba(0, 0, 0, 0.13), 0 3px 0 -1px rgba(0, 0, 0, 0.08), 0 3px 13px -1px rgba(0, 0, 0, 0.21);
 }
 .admin-home-core .grid-inner {
   grid-template-columns: 80px 200px 130px 80px 80px 1fr 1fr;
@@ -37,11 +33,7 @@
 }
 
 .grid-frame {
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.34) inset,
-    0 2px 0 -1px rgba(0, 0, 0, 0.13),
-    0 3px 0 -1px rgba(0, 0, 0, 0.08),
-    0 3px 13px -1px rgba(0, 0, 0, 0.21);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.34) inset, 0 2px 0 -1px rgba(0, 0, 0, 0.13), 0 3px 0 -1px rgba(0, 0, 0, 0.08), 0 3px 13px -1px rgba(0, 0, 0, 0.21);
   width: 100%;
   display: grid;
   font-size: 20px;
@@ -58,18 +50,12 @@
 .grid-frame button {
   display: inline-block;
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.34) inset,
-    0 2px 0 -1px rgba(0, 0, 0, 0.13),
-    0 3px 0 -1px rgba(0, 0, 0, 0.08),
-    0 3px 13px -1px rgba(0, 0, 0, 0.21);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.34) inset, 0 2px 0 -1px rgba(0, 0, 0, 0.13), 0 3px 0 -1px rgba(0, 0, 0, 0.08), 0 3px 13px -1px rgba(0, 0, 0, 0.21);
 }
 .grid-frame button:active {
   top: 1px;
   border-color: rgba(0, 0, 0, 0.34) rgba(0, 0, 0, 0.21) rgba(0, 0, 0, 0.21);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.89),
-    0 1px rgba(0, 0, 0, 0.05) inset;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.89), 0 1px rgba(0, 0, 0, 0.05) inset;
   position: relative;
 }
 .grid-frame .grid-inner {
@@ -123,7 +109,7 @@
 .checkbox-wrapper-4 .cbx {
   -webkit-user-select: none;
   -moz-user-select: none;
-  user-select: none;
+       user-select: none;
   cursor: pointer;
   padding: 6px 8px;
   border-radius: 6px;
@@ -203,8 +189,8 @@
   height: 0;
   pointer-events: none;
   -webkit-user-select: none;
-  -moz-user-select: none;
-  user-select: none;
+     -moz-user-select: none;
+          user-select: none;
 }
 
 @media screen and (max-width: 640px) {
@@ -217,4 +203,4 @@
   50% {
     transform: scale(0.9);
   }
-} /*# sourceMappingURL=adminhomestyle.css.map */
+}/*# sourceMappingURL=adminhomestyle.css.map */

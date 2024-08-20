@@ -15,6 +15,7 @@ const TestWrap = styled.div`
 
   .test-page {
     width: 1180px;
+    min-height: 100%;
     height: 100%;
     background-color: #f3f9fa;
     margin: 0 auto;

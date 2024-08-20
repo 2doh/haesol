@@ -42,12 +42,7 @@
   border: solid 2px #886348;
   border-bottom: none;
 }
-.main-core
-  .user-info-wrap
-  .user-info-tap
-  .property
-  .notice-frame
-  .text-wrapper {
+.main-core .user-info-wrap .user-info-tap .property .notice-frame .text-wrapper {
   position: relative;
   width: -moz-fit-content;
   width: fit-content;
@@ -125,18 +120,12 @@
 .main-core .notice-frame button {
   display: inline-block;
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.34) inset,
-    0 2px 0 -1px rgba(0, 0, 0, 0.13),
-    0 3px 0 -1px rgba(0, 0, 0, 0.08),
-    0 3px 13px -1px rgba(0, 0, 0, 0.21);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.34) inset, 0 2px 0 -1px rgba(0, 0, 0, 0.13), 0 3px 0 -1px rgba(0, 0, 0, 0.08), 0 3px 13px -1px rgba(0, 0, 0, 0.21);
 }
 .main-core .notice-frame button:active {
   top: 1px;
   border-color: rgba(0, 0, 0, 0.34) rgba(0, 0, 0, 0.21) rgba(0, 0, 0, 0.21);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.89),
-    0 1px rgba(0, 0, 0, 0.05) inset;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.89), 0 1px rgba(0, 0, 0, 0.05) inset;
   position: relative;
 }
 .main-core .notice-frame .grid-inner {
@@ -157,4 +146,4 @@
 }
 .main-core .notice-frame .grid-inner .grid-inner-item:first-child {
   border-right: solid 2px #886348;
-} /*# sourceMappingURL=noticeList.css.map */
+}/*# sourceMappingURL=noticeList.css.map */

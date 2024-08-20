@@ -50,53 +50,59 @@ const Login = ({ setOnHeader, onHedaer }) => {
   }, [setOnHeader]);
 
   return (
-    <main className="login">
-      <div className="login-inner" style={{ marginBottom: "180px" }}>
-        <div className="login-inner-logowrap">
-          <img
-            className="login-logo"
-            src={logo}
-            onClick={() => {
-              setOnHeader(true);
-              goHome();
-            }}
-          />
-        </div>
-        <div className="login-wrap br10">
-          <LoginNavi setNaviState={setNaviState} naviState={naviState} />
-          <Signin naviState={naviState} setNaviState={setNaviState} navi={navi}>
-            {naviState}
-          </Signin>
-        </div>
-        <div className="login-menu">
-          <div
-            onClick={e => {
-              handleClickFindId(e);
-            }}
-            className="login-navi"
-          >
-            아이디 찾기
+    <>
+      <main className="login">
+        <div className="login-inner" style={{ marginBottom: "180px" }}>
+          <div className="login-inner-logowrap">
+            <img
+              className="login-logo"
+              src={logo}
+              onClick={() => {
+                setOnHeader(true);
+                goHome();
+              }}
+            />
           </div>
-          <div
-            onClick={e => {
-              handleClickFindPass(e);
-            }}
-            className="login-navi"
-          >
-            비밀번호 찾기
+          <div className="login-wrap br10">
+            <LoginNavi setNaviState={setNaviState} naviState={naviState} />
+            <Signin
+              naviState={naviState}
+              setNaviState={setNaviState}
+              navi={navi}
+            >
+              {naviState}
+            </Signin>
           </div>
-          <div
-            onClick={e => {
-              handleClickSignup(e);
-            }}
-            className="login-navi"
-          >
-            회원가입
+          <div className="login-menu">
+            <div
+              onClick={e => {
+                handleClickFindId(e);
+              }}
+              className="login-navi"
+            >
+              아이디 찾기
+            </div>
+            <div
+              onClick={e => {
+                handleClickFindPass(e);
+              }}
+              className="login-navi"
+            >
+              비밀번호 찾기
+            </div>
+            <div
+              onClick={e => {
+                handleClickSignup(e);
+              }}
+              className="login-navi"
+            >
+              회원가입
+            </div>
           </div>
         </div>
-      </div>
+      </main>
       <Footer />
-    </main>
+    </>
   );
 };
 
