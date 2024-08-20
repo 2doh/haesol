@@ -60,12 +60,11 @@ export const putParentsPwChange = async (nowPw, newPw, userId) => {
     .put(`/api/user/parents/password-update`, data)
     .then(res => {
       // 성공 처리
-      console.log("성공 : ", res);
+      // console.log("성공 : ", res);
       return res;
     })
     .catch(error => {
-      console.log("에러 : ", error);
-      // return error.response.data.statusCode;
+      // console.log("에러 : ", error);
       return error;
       // return Promise.reject(error);
     });

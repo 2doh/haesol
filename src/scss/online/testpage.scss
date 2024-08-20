@@ -1,0 +1,77 @@
+.cbt__input {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 20px;
+
+  input[type="text"] {
+    background-color: white;
+
+    width: 60%;
+    height: 65px;
+    text-align: center;
+
+    border: 3px solid #1b6a78;
+    /* border-radius: 5px; */
+    border-radius: 15px;
+    padding: 10px 15px;
+    font-size: 20px;
+  }
+
+  input[type="text"]::placeholder {
+    color: gray;
+  }
+
+  .subject-input-btn {
+    border: 3px solid #1b6a78;
+    padding: 15px 20px;
+    border-radius: 50px;
+    background-color: #5f9ba6;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .subject-input-btn:hover {
+    cursor: pointer;
+    // color: darken(#fff, 10%);
+    background-color: lighten(#1b6a78, 7%);
+  }
+}
+
+.test-result-page-mark {
+  #correctMark {
+    color: blue;
+  }
+  #wrongMark {
+    color: red;
+  }
+}
+
+.question-grad-box {
+  .question-num,
+  .question-grad {
+    & > div {
+      flex-grow: 1;
+      text-align: center;
+    }
+    & > div:not(:first-of-type) {
+      max-width: 58px;
+      width: 58px;
+    }
+  }
+}
+
+.note-page {
+  height: 100%;
+}
+
+.cbt__quiz {
+  height: 80%;
+}
+
+.cbt_wrap {
+  bottom: 0;
+  // position: absolute;
+  width: 100%;
+  height: 20%;
+}

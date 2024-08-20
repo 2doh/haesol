@@ -21,45 +21,22 @@ export const getTeacherInfo = async () => {
 
 /** 선생님 비밀번호 변경 */
 export const putTeacherPwChange = async (nowPw, newPw, userId) => {
-  // const accessToken = getCookie("accessToken");
-
   const data = {
-    teacherId: `${userId}`,
+    teacherUid: `${userId}`,
     passWord: `${newPw}`,
     oldPassWord: `${nowPw}`,
   };
-
-  // console.log(`New PW : ${newPw}, 선생님 ID : ${userId}`);
-  // try {
-  //   const response = await axios.put(
-  //     "/api/teacher/put_pwd",
-  //     {
-  //       teacherId: `${userId}`,
-  //       passWord: `${newPw}`,
-  //       oldPassWord: `${newPw}`,
-  //     },
-  //     {
-  //       headers: {
-  //         Authorization: `Bearer ${accessToken}`,
-  //       },
-  //     },
-  //   );
-  //   // console.log("비밀번호 수정 완료");
-  //   return response;
-  // } catch (error) {
-  //   console.log(error);
-  // }
 
   let res = await jwtAxios
     .put(`/api/teacher/put_pwd`, data)
     .then(res => {
       // 성공 처리
-      console.log("성공 : ", res);
-      // return res.data.userList;
+      // console.log("성공 : ", res);
+      return true;
     })
     .catch(error => {
-      console.log("에러 : ", error);
-      // return false;
+      // console.log("에러 : ", error);
+      return false;
       // return Promise.reject(error);
     });
 

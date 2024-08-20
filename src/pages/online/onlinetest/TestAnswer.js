@@ -69,7 +69,7 @@ const TestAnswer = () => {
   const countOmr = () => {
     const num =
       testState.questionAll.length -
-      testState.selectNumArr.filter(item => item.selectNum !== 0).length;
+      testState.selectNumArr.filter(item => item.selectNum !== "").length;
     setOmerCount(num);
 
     const data = {

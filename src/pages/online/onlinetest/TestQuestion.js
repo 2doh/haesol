@@ -33,7 +33,7 @@ import TestResultsPage from "./TestResultsPage";
 
 const TestQuestionWrap = styled.div`
   min-height: 100%;
-  height: fit-content;
+  /* height: fit-content; */
   padding: 20px;
 
   input[type="radio"] {
@@ -42,6 +42,8 @@ const TestQuestionWrap = styled.div`
   }
 
   .test-question-inner {
+    position: relative;
+
     width: 100%;
     min-height: 100%;
     height: fit-content;
@@ -98,26 +100,6 @@ const TestQuestionWrap = styled.div`
 
             span {
             }
-          }
-        }
-
-        .cbt__input {
-          display: flex;
-          justify-content: center;
-          padding: 40px 0 50px 0;
-
-          input[type="text"] {
-            width: 60%;
-            height: 65px;
-            text-align: center;
-
-            border: 3px solid #1b6a78;
-            border-radius: 5px;
-            padding: 10px 15px;
-            font-size: 20px;
-          }
-          input[type="text"]::placeholder {
-            color: gray;
           }
         }
       }
@@ -190,27 +172,19 @@ const TestQuestion = ({ subjects, subjectsName, testName }) => {
   const [questionsInputAnswer, setQuestionsInputAnswer] = useState("");
 
   useEffect(() => {
-    if (testState.selectNumArr.length === 0) {
-      setQuestionsInputAnswer("");
-    } else {
+    if (testState.selectNumArr.length !== 0) {
       setQuestionsInputAnswer(
         testState.selectNumArr[testState.nowQuestionsNum].selectNum,
       );
     }
   }, [testState.nowQuestionsNum, testState.selectNumArr]);
 
-  useEffect(() => {
+  /** 주관식 답 입력 버튼 클릭 이벤트 */
+  const subjectAnswerInput = typeNum => {
     console.log("questionsInputAnswer : ", questionsInputAnswer);
-
-    if (questionsInputAnswer !== "") {
-      answerSelect(
-        questionsInputAnswer,
-        dispatch,
-        testState,
-        testState.nowQuestionsNum,
-      );
-    }
-  }, [questionsInputAnswer]);
+    console.log("typeNum : ", typeNum);
+    answerSelect(questionsInputAnswer, dispatch, testState, typeNum);
+  };
 
   useEffect(() => {
     if (subjects) {
@@ -405,6 +379,7 @@ const TestQuestion = ({ subjects, subjectsName, testName }) => {
               </div>
 
               {testState.questionAll[testState.nowQuestionsNum].queTag === 2 ? (
+                // 주관식
                 <div className="cbt__input">
                   <input
                     type="text"
@@ -414,8 +389,18 @@ const TestQuestion = ({ subjects, subjectsName, testName }) => {
                       setQuestionsInputAnswer(e.target.value);
                     }} // onChange 핸들러 추가
                   />
+                  <button
+                    className="subject-input-btn"
+                    type="button"
+                    onClick={() => {
+                      subjectAnswerInput(2);
+                    }}
+                  >
+                    입력
+                  </button>
                 </div>
               ) : (
+                // 객관식
                 <div className="cbt__selects">
                   <input
                     type="radio"
@@ -427,7 +412,7 @@ const TestQuestion = ({ subjects, subjectsName, testName }) => {
                     name={`select${testState.questionAll[testState.nowQuestionsNum].number}`}
                     value={`${testState.questionAll[testState.nowQuestionsNum].number}_1`}
                     onChange={e => {
-                      answerSelect(e, dispatch, testState);
+                      answerSelect(e, dispatch, testState, 1);
                     }} // onChange 핸들러 추가
                   />
                   <label
@@ -454,7 +439,7 @@ const TestQuestion = ({ subjects, subjectsName, testName }) => {
                     name={`select${testState.questionAll[testState.nowQuestionsNum].number}`}
                     value={`${testState.questionAll[testState.nowQuestionsNum].number}_2`}
                     onChange={e => {
-                      answerSelect(e, dispatch, testState);
+                      answerSelect(e, dispatch, testState, 1);
                     }} // onChange 핸들러 추가
                   />
                   <label
@@ -481,7 +466,7 @@ const TestQuestion = ({ subjects, subjectsName, testName }) => {
                     name={`select${testState.questionAll[testState.nowQuestionsNum].number}`}
                     value={`${testState.questionAll[testState.nowQuestionsNum].number}_3`}
                     onChange={e => {
-                      answerSelect(e, dispatch, testState);
+                      answerSelect(e, dispatch, testState, 1);
                     }} // onChange 핸들러 추가
                   />
                   <label
@@ -508,7 +493,7 @@ const TestQuestion = ({ subjects, subjectsName, testName }) => {
                     name={`select${testState.questionAll[testState.nowQuestionsNum].number}`}
                     value={`${testState.questionAll[testState.nowQuestionsNum].number}_4`}
                     onChange={e => {
-                      answerSelect(e, dispatch, testState);
+                      answerSelect(e, dispatch, testState, 1);
                     }} // onChange 핸들러 추가
                   />
                   <label
@@ -535,7 +520,7 @@ const TestQuestion = ({ subjects, subjectsName, testName }) => {
                     name={`select${testState.questionAll[testState.nowQuestionsNum].number}`}
                     value={`${testState.questionAll[testState.nowQuestionsNum].number}_5`}
                     onChange={e => {
-                      answerSelect(e, dispatch, testState);
+                      answerSelect(e, dispatch, testState, 1);
                     }} // onChange 핸들러 추가
                   />
                   <label

@@ -276,10 +276,13 @@ const NoteOmr = ({ studentOmr, realAnswerOmr }) => {
             {testState.questionAll[index].queTag === 2 ? (
               <div className="omr__input">
                 <input
+                  disabled
                   type="text"
-                  placeholder="정답을 입력해주세요"
+                  placeholder="답 미입력"
                   value={
-                    testState.questionAll[testState.nowQuestionsNum].selectNum
+                    testState.incorrectAnswerNoteMain.studentOmr.omrAnswer[
+                      index
+                    ]
                   }
                 />
               </div>

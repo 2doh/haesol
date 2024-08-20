@@ -199,23 +199,14 @@ const TestOmr = () => {
   // 주관식 답 저장
   const [questionsInputAnswer, setQuestionsInputAnswer] = useState("");
 
+  /** 주관식 답 동기화 */
   useEffect(() => {
-    if (testState.selectNumArr.length === 0) {
-      console.log("초기화");
-      setQuestionsInputAnswer("");
-    } else {
-      console.log("초기화 이후");
+    if (testState.selectNumArr.length !== 0) {
       setQuestionsInputAnswer(
         testState.selectNumArr[testState.nowQuestionsNum].selectNum,
       );
     }
   }, [testState.nowQuestionsNum, testState.selectNumArr]);
-
-  useEffect(() => {
-    if (questionsInputAnswer !== "") {
-      questionsNumCheck(questionsInputAnswer, testState.nowQuestionsNum);
-    }
-  }, [questionsInputAnswer]);
 
   useEffect(() => {
     if (width < 1180) {
@@ -237,11 +228,7 @@ const TestOmr = () => {
   const questionsNumCheck = (e, num) => {
     if (num === testState.nowQuestionsNum) {
       // console.log("일치 한다");
-      if (testState.questionAll[testState.nowQuestionsNum].queTag === 2) {
-        answerSelect(questionsInputAnswer, dispatch, testState, num);
-      } else {
-        answerSelect(e, dispatch, testState);
-      }
+      answerSelect(e, dispatch, testState, 1);
     } else {
       const data = {
         headerText: "주의",
@@ -286,10 +273,12 @@ const TestOmr = () => {
               <strong>{item.number}</strong>
             </div>
             {testState.questionAll[index].queTag === 2 ? (
+              // 주관식
               <div className="omr__input">
                 <input
+                  disabled
                   type="text"
-                  placeholder="정답을 입력해주세요"
+                  placeholder="답 미입력"
                   value={
                     testState.nowQuestionsNum === index
                       ? questionsInputAnswer
@@ -301,6 +290,8 @@ const TestOmr = () => {
                 />
               </div>
             ) : (
+              // 객관식
+
               <div className="omr-select">
                 <input
                   type="radio"

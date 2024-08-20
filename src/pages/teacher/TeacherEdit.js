@@ -145,7 +145,7 @@ const TeacherEdit = () => {
       }
 
       setGendar(res.data.gender);
-      setUserId(res.data.id);
+      setUserId(res.data.uid);
 
       // 담당 학년 / 학급
       if (res.data.class === null) {
@@ -266,6 +266,22 @@ const TeacherEdit = () => {
 
     dispatch(openModal(selectModalType));
   };
+
+  /** 비밀번호가 바뀌었다는 모달 호출  */
+  useEffect(() => {
+    if (modalState.modalRes[0] === "비밀번호수정완료") {
+      const data = {
+        bodyText: ["비밀번호 변경에 성공했습니다."],
+        headerText: "비밀번호 변경 성공",
+        modalRes: [1],
+        buttonText: ["확인"],
+        buttonCnt: 1,
+      };
+
+      dispatch(updateModalDate(data));
+      dispatch(openModal("BasicModal"));
+    }
+  }, [modalState.modalRes]);
 
   /** 우편번호 찾기 - 팝업 */
   const handleAddClick = e => {

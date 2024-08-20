@@ -28,7 +28,7 @@ const ModalStyle = styled.div`
   }
 `;
 
-const ModalView = () => {
+const ModalView: React.FC = () => {
   return (
     <ModalStyle>
       <Modal />

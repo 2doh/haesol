@@ -111,26 +111,6 @@ const TestQuestionWrap = styled.div`
             }
           }
         }
-
-        .cbt__input {
-          display: flex;
-          justify-content: center;
-          padding: 40px 0 50px 0;
-
-          input[type="text"] {
-            width: 60%;
-            height: 65px;
-            text-align: center;
-
-            border: 3px solid #1b6a78;
-            border-radius: 5px;
-            padding: 10px 15px;
-            font-size: 20px;
-          }
-          input[type="text"]::placeholder {
-            color: gray;
-          }
-        }
       }
     }
 
@@ -236,17 +216,21 @@ const NoteQuestion = ({ studentOmr, realAnswerOmr }) => {
               </div>
 
               {testState.questionAll[testState.nowQuestionsNum].queTag === 2 ? (
+                // 주관식
                 <div className="cbt__input">
                   <input
                     disabled
                     type="text"
-                    placeholder="정답을 입력해주세요"
                     value={
-                      testState.questionAll[testState.nowQuestionsNum].selectNum
+                      testState.incorrectAnswerNoteMain.studentOmr.omrAnswer[
+                        testState.nowQuestionsNum
+                      ]
                     }
                   />
                 </div>
               ) : (
+                // 객관식
+
                 <div className="cbt__selects">
                   <input
                     type="radio"

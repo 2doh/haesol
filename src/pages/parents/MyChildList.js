@@ -7,7 +7,7 @@ import HeaderMemu from "components/layout/header/HeaderMenu";
 import HeaderProfile from "components/layout/header/HeaderProfile";
 import HeaderTopPublic from "components/layout/header/HeaderTopPublic";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { openModal, updateModalDate } from "slices/modalSlice";
 import { getCookie, setCookie } from "utils/cookie";
 import SocialLoginIntegration from "./SocialLoginIntegration";
@@ -382,17 +382,17 @@ const TopDiv = styled.div`
 
 const MyChildList = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const modalState = useSelector(state => state.modalSlice);
 
   const [myInfoData, setMyInfoData] = useState("");
   const [myChildList, setMyChildList] = useState([]);
   const [offUseEffect, setOffUseEffect] = useState(false);
 
-  const dispatch = useDispatch();
-
   /** 아이들 정보 불러오기 */
   const myChildInfo = async childNum => {
     const res = await getMyChildInfo();
-    console.log("자녀 정보 : ", res);
+    // console.log("자녀 정보 : ", res);
 
     if (res === false) {
       console.log("자녀 없음.");
@@ -416,7 +416,7 @@ const MyChildList = () => {
 
     if (res) {
       setMyInfoData(res);
-      console.log("부모 데이터 : ", res);
+      // console.log("부모 데이터 : ", res);
     }
   };
 
@@ -425,9 +425,9 @@ const MyChildList = () => {
     myInfo();
   }, []);
 
-  useEffect(() => {
-    console.log("새로고침 : ", myChildList);
-  }, [myChildList]);
+  // useEffect(() => {
+  //   console.log("새로고침 : ", myChildList);
+  // }, [myChildList]);
 
   const addChild = () => {
     const data = {
@@ -462,11 +462,25 @@ const MyChildList = () => {
   /** 비밀번호 수정 모달 호출 */
   const showModal = selectModalType => {
     const data = { bodyText: [myInfoData.uid], buttonText: ["수정", "취소"] };
-
     dispatch(updateModalDate(data));
-
     dispatch(openModal(selectModalType));
   };
+
+  /** 비밀번호가 바뀌었다는 모달 호출  */
+  useEffect(() => {
+    if (modalState.modalRes[0] === "비밀번호수정완료") {
+      const data = {
+        bodyText: ["비밀번호 변경에 성공했습니다."],
+        headerText: "비밀번호 변경 성공",
+        modalRes: [1],
+        buttonText: ["확인"],
+        buttonCnt: 1,
+      };
+
+      dispatch(updateModalDate(data));
+      dispatch(openModal("BasicModal"));
+    }
+  }, [modalState.modalRes]);
 
   return (
     <>
@@ -547,7 +561,7 @@ const MyChildList = () => {
               </div>
               {myChildList.length !== 0 ? (
                 myChildList.map((item, index) => {
-                  console.log(item);
+                  // console.log(item);
                   return (
                     <div className="child-info-div" key={index}>
                       {/* <div className="child-info-div"> */}

@@ -7,16 +7,18 @@ import { useEffect, useState } from "react";
 import usePreventRefresh from "hooks/common/usePreventRefresh";
 import usePreventGoBack from "hooks/common/usePreventGoBack";
 import { useLocation, useNavigate } from "react-router";
+import "../../scss/online/testpage.css";
 
 const TestWrap = styled.div`
   position: absolute;
   width: 100%;
   height: calc(100vh - 70px);
+  /* height: auto; */
 
   .test-page {
     width: 1180px;
     min-height: 100%;
-    height: 100%;
+    height: max-content;
     background-color: #f3f9fa;
     margin: 0 auto;
     min-width: 440px;
