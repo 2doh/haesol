@@ -462,13 +462,16 @@ const ChatList = ({ chatStartOpen, setChatOpen }) => {
   const [sendTime, setSendTime] = useState("");
 
   const fetchChatData = async () => {
+    console.log("loginUserType:", loginUserType);
     try {
       if (loginUserType === "ROLE_TEACHER") {
-        const response = await getChatParentsList();
-        setChatData(response);
-      } else if (loginUserType === "ROLE_PARENTS") {
         const response = await getChatTeacherList();
-        setChatData(response);
+        setChatData(response || []);
+      } else if (loginUserType === "ROLE_PARENTS") {
+        const response = await getChatParentsList();
+        setChatData(response || []);
+      } else {
+        console.error("Unknown user role:", loginUserType);
       }
     } catch (error) {
       console.error("채팅 데이터를 불러오는 중 오류 발생:", error);
@@ -479,7 +482,7 @@ const ChatList = ({ chatStartOpen, setChatOpen }) => {
     try {
       const response = await getParentsListInfo();
       console.log(response);
-      setParentsList(response);
+      setParentsList(response || []);
     } catch (error) {
       console.log("error :", error);
     }

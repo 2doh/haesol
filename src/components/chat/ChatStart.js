@@ -3,6 +3,8 @@ import "../../scss/chat/chat.css";
 import { useEffect, useState } from "react";
 import ChatList from "./ChatList";
 import styled from "@emotion/styled";
+import NonPopup from "./NonPopup";
+import { useCookies } from "react-cookie";
 
 const ChatStartWrap = styled.div`
   z-index: 100000;
@@ -14,13 +16,13 @@ const ChatStartWrap = styled.div`
 const ChatStart = ({ chatOpen, setChatOpen }) => {
   // 채팅 시작 버튼
   const [chatStartOpen, setChatStartOpen] = useState(false);
+  const [cookies] = useCookies(["HBB_Cookie"]);
 
   useEffect(() => {
-    // console.log("chatOpen : ", chatOpen);
-    // if (chatOpen) {
-    // setChatStartOpen(true);
-    // }
-  }, [chatOpen]);
+    if (cookies["HBB_Cookie"]) {
+      setChatStartOpen(true);
+    }
+  }, [cookies]);
 
   return (
     <ChatStartWrap>
@@ -59,24 +61,16 @@ const ChatStart = ({ chatOpen, setChatOpen }) => {
             </div>
 
             <div className="chat-field">
-              <div className="chat-start-non-popup">
-                <input
-                  type="checkbox"
-                  id="non-popup"
-                  name="non-popup"
-                  checked
-                />
-                <label htmlFor="non-popup">오늘 하루 더이상 보지 않기</label>
-              </div>
+              <NonPopup setChatStartOpen={setChatStartOpen} />
 
-              <button
+              {/* <button
                 className="chat-button"
                 onClick={() => {
                   setChatStartOpen(true);
                 }}
               >
                 채팅 시작하기
-              </button>
+              </button> */}
             </div>
           </div>
         )

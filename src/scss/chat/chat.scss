@@ -134,7 +134,7 @@
       // (필요없을 시 삭제)
       @include bt-animation-02;
       position: absolute;
-      bottom: 20px;
+      bottom: 30px;
       width: 85%;
       min-height: 60px;
       border-radius: 20px;
@@ -152,7 +152,10 @@
       justify-content: center;
     }
     .chat-start-non-popup {
+      margin-bottom: 50px;
       display: flex;
+      font-size: 18px;
+      gap: 10px;
     }
   }
 }
