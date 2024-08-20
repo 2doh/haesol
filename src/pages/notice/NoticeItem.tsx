@@ -10,6 +10,18 @@ import { RiDeleteBack2Fill } from "react-icons/ri";
 import HeaderTopPublic from "components/layout/header/HeaderTopPublic";
 import HeaderMemu from "components/layout/header/HeaderMenu";
 import Footer from "components/layout/Footer";
+import { AxiosResponse } from "axios";
+
+interface NoticeItemData {
+  createdAt: string;
+  title: string;
+  content: string;
+  notice_id: number;
+}
+
+interface ModalState {
+  modalRes: boolean[] | any;
+}
 
 const NoticeListWrapStyle = styled.div`
   max-width: 1180px;
@@ -27,12 +39,14 @@ const NoticeListStyle = styled.div`
   position: relative;
 `;
 
-const NoticeItem = () => {
-  const [loginUserType, setLoginUserType] = useState(getCookie("userRole"));
-  const studentPk = getCookie("studentPk");
+const NoticeItem: React.FC = () => {
+  const [loginUserType, setLoginUserType] = useState<string>(
+    getCookie("userRole") || "",
+  );
+  const studentPk = getCookie("studentPk") || "";
   console.log("studentPk : ", studentPk);
-  const userClass = getCookie("userClass");
-  const userGrade = getCookie("userGrade");
+  const userClass = getCookie("userClass") || "";
+  const userGrade = getCookie("userGrade") || "";
   // 네비게이트
   const navigate = useNavigate();
   // const handleListClick = () => {
@@ -44,19 +58,20 @@ const NoticeItem = () => {
   // 준비물 state
   const state = 2;
 
-  const [noticeList, setNoticeList] = useState([]);
+  const [noticeList, setNoticeList] = useState<NoticeItemData[]>([]);
 
   // 알림장 데이터 연동
   const noticeListData = async () => {
     try {
-      const response = await getNoticeList(state);
-      if (response.data.result.item) {
+      const response: AxiosResponse<any> | undefined =
+        await getNoticeList(state);
+      if (response && response.data.result.item) {
         const noticeData = Array.isArray(response.data.result.item)
           ? response.data.result.item
           : [response.data.result.item];
 
         // createdAt의 날짜 부분만 추출하여 새로운 객체에 저장
-        const formattedNoticeData = noticeData.map(item => ({
+        const formattedNoticeData = noticeData.map((item: NoticeItemData) => ({
           ...item,
           createdAt: item.createdAt.split(" ")[0], // 날짜 부분만 추출
         }));
@@ -74,7 +89,13 @@ const NoticeItem = () => {
 
   const dispatch = useDispatch();
   /** 모달 호출 */
-  const showModal = (selectModalType, createdAt, title, content, notice_id) => {
+  const showModal = (
+    selectModalType: string,
+    createdAt: string,
+    title: string,
+    content: string,
+    notice_id: number,
+  ) => {
     /** (선택) 들어갈 내용 수정 */
     const data = {
       headerText: `준비물 - ${createdAt}`,
@@ -89,9 +110,15 @@ const NoticeItem = () => {
     // console.log("모달 결과 출력 내용 확인 : ", modalRes);
   };
 
-  const modalState = useSelector(state => state.modalSlice);
+  const modalState = useSelector(
+    (state: { modalSlice: ModalState }) => state.modalSlice,
+  );
 
-  const handleDelete = (e, selectModalType, notice_id) => {
+  const handleDelete = (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    selectModalType: string,
+    notice_id: number,
+  ) => {
     e.stopPropagation();
     const data = {
       headerText: ["삭제"],
@@ -105,15 +132,9 @@ const NoticeItem = () => {
     /**(고정) 모달 활성화 */
     dispatch(openModal(selectModalType));
   };
-  useEffect(
-    () => {
-      // if (modalState.modalRes[0] === false) {
-      noticeListData();
-      // }
-    },
-    [modalState.modalRes[0]],
-    state,
-  );
+  useEffect(() => {
+    noticeListData();
+  }, [modalState.modalRes[0]]);
 
   return (
     <>

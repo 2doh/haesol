@@ -80,11 +80,12 @@ const ChatWrapStyle = styled.div`
       scrollbar-width: none; /* Firefox에서 스크롤 바 숨기기 */
 
       .chat-select-wrap {
+        max-height: 90%;
         width: 95%;
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 15px;
+        gap: 5px;
         span {
           color: #1b6a78;
           font-size: 16px;
@@ -93,11 +94,11 @@ const ChatWrapStyle = styled.div`
         .chat-select-field {
           width: 95%;
           /* min-height: 80%; */
-          border-radius: 10px;
+          /* border-radius: 10px; */
           background-color: #fbfaf9;
           padding: 15px;
           display: flex;
-          gap: 20px;
+          /* gap: 10px; */
           flex-direction: column;
           box-shadow:
             0px 3px 6px rgba(0, 0, 0, 0.16),
@@ -235,6 +236,8 @@ const ChatWrapStyle = styled.div`
           }
           &:hover {
             background-color: #f3f9fa;
+          }
+          .parents-info {
           }
         }
         .chat-select-field-group {
@@ -478,6 +481,7 @@ const ChatList = ({ chatStartOpen, setChatOpen }) => {
     }
   };
 
+  // 선생님 -> 담당 학급 학부모 리스트 불러오기
   const getParentsList = async () => {
     try {
       const response = await getParentsListInfo();
@@ -492,19 +496,14 @@ const ChatList = ({ chatStartOpen, setChatOpen }) => {
     fetchChatData();
   }, [loginUserType]);
 
-  // useEffect(() => {
-  //   console.log("getParentsList : ", getParentsList.data);
-  //   getParentsList();
-  // }, []);
-
   const handleOpenChatRoom = (
     selectedRoomId,
     selectedTeaId,
     selectedParentId,
   ) => {
     setRoomId(selectedRoomId);
-    setTeaId(selectedTeaId.name);
-    setParentId(selectedParentId.name);
+    setTeaId(selectedTeaId); // 객체 전체를 전달
+    setParentId(selectedParentId); // 객체 전체를 전달
     setChatRoomOpen(true);
   };
 
@@ -545,8 +544,8 @@ const ChatList = ({ chatStartOpen, setChatOpen }) => {
                       onClick={() =>
                         handleOpenChatRoom(
                           item.roomId,
-                          item.teaId,
-                          item.parentId,
+                          item.teaId?.name || "정보 없음",
+                          item.parents || [],
                         )
                       }
                     >
@@ -554,22 +553,8 @@ const ChatList = ({ chatStartOpen, setChatOpen }) => {
                         <span>
                           {item.studentGrade}학년 {item.studentClass}반
                         </span>
-                        <p>{item.teacherName} 선생님</p>
+                        <p>{item.teaId?.name || "선생님 정보 없음"} 선생님</p>
                       </div>
-                      {chatData.length > 0 ? (
-                        <div className="teacher-chat-contain">
-                          <p>
-                            여기 대화내용 출력 어쩌고저쩌고뭐시기저시기야 오늘의
-                            점심은 오므라이스입니다. 맛있었어요.
-                          </p>
-                        </div>
-                      ) : (
-                        <div className="chat-select-wrap-parents">
-                          <div className="chat-null">
-                            <span>아직 대화내용이 없습니다.</span>
-                          </div>
-                        </div>
-                      )}
                     </div>
                   </div>
                 ))}
@@ -581,21 +566,26 @@ const ChatList = ({ chatStartOpen, setChatOpen }) => {
                     <div
                       className="chat-select-wrap-parents"
                       key={index}
-                      // onClick={() => {
-                      //   setChatRoomOpen(true);
-                      // }}
                       onClick={() =>
                         handleOpenChatRoom(
                           item.roomId,
-                          item.teaId,
-                          item.parentId,
+                          item.teaId?.name || "정보 없음",
+                          item.parents || [],
                         )
                       }
                     >
                       <div className="chat-select-field-parents">
                         <div className="parents-info">
-                          <span>{item.parentId.name} 학부모</span>
-                          <p>내일 어쩌구저쩌구 이거 내용이에요.</p>
+                          {/* 학부모 목록 출력 */}
+                          {item.parents?.length > 0 ? (
+                            item.parents.map((parent, parentIndex) => (
+                              <span key={parentIndex}>
+                                {parent.name} 학부모
+                              </span>
+                            ))
+                          ) : (
+                            <span>학부모 정보 없음</span>
+                          )}
                         </div>
                       </div>
                     </div>

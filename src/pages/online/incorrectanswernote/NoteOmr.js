@@ -21,6 +21,7 @@ import useWindowDimensions from "hooks/common/useWindowDimensions";
 
 import correctlyImg from "../../../images/online/note/3.png";
 import wrongImg from "../../../images/online/note/4.png";
+import { useNavigate } from "react-router";
 
 const TestOmrStyle = styled.div`
   display: flex;
@@ -201,6 +202,7 @@ const TestOmrStyle = styled.div`
 `;
 
 const NoteOmr = ({ studentOmr, realAnswerOmr }) => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const testState = useSelector(state => state.testSlice);
   const [changeStyle, setChangeStyle] = useState(true);
