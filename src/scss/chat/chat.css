@@ -144,7 +144,7 @@
 }
 .chat-wrap-style .chat-field .chat-button {
   position: absolute;
-  bottom: 20px;
+  bottom: 30px;
   width: 85%;
   min-height: 60px;
   border-radius: 20px;
@@ -163,5 +163,8 @@
   transform: translateY(2px);
 }
 .chat-wrap-style .chat-field .chat-start-non-popup {
+  margin-bottom: 50px;
   display: flex;
+  font-size: 18px;
+  gap: 10px;
 }/*# sourceMappingURL=chat.css.map */

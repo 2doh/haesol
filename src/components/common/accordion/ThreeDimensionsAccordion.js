@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 import { useNavigate } from "react-router";
 import { setCookie } from "utils/cookie";
 

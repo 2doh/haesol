@@ -1,0 +1,16 @@
+.bot-speech-bubble-btns {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+
+  button {
+    padding: 20px;
+    font-size: 18px;
+    font-weight: bold;
+
+    max-width: 150px;
+    max-height: 70px;
+    background-color: gray;
+    border-radius: 20px;
+  }
+}

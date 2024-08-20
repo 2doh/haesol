@@ -462,40 +462,44 @@ const Modal = () => {
       }
     }
     if (modalState.modalType === "PasswordChangeModal") {
-      console.log(
-        `기존 비밀번호 : ${nowPw}, 신규 비밀번호 : ${newPw}, 재입력 : ${newPwRe}`,
-      );
+      // console.log(
+      //   `기존 비밀번호 : ${nowPw}, 신규 비밀번호 : ${newPw}, 재입력 : ${newPwRe}`,
+      // );
 
+      // 입력한 비밀번호 체크
       const pwOk = pwCheck();
       let res = "";
 
       if (pwOk === true) {
-        console.log("일치");
+        // console.log("일치");
       }
       if (
-        newPwWarningCheck === true ||
-        newPwReWarningCheck === true ||
-        nowPwWarningCheck === true ||
+        newPwWarningCheck === true &&
+        newPwReWarningCheck === true &&
+        nowPwWarningCheck === true &&
         pwOk === true
       ) {
-        console.log("비밀번호 수정 처리 진입");
+        // console.log("비밀번호 수정 처리 진입");
 
         if (getCookie("userRole") === "ROLE_TEACHER") {
-          console.log("교직원 비밀번호 변경");
           res = await putTeacherPwChange(nowPw, newPw, modalState.bodyText);
         }
         if (getCookie("userRole") === "ROLE_PARENTS") {
-          console.log("학부모 비밀번호 변경");
-
           res = await putParentsPwChange(nowPw, newPw, modalState.bodyText);
         }
 
-        if (res.data === 1) {
-          // 비밀번호가 바뀌었다는 모달 추가
-          console.log("처리됨 : ", res);
+        if (res.data === 1 || res === true) {
+          const data = {
+            modalRes: ["비밀번호수정완료"],
+          };
+
+          dispatch(updateModalDate(data));
+          dispatch(closeModal());
         } else {
-          console.log("오류");
-          // dispatch(closeModal());
+          // 기존 비밀번호 확인 해달라는 메세지
+          setValidationConfirmMsg(
+            "비밀번호를 변경하지 못했습니다. 기존 비밀번호를 확인해주세요.",
+          );
         }
       }
     }
@@ -581,28 +585,25 @@ const Modal = () => {
   //   // newPwReWarningCheck
   // }, [newPwWarningCheck, newPwReWarningCheck]);
 
-  /** 새로운 비밀번호 일치 여부 확인 */
+  /** 새로운 비밀번호 일치 여부 및 기존 비밀번호 일치 여부 확인 */
   const pwCheck = () => {
-    let check01 = false;
-    let check02 = false;
+    let check = false;
 
-    // 새로운 비밀번호 일치 하지 않을 경우
     if (newPwRe !== newPw) {
+      // 새로운 비밀번호 일치 하지 않을 경우
       setValidationConfirmMsg("비밀번호가 일치하지 않습니다");
-      check01 = false;
-    } else if (nowPw == newPwRe || nowPw == newPw) {
-      setValidationConfirmMsg("");
-      check01 = true;
-    }
-
-    // 새로운 비밀번호 일치 하지 않을 경우
-    if (nowPw == newPwRe || nowPw == newPw) {
-      setValidationConfirmMsg("비밀번호가 일치하지 않습니다");
-      return false;
+    } else if (nowPw === newPwRe) {
+      // 기존 비밀번호와 동일한 비밀번호로 변경하려는 경우
+      setValidationConfirmMsg(
+        `기존 비밀번호와 신규 비밀번호가 동일합니다. 신규 비밀번호를 변경해주세요.`,
+      );
+      check = false;
     } else {
       setValidationConfirmMsg("");
-      return true;
+      check = true;
     }
+
+    return check;
   };
 
   /** 자녀 추가 */

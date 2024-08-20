@@ -8,6 +8,7 @@ import NoteAnswer from "./NoteAnswer";
 import { nowQuestionsNumReset } from "slices/testSlice";
 import { useNavigate } from "react-router";
 import usePreventRefresh from "hooks/common/usePreventRefresh";
+import Chat from "pages/online/incorrectanswernote/Chat";
 
 const NoteWrap = styled.div`
   position: absolute;
@@ -80,6 +81,8 @@ const IncorrectAnswerNoteMain = () => {
   return (
     <>
       <GreenHeaderNoOption />
+      <Chat />
+
       <NoteWrap>
         {isDate ? (
           <div className="note-page">

@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import botImg from "../../../images/graidentairobot.jpg";
 import { useNavigate } from "react-router";
+import "../../../scss/bot/bot.css";
 
 const TextBotWrap = styled.div`
   width: 100%;
@@ -38,7 +39,7 @@ const TextBotWrap = styled.div`
 
     // looks
     background-color: #fff;
-    padding: 1.125em 1.5em;
+    padding: 2.125em 2.5em;
     font-size: 1.25em;
     border-radius: 1rem;
     box-shadow:
@@ -76,10 +77,11 @@ const TextBotWrap = styled.div`
 
 const TextBot = () => {
   const navigate = useNavigate();
-
+  const testState = useSelector(state => state.testSlice);
   const [inputValue, setInputValue] = useState("");
-  const [promptResponses, setpromptResponses] = useState([]);
+  const [promptResponses, setPromptResponses] = useState([]);
   const [loading, setLoading] = useState(false);
+
   // 여기에 당신의 API 키를 넣어주세요
   const genAI = new GoogleGenerativeAI(AI_KEY);
 
@@ -91,13 +93,15 @@ const TextBot = () => {
     try {
       setLoading(true);
       const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-      const result = await model.generateContent("네 이름이 뭐니?");
-      //   const result = await model.generateContent(inputValue);
+      const result = await model.generateContent(
+        `naver.com 들어가서 지금 뭐가 있는지 확인하고 설명할 수 있니??`,
+      );
+      // const result = await model.generateContent(inputValue);
       setInputValue("");
       const response = result.response;
-      const text = response.text();
+      const text = await response.text();
       console.log(text);
-      setpromptResponses([...promptResponses, text]);
+      setPromptResponses([...promptResponses, text]);
 
       setLoading(false);
     } catch (error) {
@@ -161,15 +165,21 @@ const TextBot = () => {
             ))
           )}
         </div>
-        <div>
-          <div>책 추천</div>
-          <div
+        <div className="bot-speech-bubble-btns">
+          <button
+            onClick={() => {
+              console.log("책 추천 입니다.");
+            }}
+          >
+            책 추천받기
+          </button>
+          <button
             onClick={() => {
               movePage();
             }}
           >
-            오답노트
-          </div>
+            오답 노트 보기
+          </button>
         </div>
       </p>
     </TextBotWrap>

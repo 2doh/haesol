@@ -7,7 +7,7 @@ import HeaderProfile from "components/layout/header/HeaderProfile";
 import HeaderTopPublic from "components/layout/header/HeaderTopPublic";
 import PhoneInputFields from "pages/student/PhoneInputFields";
 import { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import "../../scss/teacher/teacheredit.css";
 import { openModal, updateModalDate } from "slices/modalSlice";
@@ -106,6 +106,7 @@ const TeacherInfoViewStyle = styled.div`
 
 const TeacherInfoView = () => {
   const navigate = useNavigate();
+  const modalState = useSelector(state => state.modalSlice);
 
   const dispatch = useDispatch();
 
@@ -142,7 +143,7 @@ const TeacherInfoView = () => {
       }
 
       setGendar(res.data.gender);
-      setUserId(res.data.id);
+      setUserId(res.data.uid);
 
       // 담당 학년 / 학급
       if (res.data.class === null) {
@@ -177,12 +178,28 @@ const TeacherInfoView = () => {
   /** 비밀번호 수정 모달 호출 */
   const showModal = selectModalType => {
     // const data = { bodyText: [userId], buttonText: ["수정", "취소"] };
-    const data = { bodyText: ["test1234"], buttonText: ["수정", "취소"] };
+    const data = { bodyText: [userId], buttonText: ["수정", "취소"] };
 
     dispatch(updateModalDate(data));
 
     dispatch(openModal(selectModalType));
   };
+
+  /** 비밀번호가 바뀌었다는 모달 호출  */
+  useEffect(() => {
+    if (modalState.modalRes[0] === "비밀번호수정완료") {
+      const data = {
+        bodyText: ["비밀번호 변경에 성공했습니다."],
+        headerText: "비밀번호 변경 성공",
+        modalRes: [1],
+        buttonText: ["확인"],
+        buttonCnt: 1,
+      };
+
+      dispatch(updateModalDate(data));
+      dispatch(openModal("BasicModal"));
+    }
+  }, [modalState.modalRes]);
 
   return (
     <>
@@ -231,7 +248,7 @@ const TeacherInfoView = () => {
                   <input
                     disabled
                     className="no-edit-class"
-                    value={userName}
+                    defaultValue={userName}
                     type="text"
                     name="text"
                   />
@@ -242,7 +259,7 @@ const TeacherInfoView = () => {
                       id="domain-txt"
                       type="text"
                       name="text"
-                      value={gender}
+                      defaultValue={gender}
                     />
                   </div>
                 </div>
@@ -251,7 +268,7 @@ const TeacherInfoView = () => {
                   <input
                     type="date"
                     name="date"
-                    value={birth}
+                    defaultValue={birth}
                     className="no-edit-class"
                     // onChange={e => setBirth(e.target.value)}
                   />
@@ -272,7 +289,7 @@ const TeacherInfoView = () => {
                     type="text"
                     name="text"
                     placeholder=""
-                    value={userId}
+                    defaultValue={userId}
                     className="no-edit-class"
                   />
                 </div>
@@ -282,7 +299,7 @@ const TeacherInfoView = () => {
                     type="text"
                     name="text"
                     placeholder=""
-                    value={classGrade}
+                    defaultValue={classGrade}
                     className="no-edit-class"
                   />
                 </div>
@@ -292,7 +309,7 @@ const TeacherInfoView = () => {
                     type="text"
                     name="text"
                     placeholder=""
-                    value={classNum}
+                    defaultValue={classNum}
                     className="no-edit-class"
                   />
                 </div>
@@ -312,7 +329,7 @@ const TeacherInfoView = () => {
                         id="domain-txt"
                         type="text"
                         name="text"
-                        value={email.split("@")[1]}
+                        defaultValue={email.split("@")[1]}
                       />
                     </div>
                   </div>
@@ -325,7 +342,7 @@ const TeacherInfoView = () => {
                         disabled
                         type="text"
                         name="text"
-                        value={zoneCode}
+                        defaultValue={zoneCode}
                       />
                     </div>
                     <input
@@ -333,14 +350,14 @@ const TeacherInfoView = () => {
                       type="text"
                       name="text"
                       className="info-add"
-                      value={addr}
+                      defaultValue={addr}
                     />
                     <input
                       disabled
                       type="text"
                       name="text"
                       className="info-add"
-                      value={subAddr}
+                      defaultValue={subAddr}
                     />
                   </div>
                 </div>
