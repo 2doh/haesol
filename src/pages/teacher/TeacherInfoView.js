@@ -1,18 +1,16 @@
 import styled from "@emotion/styled";
-import { useEffect, useRef, useState } from "react";
-import "../../scss/teacher/teacheredit.css";
 import { getTeacherInfo } from "api/teacher/teacherapi";
-import PhoneInputFields from "pages/student/PhoneInputFields";
-import { useDispatch, useSelector } from "react-redux";
-import { openModal, updateModalDate } from "slices/modalSlice";
-import HeaderTopPublic from "components/layout/header/HeaderTopPublic";
+import PageTitle from "components/common/style/PageTitle";
+import Footer from "components/layout/Footer";
 import HeaderMemu from "components/layout/header/HeaderMenu";
 import HeaderProfile from "components/layout/header/HeaderProfile";
-import Footer from "components/layout/Footer";
-import PageTitle from "components/common/style/PageTitle";
+import HeaderTopPublic from "components/layout/header/HeaderTopPublic";
+import PhoneInputFields from "pages/student/PhoneInputFields";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
-import usePreventGoBack from "hooks/common/usePreventGoBack";
-import usePreventRefresh from "hooks/common/usePreventRefresh";
+import "../../scss/teacher/teacheredit.css";
+import { openModal, updateModalDate } from "slices/modalSlice";
 
 const TeacherInfoViewStyle = styled.div`
   .Modal {
@@ -112,7 +110,7 @@ const TeacherInfoView = () => {
   const dispatch = useDispatch();
 
   const emailText = useRef();
-  const emailDomain = useRef();
+  // const emailDomain = useRef();
 
   // 여기서부터 코드 수정
   const [birth, setBirth] = useState("");
@@ -176,6 +174,16 @@ const TeacherInfoView = () => {
     navigate("/teacher/infoedit");
   };
 
+  /** 비밀번호 수정 모달 호출 */
+  const showModal = selectModalType => {
+    // const data = { bodyText: [userId], buttonText: ["수정", "취소"] };
+    const data = { bodyText: ["test1234"], buttonText: ["수정", "취소"] };
+
+    dispatch(updateModalDate(data));
+
+    dispatch(openModal(selectModalType));
+  };
+
   return (
     <>
       <HeaderTopPublic />
@@ -194,6 +202,16 @@ const TeacherInfoView = () => {
               <div className="property">
                 <div className="frame">
                   <div className="text-wrapper">신상 정보</div>
+                </div>
+                <div className="info-button .re-pw-btn">
+                  <button
+                    onClick={() => {
+                      showModal("PasswordChangeModal");
+                    }}
+                    className="re-pw-btn"
+                  >
+                    비밀번호 수정
+                  </button>
                 </div>
               </div>
               <div className="info-button">

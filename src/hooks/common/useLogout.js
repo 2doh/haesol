@@ -2,6 +2,8 @@ import { removeCookie } from "utils/cookie";
 
 /** 로그인 할 때 로그인 유효시간 저장 */
 const useLogout = () => {
+  // console.log("로그아웃");
+
   // 타이머
   removeCookie("timerMin");
   removeCookie("timerSec");
@@ -25,7 +27,7 @@ const useLogout = () => {
   removeCookie("userGrade");
   removeCookie("userName");
 
-  window.location.reload("/");
+  return window.location.reload("/");
 };
 
 export default useLogout;
