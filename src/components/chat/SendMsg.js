@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import React, { useEffect, useState } from "react";
 
 const ChatWrapInner = styled.div`
   font-size: 17px;
@@ -12,7 +11,7 @@ const ChatWrapInner = styled.div`
     .sendmsg-timewrap {
       .sendmsg-time {
         white-space: nowrap;
-        font-size: 12px;
+        font-size: 11px;
       }
     }
     .sendmsg-msg {

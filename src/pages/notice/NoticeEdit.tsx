@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from "react";
-import "../../scss/notice/noticeEdit.css";
-import { createNotice, getStudentInfo } from "api/student/studentapi";
-import { postTeacherSignin } from "api/login/teacherloginapi";
-import { getCookie } from "utils/cookie";
+import styled from "@emotion/styled";
+import { createNotice } from "api/student/studentapi";
+import Footer from "components/layout/Footer";
+import HeaderMemu from "components/layout/header/HeaderMenu";
+import HeaderTopPublic from "components/layout/header/HeaderTopPublic";
+import { ChangeEvent, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { openModal, updateModalDate } from "slices/modalSlice";
-import { useDispatch, useSelector } from "react-redux";
-import HeaderTopPublic from "components/layout/header/HeaderTopPublic";
-import HeaderMemu from "components/layout/header/HeaderMenu";
-import styled from "@emotion/styled";
-import Footer from "components/layout/Footer";
+import { getCookie } from "utils/cookie";
+import "../../scss/notice/noticeEdit.css";
+
+interface ModalState {
+  modalRes: boolean[];
+}
 
 const NoticeEditWrapStyle = styled.div`
   max-width: 1180px;
@@ -20,21 +23,23 @@ const NoticeEditWrapStyle = styled.div`
   padding: 0 30px;
 `;
 
-const NoticeEdit = () => {
+const NoticeEdit: React.FC = () => {
   const userClass = getCookie("userClass");
   const userGrade = getCookie("userGrade");
   const navigate = useNavigate();
-  const modalState = useSelector(state => state.modalSlice);
+  const modalState = useSelector(
+    (state: { modalSlice: ModalState }) => state.modalSlice,
+  );
   const dispatch = useDispatch();
 
   // 상태 설정
-  const [state, setState] = useState(2);
+  const [state, setState] = useState<number>(2);
   // const [date, setDate] = useState("");
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  const [title, setTitle] = useState<string>("");
+  const [content, setContent] = useState<string>("");
 
   // Select 변경 핸들러
-  const handleSelectChange = e => {
+  const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = e.target.value;
     if (selectedValue === "준비물") {
       setState(2);
@@ -44,11 +49,11 @@ const NoticeEdit = () => {
   };
 
   // Title 변경 핸들러
-  const handleTitleChange = e => {
+  const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
   // Content 변경 핸들러
-  const handleContentChange = e => {
+  const handleContentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.target.value);
   };
   // 저장 버튼 클릭 핸들러
@@ -74,7 +79,7 @@ const NoticeEdit = () => {
   };
 
   /** 취소 기능 */
-  const modifyCancel = selectModalType => {
+  const modifyCancel = (selectModalType: string) => {
     const data = {
       bodyText: ["알림장 작성을 취소하시겠습니까?"],
       modalRes: [43],
@@ -151,7 +156,7 @@ const NoticeEdit = () => {
                 }}
               />
               <textarea
-                type="text"
+                // type="text"
                 placeholder="내용을 입력하세요."
                 value={content}
                 onChange={e => {
