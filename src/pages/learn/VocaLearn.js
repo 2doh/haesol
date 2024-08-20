@@ -60,7 +60,7 @@ const VocaLearn = () => {
     alert("브라우저가 음성 인식을 지원하지 않습니다.");
   }
 
-  console.log(transcript);
+  // console.log(transcript.toLowerCase());
 
   const tempArrUpdateHandler = isCorrect => {
     setTempArr(prevArr => {
@@ -91,6 +91,7 @@ const VocaLearn = () => {
           isCorrect,
           sentence: learnState !== "voca" ? currentItem.sentence : null,
           queAnswer: learnState === "voca" ? currentItem.answer : null,
+          word: learnState === "voca" ? currentItem.word : null,
         });
       }
       // console.log(newArr);
@@ -200,7 +201,7 @@ const VocaLearn = () => {
   // }, [onListening]);
 
   useEffect(() => {
-    if (isTranscript === getObj[index]?.word) {
+    if (isTranscript.toLowerCase() === getObj.data?.result[index].word) {
       if (onListening) {
         SpeechRecognition.stopListening();
         if (audioStream) {
