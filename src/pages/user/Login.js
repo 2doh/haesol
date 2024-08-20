@@ -100,8 +100,8 @@ const Login = ({ setOnHeader, onHedaer }) => {
             </div>
           </div>
         </div>
+        <Footer />
       </main>
-      <Footer />
     </>
   );
 };

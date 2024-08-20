@@ -15,6 +15,7 @@ import QuickMenu from "components/common/quickmenu/QuickMenu";
 import { useEffect, useState } from "react";
 import { getCookie } from "utils/cookie";
 import ClassSchedule from "./ClassSchedule";
+import Chat from "pages/online/bot/Chat";
 
 const MainPageStyle = styled.div`
   width: 100%;
@@ -46,6 +47,7 @@ const MainPage = () => {
       <HeaderMemu />
       <HeaderProfile />
       <MainPageStyle>
+        {/* <Chat /> */}
         {/* 로그인 후 알림장 목록 탭을 위한 공간 */}
         <div className="main-page-fill-space">
           <div className="top-space"></div>

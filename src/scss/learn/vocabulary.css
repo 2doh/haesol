@@ -41,7 +41,7 @@
 .voca-wrap .voca-top .voca-top-soundwrap .voca-top-volumeslider {
   -webkit-appearance: none;
   -moz-appearance: none;
-  appearance: none;
+       appearance: none;
   height: 8px;
   cursor: pointer;
   background-color: #add2d8;
@@ -80,4 +80,4 @@
   font-weight: 700;
   display: flex;
   justify-content: center;
-} /*# sourceMappingURL=vocabulary.css.map */
+}/*# sourceMappingURL=vocabulary.css.map */

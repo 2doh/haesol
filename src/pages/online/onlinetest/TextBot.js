@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import botImg from "../../../images/graidentairobot.jpg";
 import { useNavigate } from "react-router";
-import "../../../scss/bot/bot.css";
 
 const TextBotWrap = styled.div`
   width: 100%;

@@ -116,7 +116,6 @@ const TestOmrStyle = styled.div`
       .omr-select,
       .omr__input {
         justify-content: space-evenly;
-        width: 90%;
         background-color: #add2d8;
 
         label {

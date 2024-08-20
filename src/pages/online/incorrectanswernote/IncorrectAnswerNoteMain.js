@@ -8,7 +8,7 @@ import NoteAnswer from "./NoteAnswer";
 import { nowQuestionsNumReset } from "slices/testSlice";
 import { useNavigate } from "react-router";
 import usePreventRefresh from "hooks/common/usePreventRefresh";
-import Chat from "pages/online/incorrectanswernote/Chat";
+import Chat from "pages/online/bot/Chat";
 
 const NoteWrap = styled.div`
   position: absolute;
