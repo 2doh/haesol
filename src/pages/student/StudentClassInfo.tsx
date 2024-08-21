@@ -7,7 +7,7 @@ const StudentClassInfo = () => {
   const userClass = getCookie("userClass");
   const userGrade = getCookie("userGrade");
   const userName = getCookie("userName");
-  const { studentPk } = useParams();
+  const studentPk = getCookie("studentPk");
   // const [studentInfo, setStudentInfo] = useState({});
   const [studentName, setStudentName] = useState("");
   const [studentClass, setStudentClass] = useState("");

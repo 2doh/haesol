@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import { createNotice } from "api/student/studentapi";
 import Footer from "components/layout/Footer";
 import HeaderMemu from "components/layout/header/HeaderMenu";
 import HeaderTopPublic from "components/layout/header/HeaderTopPublic";
@@ -9,6 +8,7 @@ import { useNavigate } from "react-router";
 import { openModal, updateModalDate } from "slices/modalSlice";
 import { getCookie } from "utils/cookie";
 import "../../scss/notice/noticeEdit.css";
+import { createNotice } from "api/notice/noticeapi";
 
 interface ModalState {
   modalRes: boolean[];

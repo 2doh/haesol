@@ -1,17 +1,17 @@
 import styled from "@emotion/styled";
 import "../../scss/notice/noticeList.css";
 
-import { getNoticeList } from "api/student/studentapi";
+import { getNoticeList, getNoticeListTea } from "api/notice/noticeapi";
+import Footer from "components/layout/Footer";
+import HeaderMemu from "components/layout/header/HeaderMenu";
+import HeaderTopPublic from "components/layout/header/HeaderTopPublic";
 import { useEffect, useState } from "react";
 import { RiDeleteBack2Fill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { openModal, updateModalDate } from "slices/modalSlice";
 import { getCookie } from "utils/cookie";
-import HeaderTopPublic from "components/layout/header/HeaderTopPublic";
-import HeaderMemu from "components/layout/header/HeaderMenu";
-import HeaderProfile from "components/layout/header/HeaderProfile";
-import Footer from "components/layout/Footer";
+import StudentClassInfo from "pages/student/StudentClassInfo";
 
 const NoticeListWrapStyle = styled.div`
   max-width: 1180px;
@@ -32,13 +32,10 @@ const NoticeListStyle = styled.div`
 const NoticeList = () => {
   const [loginUserType, setLoginUserType] = useState(getCookie("userRole"));
   const studentPk = getCookie("studentPk");
-  const userClass = getCookie("userClass");
-  const userGrade = getCookie("userGrade");
+
   // 네비게이트
   const navigate = useNavigate();
-  const handleItemClick = () => {
-    navigate(`/notice/item/${userClass}`);
-  };
+
   const handleEditClick = () => {
     navigate(`/notice/edit`);
   };
@@ -48,30 +45,17 @@ const NoticeList = () => {
 
   const [noticeList, setNoticeList] = useState([]);
 
-  // // 알림장 데이터 연동
-  // const noticeListData = async () => {
-  //   try {
-  //     const response = await getNoticeList(state);
-  //     if (Array.isArray(response.data.result.notice)) {
-  //       setNoticeList(response.data.result.notice);
-  //     } else {
-  //       setNoticeList([response.data.result.notice]);
-  //     }
-
-  //     // console.log(noticeList);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-  // useEffect(() => {
-  //   noticeListData();
-  // }, [state]);
-
   // 알림장 데이터 연동
   const noticeListData = async () => {
     try {
-      const response = await getNoticeList(state);
-      if (response.data.result.notice) {
+      let response;
+      if (loginUserType === "ROLE_TEACHER") {
+        response = await getNoticeListTea(); // 선생님용 API 호출
+      } else if (loginUserType === "ROLE_PARENTS") {
+        response = await getNoticeList(studentPk); // 학부모용 API 호출
+      }
+
+      if (response?.data?.result?.notice) {
         const noticeData = Array.isArray(response.data.result.notice)
           ? response.data.result.notice
           : [response.data.result.notice];
@@ -91,7 +75,7 @@ const NoticeList = () => {
 
   useEffect(() => {
     noticeListData();
-  }, [state]);
+  }, [loginUserType, state]); // loginUserType과 state를 의존성 배열에 추가
 
   const dispatch = useDispatch();
   /** 모달 호출 */
@@ -140,9 +124,7 @@ const NoticeList = () => {
       <div className="main-core">
         <NoticeListWrapStyle>
           <div className="student-list-title">
-            <span>
-              {userGrade}학년 {userClass}반
-            </span>
+            <StudentClassInfo />
             <p>알림장 목록</p>
           </div>
           <div className="user-info-wrap">
@@ -152,11 +134,7 @@ const NoticeList = () => {
                 <div
                   className="div-wrapper"
                   onClick={() => {
-                    if (loginUserType === "ROLE_TEACHER") {
-                      navigate(`/notice/item/${userClass}`);
-                    } else if (loginUserType === "ROLE_PARENTS") {
-                      navigate(`/notice/item/${studentPk}`);
-                    }
+                    navigate(`/notice/item`);
                   }}
                 >
                   <div className="info-subtitle">준비물</div>

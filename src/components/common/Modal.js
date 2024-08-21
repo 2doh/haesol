@@ -13,11 +13,7 @@ import ViewPw from "./ViewPw";
 import { patchTeacherInfo, putTeacherPwChange } from "api/teacher/teacherapi";
 import PhoneInputFields from "pages/student/PhoneInputFields";
 import { getCookie, removeCookie } from "utils/cookie";
-import {
-  deleteNotice,
-  modifyStudentInfo,
-  sendSmsPost,
-} from "api/student/studentapi";
+import { modifyStudentInfo } from "api/student/studentapi";
 
 import NoticeList from "pages/notice/NoticeList";
 import { useNavigate } from "react-router";
@@ -26,6 +22,7 @@ import { getChild, getChildList, putChild } from "api/signup/parentapi";
 import { getOnlineTest, postOnlineTest } from "api/online/onlinetestapi";
 import moment from "moment";
 import { updateTestDate } from "slices/testSlice";
+import { deleteNotice, sendSmsPost } from "api/notice/noticeapi";
 
 const ModalStyle = styled.div`
   position: fixed;

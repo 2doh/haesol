@@ -1,12 +1,17 @@
 import styled from "@emotion/styled";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BsFillChatRightDotsFill } from "react-icons/bs";
 import { FaUserPlus } from "react-icons/fa6";
 import { getCookie } from "utils/cookie";
 import "../../scss/chat/chat.css";
 import { IoClose } from "react-icons/io5";
 import ChatRoom from "./ChatRoom";
-import { getChatParentsList, getChatTeacherList } from "api/chat/chatapi";
+import io from "socket.io-client";
+import {
+  getChatParentsList,
+  getChatTeacherList,
+  postCreateChatRoom,
+} from "api/chat/chatapi";
 import { getParentsListInfo } from "api/parents/parentsapi";
 
 const ChatWrapStyle = styled.div`
@@ -464,6 +469,21 @@ const ChatList = ({ chatStartOpen, setChatOpen }) => {
   const [sender, setSender] = useState("");
   const [sendTime, setSendTime] = useState("");
 
+  // 소켓 관리용 ref
+  const socketRef = useRef();
+
+  // 웹소켓 연결 설정
+  useEffect(() => {
+    // 환경 변수에서 URL 가져오기
+    const socketUrl = process.env.REACT_APP_SOCKET_URL;
+
+    // 소켓 연결
+    socketRef.current = io(socketUrl);
+    return () => {
+      socketRef.current.disconnect(); // 컴포넌트 언마운트 시 소켓 연결 해제
+    };
+  }, []);
+
   const fetchChatData = async () => {
     console.log("loginUserType:", loginUserType);
     try {
@@ -512,6 +532,33 @@ const ChatList = ({ chatStartOpen, setChatOpen }) => {
       ...prevState,
       [index]: !prevState[index],
     }));
+  };
+
+  const getSelectedParentsIds = () => {
+    return parentsList
+      .filter((_, index) => checkedItems[index]) // 체크된 항목만 필터링
+      .map(item => item.parentsId); // parentsId만 추출하여 배열로 반환
+  };
+
+  const handleCreateChatRoom = async () => {
+    const selectedParentsIds = getSelectedParentsIds(); // 선택된 parentsIds 가져오기
+
+    if (selectedParentsIds.length > 0) {
+      try {
+        const newChatRoom = await postCreateChatRoom(selectedParentsIds); // API 호출
+        if (newChatRoom && newChatRoom.roomId) {
+          // 새로운 채팅방 열기
+          setRoomId(newChatRoom.roomId);
+          setTeaId(newChatRoom.teaId);
+          setParentId(newChatRoom.parentIds);
+          setChatRoomOpen(true); // ChatRoom 컴포넌트 열기
+        }
+      } catch (error) {
+        console.error("채팅방 생성 중 오류 발생:", error);
+      }
+    } else {
+      alert("한 명 이상의 학부모를 선택해주세요.");
+    }
   };
 
   return (
@@ -642,18 +689,26 @@ const ChatList = ({ chatStartOpen, setChatOpen }) => {
                       onClick={() => handleCheckboxChange(index)}
                     >
                       <div className="parents-info">
-                        <span>{item.name} 학부모</span>
+                        <span>
+                          {item.name} 학부모 ({item.studentName})
+                        </span>
                         <input
                           type="checkbox"
                           checked={!!checkedItems[index]}
-                          readOnly
                         />
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
-              <button className="create-group-chat-btn">채팅방 만들기</button>
+              <button
+                className="create-group-chat-btn"
+                onClick={() => {
+                  handleCreateChatRoom();
+                }}
+              >
+                채팅방 만들기
+              </button>
             </>
           ) : null}
         </ChatWrapStyle>
@@ -666,6 +721,7 @@ const ChatList = ({ chatStartOpen, setChatOpen }) => {
           parentId={parentId}
           sender={sender}
           sendTime={sendTime}
+          socket={socketRef.current}
         />
       ) : null}
     </>
