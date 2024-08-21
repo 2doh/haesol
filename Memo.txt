@@ -8,16 +8,6 @@
 // 7. 소셜로그인 네이버 / 구글,카카오는 에러점검
 8. 모든 api 오류처리
 
-
-Signin.js
-parentloginapi.js
-userState.js
-위 세 파일에 아래 링크 참고
-https://velog.io/@tamagoyakii/42byte-Recoil%EB%A1%9C-%EB%A1%9C%EA%B7%B8%EC%9D%B8-%EC%83%81%ED%83%9C-%EA%B4%80%EB%A6%AC%ED%95%98%EA%B8%B0
-
-리덕스툴킷 및 리코일은 상태를 메모리에 저장하므로 새로고침시 초기화됨
-
-
 ldh tsx 적용해야할 페이지 파일 목록
 - /src/pages/learn
 - /src/components/TextInput
@@ -28,7 +18,3 @@ ldh tsx 적용해야할 페이지 파일 목록
 - /src/store/zustandStore.js
 
 SigninShape.js  아이디찾기, 비번찾기에 적용
-
-시간 여유 된다면 웹스피치api => 구글 스피치 api
-
-tts 뒤로가기, 새로고침 방지 / 그림 한번 더 누르면 음성 종료

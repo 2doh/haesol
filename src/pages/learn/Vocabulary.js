@@ -18,6 +18,7 @@ const Vocabulary = ({
   onAnswer,
   setListen,
   listen,
+  setLearnState,
 }) => {
   const initVolume = localStorage.getItem("initVolume");
   const voca = getObj?.data?.result[index];
@@ -65,9 +66,17 @@ const Vocabulary = ({
     }
   };
 
-  const onNext = () => {
+  const confirmEndWord = () => {
+    setIndex(index + 1);
+    return true;
+  };
+
+  const onNext = async () => {
     if (index === getObj.data.result.length - 1) {
-      return;
+      const isEnd = confirmEndWord(index);
+      if (isEnd) {
+        setLearnState("result");
+      }
     }
     if (!onAnswer) {
       tempArrUpdateHandler(null);
@@ -82,6 +91,7 @@ const Vocabulary = ({
     setIndex(index - 1);
     setIsTranscript("");
   };
+
   // console.log(index);
   // console.log(getObj[index]);
   // console.log(getObj.length);
