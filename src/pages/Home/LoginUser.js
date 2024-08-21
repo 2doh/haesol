@@ -17,7 +17,7 @@ import "../../scss/main/mainlogin.css";
 import ClassSchedule from "./ClassSchedule";
 
 // import StudentImg from "pages/student/StudentImg";
-import Chat from "../online/incorrectanswernote/Chat";
+import Chat from "../online/bot/Chat";
 import ClassNotice from "./ClassNotice";
 import MainSchedule from "./calendar/MainSchedule";
 

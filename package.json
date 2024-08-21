@@ -44,6 +44,7 @@
     "react-scripts": "5.0.1",
     "react-session-api": "^1.1.0",
     "react-signature-canvas": "^1.0.6",
+    "react-simple-chatbot": "^0.6.1",
     "react-speech-recognition": "^3.10.0",
     "react-spinners": "^0.14.1",
     "recoil": "^0.7.7",
