@@ -93,7 +93,7 @@ const TextBotWrap = styled.div`
   }
 `;
 
-const TextBot = ({ testResText }) => {
+const TextBot = ({ testResText, setIsRecommend, isRecommend }) => {
   const navigate = useNavigate();
   const [promptResponses, setPromptResponses] = useState([]);
   const [inputValue, setInputValue] = useState("");
@@ -202,10 +202,11 @@ ERI 지수 300 ~ 400의 독해 교재와 3단계 교재부터 차근차근 시�
         <div className="bot-speech-bubble-btns">
           <button
             onClick={() => {
-              console.log("책 추천 입니다.");
+              setIsRecommend(!isRecommend);
+              // setIsRecommend(true);
             }}
           >
-            책 추천받기
+            시험 끝내기
           </button>
           <button
             onClick={() => {

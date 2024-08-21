@@ -1,7 +1,12 @@
-.test-page {
-  position: relative;
+@import "../valiables";
 
-  .test-page-inner {
+.test-page,
+.note-page {
+  position: relative;
+  height: auto;
+
+  .test-page-inner,
+  .note-page-inner {
     // position: absolute;
     height: fit-content;
     min-height: calc(100% - 60px);
@@ -101,7 +106,19 @@
   }
 }
 
+.omr-num {
+  min-width: 39px;
+}
+
 .omr-select,
 .omr__input {
   width: 100%;
+  max-width: 260px;
+}
+
+@media screen and (max-width: $tablet-screen) {
+  .omr-select,
+  .omr__input {
+    max-width: 100%;
+  }
 }
