@@ -17,8 +17,8 @@ const TestWrap = styled.div`
 
   .test-page {
     width: 1180px;
-    min-height: 100%;
-    height: max-content;
+    /* min-height: 100%; */
+    /* height: max-content; */
     background-color: #f3f9fa;
     margin: 0 auto;
     min-width: 440px;

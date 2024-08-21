@@ -46,23 +46,40 @@ const ChatWrap = styled.div`
     border-radius: 10px 10px 0 0;
     background: white;
     bottom: 0;
-    transition: 0.1s ease-out;
+    /* transition: 0.1s ease-out; */
+    transition: 0.3s ease-out;
 
     .chatbox-top {
+      cursor: pointer;
       position: relative;
       display: flex;
       padding: 10px 0;
       border-radius: 10px 10px 0 0;
       background: rgba(0, 0, 0, 0.05);
+      max-height: 40px;
+
+      .chatbox-avatar {
+        img {
+          border-radius: 50px;
+          width: 125px;
+          /* height: 20px; */
+          position: relative;
+          top: -105px;
+          left: 25px;
+        }
+      }
 
       .chat-partner-name {
         flex: 1;
-        padding: 0 0 0 95px;
+        padding-left: 40px;
         font-size: 15px;
         font-weight: bold;
         color: #30649c;
         text-shadow: 1px 1px 0 white;
         transition: 0.1s ease-out;
+        a {
+          font-size: 20px;
+        }
       }
       .chatbox-icons {
         a {
@@ -103,7 +120,7 @@ const ChatWrap = styled.div`
 
       /* (공통) 말풍선 */
       .cs-message {
-        width: 100%;
+        width: 100% !important;
         margin: 0 0 15px;
         display: flex;
         flex-flow: column;
@@ -128,16 +145,31 @@ const ChatWrap = styled.div`
           bottom: -22px;
           right: 10px;
         }
+
+        .cs-message__content-wrapper {
+          max-width: 85% !important;
+        }
+
+        .cs-message-input__content-editor-wrapper {
+          font-size: 14px;
+        }
+
+        .cs-message__html-content {
+          font-size: 15px;
+        }
       }
       /* (이용자) 말풍선 */
       .cs-message--outgoing {
         align-items: flex-end;
+        position: relative;
+        right: -40px;
 
         .cs-message__content {
         }
       }
       /* (ai) 말풍선 */
       .cs-message--incoming {
+        padding-top: 10px;
         align-items: flex-start;
         .cs-message__content {
           background: rgba(0, 114, 135, 0.1);
@@ -155,6 +187,10 @@ const ChatWrap = styled.div`
         }
       }
       .cs-message-input__tools {
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+        justify-content: center;
         .cs-button--attachment {
           display: none;
         }
@@ -179,10 +215,10 @@ const Chat = () => {
         message: "안녕하세요! 궁금한 내용을 입력해주세요.",
         direction: "incoming",
       },
-      avatar: {
-        src: botImg,
-        name: "chatbot",
-      },
+      // avatar: {
+      //   src: botImg,
+      //   name: "chatbot",
+      // },
     },
     // {
     //   model: {
@@ -250,10 +286,10 @@ const Chat = () => {
         message: output,
         direction: "incoming",
       },
-      avatar: {
-        src: botImg,
-        name: "bloodstrawberry",
-      },
+      // avatar: {
+      //   src: botImg,
+      //   name: "bloodstrawberry",
+      // },
     };
 
     setMessages([...messages, newMessage]);
@@ -303,16 +339,30 @@ const Chat = () => {
   };
   // 챗봇 ai 영역 - end //
 
+  // 채팅방 열려있는지 닫혀있는지 확인
+  const [isOpen, setIsOpen] = useState(false);
+  /** 오답노트 : 챗봇 여닫기 */
+  // const openChatBot = () => {
+  //   setIsOpen();
+  // };
+
   return (
     <ChatWrap>
       {/* <div className="chatbox chatbox-min"> */}
-      <div className="chatbox">
+      <div className={isOpen ? "chatbox" : "chatbox chatbox-min"}>
         {/* header 영역 - start */}
-        <div className="chatbox-top">
-          <div className="chatbox-avatar"></div>
+        <div
+          className="chatbox-top"
+          onClick={() => {
+            setIsOpen(!isOpen);
+          }}
+        >
+          <div className="chatbox-avatar">
+            <img src={botImg} />
+          </div>
           <div className="chat-partner-name">
             <span className="status donot-disturb"></span>
-            <a target="_blank">Mamun Khandaker</a>
+            <a target="_blank">질문하기</a>
           </div>
 
           <div className="chatbox-icons">

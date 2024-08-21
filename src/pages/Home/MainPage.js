@@ -47,7 +47,9 @@ const MainPage = () => {
       <HeaderMemu />
       <HeaderProfile />
       <MainPageStyle>
+
         {/* <Chat /> */}
+
         {/* 로그인 후 알림장 목록 탭을 위한 공간 */}
         <div className="main-page-fill-space">
           <div className="top-space"></div>

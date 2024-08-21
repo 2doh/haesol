@@ -1,12 +1,20 @@
-.test-page {
+.test-page,
+.note-page {
   position: relative;
+  height: auto;
 }
-.test-page .test-page-inner {
+.test-page .test-page-inner,
+.test-page .note-page-inner,
+.note-page .test-page-inner,
+.note-page .note-page-inner {
   height: -moz-fit-content;
   height: fit-content;
   min-height: calc(100% - 60px);
 }
-.test-page .test-page-inner .test-question-inner {
+.test-page .test-page-inner .test-question-inner,
+.test-page .note-page-inner .test-question-inner,
+.note-page .test-page-inner .test-question-inner,
+.note-page .note-page-inner .test-question-inner {
   justify-content: space-between;
   min-height: calc(100vh - 170px);
 }
@@ -85,7 +93,19 @@
   height: 20%;
 }
 
+.omr-num {
+  min-width: 39px;
+}
+
 .omr-select,
 .omr__input {
   width: 100%;
+  max-width: 260px;
+}
+
+@media screen and (max-width: 1023px) {
+  .omr-select,
+  .omr__input {
+    max-width: 100%;
+  }
 }/*# sourceMappingURL=testpage.css.map */
