@@ -1,8 +1,11 @@
 import styled from "@emotion/styled";
-import React, { useState } from "react";
+import { useState } from "react";
 import googleIcon from "../../images/google-icon.png";
-import naverIcon from "../../images/naver-icon.png";
 import kakaoIcon from "../../images/kakao-icon.png";
+import naverIcon from "../../images/naver-icon.png";
+import { useGoogleLogin } from "@react-oauth/google";
+import { fetchUserInfo, socialLogin } from "api/login/social";
+import useSocialLogin from "hooks/useSocialLogin";
 
 const SocialLoginIntegrationStyle = styled.div`
   /* min-width: 600px;
@@ -179,8 +182,51 @@ const SocialLoginIntegration = () => {
   const [naverChecked, setNaverChecked] = useState(false);
   const [kakaoChecked, setKakaoChecked] = useState(false);
 
+  const handleGoogleSuccess = async response => {
+    // console.log(response);
+    const token = response.access_token;
+    const res = await fetchUserInfo(token);
+    console.log(res);
+
+    // console.log(token);
+    // 토큰 파싱
+    // const resp = await googleToken(token);
+    const reqData = {
+      id: res.id,
+      providerType: 0,
+    };
+    // console.log(reqData);
+    const result = await socialLogin(reqData);
+    // const naviState = useSocialLogin(result);
+    console.log(result);
+    const tempObj = {
+      clientid: res.id,
+      providerType: 0,
+      useremail: res.email,
+      name: res.name,
+    };
+    // sessionStorage.setItem("sociallogin", JSON.stringify(tempObj));
+    // sessionStorage.setItem("clientid", res.id);
+    // sessionStorage.setItem("providerType", 0);
+    // sessionStorage.setItem("useremail", res.email);
+    // sessionStorage.setItem("name", res.name);
+    // navi(naviState);
+  };
+
+  const handleGoogleFailure = error => {
+    // 로그인 실패 로직
+    // console.log(error);
+    alert("로그인에 실패하였습니다");
+  };
+
+  const googleLogin = useGoogleLogin({
+    onSuccess: handleGoogleSuccess,
+    onError: handleGoogleFailure,
+  });
+
   return (
     <SocialLoginIntegrationStyle>
+      {/* 소셜 연동 api 정보 받기 미구현 */}
       <h3>소셜 로그인 설정</h3>
       <div className="social-login-div google-social-login-div">
         <div className="social-icon-div google-icon-div">
@@ -188,13 +234,28 @@ const SocialLoginIntegration = () => {
         </div>
         <p>구글 계정으로 로그인 </p>
         <div className="checkbox-wrapper">
-          <input
-            checked={googleChecked}
-            onChange={() => setGoogleChecked(!googleChecked)}
-            id="switch-google"
-            type="checkbox"
-            className="switch"
-          />
+          {googleChecked ? (
+            <input
+              disabled
+              checked={googleChecked}
+              onChange={() => setGoogleChecked(!googleChecked)}
+              id="switch-google"
+              type="checkbox"
+              className="switch"
+            />
+          ) : (
+            <input
+              checked={googleChecked}
+              onChange={() => {
+                setGoogleChecked(!googleChecked);
+                googleLogin();
+              }}
+              id="switch-google"
+              type="checkbox"
+              className="switch"
+            />
+          )}
+
           <label htmlFor="switch-google">
             <span className="switch-x-text">현재 연동</span>
             <span className="switch-x-toggletext">
