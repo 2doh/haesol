@@ -42,7 +42,6 @@ import TestPage from "pages/online/TestPage";
 import HeaderTopPublic from "components/layout/header/HeaderTopPublic";
 import HeaderMemu from "components/layout/header/HeaderMenu";
 import HeaderProfile from "components/layout/header/HeaderProfile";
-import Test from "Test";
 import VocaLearn from "pages/learn/VocaLearn";
 import CreateTestKo from "pages/online/CreateTestKo";
 import CreateTestEn from "pages/online/CreateTestEn";
@@ -197,7 +196,6 @@ function App() {
           {/* 로그인 & 회원가입 : end */}
 
           {/* 영어 테스트 - start */}
-          <Route path="/testcode" element={<Test />}></Route>
           {/* <Route path="/learn" element={<Learn />}></Route> */}
           <Route path="/learn/voca" element={<VocaLearn />}></Route>
           {/* <Route path="/learn/result" element={<VocaResult />}></Route> */}

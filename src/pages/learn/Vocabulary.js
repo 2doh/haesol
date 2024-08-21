@@ -14,10 +14,14 @@ const Vocabulary = ({
   resetTranscript,
   audioStream,
   setIsTranscript,
+  tempArrUpdateHandler,
+  onAnswer,
+  setListen,
+  listen,
 }) => {
   const initVolume = localStorage.getItem("initVolume");
   const voca = getObj?.data?.result[index];
-  const [listen, setListen] = useState(false);
+  // const [listen, setListen] = useState(false);
   const [volume, setVolume] = useState(initVolume || 0.5);
   const [isVolume, setIsVolume] = useState(volume);
 
@@ -64,6 +68,9 @@ const Vocabulary = ({
   const onNext = () => {
     if (index === getObj.data.result.length - 1) {
       return;
+    }
+    if (!onAnswer) {
+      tempArrUpdateHandler(null);
     }
     setIndex(index + 1);
     setIsTranscript("");
