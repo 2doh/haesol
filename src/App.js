@@ -379,7 +379,7 @@ function App() {
               }
             ></Route>
             <Route
-              path="list/:userClass"
+              path="list"
               element={
                 <PrivateRoute
                   authenticated={accessToken}
@@ -388,7 +388,7 @@ function App() {
               }
             />
             <Route
-              path="item/:userClass"
+              path="item"
               element={
                 <PrivateRoute
                   authenticated={accessToken}

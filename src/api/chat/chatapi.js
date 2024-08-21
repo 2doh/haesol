@@ -46,15 +46,19 @@ export const getChatRoom = async roomId => {
   }
 };
 
-// 채팅방 만들기
-export const postCreateChatRoom = async () => {
+// 선생님 -> 학부모 채팅방 만들기
+export const postCreateChatRoom = async selectedParentsIds => {
   const accessToken = getCookie("accessToken");
   try {
-    const response = await jwtAxios.post(`/api/chat/create`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
+    const response = await jwtAxios.post(
+      `/api/chat/create`,
+      selectedParentsIds,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
       },
-    });
+    );
     return response.data;
   } catch (error) {
     console.log(error);

@@ -68,18 +68,14 @@ const ChatWrapStyle = styled.div`
   }
 `;
 
-const ChatRoom = ({ setChatRoomOpen, roomId, sender, teaId, parentId }) => {
-  // console.log("teaId : ", teaId);
-  // console.log("parentId : ", parentId);
+const ChatRoom = ({ setChatRoomOpen, roomId, socket }) => {
   const [loginUserType, setLoginUserType] = useState(getCookie("userRole"));
-  const [loginUserId, setLoginUserId] = useState(getCookie("userIdPk"));
-  // const [myMsg, setMyMsg] = useState("");
+
   const [sandingMsg, setSendingMsg] = useState("");
-  const [receiveMsg, setReceiveMsg] = useState("");
   const [nowTime, setNowTime] = useState("");
-  const [receiveTime, setReceiveTime] = useState("");
   // 채팅 목록
   const [chatList, setChatList] = useState([]);
+  const [loginUserName, setLoginUserName] = useState("");
 
   const scrollRef = useRef();
 
@@ -91,11 +87,34 @@ const ChatRoom = ({ setChatRoomOpen, roomId, sender, teaId, parentId }) => {
     console.log("roomId : ", roomId);
   }, [roomId]);
 
+  // 웹소켓 연결 설정
+  useEffect(() => {
+    if (socket) {
+      // 방에 참가
+      socket.emit("joinRoom", { roomId, userName: loginUserName });
+
+      // 서버에서 새로운 메시지를 수신
+      socket.on("receiveMessage", messageData => {
+        setChatList(prevChatList => [...prevChatList, messageData]);
+      });
+
+      return () => {
+        // 방을 떠날 때
+        socket.emit("leaveRoom", roomId);
+        socket.off("receiveMessage"); // 이벤트 리스너 제거
+      };
+    }
+  }, [socket, roomId, loginUserName]);
+
   // 특정 채팅방 내용 get
   const getAllChatList = async () => {
     try {
       const result = await getChatRoom(roomId);
-      setChatList(result);
+      setChatList(result || []);
+      if (result && result.length > 0) {
+        // 첫 번째 항목에서 loginUserName 설정
+        setLoginUserName(result[0].loginUserName);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -125,77 +144,83 @@ const ChatRoom = ({ setChatRoomOpen, roomId, sender, teaId, parentId }) => {
     return `${year}/${month}/${day}`;
   };
 
-  // 특정 부모의 이름을 추출하는 함수
-  const getParentNameBySender = (parents, sender) => {
-    const parent = parents.find(parent => parent.name === sender);
-    return parent ? parent.name : "정보 없음";
-  };
+  // // 채팅 보내기
+  // const sendChat = async () => {
+  //   if (sandingMsg.trim() === "") {
+  //     // 빈 메시지나 공백만 있는 메시지는 전송하지 않음
+  //     return;
+  //   }
 
-  // 채팅 보내기
-  const sendChat = async () => {
-    if (sandingMsg.trim() === "") {
-      // 빈 메시지나 공백만 있는 메시지는 전송하지 않음
-      return;
-    }
+  //   const postChatData = {
+  //     msg: sandingMsg,
+  //     roomId,
+  //   };
+  //   try {
+  //     await postCreateChat(postChatData);
+  //     await getAllChatList();
+  //     setSendingMsg("");
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
 
-    const postChatData = {
-      msg: sandingMsg,
+  //   const now = new Date();
+  //   const nowhours = String(now.getHours()).padStart(2, "0");
+  //   const minutes = String(now.getMinutes()).padStart(2, "0");
+  //   const meridiem = nowhours >= 12 ? "오후" : "오전";
+  //   const hours =
+  //     meridiem === "오후" && nowhours > 12 ? nowhours - 12 : nowhours;
+  //   const formattedTime = `${meridiem} ${hours}:${minutes}`;
+  //   setNowTime(formattedTime);
+
+  //   // 채팅 리스트에 메시지 추가
+  //   const newMessage = {
+  //     message: sandingMsg,
+  //     time: formattedTime,
+  //     isSender: true, // 보낸 메시지인지 여부
+  //   };
+
+  //   setChatList(prevChatList => [...prevChatList, newMessage]);
+  //   setSendingMsg(""); // 메시지 입력 후 초기화
+  // };
+
+  const sendChat = () => {
+    if (sandingMsg.trim() === "") return;
+
+    const messageData = {
       roomId,
-    };
-    try {
-      await postCreateChat(postChatData);
-      await getAllChatList();
-      setSendingMsg("");
-    } catch (error) {
-      console.log(error);
-    }
-
-    const now = new Date();
-    const nowhours = String(now.getHours()).padStart(2, "0");
-    const minutes = String(now.getMinutes()).padStart(2, "0");
-    const meridiem = nowhours >= 12 ? "오후" : "오전";
-    const hours =
-      meridiem === "오후" && nowhours > 12 ? nowhours - 12 : nowhours;
-    const formattedTime = `${meridiem} ${hours}:${minutes}`;
-    setNowTime(formattedTime);
-
-    // 채팅 리스트에 메시지 추가
-    const newMessage = {
-      message: sandingMsg,
-      time: formattedTime,
-      isSender: true, // 보낸 메시지인지 여부
+      sender: loginUserName,
+      msg: sandingMsg,
+      sendTime: new Date().toISOString(),
     };
 
-    setChatList(prevChatList => [...prevChatList, newMessage]);
-    setSendingMsg(""); // 메시지 입력 후 초기화
+    // 메시지를 서버로 전송
+    socket.emit("sendMessage", messageData);
+
+    // 메시지를 채팅 리스트에 추가
+    setChatList(prevChatList => [...prevChatList, messageData]);
+    setSendingMsg(""); // 메시지 입력창 초기화
   };
 
-  // 첫 번째 항목의 부모님이나 선생님 정보 가져오기
-  const chatHeaderInfo = chatList.length > 0 && chatList[0];
   let lastMessageDate = ""; // 이전 메시지의 날짜를 저장
 
   return (
     // {/* 버튼 클릭하면 채팅창 나오게 */}
     <ChatWrapStyle>
       <div className="chat-header">
-        {loginUserType === "ROLE_TEACHER" ? (
-          <span>
-            {chatHeaderInfo?.parents?.map(parent => parent.name).join(", ") ||
-              "정보 없음"}{" "}
-            학부모
-          </span>
-        ) : (
-          <span>{chatHeaderInfo?.teaId?.name || "정보 없음"} 선생님</span>
-        )}
-
+        {/* 로그인한 사용자가 선생님일 경우와 학부모일 경우에 따라 헤더 정보 출력 */}
+        <span>
+          {chatList.length > 0 && loginUserName === chatList[0]?.teaId?.name
+            ? chatList[0]?.parents?.map(parent => parent.name).join(", ") +
+              " 학부모"
+            : chatList[0]?.teaId?.name + " 선생님"}
+        </span>
         <IoClose
           size={30}
           className="close-icon"
-          onClick={() => {
-            setChatRoomOpen(false);
-          }}
+          onClick={() => setChatRoomOpen(false)}
         />
       </div>
+
       <div className="chat-field">
         {Array.isArray(chatList) && chatList.length > 0 ? (
           chatList.map((item, index) =>
@@ -204,11 +229,8 @@ const ChatRoom = ({ setChatRoomOpen, roomId, sender, teaId, parentId }) => {
                 const currentMessageDate = formatDate(message.sendTime);
                 const isNewDate = currentMessageDate !== lastMessageDate;
                 lastMessageDate = currentMessageDate;
-
-                const isSender =
-                  loginUserType === "ROLE_TEACHER"
-                    ? message.sender === item.teaId?.name // 선생님인 경우
-                    : getParentNameBySender(item.parents, message.sender); // 학부모인 경우
+                // loginUserName과 message.sender를 비교하여 조건에 따라 컴포넌트를 렌더링
+                const isSender = loginUserName === message.sender;
 
                 // console.log("로그인한 사용자 ID:", loginUserId);
                 // console.log("메시지 발신자:", message.sender);
@@ -264,14 +286,15 @@ const ChatRoom = ({ setChatRoomOpen, roomId, sender, teaId, parentId }) => {
               setSendingMsg(e.target.value);
             }}
           ></textarea>
-          <div
+          {/* <div
             className="chat-sendbtn br5"
             onClick={() => {
               sendChat();
             }}
           >
             전송
-          </div>
+          </div> */}
+          <button type="submit">전송</button>
         </form>
       </div>
     </ChatWrapStyle>

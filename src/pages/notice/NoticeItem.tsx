@@ -2,7 +2,6 @@ import styled from "@emotion/styled";
 import "../../scss/notice/noticeList.css";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { getNoticeList, getStudentInfo } from "api/student/studentapi";
 import { useDispatch, useSelector } from "react-redux";
 import { openModal, updateModalDate } from "slices/modalSlice";
 import { getCookie } from "utils/cookie";
@@ -11,6 +10,8 @@ import HeaderTopPublic from "components/layout/header/HeaderTopPublic";
 import HeaderMemu from "components/layout/header/HeaderMenu";
 import Footer from "components/layout/Footer";
 import { AxiosResponse } from "axios";
+import { getNoticeList, getNoticeListTea } from "api/notice/noticeapi";
+import StudentClassInfo from "pages/student/StudentClassInfo";
 
 interface NoticeItemData {
   createdAt: string;
@@ -44,17 +45,14 @@ const NoticeItem: React.FC = () => {
     getCookie("userRole") || "",
   );
   const studentPk = getCookie("studentPk") || "";
-  console.log("studentPk : ", studentPk);
-  const userClass = getCookie("userClass") || "";
-  const userGrade = getCookie("userGrade") || "";
+
   // 네비게이트
   const navigate = useNavigate();
-  // const handleListClick = () => {
-  //   navigate(`/notice/list/${userClass}`);
-  // };
+
   const handleEditClick = () => {
     navigate(`/notice/edit`);
   };
+
   // 준비물 state
   const state = 2;
 
@@ -63,9 +61,14 @@ const NoticeItem: React.FC = () => {
   // 알림장 데이터 연동
   const noticeListData = async () => {
     try {
-      const response: AxiosResponse<any> | undefined =
-        await getNoticeList(state);
-      if (response && response.data.result.item) {
+      let response;
+      if (loginUserType === "ROLE_TEACHER") {
+        response = await getNoticeListTea(); // 선생님용 API 호출
+      } else if (loginUserType === "ROLE_PARENTS") {
+        response = await getNoticeList(studentPk); // 학부모용 API 호출
+      }
+
+      if (response?.data?.result?.item) {
         const noticeData = Array.isArray(response.data.result.item)
           ? response.data.result.item
           : [response.data.result.item];
@@ -85,7 +88,7 @@ const NoticeItem: React.FC = () => {
 
   useEffect(() => {
     noticeListData();
-  }, [state]);
+  }, [loginUserType, state]); // loginUserType과 state를 의존성 배열에 추가
 
   const dispatch = useDispatch();
   /** 모달 호출 */
@@ -143,9 +146,7 @@ const NoticeItem: React.FC = () => {
       <div className="main-core">
         <NoticeListWrapStyle>
           <div className="student-list-title">
-            <span>
-              {userGrade}학년 {userClass}반
-            </span>
+            <StudentClassInfo />
             <p>알림장 목록</p>
           </div>
           <div className="user-info-wrap">
@@ -158,11 +159,7 @@ const NoticeItem: React.FC = () => {
                 <div
                   className="div-wrapper"
                   onClick={() => {
-                    if (loginUserType === "ROLE_TEACHER") {
-                      navigate(`/notice/list/${userClass}`);
-                    } else if (loginUserType === "ROLE_PARENTS") {
-                      navigate(`/notice/list/${studentPk}`);
-                    }
+                    navigate(`/notice/list`);
                   }}
                 >
                   <div className="info-subtitle">알림장</div>
