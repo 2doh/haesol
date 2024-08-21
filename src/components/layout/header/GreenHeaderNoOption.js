@@ -5,6 +5,7 @@ import { getCookie, removeCookie } from "utils/cookie";
 import { useState } from "react";
 import Timer from "../Timer";
 import { MdOutlineLogout } from "react-icons/md";
+import useLogout from "hooks/common/useLogout";
 
 const GreenHeaderNoOptionStyle = styled.div`
   position: relative;
@@ -84,23 +85,6 @@ const GreenHeaderNoOption = () => {
     navigate("/");
   };
 
-  /** 로그아웃 기능 */
-  const logout = () => {
-    removeCookie("accessToken");
-    removeCookie("userIdPk");
-    removeCookie("userRole");
-
-    removeCookie("userClass");
-    removeCookie("userEmail");
-    removeCookie("userName");
-
-    removeCookie("timerMin");
-    removeCookie("timerSec");
-    removeCookie("timerTime");
-
-    window.location.reload("/");
-  };
-
   return (
     <GreenHeaderNoOptionStyle>
       <div className="header-wrap">
@@ -121,7 +105,7 @@ const GreenHeaderNoOption = () => {
             <div
               className="logout-icon"
               onClick={() => {
-                logout();
+                useLogout();
               }}
             >
               <MdOutlineLogout size="22px" title="로그아웃" />

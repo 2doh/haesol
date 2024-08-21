@@ -122,7 +122,7 @@ const ParentsChildProfile = ({ childNum, type }) => {
               classId === 0 ? (
                 <div className="no-info">미등록</div>
               ) : (
-                `${className} 학년 ${classId} 반`
+                `${classId} 학년 ${className} 반`
               )}
             </div>
             <div className="login-user-info-text">

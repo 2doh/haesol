@@ -1,8 +1,9 @@
 import styled from "@emotion/styled";
 import ChatStart from "components/chat/ChatStart";
-import ClassSchedule from "pages/Home/ClassSchedule";
 import { useEffect, useState } from "react";
 import { BiSolidArrowToTop } from "react-icons/bi";
+import { useDispatch, useSelector } from "react-redux";
+import { updateDate } from "slices/openManagerSlice";
 
 const QuickMenuStyle = styled.div`
   .quick-menu-wrap {
@@ -82,6 +83,9 @@ const QuickMenuStyle = styled.div`
 `;
 
 const QuickMenu = () => {
+  const dispatch = useDispatch();
+  const openManagerState = useSelector(state => state.openManagerSlice);
+
   // 퀵메뉴 위치 저장
   const [barPosition, setBarPosition] = useState(510);
 
@@ -117,12 +121,19 @@ const QuickMenu = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const handleOpen = () => {
+    const data = {
+      classScheduleIsOpen: !openManagerState.classScheduleIsOpen,
+    };
+
+    dispatch(updateDate(data));
+  };
+
   return (
     <>
       {chatOpen ? (
         <ChatStart chatOpen={chatOpen} setChatOpen={setChatOpen} />
       ) : null}
-      {classScheduleOpen ? <ClassSchedule /> : null}
 
       {/* {chatOpen ? <Chat /> : null} */}
       <QuickMenuStyle>
@@ -162,7 +173,7 @@ const QuickMenu = () => {
             <li
               className="btn"
               onClick={() => {
-                setClassScheduleOpen(!classScheduleOpen);
+                handleOpen();
               }}
             >
               {/* 채팅 */}

@@ -13,6 +13,7 @@ const useLogout = () => {
   // 공통
   removeCookie("userRole");
   removeCookie("accessToken");
+  removeCookie("incorrectAnswerNoteGuide")
 
   // 학부모, 교직원
   removeCookie("userIdPk");

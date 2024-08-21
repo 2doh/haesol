@@ -3,6 +3,14 @@ import styled from "@emotion/styled";
 const ClassScheduleStyle = styled.div`
   width: 100%;
   height: 100%;
+
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* width: 80%; */
+
+  background-color: rgba(0, 0, 0, 0.8);
 `;
 
 const ClassSchedule = () => {

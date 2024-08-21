@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import botImg from "../../../images/graidentairobot.jpg";
 import { useNavigate } from "react-router";
+import { DotLoader, GridLoader } from "react-spinners";
 
 const TextBotWrap = styled.div`
   width: 100%;
@@ -90,6 +91,41 @@ const TextBotWrap = styled.div`
 
   .bot-speech-bubble-btns {
     padding: 10px 0;
+
+    & * {
+      color: #2a1b07;
+    }
+
+    & button:first-of-type {
+      background-color: #dee8e9;
+      border: 2px solid #cfdddf;
+    }
+    & button:first-of-type:hover {
+      background-color: #cfdddf;
+      color: white;
+    }
+    & button:last-of-type {
+      background-color: #ffdfe4;
+      border: 2px solid #ffd0d7;
+    }
+    & button:last-of-type:hover {
+      background-color: #ffd0d7;
+      color: white;
+    }
+  }
+
+  .spinner-border {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    gap: 20px;
+  }
+
+  .visually-hidden {
+    color: #5f909f;
+    font-size: 20px;
   }
 `;
 
@@ -162,8 +198,18 @@ ERI 지수 300 ~ 400의 독해 교재와 3단계 교재부터 차근차근 시�
     }
   };
 
-  const movePage = () => {
-    navigate("/online/test/note");
+  const movePage = num => {
+    if (num === 1) {
+      navigate("/online/test/note", {
+        state: {
+          bool: true,
+        },
+      });
+    }
+    if (num === 2) {
+      navigate("/");
+      // window.location.reload("/");
+    }
   };
 
   // 최소 랜더링
@@ -178,7 +224,7 @@ ERI 지수 300 ~ 400의 독해 교재와 3단계 교재부터 차근차근 시�
       <div className="bot-img-div">
         <img src={botImg} />
         <a href="https://kr.freepik.com/free-vector/graident-ai-robot-vectorart_125887871.htm#fromView=search&page=1&position=1&uuid=40fa22be-b6bc-45f0-8042-4d16889e1316">
-          작가 juicy_fish 출처 Freepik
+          이미지 출처 : 작가 juicy_fish 출처 Freepik
         </a>
       </div>
       <p>
@@ -188,7 +234,15 @@ ERI 지수 300 ~ 400의 독해 교재와 3단계 교재부터 차근차근 시�
             {loading ? (
               <div className="text-center mt-3">
                 <div className="spinner-border text-primary" role="status">
-                  <span className="visually-hidden">로딩중...</span>
+                  <GridLoader
+                    color="#5f909f"
+                    loading
+                    margin={4}
+                    size={20}
+                    speedMultiplier={1}
+                    width={0}
+                  />
+                  <span className="visually-hidden">분석중</span>
                   {/* // 당신의 질문에 대한 답변이 생성되는 동안에 표시되는 메시지 */}
                 </div>
               </div>
@@ -199,23 +253,28 @@ ERI 지수 300 ~ 400의 독해 교재와 3단계 교재부터 차근차근 시�
         </div>
 
         {/* 하단 */}
-        <div className="bot-speech-bubble-btns">
-          <button
-            onClick={() => {
-              setIsRecommend(!isRecommend);
-              // setIsRecommend(true);
-            }}
-          >
-            시험 끝내기
-          </button>
-          <button
-            onClick={() => {
-              movePage();
-            }}
-          >
-            오답 노트 보기
-          </button>
-        </div>
+        {loading ? null : (
+          <>
+            <div className="bot-speech-bubble-btns">
+              <button
+                onClick={() => {
+                  // setIsRecommend(!isRecommend);
+                  // setIsRecommend(true);
+                  movePage(2);
+                }}
+              >
+                시험 끝내기
+              </button>
+              <button
+                onClick={() => {
+                  movePage(1);
+                }}
+              >
+                오답 노트 보기
+              </button>
+            </div>
+          </>
+        )}
       </p>
     </TextBotWrap>
   );

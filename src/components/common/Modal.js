@@ -12,7 +12,7 @@ import { allowScroll, preventScroll } from "./ScrollManagement";
 import ViewPw from "./ViewPw";
 import { patchTeacherInfo, putTeacherPwChange } from "api/teacher/teacherapi";
 import PhoneInputFields from "pages/student/PhoneInputFields";
-import { getCookie, removeCookie } from "utils/cookie";
+import { getCookie, removeCookie, setCookie } from "utils/cookie";
 import { modifyStudentInfo } from "api/student/studentapi";
 
 import NoticeList from "pages/notice/NoticeList";
@@ -32,7 +32,7 @@ const ModalStyle = styled.div`
   height: 100%;
   width: 100vw;
   z-index: 999999;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -242,6 +242,17 @@ const Modal = () => {
         };
         dispatch(updateModalDate(data));
         dispatch(logoutModal());
+      }
+
+      // 오답노트 페이지
+      if (modalState.modalRes[0] === 3) {
+        // console.log("true 를 리턴합니다.");
+        // const data = {
+        //   modalRes: ["오답노트시작"],
+        // };
+        // dispatch(updateModalDate(data));
+        setCookie("incorrectAnswerNoteGuide", true);
+        dispatch(closeModal());
       }
 
       // 교직원 : 취소

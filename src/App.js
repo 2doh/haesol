@@ -60,8 +60,18 @@ import MyChildInfoView from "pages/parents/MyChildInfoView";
 import StudentInfoViewTeacher from "pages/student/StudentInfoViewTeacher";
 import useLogout from "hooks/common/useLogout";
 import VocaResult from "pages/learn/VocaResult";
+import ClassSchedule from "pages/Home/ClassSchedule";
 
 const Main = styled.div``;
+
+const ClassScheduleStyle = styled.div`
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  height: 100vh;
+  width: 100vw;
+  z-index: 999999;
+`;
 
 /** 모달 스타일 */
 const ModalStyle = styled.div`
@@ -100,6 +110,8 @@ function App() {
   /** 모달 상태 관리 */
   const modalState = useSelector(state => state.modalSlice);
 
+  const openManagerState = useSelector(state => state.openManagerSlice);
+
   // console.log("권한 : ", loginUserType);
   // // 토큰 디코딩
   // const decoded = jwt.decode(token, { complete: true });
@@ -123,6 +135,12 @@ function App() {
         <ModalStyle>
           <Modal />
         </ModalStyle>
+      ) : null}
+
+      {openManagerState.classScheduleIsOpen ? (
+        <ClassScheduleStyle>
+          <ClassSchedule />{" "}
+        </ClassScheduleStyle>
       ) : null}
 
       <Main>
