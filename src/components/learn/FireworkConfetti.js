@@ -17,11 +17,11 @@ const FireworkConfetti = () => {
         if (now >= end) return;
 
         confetti({
-          particleCount: 15,
+          particleCount: 40,
           angle: 180,
           spread: 500,
           origin: { x: 0.5, y: 1.1 },
-          startVelocity: 100,
+          startVelocity: 200,
           scalar: 1,
           gravity: 1,
           disableForReducedMotion: true,
