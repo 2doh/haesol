@@ -485,13 +485,14 @@ const ChatList = ({ chatStartOpen, setChatOpen }) => {
   }, []);
 
   const fetchChatData = async () => {
-    console.log("loginUserType:", loginUserType);
     try {
       if (loginUserType === "ROLE_TEACHER") {
         const response = await getChatTeacherList();
+        console.log("getChatTeacherList response: ", response);
         setChatData(response || []);
       } else if (loginUserType === "ROLE_PARENTS") {
         const response = await getChatParentsList();
+        console.log("getChatParentsList response: ", response);
         setChatData(response || []);
       } else {
         console.error("Unknown user role:", loginUserType);
@@ -522,8 +523,8 @@ const ChatList = ({ chatStartOpen, setChatOpen }) => {
     selectedParentId,
   ) => {
     setRoomId(selectedRoomId);
-    setTeaId(selectedTeaId); // 객체 전체를 전달
-    setParentId(selectedParentId); // 객체 전체를 전달
+    setTeaId(selectedTeaId); // 객체 전체 전달
+    setParentId(selectedParentId); // 객체 전체 전달
     setChatRoomOpen(true);
   };
 
@@ -536,8 +537,8 @@ const ChatList = ({ chatStartOpen, setChatOpen }) => {
 
   const getSelectedParentsIds = () => {
     return parentsList
-      .filter((_, index) => checkedItems[index]) // 체크된 항목만 필터링
-      .map(item => item.parentsId); // parentsId만 추출하여 배열로 반환
+      .filter((_, index) => checkedItems[index])
+      .map(item => item.parentsId);
   };
 
   const handleCreateChatRoom = async () => {
@@ -588,19 +589,26 @@ const ChatList = ({ chatStartOpen, setChatOpen }) => {
                   <div className="chat-select-wrap" key={index}>
                     <div
                       className="chat-select-field"
-                      onClick={() =>
+                      onClick={() => {
                         handleOpenChatRoom(
                           item.roomId,
-                          item.teaId?.name || "정보 없음",
+                          { teaId: teaId?.teaId, name: teaId?.name },
                           item.parents || [],
-                        )
-                      }
+                        );
+                      }}
                     >
                       <div className="teacher-info">
-                        <span>
+                        {/* <span>
                           {item.studentGrade}학년 {item.studentClass}반
+                        </span> */}
+                        <span>
+                          {loginUserType === "ROLE_PARENTS"
+                            ? `${item.teaId?.name} 선생님`
+                            : item.parents
+                                ?.map(parent => parent.name)
+                                .join(", ") + " 학부모"}
                         </span>
-                        <p>{item.teaId?.name || "선생님 정보 없음"} 선생님</p>
+                        {/* <p>{item.teaId?.name || "선생님 정보 없음"} 선생님</p> */}
                       </div>
                     </div>
                   </div>

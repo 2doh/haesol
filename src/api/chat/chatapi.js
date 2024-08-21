@@ -68,7 +68,7 @@ export const postCreateChatRoom = async selectedParentsIds => {
 // 채팅 보내기
 export const postCreateChat = async chatData => {
   const accessToken = getCookie("accessToken");
-  console.log("chatData : ", chatData);
+  console.log("chatData ======== : ", chatData);
   try {
     const response = await jwtAxios.post(`/api/chat/chat/sender`, chatData, {
       headers: {
