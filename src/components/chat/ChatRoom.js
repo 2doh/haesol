@@ -72,17 +72,18 @@ const ChatRoom = ({ setChatRoomOpen, roomId, socket }) => {
   const [loginUserType, setLoginUserType] = useState(getCookie("userRole"));
 
   const [sandingMsg, setSendingMsg] = useState("");
-  const [nowTime, setNowTime] = useState("");
   // 채팅 목록
   const [chatList, setChatList] = useState([]);
   const [loginUserName, setLoginUserName] = useState("");
 
+  // 스크롤 아래로
   const scrollRef = useRef();
 
   useEffect(() => {
     scrollRef.current.scrollIntoView({ behavior: "smooth" });
   }, [chatList]);
 
+  // 채팅방 아이디
   useEffect(() => {
     console.log("roomId : ", roomId);
   }, [roomId]);
@@ -110,9 +111,9 @@ const ChatRoom = ({ setChatRoomOpen, roomId, socket }) => {
   const getAllChatList = async () => {
     try {
       const result = await getChatRoom(roomId);
-      setChatList(result || []);
+      // setChatList(result || []);
       if (result && result.length > 0) {
-        // 첫 번째 항목에서 loginUserName 설정
+        setChatList(result[0].messages || []);
         setLoginUserName(result[0].loginUserName);
       }
     } catch (error) {
@@ -144,7 +145,7 @@ const ChatRoom = ({ setChatRoomOpen, roomId, socket }) => {
     return `${year}/${month}/${day}`;
   };
 
-  // // 채팅 보내기
+  // 채팅 보내기
   // const sendChat = async () => {
   //   if (sandingMsg.trim() === "") {
   //     // 빈 메시지나 공백만 있는 메시지는 전송하지 않음
@@ -183,15 +184,27 @@ const ChatRoom = ({ setChatRoomOpen, roomId, socket }) => {
   //   setSendingMsg(""); // 메시지 입력 후 초기화
   // };
 
-  const sendChat = () => {
+  // console.log("teaId:", teaId);
+  // console.log("parentId:", parentId);
+
+  const sendChat = async () => {
     if (sandingMsg.trim() === "") return;
 
     const messageData = {
       roomId,
-      sender: loginUserName,
       msg: sandingMsg,
-      sendTime: new Date().toISOString(),
     };
+
+    try {
+      // Axios로 메시지 전송
+      await postCreateChat(messageData);
+
+      // 전송이 완료되면 로컬 채팅 목록에 메시지 추가
+      setChatList(prevChatList => [...prevChatList, messageData]);
+      setSendingMsg(""); // 메시지 입력창 초기화
+    } catch (error) {
+      console.log(error);
+    }
 
     // 메시지를 서버로 전송
     socket.emit("sendMessage", messageData);
@@ -204,15 +217,15 @@ const ChatRoom = ({ setChatRoomOpen, roomId, socket }) => {
   let lastMessageDate = ""; // 이전 메시지의 날짜를 저장
 
   return (
-    // {/* 버튼 클릭하면 채팅창 나오게 */}
     <ChatWrapStyle>
       <div className="chat-header">
-        {/* 로그인한 사용자가 선생님일 경우와 학부모일 경우에 따라 헤더 정보 출력 */}
         <span>
-          {chatList.length > 0 && loginUserName === chatList[0]?.teaId?.name
-            ? chatList[0]?.parents?.map(parent => parent.name).join(", ") +
-              " 학부모"
-            : chatList[0]?.teaId?.name + " 선생님"}
+          {/* 조건부 렌더링을 통해 안전하게 데이터에 접근 */}
+          {loginUserName !== chatList[0]?.sender
+            ? // 상대방이 선생님일 경우
+              `${chatList[0]?.teaId?.name || ""} 선생님`
+            : // 상대방이 학부모일 경우
+              `${chatList[0]?.parents?.map(parent => parent.name).join(", ") || ""} 학부모`}
         </span>
         <IoClose
           size={30}
@@ -223,48 +236,34 @@ const ChatRoom = ({ setChatRoomOpen, roomId, socket }) => {
 
       <div className="chat-field">
         {Array.isArray(chatList) && chatList.length > 0 ? (
-          chatList.map((item, index) =>
-            Array.isArray(item.messages) && item.messages.length > 0 ? (
-              item.messages.map((message, msgIndex) => {
-                const currentMessageDate = formatDate(message.sendTime);
-                const isNewDate = currentMessageDate !== lastMessageDate;
-                lastMessageDate = currentMessageDate;
-                // loginUserName과 message.sender를 비교하여 조건에 따라 컴포넌트를 렌더링
-                const isSender = loginUserName === message.sender;
+          chatList.map((messages, msgIndex) => {
+            const currentMessageDate = formatDate(messages.sendTime);
+            const isNewDate = currentMessageDate !== lastMessageDate;
+            lastMessageDate = currentMessageDate;
 
-                // console.log("로그인한 사용자 ID:", loginUserId);
-                // console.log("메시지 발신자:", message.sender);
-                // console.log("parentsId:", item.parentsId);
+            const isSender = loginUserName === messages.sender;
 
-                return (
-                  <div
-                    className="chat-text-box-wrap"
-                    key={`${index}-${msgIndex}`}
-                  >
-                    {isNewDate && (
-                      <div className="date-separator">
-                        {/* 날짜가 바뀔 때마다 출력 */}
-                        <p>{currentMessageDate}</p>
-                      </div>
-                    )}
-                    {isSender ? (
-                      <SendMsg
-                        sandingMsg={message.msg}
-                        nowTime={formatTime(message.sendTime)}
-                      />
-                    ) : (
-                      <ReceiveMsg
-                        receiveMsg={message.msg}
-                        receiveTime={formatTime(message.sendTime)}
-                      />
-                    )}
+            return (
+              <div className="chat-text-box-wrap" key={msgIndex}>
+                {isNewDate && (
+                  <div className="date-separator">
+                    <p>{currentMessageDate}</p>
                   </div>
-                );
-              })
-            ) : (
-              <p key={index}></p>
-            ),
-          )
+                )}
+                {isSender ? (
+                  <SendMsg
+                    sandingMsg={messages.msg}
+                    nowTime={formatTime(messages.sendTime)}
+                  />
+                ) : (
+                  <ReceiveMsg
+                    receiveMsg={messages.msg}
+                    receiveTime={formatTime(messages.sendTime)}
+                  />
+                )}
+              </div>
+            );
+          })
         ) : (
           <p>채팅 내역이 없습니다.</p>
         )}
@@ -286,15 +285,14 @@ const ChatRoom = ({ setChatRoomOpen, roomId, socket }) => {
               setSendingMsg(e.target.value);
             }}
           ></textarea>
-          {/* <div
+          <div
             className="chat-sendbtn br5"
             onClick={() => {
               sendChat();
             }}
           >
             전송
-          </div> */}
-          <button type="submit">전송</button>
+          </div>
         </form>
       </div>
     </ChatWrapStyle>

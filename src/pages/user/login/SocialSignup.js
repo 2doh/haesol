@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import axios from "axios";
 import { signupSocialCode, signupSocialInfo } from "api/signup/socialapi";
+import { useNavigate } from "react-router";
 
 const initSignupState = {
   phone: "",
@@ -38,6 +39,7 @@ const SocialSignup = () => {
   const [userConnet, setUserConnet] = useState("");
   const [userPhoneNum, setUserPhoneNum] = useState("");
   const [isRandCode, setIsRandCode] = useState(false);
+  const navi = useNavigate();
 
   const {
     handleSubmit,
@@ -56,7 +58,7 @@ const SocialSignup = () => {
       alert("자녀코드 확인을 해주세요");
       return;
     }
-    if (isRandCode === true) {
+    if (isRandCode) {
       setIsRandCode(false);
     }
     // console.log(data);
@@ -78,9 +80,9 @@ const SocialSignup = () => {
     sessionStorage.removeItem("sociallogin");
     // 회원가입 성공시 처리
     // console.log(result);
-    if (result === 1) {
+    if (result.data === 1) {
       alert("회원등록 되었습니다.");
-      window.location.reload("/");
+      navi("/");
     }
   };
 

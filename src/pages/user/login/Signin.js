@@ -39,11 +39,15 @@ const Signin = ({ children, naviState, setNaviState }) => {
     if (naviState === "signin") {
       const result = await postParentSignin(request);
       // console.log(result);
-      if (result) {
-        // console.log(result.data.studentList);
-        window.location.replace("/");
+      if (result === "유저정보가 없습니다.") {
+        console.log(result);
+        // window.location.replace("/");
         // console.log(userRole);
         // navi("/");
+        return;
+      }
+      if (result) {
+        window.location.replace("/");
       }
     }
     if (naviState === "teacherlogin") {

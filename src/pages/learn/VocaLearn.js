@@ -68,10 +68,12 @@ const VocaLearn = () => {
       const newArr = [...prevArr];
       const currentItem = getObj.data.result[index];
       const currentItemId =
-        learnState === "voca" ? currentItem.wordQuePk : currentItem.queId;
+        learnState === "voca" || learnState === "speaking"
+          ? currentItem.wordQuePk
+          : currentItem.queId;
       // 배열에서 현재 문제의 ID와 일치하는 항목의 인덱스를 찾기
       const itemIndex = newArr.findIndex(item =>
-        learnState === "voca"
+        learnState === "voca" || learnState === "speaking"
           ? item.wordQuePk === currentItemId
           : item.queId === currentItemId,
       );
@@ -95,7 +97,7 @@ const VocaLearn = () => {
           word: learnState === "voca" ? currentItem.word : null,
         });
       }
-      // console.log(newArr);
+      console.log(newArr);
       return newArr;
     });
   };
@@ -211,10 +213,22 @@ const VocaLearn = () => {
         }
         setOnListening(false);
       }
-      alert("정답!");
-      if (index < getObj.length - 1) {
+      console.log(isTranscript.toLowerCase());
+      const isCorrect =
+        isTranscript.toLowerCase() === getObj.data?.result[index].word;
+      tempArrUpdateHandler(isCorrect);
+      console.log(getObj.data?.result[index].word);
+      console.log(isTranscript.toLowerCase());
+      console.log(isCorrect);
+      if (isCorrect) {
+        alert("정답");
+      }
+      if (index < getObj.data.result.length - 1) {
         setIndex(index + 1);
         setIsTranscript("");
+      }
+      if (index === getObj.data.result.length - 1) {
+        setLearnState("result");
       }
     }
   }, [isTranscript]);
@@ -260,6 +274,7 @@ const VocaLearn = () => {
               tempArrUpdateHandler={tempArrUpdateHandler}
               setListen={setListen}
               listen={listen}
+              setLearnState={setLearnState}
             />
             <VocaBottomWrap>
               {learnState === "speaking" ? (

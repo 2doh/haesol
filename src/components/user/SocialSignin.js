@@ -139,9 +139,7 @@ const SocialSignin = () => {
     };
     console.log(reqData);
     const result = await socialLogin(reqData);
-    console.log("aa");
     const naviState = useSocialLogin(result);
-    console.log("aa");
     const tempObj = {
       clientid: response.id,
       providerType: 1,
