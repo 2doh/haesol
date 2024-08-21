@@ -29,6 +29,7 @@ const VocaLearn = () => {
   const [audioStream, setAudioStream] = useState(null);
   const [tempArr, setTempArr] = useState([]);
   const navigate = useNavigate();
+  const [listen, setListen] = useState(false);
   // console.log(userRole);
   // console.log(getObj);
 
@@ -223,12 +224,18 @@ const VocaLearn = () => {
   }, [transcript]);
 
   useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
     return () => {
       if ("speechSynthesis" in window) {
         window.speechSynthesis.cancel(); // 음성 중단
+        setListen(false);
       }
     };
-  }, []);
+  }, [index]);
 
   return (
     <>
@@ -249,6 +256,10 @@ const VocaLearn = () => {
               audioStream={audioStream}
               resetTranscript={resetTranscript}
               setIsTranscript={setIsTranscript}
+              onAnswer={onAnswer}
+              tempArrUpdateHandler={tempArrUpdateHandler}
+              setListen={setListen}
+              listen={listen}
             />
             <VocaBottomWrap>
               {learnState === "speaking" ? (
@@ -292,11 +303,17 @@ const VocaLearn = () => {
 const VocaWrapStyle = styled.div`
   margin: 50px auto;
   width: 100%;
-  max-width: 650px;
+  max-width: 900px;
   height: 100%;
+  min-height: calc(100vh - 263px);
   /* background-color: #f3f9fa; */
   /* border: solid 1px #000; */
   padding: 50px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
 `;
 
 const ContentWrapStyle = styled.div`
