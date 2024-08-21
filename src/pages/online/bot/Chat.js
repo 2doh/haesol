@@ -172,26 +172,12 @@ const ChatWrap = styled.div`
 `;
 
 const Chat = () => {
-  // AI 이미지
-  // const CHAT_BOT_IMAGE
-  const AVATAR_IMAGE =
-    "https://img1.daumcdn.net/thumb/C428x428/?scode=mtistory2&fname=https%3A%2F%2Ftistory3.daumcdn.net%2Ftistory%2F4431109%2Fattach%2F3af65be1d8b64ece859b8f6d07fafadc";
-
-  useEffect(() => {
-    /** 모달 생성시 스크롤 금지 */
-    const prevScrollY = preventScroll();
-
-    return () => {
-      allowScroll(prevScrollY);
-    };
-  }, []);
-
   /** 디폴트 메세지 */
   const defaultMessage = [
     {
       model: {
-        message: "",
-        direction: "안녕하세요! 궁금한 내용을 입력해주세요.",
+        message: "안녕하세요! 궁금한 내용을 입력해주세요.",
+        direction: "incoming",
       },
       avatar: {
         src: botImg,
@@ -215,10 +201,12 @@ const Chat = () => {
     //   },
     // },
   ];
-
   const [messages, setMessages] = useState(defaultMessage);
 
+  console.log("messages : ", messages);
+
   // 현재 문제 번호에 대해서 저장해두기
+  // 전체 채팅 저장
 
   /** Message 컴포넌트 생성 기능 */
   const getMessageComponent = data => {
@@ -233,10 +221,16 @@ const Chat = () => {
     });
   };
 
-  // 전체 채팅 저장
+  const [messageAll, setMessageAll] = useState(
+    "[대답]은 너가 했던 대답이다. [질문]는 너에게 했던 질문이다. (여기서부터 대화 기록) [대답]안녕하세요! 궁금한 내용을 입력해주세요.",
+  );
+  // const [messageAll, setMessageAll] = useState(
+  //   "대화 내용에 대한 설명 1 : 아래의 내용은 이때까지 대화이 저장된 것이다. 대화 내용에 대한 설명 2 : [대답]은 너가 했던 대답이다. 대화 내용에 대한 설명 3 : [질문]는 너에게 했던 질문이다. (여기서부터 대화 기록) [대답]안녕하세요! 궁금한 내용을 입력해주세요.",
+  // );
 
   /** 전송 버튼 클릭시 이벤트, 새 메시지를 추가 */
   const handleSend = input => {
+    setMessageAll([...messageAll, `[질문]${input}`]);
     getResponseForGivenPrompt(input);
 
     let newMessage = {
@@ -285,6 +279,7 @@ const Chat = () => {
     setInputValue(e);
   };
 
+  /** 실제 ai : 메세지 전송 및 답변 */
   const getResponseForGivenPrompt = async questionText => {
     try {
       setLoading(true);
@@ -292,7 +287,7 @@ const Chat = () => {
       // const result = await model.generateContent(
       //   `naver.com 들어가서 지금 뭐가 있는지 확인하고 설명할 수 있니??`,
       // );
-      const result = await model.generateContent(questionText);
+      const result = await model.generateContent(messageAll);
       setInputValue("");
       const response = result.response;
       const text = await response.text();

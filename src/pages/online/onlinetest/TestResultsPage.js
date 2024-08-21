@@ -5,6 +5,7 @@ import GreenHeaderNoOption from "components/layout/header/GreenHeaderNoOption";
 import usePreventGoBack from "hooks/common/usePreventGoBack";
 import TestTitle from "./TestTitle";
 import TextBot from "./TextBot";
+import { useNavigate } from "react-router";
 
 const TestGradWrap = styled.div`
   position: absolute;
@@ -81,10 +82,11 @@ const TestGradWrap = styled.div`
 `;
 
 const TestResultsPage = () => {
+  const navigate = useNavigate();
   const testState = useSelector(state => state.testSlice);
 
   // 모든 문제의 문제 유형 배열
-  const questionTypeAll = testState.incorrectAnswerNoteMain.typeString;
+  const [questionTypeAll, setQuestionTypeAll] = useState();
 
   // 문제 유형 중복 제거 배열
   const questionType = [...new Set(questionTypeAll)];
@@ -93,30 +95,175 @@ const TestResultsPage = () => {
   const [questionTypeList, setQuestionTypeList] = useState({});
 
   // 문제 실제 정답 배열
-  const realAnswerAll = testState.incorrectAnswerNoteMain.realAnswer;
+  const [realAnswerAll, setRealAnswerAll] = useState();
+
   // 학생이 선택한 정답 배열
-  const studentSelectOmr =
-    testState.incorrectAnswerNoteMain.studentOmr.omrAnswer;
+  const [studentSelectOmr, setStudentSelectOmr] = useState();
+
+  // 채점 결과를 담을 배열
+  const [omrRe, setOmrRe] = useState([]);
+
+  /** omr 배열이 들어왔을 때 정답 배열 생성 */
+  useEffect(() => {
+    if (realAnswerAll && studentSelectOmr) {
+      // 정답 배열을 저장할 변수
+      const newOmrRe = [];
+
+      // 각 문제에 대해 정답을 비교하고 결과를 newOmrRe에 저장
+      testState.questionAll.forEach((item, index) => {
+        const isCorrect =
+          testState.incorrectAnswerNoteMain.realAnswer[index] ===
+          testState.incorrectAnswerNoteMain.studentOmr.omrAnswer[index];
+
+        newOmrRe.push(isCorrect ? "O" : "X");
+      });
+
+      // 상태를 업데이트
+      setOmrRe(newOmrRe);
+    }
+  }, [realAnswerAll, studentSelectOmr]);
+
+  /** 문제 유형별로 틀린 개수 도출 및 가장 많이 틀린 유형 도출 */
+  useEffect(() => {
+    if (questionType) {
+      questionType.map((item, index) => {
+        const questionIndices = questionTypeList[item] || [];
+
+        let countNum = 0;
+        let maxNum = 0;
+        let maxType = 0;
+
+        // 각 문제 유형
+        questionIndices.map(
+          num => (countNum += 1),
+
+          // console.log(item, " : ", num)
+        );
+      });
+    }
+
+    // return (
+    //   <div className="question-type-box" key={index}>
+
+    //       </div>
+    //       <div className="question-grad">
+    //         <div>채점</div>
+
+    //         {questionIndices.map(num => {
+    //           const isCorrect =
+    //             realAnswerAll[num - 1] ===
+    //             studentSelectOmr[num - 1];
+
+    //           return (
+    //             <div className="test-result-page-mark" key={num}>
+    //               {isCorrect ? (
+    //                 <>
+    //                   <div id="correctMark">O</div>
+    //                 </>
+    //               ) : (
+    //                 <>
+    //                   <div id="wrongMark">X</div>
+    //                 </>
+    //               )}
+    //             </div>
+    //           );
+    //         })}
+    //       </div>
+    //     </div>
+    //   </div>
+    // );
+
+    // if (realAnswerAll && studentSelectOmr) {
+    //   // 정답 배열을 저장할 변수
+    //   const newOmrRe = [];
+
+    //   // 각 문제에 대해 정답을 비교하고 결과를 newOmrRe에 저장
+    //   testState.questionAll.forEach((item, index) => {
+    //     const isCorrect =
+    //       testState.incorrectAnswerNoteMain.realAnswer[index] ===
+    //       testState.incorrectAnswerNoteMain.studentOmr.omrAnswer[index];
+
+    //     newOmrRe.push(isCorrect ? "O" : "X");
+    //   });
+
+    //   // 상태를 업데이트
+    //   setOmrRe(newOmrRe);
+    // }
+  }, [questionType]);
+
+  /** 새로고침으로 데이터 없을시 처리 */
+  useEffect(() => {
+    if (testState.incorrectAnswerNoteMain.length === 0) {
+      navigate("/");
+    } else {
+      setQuestionTypeAll(testState.incorrectAnswerNoteMain.typeString);
+      setRealAnswerAll(testState.incorrectAnswerNoteMain.realAnswer);
+      setStudentSelectOmr(
+        testState.incorrectAnswerNoteMain.studentOmr.omrAnswer,
+      );
+    }
+  }, [testState]);
 
   useEffect(() => {
-    console.log("Unique question types: ", questionType);
+    if (questionTypeAll) {
+      const result = {};
 
-    const result = {};
+      questionTypeAll.forEach((item, index) => {
+        if (result[item]) {
+          result[item].push(index + 1); // 문제 번호는 1부터 시작
+        } else {
+          result[item] = [index + 1];
+        }
+      });
 
-    questionTypeAll.forEach((item, index) => {
-      if (result[item]) {
-        result[item].push(index + 1); // 문제 번호는 1부터 시작
-      } else {
-        result[item] = [index + 1];
-      }
-    });
-
-    console.log("Indices mapping: ", result);
-    setQuestionTypeList(result);
-  }, [questionTypeAll]);
+      console.log("Indices mapping: ", result);
+      setQuestionTypeList(result);
+    }
+  }, [testState, questionTypeAll]);
 
   /** 이전 페이지 시험 페이지로 돌아가지 못하게 막기 */
   usePreventGoBack("시험 문제 페이지로 돌아갈 수 없습니다.");
+
+  /** 테스트 결과에 대한 참조값 저장 */
+  const [testResText, setTestResText] = useState("");
+  /** 테스트 결과 준비 완료 */
+  const [istestResText, setIsTestResText] = useState(false);
+
+  /** 테스트 결과에 대한 참조값 저장 */
+  const [reTestResText, setReTestResText] = useState("");
+
+  /** 테스트 결과를 문자열로 저장 */
+  const testRes = () => {
+    let cunt = 0;
+    let newText = ``;
+
+    testState.questionAll.map((item, index) => {
+      cunt = omrRe[index] === "X" ? cunt + 1 : null;
+
+      // 1차
+      // const text = `${testState.questionAll[index].number}번 문제는 ${gradRes} ${testState.questionAll[index].number}번 문제 유형은 ${testState.incorrectAnswerNoteMain.typeString[index]}이고, 난이도는 ${testState.questionAll[index].level}이다. `;
+
+      // 2차
+      // const text = `${index + 1}번 문제의 유형은 ${testState.incorrectAnswerNoteMain.typeString[index]}이고, 이 문제를 ${gradRes}`;
+      // newText += text + "\n"; // 줄바꿈을 추가하여 각 문제 결과를 구분
+
+      if (testState.questionAll[index].number === index + 1) {
+        setIsTestResText(true);
+        setReTestResText(
+          `총 문제의 수는 ${testState.questionAll.length} 이고, ${cunt} 문제 틀렸다. 가장 많이 틀린 문제 유형은 이다. `,
+        );
+      }
+    });
+    setTestResText(newText);
+  };
+
+  useEffect(() => {
+    testRes();
+  }, []);
+
+  useEffect(() => {
+    console.log("testResText : ", testResText);
+  }, [testResText, istestResText]);
 
   return (
     <>
@@ -128,12 +275,15 @@ const TestResultsPage = () => {
             testName={testState.testTitle}
           />
           <div className="test-grad-page-inner">
-            <TextBot />
+            <TextBot testResText={reTestResText} />
 
             <div className="res-question-type">
               {questionType.map((item, index) => {
                 // 현재 문제 유형에 해당하는 문제 인덱스를 가져옵니다.
                 const questionIndices = questionTypeList[item] || [];
+
+                if (questionIndices)
+                  console.log("questionIndices : ", questionIndices);
 
                 return (
                   <div className="question-type-box" key={index}>
@@ -147,16 +297,22 @@ const TestResultsPage = () => {
                       </div>
                       <div className="question-grad">
                         <div>채점</div>
+
                         {questionIndices.map(num => {
                           const isCorrect =
                             realAnswerAll[num - 1] ===
                             studentSelectOmr[num - 1];
+
                           return (
                             <div className="test-result-page-mark" key={num}>
                               {isCorrect ? (
-                                <div id="correctMark">O</div>
+                                <>
+                                  <div id="correctMark">O</div>
+                                </>
                               ) : (
-                                <div id="wrongMark">X</div>
+                                <>
+                                  <div id="wrongMark">X</div>
+                                </>
                               )}
                             </div>
                           );
