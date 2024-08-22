@@ -19,6 +19,7 @@ import StudentClassInfo from "pages/student/StudentClassInfo";
 import Footer from "components/layout/Footer";
 import HeaderTopPublic from "components/layout/header/HeaderTopPublic";
 import HeaderMemu from "components/layout/header/HeaderMenu";
+import Title from "components/Title";
 
 const initData = [
   {
@@ -509,7 +510,8 @@ const GradeView = () => {
       <div className="main-core">
         <div className="student-list-title">
           {/* <!-- 제목 위치 --> */}
-          <StudentClassInfo />
+          {/* <StudentClassInfo /> */}
+          <Title></Title>
         </div>
         <div className="user-info-wrap">
           {/* <!-- 탭 선택 부분 --> */}

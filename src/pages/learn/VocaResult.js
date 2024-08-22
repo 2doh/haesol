@@ -18,7 +18,8 @@ const VocaResult = ({ tempArr }) => {
   useEffect(() => {
     const newArr = tempArr.filter(item => item.isCorrect === false);
     const spareArr = tempArr.filter(item => item.isCorrect === null);
-    const result = 100 - (newArr.length + spareArr.length) * 5;
+    const point = 100 / tempArr.length;
+    const result = 100 - (newArr.length + spareArr.length) * point;
     setScore(result);
     if (result === 100) {
       setResultMsg(initMsg.perfect);

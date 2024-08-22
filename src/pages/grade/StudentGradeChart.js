@@ -1,4 +1,5 @@
 import { getScoreDetail, getStudentInfo } from "api/student/studentapi";
+import Title from "components/Title";
 import Chart from "components/chart/Chart";
 import Footer from "components/layout/Footer";
 import HeaderMemu from "components/layout/header/HeaderMenu";
@@ -109,8 +110,9 @@ const StudentGradeChart = () => {
       <div className="main-core">
         <div className="student-list-title">
           {/* <!-- 제목 위치 --> */}
-          <StudentClassInfo />
-          <p>성적확인</p>
+          {/* <StudentClassInfo />
+          <p>성적확인</p> */}
+          <Title />
         </div>
         <div className="user-info-wrap">
           {/* <!-- 탭 선택 부분 --> */}
