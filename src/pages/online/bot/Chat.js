@@ -18,6 +18,22 @@ import { allowScroll, preventScroll } from "components/common/ScrollManagement";
 import { useEffect, useState } from "react";
 import botImg from "../../../images/graidentairobot.jpg";
 import "../../../scss/bot/bot.css";
+import { useDispatch, useSelector } from "react-redux";
+import { openModal, updateModalDate } from "slices/modalSlice";
+import { useLocation, useNavigate } from "react-router";
+import { getCookie, setCookie } from "utils/cookie";
+
+const ChatOuter = styled.div`
+  .chat-wrap-left {
+    & > div {
+      left: 0;
+    }
+
+    .chatbox {
+      margin: 0 0 0 20px;
+    }
+  }
+`;
 
 const ChatWrap = styled.div`
   /* height: 350px; */
@@ -32,7 +48,6 @@ const ChatWrap = styled.div`
   bottom: 0;
   display: flex;
   align-items: flex-end;
-
   height: 0;
 
   .chatbox {
@@ -53,7 +68,7 @@ const ChatWrap = styled.div`
       cursor: pointer;
       position: relative;
       display: flex;
-      padding: 10px 0;
+      padding: 10px 10px;
       border-radius: 10px 10px 0 0;
       background: rgba(0, 0, 0, 0.05);
       max-height: 40px;
@@ -82,6 +97,9 @@ const ChatWrap = styled.div`
         }
       }
       .chatbox-icons {
+        & * {
+          font-size: 14px;
+        }
         a {
           color: white;
         }
@@ -102,6 +120,10 @@ const ChatWrap = styled.div`
           content: "\f068";
         }
       }
+    }
+
+    .chatbox-top-right {
+      flex-direction: row-reverse;
     }
 
     .chat-messages {
@@ -207,7 +229,34 @@ const ChatWrap = styled.div`
   }
 `;
 
+const FirstChatWrap = styled.div`
+  pointer-events: none;
+  overflow: hidden;
+  width: 100vw;
+  height: calc(100vh + 70px);
+  position: absolute;
+  top: -70px;
+  z-index: 1000000;
+
+  .first-wrap-img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    img {
+      position: absolute;
+      right: 280px;
+      bottom: 215px;
+    }
+  }
+`;
+
 const Chat = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const dispatch = useDispatch();
+  const modalState = useSelector(state => state.modalSlice);
   /** 디폴트 메세지 */
   const defaultMessage = [
     {
@@ -258,7 +307,8 @@ const Chat = () => {
   };
 
   const [messageAll, setMessageAll] = useState(
-    "[대답]은 너가 했던 대답이다. [질문]는 너에게 했던 질문이다. (여기서부터 대화 기록) [대답]안녕하세요! 궁금한 내용을 입력해주세요.",
+    "",
+    // "[대답]은 너가 했던 대답이다. [질문]는 너에게 했던 질문이다. (여기서부터 대화 기록) [대답]안녕하세요! 궁금한 내용을 입력해주세요.",
   );
   // const [messageAll, setMessageAll] = useState(
   //   "대화 내용에 대한 설명 1 : 아래의 내용은 이때까지 대화이 저장된 것이다. 대화 내용에 대한 설명 2 : [대답]은 너가 했던 대답이다. 대화 내용에 대한 설명 3 : [질문]는 너에게 했던 질문이다. (여기서부터 대화 기록) [대답]안녕하세요! 궁금한 내용을 입력해주세요.",
@@ -266,7 +316,7 @@ const Chat = () => {
 
   /** 전송 버튼 클릭시 이벤트, 새 메시지를 추가 */
   const handleSend = input => {
-    setMessageAll([...messageAll, `[질문]${input}`]);
+    setMessageAll([...messageAll, `${input}`]);
     getResponseForGivenPrompt(input);
 
     let newMessage = {
@@ -346,53 +396,136 @@ const Chat = () => {
   //   setIsOpen();
   // };
 
+  // 첫 설명
+
+  useEffect(() => {
+    if (!getCookie("incorrectAnswerNoteGuide")) {
+      const data = {
+        headerText: "확인",
+        bodyText: [
+          `오답노트를 확인하고\n\n 모르는 부분에 대해서\n\n오른쪽 아래 챗봇을 클릭하여 질문해봅시다.`,
+        ],
+        buttonCnt: 1,
+        buttonText: ["확인"],
+        modalRes: [3],
+      };
+
+      dispatch(updateModalDate(data));
+      dispatch(openModal("BasicModal"));
+    }
+  }, []);
+
+  const [chatBotBtn, setChatBotBtn] = useState("right");
+  /** 왼쪽으로 가기 버튼 */
+  const chatBotLeftBtn = e => {
+    // 부모 이벤트 막기
+    e.stopPropagation();
+    setChatBotBtn("left");
+    onOff();
+  };
+  /** 오른쪽으로 가기 버튼 */
+  const chatBotRightBtn = e => {
+    // 부모 이벤트 막기
+    e.stopPropagation();
+    setChatBotBtn("right");
+    onOff();
+  };
+
+  const onOff = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
-    <ChatWrap>
-      {/* <div className="chatbox chatbox-min"> */}
-      <div className={isOpen ? "chatbox" : "chatbox chatbox-min"}>
-        {/* header 영역 - start */}
-        <div
-          className="chatbox-top"
-          onClick={() => {
-            setIsOpen(!isOpen);
-          }}
-        >
-          <div className="chatbox-avatar">
-            <img src={botImg} />
+    <ChatOuter>
+      {getCookie("incorrectAnswerNoteGuide") ? null : (
+        <FirstChatWrap>
+          <div className="first-wrap-img">
+            <img
+              src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Backhand%20Index%20Pointing%20Down%20Medium-Light%20Skin%20Tone.png"
+              alt="Backhand Index Pointing Down Medium-Light Skin Tone"
+              width="180"
+              height="180"
+            />
           </div>
-          <div className="chat-partner-name">
-            <span className="status donot-disturb"></span>
-            <a target="_blank">질문하기</a>
+        </FirstChatWrap>
+      )}
+
+      <div
+        className={
+          chatBotBtn === "right" ? "chat-wrap-right" : "chat-wrap-left"
+        }
+      >
+        <ChatWrap>
+          {/* <div className="chatbox chatbox-min"> */}
+          <div className={isOpen ? "chatbox" : "chatbox chatbox-min"}>
+            {/* header 영역 - start */}
+            <div
+              className={
+                chatBotBtn === "right"
+                  ? "chatbox-top chatbox-top-right"
+                  : "chatbox-top chatbox-top-left"
+              }
+              onClick={() => {
+                onOff();
+              }}
+            >
+              <div className="chatbox-avatar">
+                <img src={botImg} />
+              </div>
+              <div className="chat-partner-name">
+                <span className="status donot-disturb"></span>
+                <a target="_blank">질문하기</a>
+              </div>
+
+              <div
+                className="chatbox-icons"
+                onClick={e => {
+                  e.stopPropagation();
+                }}
+              >
+                {chatBotBtn === "right" ? (
+                  <a
+                    href="javascript:void(0);"
+                    onClick={e => {
+                      chatBotLeftBtn(e);
+                    }}
+                  >
+                    <i className="fa fa-minus">왼쪽으로 가기</i>
+                  </a>
+                ) : null}
+                {chatBotBtn === "left" ? (
+                  <a
+                    href="javascript:void(0);"
+                    onClick={e => {
+                      chatBotRightBtn(e);
+                    }}
+                  >
+                    <i className="fa fa-close">오른쪽으로 가기</i>
+                  </a>
+                ) : null}
+              </div>
+            </div>
+            {/* header 영역 - end */}
+
+            {/* 채팅 영역 - start */}
+            <div className="chat-messages">
+              <MainContainer>
+                <ChatContainer>
+                  <MessageList>{getMessageComponent(messages)}</MessageList>
+                  <MessageInput attachButton={false} />
+
+                  <MessageInput
+                    placeholder="물어보고 싶은 것을 말해주세요"
+                    onSend={handleSend}
+                  />
+                  <TypingIndicator />
+                </ChatContainer>
+              </MainContainer>
+            </div>
           </div>
-
-          <div className="chatbox-icons">
-            <a href="javascript:void(0);">
-              <i className="fa fa-minus"></i>
-            </a>
-            <a href="javascript:void(0);">
-              <i className="fa fa-close"></i>
-            </a>
-          </div>
-        </div>
-        {/* header 영역 - end */}
-
-        {/* 채팅 영역 - start */}
-        <div className="chat-messages">
-          <MainContainer>
-            <ChatContainer>
-              <MessageList>{getMessageComponent(messages)}</MessageList>
-              <MessageInput attachButton={false} />
-
-              <MessageInput
-                placeholder="물어보고 싶은 것을 말해주세요"
-                onSend={handleSend}
-              />
-              <TypingIndicator />
-            </ChatContainer>
-          </MainContainer>
-        </div>
+        </ChatWrap>
       </div>
-    </ChatWrap>
+    </ChatOuter>
   );
 };
 

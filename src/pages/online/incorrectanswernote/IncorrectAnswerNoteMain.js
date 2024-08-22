@@ -9,6 +9,7 @@ import { nowQuestionsNumReset } from "slices/testSlice";
 import { useNavigate } from "react-router";
 import usePreventRefresh from "hooks/common/usePreventRefresh";
 import Chat from "pages/online/bot/Chat";
+import { getCookie } from "utils/cookie";
 
 const NoteWrap = styled.div`
   position: absolute;
@@ -39,6 +40,10 @@ const NoteWrap = styled.div`
         max-width: 377px; */
       }
     }
+  }
+
+  .no-note-page {
+    overflow: hidden;
   }
 `;
 const IncorrectAnswerNoteMain = () => {
@@ -85,7 +90,13 @@ const IncorrectAnswerNoteMain = () => {
 
       <NoteWrap>
         {isDate ? (
-          <div className="note-page">
+          <div
+            className={
+              getCookie("incorrectAnswerNoteGuide")
+                ? "note-page"
+                : "note-page no-note-page"
+            }
+          >
             <TestTitle
               subjectsName={testState.subjectName}
               testName={testState.testTitle}

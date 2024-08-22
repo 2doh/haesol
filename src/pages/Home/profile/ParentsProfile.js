@@ -277,7 +277,7 @@ const ParentsProfile = () => {
   const myChildInfo = async childNum => {
     const res = await getMyChildInfo();
     const num = childNum;
-    // console.log("자녀 정보 : ", res);
+    console.log("자녀 정보 : ", res);
     // console.log("자녀 index : ", childNum);
 
     if (res === false) {
