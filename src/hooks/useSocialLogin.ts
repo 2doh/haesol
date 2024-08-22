@@ -6,7 +6,7 @@ interface LoginResult {
 
 const useSocialLogin = (result: LoginResult): string | undefined => {
   if (result.data.parentsId === -1) {
-    alert("자식코드,번호 보내야함");
+    alert("자녀코드 및 회원가입 필수 정보를 입력하셔야 회원 등록됩니다.");
     return "/signup/social";
   }
   if (result.data.parentsId !== -1) {
