@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import "../../scss/student/studentList.css";
-import { useNavigate, useParams } from "react-router";
 import styled from "@emotion/styled";
 import { getStudentList } from "api/student/studentapi";
-import { getCookie } from "utils/cookie";
-import { FaAngleDown } from "react-icons/fa6";
-import HeaderTopPublic from "components/layout/header/HeaderTopPublic";
 import Footer from "components/layout/Footer";
 import HeaderMemu from "components/layout/header/HeaderMenu";
+import HeaderTopPublic from "components/layout/header/HeaderTopPublic";
+import React, { useEffect, useState } from "react";
+import { FaAngleDown } from "react-icons/fa6";
+import { useNavigate } from "react-router";
+import { getCookie, setCookie } from "utils/cookie";
+import "../../scss/student/studentList.css";
 
 const StudentsListStyle = styled.div`
   display: flex;
@@ -34,6 +34,7 @@ const StudentsList: React.FC = () => {
   const navigate = useNavigate();
   const handleClick = (studentPk: number) => {
     console.log("studentPk :", studentPk);
+    setCookie("studentPk", studentPk);
     navigate(`/students/${studentPk}`);
   };
 
