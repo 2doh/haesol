@@ -14,12 +14,19 @@ const ChatWrapInner = styled.div`
         font-size: 11px;
       }
     }
-    .sendmsg-msg {
-      background-color: #add2d8;
-      border: solid 1px #1b4957;
-      border-radius: 15px;
+    .sendmsg-msg-wrap {
       margin-left: 10px;
-      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      .sender-name {
+      }
+      .sendmsg-msg {
+        background-color: #add2d8;
+        border: solid 1px #1b4957;
+        border-radius: 15px;
+        padding: 8px;
+      }
     }
   }
 `;
@@ -32,7 +39,9 @@ const SendMsg = ({ sandingMsg, nowTime }) => {
         <div className="sendmsg-timewrap">
           <div className="sendmsg-time">{nowTime}</div>
         </div>
-        <div className="sendmsg-msg">{sandingMsg}</div>
+        <div className="sendmsg-msg-wrap">
+          <div className="sendmsg-msg">{sandingMsg}</div>
+        </div>
       </div>
     </ChatWrapInner>
   );

@@ -469,20 +469,20 @@ const ChatList = ({ chatStartOpen, setChatOpen }) => {
   const [sender, setSender] = useState("");
   const [sendTime, setSendTime] = useState("");
 
-  // 소켓 관리용 ref
-  const socketRef = useRef();
+  // // 소켓 관리용 ref
+  // const socketRef = useRef();
 
-  // 웹소켓 연결 설정
-  useEffect(() => {
-    // 환경 변수에서 URL 가져오기
-    const socketUrl = process.env.REACT_APP_SOCKET_URL;
+  // // 웹소켓 연결 설정
+  // useEffect(() => {
+  //   // 환경 변수에서 URL 가져오기
+  //   const socketUrl = process.env.REACT_APP_SOCKET_URL;
 
-    // 소켓 연결
-    socketRef.current = io(socketUrl);
-    return () => {
-      socketRef.current.disconnect(); // 컴포넌트 언마운트 시 소켓 연결 해제
-    };
-  }, []);
+  //   // 소켓 연결
+  //   socketRef.current = io(socketUrl);
+  //   return () => {
+  //     socketRef.current.disconnect(); // 컴포넌트 언마운트 시 소켓 연결 해제
+  //   };
+  // }, []);
 
   const fetchChatData = async () => {
     try {
@@ -729,7 +729,7 @@ const ChatList = ({ chatStartOpen, setChatOpen }) => {
           parentId={parentId}
           sender={sender}
           sendTime={sendTime}
-          socket={socketRef.current}
+          // socket={socketRef.current}
         />
       ) : null}
     </>

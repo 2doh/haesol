@@ -68,13 +68,15 @@ const ChatWrapStyle = styled.div`
   }
 `;
 
-const ChatRoom = ({ setChatRoomOpen, roomId, socket }) => {
-  const [loginUserType, setLoginUserType] = useState(getCookie("userRole"));
-
-  const [sandingMsg, setSendingMsg] = useState("");
+const ChatRoom = ({ setChatRoomOpen, roomId }) => {
+  // 전체 채팅방 데이터를 저장
+  const [chatRoomData, setChatRoomData] = useState(null);
   // 채팅 목록
   const [chatList, setChatList] = useState([]);
-  const [loginUserName, setLoginUserName] = useState("");
+  const [sandingMsg, setSendingMsg] = useState("");
+  // const [loginUserName, setLoginUserName] = useState("");
+  const loginUserName = decodeURIComponent(getCookie("userName"));
+  // const userName = getCookie("userName");
 
   // 스크롤 아래로
   const scrollRef = useRef();
@@ -83,45 +85,48 @@ const ChatRoom = ({ setChatRoomOpen, roomId, socket }) => {
     scrollRef.current.scrollIntoView({ behavior: "smooth" });
   }, [chatList]);
 
-  // 채팅방 아이디
-  useEffect(() => {
-    console.log("roomId : ", roomId);
-  }, [roomId]);
+  // // 웹소켓 연결 설정
+  // useEffect(() => {
+  //   if (socket) {
+  //     // 방에 참가
+  //     socket.emit("joinRoom", { roomId, userName: loginUserName });
 
-  // 웹소켓 연결 설정
-  useEffect(() => {
-    if (socket) {
-      // 방에 참가
-      socket.emit("joinRoom", { roomId, userName: loginUserName });
+  //     // 서버에서 새로운 메시지를 수신
+  //     socket.on("receiveMessage", messageData => {
+  //       setChatList(prevChatList => [...prevChatList, messageData]);
+  //     });
 
-      // 서버에서 새로운 메시지를 수신
-      socket.on("receiveMessage", messageData => {
-        setChatList(prevChatList => [...prevChatList, messageData]);
-      });
-
-      return () => {
-        // 방을 떠날 때
-        socket.emit("leaveRoom", roomId);
-        socket.off("receiveMessage"); // 이벤트 리스너 제거
-      };
-    }
-  }, [socket, roomId, loginUserName]);
+  //     return () => {
+  //       // 방을 떠날 때
+  //       socket.emit("leaveRoom", roomId);
+  //       socket.off("receiveMessage"); // 이벤트 리스너 제거
+  //     };
+  //   }
+  // }, [socket, roomId, loginUserName]);
 
   // 특정 채팅방 내용 get
   const getAllChatList = async () => {
     try {
       const result = await getChatRoom(roomId);
-      // setChatList(result || []);
       if (result && result.length > 0) {
+        setChatRoomData(result[0]);
         setChatList(result[0].messages || []);
-        setLoginUserName(result[0].loginUserName);
       }
     } catch (error) {
       console.log(error);
     }
   };
+  // 채팅 내역을 일정 간격으로 갱신
   useEffect(() => {
-    getAllChatList();
+    getAllChatList(); // 초기 데이터 로드
+
+    // 3초 간격으로 데이터를 갱신
+    const interval = setInterval(() => {
+      getAllChatList();
+    }, 3000);
+
+    // 컴포넌트 언마운트 시 인터벌 제거
+    return () => clearInterval(interval);
   }, [roomId]);
 
   // 날짜 및 시간 포맷 함수
@@ -145,88 +150,55 @@ const ChatRoom = ({ setChatRoomOpen, roomId, socket }) => {
     return `${year}/${month}/${day}`;
   };
 
-  // 채팅 보내기
-  // const sendChat = async () => {
-  //   if (sandingMsg.trim() === "") {
-  //     // 빈 메시지나 공백만 있는 메시지는 전송하지 않음
-  //     return;
-  //   }
-
-  //   const postChatData = {
-  //     msg: sandingMsg,
-  //     roomId,
-  //   };
-  //   try {
-  //     await postCreateChat(postChatData);
-  //     await getAllChatList();
-  //     setSendingMsg("");
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-
-  //   const now = new Date();
-  //   const nowhours = String(now.getHours()).padStart(2, "0");
-  //   const minutes = String(now.getMinutes()).padStart(2, "0");
-  //   const meridiem = nowhours >= 12 ? "오후" : "오전";
-  //   const hours =
-  //     meridiem === "오후" && nowhours > 12 ? nowhours - 12 : nowhours;
-  //   const formattedTime = `${meridiem} ${hours}:${minutes}`;
-  //   setNowTime(formattedTime);
-
-  //   // 채팅 리스트에 메시지 추가
-  //   const newMessage = {
-  //     message: sandingMsg,
-  //     time: formattedTime,
-  //     isSender: true, // 보낸 메시지인지 여부
-  //   };
-
-  //   setChatList(prevChatList => [...prevChatList, newMessage]);
-  //   setSendingMsg(""); // 메시지 입력 후 초기화
-  // };
-
-  // console.log("teaId:", teaId);
-  // console.log("parentId:", parentId);
-
   const sendChat = async () => {
+    // e.preventDefault();
     if (sandingMsg.trim() === "") return;
+
+    const currentTime = new Date();
 
     const messageData = {
       roomId,
       msg: sandingMsg,
+      sender: loginUserName,
+      sendTime: currentTime.toISOString(),
     };
 
     try {
       // Axios로 메시지 전송
       await postCreateChat(messageData);
 
-      // 전송이 완료되면 로컬 채팅 목록에 메시지 추가
       setChatList(prevChatList => [...prevChatList, messageData]);
       setSendingMsg(""); // 메시지 입력창 초기화
     } catch (error) {
       console.log(error);
     }
-
-    // 메시지를 서버로 전송
-    socket.emit("sendMessage", messageData);
-
-    // 메시지를 채팅 리스트에 추가
-    setChatList(prevChatList => [...prevChatList, messageData]);
-    setSendingMsg(""); // 메시지 입력창 초기화
   };
 
   let lastMessageDate = ""; // 이전 메시지의 날짜를 저장
 
+  const getChatHeaderName = () => {
+    if (!chatRoomData) return "";
+
+    // teaId(선생님)와 parents(학부모) 정보를 비교해서 로그인한 유저가 아닌 사람의 이름을 찾음
+    const otherParticipants = [];
+
+    if (chatRoomData.teaId.name !== loginUserName) {
+      otherParticipants.push(chatRoomData.teaId.name);
+    }
+
+    chatRoomData.parents.forEach(parent => {
+      if (parent.name !== loginUserName) {
+        otherParticipants.push(parent.name);
+      }
+    });
+
+    return otherParticipants.join(", ");
+  };
+
   return (
     <ChatWrapStyle>
       <div className="chat-header">
-        <span>
-          {/* 조건부 렌더링을 통해 안전하게 데이터에 접근 */}
-          {loginUserName !== chatList[0]?.sender
-            ? // 상대방이 선생님일 경우
-              `${chatList[0]?.teaId?.name || ""} 선생님`
-            : // 상대방이 학부모일 경우
-              `${chatList[0]?.parents?.map(parent => parent.name).join(", ") || ""} 학부모`}
-        </span>
+        <span>{getChatHeaderName()}</span>
         <IoClose
           size={30}
           className="close-icon"
@@ -271,13 +243,7 @@ const ChatRoom = ({ setChatRoomOpen, roomId, socket }) => {
       </div>
 
       <div className="chat-input-style">
-        <form
-          className="chat-wrap"
-          onSubmit={e => {
-            e.preventDefault();
-            sendChat();
-          }}
-        >
+        <div className="chat-wrap">
           <textarea
             className="chat-input"
             value={sandingMsg}
@@ -293,7 +259,7 @@ const ChatRoom = ({ setChatRoomOpen, roomId, socket }) => {
           >
             전송
           </div>
-        </form>
+        </div>
       </div>
     </ChatWrapStyle>
   );
