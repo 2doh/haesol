@@ -1,21 +1,12 @@
-import {
-  fetchUserInfo,
-  getNaverUserInfo,
-  googleSignin,
-  googleToken,
-  socialLogin,
-  socialSignin,
-} from "api/login/social";
-import { useEffect, useState } from "react";
+import { fetchUserInfo, socialLogin } from "api/login/social";
 import NaverLogin from "react-naver-login";
 // import KakaoLogin from "react-kakao-login";
-import kakao from "../../images/ri_kakao-talk-fill.svg";
-import naver from "../../images/simple-icons_naver.svg";
-import LoginGoogle from "./LoginGoogle";
 import useSocialLogin from "hooks/useSocialLogin";
 import KakaoLogin from "react-kakao-login";
 import { useNavigate } from "react-router";
-import { GoogleLogin } from "@react-oauth/google";
+import kakao from "../../images/ri_kakao-talk-fill.svg";
+import naver from "../../images/simple-icons_naver.svg";
+import LoginGoogle from "./LoginGoogle";
 
 const SocialSignin = () => {
   const navi = useNavigate();
