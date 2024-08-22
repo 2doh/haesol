@@ -169,6 +169,28 @@ const TestQuestionWrap = styled.div`
     .question-pic {
     }
   }
+
+  .cbt__selects {
+    img {
+      margin-left: -23px;
+      width: 67px;
+      height: 80px;
+      position: absolute;
+    }
+  }
+  .cbt__input {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .real-answer-text {
+    font-size: 30px;
+    color: red;
+    padding-bottom: 40px;
+  }
 `;
 
 const NoteQuestion = ({ studentOmr, realAnswerOmr }) => {
@@ -227,6 +249,9 @@ const NoteQuestion = ({ studentOmr, realAnswerOmr }) => {
                       ]
                     }
                   />
+                  <div className="real-answer-text">
+                    정답 : {realAnswerOmr[testState.nowQuestionsNum]}
+                  </div>
                 </div>
               ) : (
                 // 객관식
@@ -245,6 +270,9 @@ const NoteQuestion = ({ studentOmr, realAnswerOmr }) => {
                   <label
                     htmlFor={`select${testState.questionAll[testState.nowQuestionsNum].number}_1`}
                   >
+                    {realAnswerOmr[testState.nowQuestionsNum] === 1 ? (
+                      <img src={correctlyImg} id="correctlyImg" />
+                    ) : null}
                     {testState.selectNumArr[testState.nowQuestionsNum]
                       .selectNum === 1 ? (
                       <PiNumberCircleOneFill />
@@ -269,6 +297,9 @@ const NoteQuestion = ({ studentOmr, realAnswerOmr }) => {
                   <label
                     htmlFor={`select${testState.questionAll[testState.nowQuestionsNum].number}_2`}
                   >
+                    {realAnswerOmr[testState.nowQuestionsNum] === 2 ? (
+                      <img src={correctlyImg} id="correctlyImg" />
+                    ) : null}
                     {testState.selectNumArr[testState.nowQuestionsNum]
                       .selectNum === 2 ? (
                       <PiNumberCircleTwoFill />
@@ -293,6 +324,10 @@ const NoteQuestion = ({ studentOmr, realAnswerOmr }) => {
                   <label
                     htmlFor={`select${testState.questionAll[testState.nowQuestionsNum].number}_3`}
                   >
+                    {realAnswerOmr[testState.nowQuestionsNum] == 3 ? (
+                      <img src={correctlyImg} id="correctlyImg" />
+                    ) : null}
+
                     {testState.selectNumArr[testState.nowQuestionsNum]
                       .selectNum === 3 ? (
                       <PiNumberCircleThreeFill />
@@ -317,13 +352,15 @@ const NoteQuestion = ({ studentOmr, realAnswerOmr }) => {
                   <label
                     htmlFor={`select${testState.questionAll[testState.nowQuestionsNum].number}_4`}
                   >
+                    {realAnswerOmr[testState.nowQuestionsNum] === 4 ? (
+                      <img src={correctlyImg} id="correctlyImg" />
+                    ) : null}
                     {testState.selectNumArr[testState.nowQuestionsNum]
                       .selectNum === 4 ? (
                       <PiNumberCircleFourFill />
                     ) : (
                       <PiNumberCircleFourBold />
                     )}
-
                     <span>
                       {testState.questionAll[testState.nowQuestionsNum].choice4}
                     </span>
@@ -341,6 +378,10 @@ const NoteQuestion = ({ studentOmr, realAnswerOmr }) => {
                   <label
                     htmlFor={`select${testState.questionAll[testState.nowQuestionsNum].number}_5`}
                   >
+                    {realAnswerOmr[testState.nowQuestionsNum] === 5 ? (
+                      <img src={correctlyImg} id="correctlyImg" />
+                    ) : null}
+
                     {testState.selectNumArr[testState.nowQuestionsNum]
                       .selectNum === 5 ? (
                       <PiNumberCircleFiveFill />

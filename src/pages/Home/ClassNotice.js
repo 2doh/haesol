@@ -4,11 +4,26 @@ import { getRecentNoticeInfo } from "api/teacher/teacherapi";
 import moment from "moment";
 import { useEffect, useRef, useState } from "react";
 import { BsPencilFill } from "react-icons/bs";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
+import { updateDate } from "slices/openManagerSlice";
 import { getCookie } from "utils/cookie";
 
 const ClassNoticeStyle = styled.div`
+  width: 100%;
+  height: 100%;
+
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* width: 80%; */
+
+  background-color: rgba(0, 0, 0, 0.8);
+
   .class-notice-inner {
+    position: relative;
+    width: 60%;
     .notice-menu {
       width: 100%;
       display: flex;
@@ -149,6 +164,8 @@ const ClassNoticeStyle = styled.div`
 `;
 const ClassNotice = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [noticeMenuNum, setNoticeMenuNum] = useState(2);
 
   // 준비물
@@ -162,7 +179,12 @@ const ClassNotice = () => {
 
   /** (교직원) 우리 학급 알림장 리스트 페이지로 이동 */
   const moveMyPage = () => {
-    navigate("/notice/list/classid");
+    const data = {
+      classNoticeIsOpen: false,
+    };
+
+    dispatch(updateDate(data));
+    navigate("/notice/list");
   };
 
   const suppliesMenuClassName = useRef();

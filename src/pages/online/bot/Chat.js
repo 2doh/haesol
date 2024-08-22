@@ -221,11 +221,19 @@ const ChatWrap = styled.div`
         border: 0;
       }
     }
+
+    .cs-message-input__content-editor {
+      font-size: 15px !important;
+    }
   }
 
   /* 아래로 내리기 */
   .chatbox-min {
     margin-bottom: -362px;
+  }
+
+  .cs-message-input__content-editor[data-placeholder]:empty:before {
+    font-size: 15px !important;
   }
 `;
 
@@ -373,7 +381,10 @@ const Chat = () => {
       // const result = await model.generateContent(
       //   `naver.com 들어가서 지금 뭐가 있는지 확인하고 설명할 수 있니??`,
       // );
-      const result = await model.generateContent(messageAll);
+      const result = await model.generateContent(
+        `"${questionText}"이라는 메시지의 대답을 초등학생이 알아들을 수 있을 정도로 3문장 이내로 쉽게 대답해줘. 그리고 한국말인데 존댓말로 대답해줘.`,
+      );
+      // const result = await model.generateContent(messageAll);
       setInputValue("");
       const response = result.response;
       const text = await response.text();
@@ -421,14 +432,14 @@ const Chat = () => {
     // 부모 이벤트 막기
     e.stopPropagation();
     setChatBotBtn("left");
-    onOff();
+    // onOff();
   };
   /** 오른쪽으로 가기 버튼 */
   const chatBotRightBtn = e => {
     // 부모 이벤트 막기
     e.stopPropagation();
     setChatBotBtn("right");
-    onOff();
+    // onOff();
   };
 
   const onOff = () => {

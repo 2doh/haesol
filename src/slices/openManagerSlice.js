@@ -5,6 +5,7 @@ import { removeCookie } from "utils/cookie";
 const initialState = {
   // 학급 시간표
   classScheduleIsOpen: false,
+  classNoticeIsOpen: false,
 };
 
 export const openManagerSlice = createSlice({
