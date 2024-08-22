@@ -50,7 +50,7 @@ const TestEndBtn = () => {
     if (testState.remainingQuestions !== 0) {
       const data = {
         headerText: "주의",
-        bodyText: [`남은 문제가 있습니다.\n\n답인지를 제출하시겠습니까?`],
+        bodyText: [`남은 문제가 있습니다.\n\n답안지를 제출하시겠습니까?`],
         modalRes: [56],
         buttonCnt: 2,
         buttonText: ["제출", "취소"],
@@ -60,7 +60,7 @@ const TestEndBtn = () => {
     } else {
       const data = {
         headerText: "확인",
-        bodyText: [`답인지를 제출하시겠습니까?`],
+        bodyText: [`답안지를 제출하시겠습니까?`],
         modalRes: [56],
         buttonCnt: 2,
         buttonText: ["제출", "취소"],

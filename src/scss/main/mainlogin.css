@@ -263,7 +263,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: red;
 }
 .class-schedule-inner .grid-frame .item:nth-of-type(1) {
   background-color: #fbfaf9;

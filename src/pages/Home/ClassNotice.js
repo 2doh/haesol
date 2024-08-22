@@ -23,7 +23,7 @@ const ClassNoticeStyle = styled.div`
 
   .class-notice-inner {
     position: relative;
-    width: 60%;
+    width: 45%;
     .notice-menu {
       width: 100%;
       display: flex;

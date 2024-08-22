@@ -6,6 +6,7 @@ const initialState = {
   // 학급 시간표
   classScheduleIsOpen: false,
   classNoticeIsOpen: false,
+  mainChatIsOpen: false,
 };
 
 export const openManagerSlice = createSlice({

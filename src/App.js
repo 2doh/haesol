@@ -242,12 +242,36 @@ function App() {
 
           {/* 영어 테스트 - start */}
           {/* <Route path="/learn" element={<Learn />}></Route> */}
-          <Route path="/learn/voca" element={<VocaLearn />}></Route>
+          <Route
+            path="/learn/voca"
+            element={
+              <PrivateRoute
+                component={<VocaLearn />}
+                authenticated={accessToken}
+              />
+            }
+          ></Route>
           {/* <Route path="/learn/result" element={<VocaResult />}></Route> */}
-          <Route path="/signup/social" element={<SocialSignup />}></Route>
+          <Route
+            path="/signup/social"
+            element={
+              <PrivateRoute
+                component={<SocialSignup />}
+                authenticated={accessToken}
+              />
+            }
+          ></Route>
           {/* 영어 테스트 - end */}
 
-          <Route path="/chat/teacher/:선생님pk" element={<ChatRoom />}></Route>
+          <Route
+            path="/chat/teacher/:선생님pk"
+            element={
+              <PrivateRoute
+                component={<ChatRoom />}
+                authenticated={accessToken}
+              />
+            }
+          ></Route>
           {/* 교직원 : 학생 리스트 */}
           <Route
             path="/students"
@@ -271,6 +295,7 @@ function App() {
             {/* 시험 설명 */}
             <Route path="test/ex" element={<TestExPage />}></Route>
           </Route>
+
           <Route path="/online/test/create">
             {/* <Route index element={<CreateTest />}></Route> */}
             {/* <Route path="korean" element={<CreateTestKo />}></Route> */}
