@@ -121,10 +121,22 @@ const QuickMenu = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const handleOpen = () => {
-    const data = {
-      classScheduleIsOpen: !openManagerState.classScheduleIsOpen,
-    };
+  const handleOpen = num => {
+    let data = "";
+    setChatOpen(false);
+
+    if (num === 1) {
+      data = {
+        classScheduleIsOpen: !openManagerState.classScheduleIsOpen,
+        classNoticeIsOpen: false,
+      };
+    }
+    if (num === 2) {
+      data = {
+        classScheduleIsOpen: false,
+        classNoticeIsOpen: !openManagerState.classNoticeIsOpen,
+      };
+    }
 
     dispatch(updateDate(data));
   };
@@ -158,7 +170,7 @@ const QuickMenu = () => {
             <li
               className="btn"
               onClick={() => {
-                callChat(false);
+                handleOpen(2);
               }}
             >
               {/* 채팅 */}
@@ -173,7 +185,7 @@ const QuickMenu = () => {
             <li
               className="btn"
               onClick={() => {
-                handleOpen();
+                handleOpen(1);
               }}
             >
               {/* 채팅 */}

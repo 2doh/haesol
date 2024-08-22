@@ -28,6 +28,7 @@ const initialState = {
   // 남은 문제 수
   remainingQuestions: 20,
 
+  
   // 시험결과
   incorrectAnswerNoteMain: [],
 };

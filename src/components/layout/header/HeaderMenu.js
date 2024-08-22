@@ -355,7 +355,12 @@ const HeaderMemu = () => {
                           <span>학급 관리</span>
                         </a>
                       </li>
-                      <li>
+                      <li
+                        onClick={e => {
+                          e.stopPropagation();
+                          moveMyPage(10);
+                        }}
+                      >
                         <a>
                           <span>문제 출제 리스트</span>
                         </a>
@@ -496,7 +501,7 @@ const HeaderMemu = () => {
                 </li>
                 <li
                   onClick={() => {
-                    moveMyPage(5);
+                    // moveMyPage(5);
                   }}
                 >
                   <h2>

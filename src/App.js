@@ -61,10 +61,20 @@ import StudentInfoViewTeacher from "pages/student/StudentInfoViewTeacher";
 import useLogout from "hooks/common/useLogout";
 import VocaResult from "pages/learn/VocaResult";
 import ClassSchedule from "pages/Home/ClassSchedule";
+import ClassNotice from "pages/Home/ClassNotice";
+import { allowScroll, preventScroll } from "components/common/ScrollManagement";
 
 const Main = styled.div``;
 
 const ClassScheduleStyle = styled.div`
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  height: 100vh;
+  width: 100vw;
+  z-index: 999999;
+`;
+const ClassNoticeStyle = styled.div`
   position: absolute;
   left: 0px;
   top: 0px;
@@ -128,6 +138,17 @@ function App() {
   //   console.log("토큰 유효시간 : ", data);
   // }, []);
 
+  useEffect(() => {
+    if (openManagerState.classScheduleIsOpen) {
+      const prevScrollY = preventScroll();
+      allowScroll(prevScrollY);
+    }
+    if (openManagerState.classNoticeIsOpen) {
+      const prevScrollY = preventScroll();
+      allowScroll(prevScrollY);
+    }
+  }, []);
+
   return (
     <BrowserRouter>
       {/* 모달 */}
@@ -139,8 +160,14 @@ function App() {
 
       {openManagerState.classScheduleIsOpen ? (
         <ClassScheduleStyle>
-          <ClassSchedule />{" "}
+          <ClassSchedule />
         </ClassScheduleStyle>
+      ) : null}
+
+      {openManagerState.classNoticeIsOpen ? (
+        <ClassNoticeStyle>
+          <ClassNotice />
+        </ClassNoticeStyle>
       ) : null}
 
       <Main>

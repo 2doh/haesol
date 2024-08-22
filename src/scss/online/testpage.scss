@@ -3,7 +3,7 @@
 .test-page,
 .note-page {
   position: relative;
-  height: auto;
+  height: auto !important;
 
   .test-page-inner,
   .note-page-inner {
