@@ -1,4 +1,5 @@
 import LogoutButton from "components/common/LogoutButton";
+import StudentImg from "pages/student/StudentImg";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
@@ -25,7 +26,7 @@ const ParentsChildProfile = ({ childNum, type }) => {
   const [studentPic, setStudentPic] = useState(null);
 
   useEffect(() => {
-    // console.log("페이지 : ", childState.selectChildInfoList);
+    console.log("페이지 : ", childState.selectChildInfoList);
     // console.log("선택되어 있는 자녀 Index : ", getCookie("selectChildNum"));
     // console.log("선택되어 있는 자녀 childNum : ", childNum);
   }, [childState]);
@@ -89,7 +90,17 @@ const ParentsChildProfile = ({ childNum, type }) => {
       {/* <div className="rgyPostIt">{name}</div> */}
       {/* 유저 정보 start */}
       <div className="top-user-info">
-        <div className="user-pic"></div>
+        {studentPic ? (
+          <div className="child-user-pic">
+            <StudentImg
+              studentPic={studentPic}
+              setStudentPic={setStudentPic}
+              studentPk={studentPk}
+            />
+          </div>
+        ) : (
+          <div className="user-pic"></div>
+        )}
 
         <div className="user-info-div">
           <div className="user-info-label-box">

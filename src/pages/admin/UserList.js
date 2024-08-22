@@ -18,6 +18,9 @@ const NoResults = styled.div`
 `;
 
 const UserListStyle = styled.div`
+  .main-core {
+    padding-top: 15px;
+  }
   .admin-user-list {
     background-color: unset !important;
     border: 0px !important;
@@ -147,7 +150,7 @@ const UserList = ({
                     deactivateModal(1, 2, item.pk);
                   }}
                 >
-                  휴먼 전환
+                  휴면 전환
                 </button>
               ) : (
                 <button

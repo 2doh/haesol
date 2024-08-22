@@ -235,6 +235,10 @@ const ChatWrap = styled.div`
   .cs-message-input__content-editor[data-placeholder]:empty:before {
     font-size: 15px !important;
   }
+
+  .cs-message-input__content-editor-container {
+    min-height: 1.7em;
+  }
 `;
 
 const FirstChatWrap = styled.div`

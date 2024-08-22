@@ -6,6 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateDate } from "slices/openManagerSlice";
 
 const QuickMenuStyle = styled.div`
+  li {
+    cursor: pointer;
+  }
+
   .quick-menu-wrap {
     position: absolute;
     right: 0px;
