@@ -5,8 +5,6 @@ import { useNavigate } from "react-router";
 const SignupBt = () => {
   const navi = useNavigate();
 
-  const handleClick = () => {};
-
   return (
     <BtWrapStyle>
       <BtStyle
