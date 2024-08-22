@@ -230,6 +230,7 @@ const ChatRoom = ({ setChatRoomOpen, roomId }) => {
                 ) : (
                   <ReceiveMsg
                     receiveMsg={messages.msg}
+                    receiverName={messages.sender}
                     receiveTime={formatTime(messages.sendTime)}
                   />
                 )}
