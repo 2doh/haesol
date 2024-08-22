@@ -32,12 +32,12 @@ const ChatWrapInner = styled.div`
 `;
 
 // 대화 내용 반복 처리 필요
-const ReceiveMsg = ({ receiveMsg, receiveTime }) => {
+const ReceiveMsg = ({ receiveMsg, receiveTime, receiverName }) => {
   return (
     <ChatWrapInner>
       <div className="receive-msg-wrap">
         <div className="receivemsg-msg-wrap">
-          <div className="receive-name"></div>
+          <div className="receive-name">{receiverName}</div>
           <div className="receivemsg-msg">{receiveMsg}</div>
         </div>
         <div className="receivemsg-timewrap">
