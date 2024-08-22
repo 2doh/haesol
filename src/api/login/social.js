@@ -1,6 +1,7 @@
 import axios from "axios";
 import { setCookie } from "utils/cookie";
 import base64 from "base-64";
+import useLoginTimerStart from "hooks/common/useLoginTimerStart";
 
 export const socialLogin = async data => {
   console.log(data);
@@ -20,6 +21,7 @@ export const socialLogin = async data => {
       setCookie("userRole", signedUser.role);
       setCookie("selectChildNum", 0);
     }
+    useLoginTimerStart();
     console.log(res);
     return res;
   } catch (error) {

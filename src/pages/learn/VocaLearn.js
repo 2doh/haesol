@@ -167,7 +167,9 @@ const VocaLearn = () => {
     if (!onListening) {
       try {
         // 권한 요청
-        await navigator.mediaDevices
+
+        // await navigator.mediaDevices
+        navigator.mediaDevices
           .getUserMedia({ audio: true })
           .then(stream => setAudioStream(stream));
         // 권한이 허용된 경우
