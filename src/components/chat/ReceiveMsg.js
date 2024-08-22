@@ -13,13 +13,20 @@ const ChatWrapInner = styled.div`
         font-size: 11px;
       }
     }
-    .receivemsg-msg {
-      background-color: #ffdfe4;
-      border: solid 1px #dd838f;
-      border-radius: 15px;
+    .receivemsg-msg-wrap {
       margin-left: 10px;
-      padding: 8px;
-      margin-right: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      .receive-name {
+        font-size: 14px;
+      }
+      .receivemsg-msg {
+        background-color: #ffdfe4;
+        border: solid 1px #dd838f;
+        border-radius: 15px;
+        padding: 8px;
+      }
     }
   }
 `;
@@ -29,7 +36,10 @@ const ReceiveMsg = ({ receiveMsg, receiveTime }) => {
   return (
     <ChatWrapInner>
       <div className="receive-msg-wrap">
-        <div className="receivemsg-msg">{receiveMsg}</div>
+        <div className="receivemsg-msg-wrap">
+          <div className="receive-name"></div>
+          <div className="receivemsg-msg">{receiveMsg}</div>
+        </div>
         <div className="receivemsg-timewrap">
           <div className="receivemsg-time">{receiveTime}</div>
         </div>

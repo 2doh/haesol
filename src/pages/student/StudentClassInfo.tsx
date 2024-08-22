@@ -18,6 +18,7 @@ const StudentClassInfo = () => {
     try {
       const response = await getStudentInfo(studentPk);
       const result = response.data;
+      console.log(result);
 
       setStudentClass(result.studentClass);
       setStudentGrade(result.studentGrade);

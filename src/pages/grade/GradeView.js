@@ -476,8 +476,15 @@ const GradeView = () => {
       background-color: #dd838f;
       color: #fbfaf9;
       position: relative;
+
+      .sign-view {
+        display: none;
+        object-fit: cover;
+        overflow: hidden;
+      }
       &:hover {
         .sign-view {
+          display: block;
           position: absolute;
           bottom: -100%;
           left: -10%;
@@ -485,6 +492,11 @@ const GradeView = () => {
           height: 300%;
           border: solid 1px #886348;
           background-color: #fbfaf9;
+
+          object-fit: cover;
+
+          img {
+          }
         }
       }
     }
@@ -628,7 +640,11 @@ const GradeView = () => {
             <ParentCheckStyle>
               <button className="is-sign">
                 학부모 확인
-                <div className="sign-view"></div>
+                <div className="sign-view">
+                  <img
+                    src={`http://112.222.157.156:5121/pic/sign/${signResultPic1.signId}/${signResultPic1.pic}`}
+                  />
+                </div>
               </button>
             </ParentCheckStyle>
           ) : (
@@ -691,7 +707,14 @@ const GradeView = () => {
           </div>
           {signResultPic2 ? (
             <ParentCheckStyle>
-              <button className="is-sign">학부모 확인</button>
+              <button className="is-sign">
+                학부모 확인
+                <div className="sign-view">
+                  <img
+                    src={`http://112.222.157.156:5121/pic/sign/${signResultPic2.signId}/${signResultPic2.pic}`}
+                  />
+                </div>
+              </button>
             </ParentCheckStyle>
           ) : (
             <Signature2
