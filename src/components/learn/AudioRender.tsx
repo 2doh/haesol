@@ -3,8 +3,12 @@ import audioContext from "utils/learn/audioContext";
 import audioFrequency from "utils/learn/audioFrequency";
 import "../../scss/learn/audiorender.scss";
 
-const AudioRender = ({ audioStream }) => {
-  const [volume, setVolume] = useState("");
+interface AudioRenderProps {
+  audioStream: MediaStream | null; // MediaStream 또는 null로 설정
+}
+
+const AudioRender: React.FC<AudioRenderProps> = ({ audioStream }) => {
+  const [volume, setVolume] = useState<number>(0); // volume은 숫자 타입
   const barCount = 10;
 
   // useEffect(() => {
@@ -36,18 +40,22 @@ const AudioRender = ({ audioStream }) => {
   //     audioContext.close();
   //   };
   // }, [audioStream]);
+
   useEffect(() => {
     if (!audioStream) return;
-    let Interval;
+
+    let interval: NodeJS.Timeout; // Interval의 타입을 NodeJS.Timeout으로 설정
+
     const { analyser, bufferLength, dataArray } = audioContext(audioStream);
+
     if (audioStream) {
-      Interval = setInterval(() => {
+      interval = setInterval(() => {
         analyser.getByteFrequencyData(dataArray);
         const volume = audioFrequency(dataArray, bufferLength);
         setVolume(Math.floor((volume / 256) * 100));
-        // console.log(volume);
       }, 30);
-      return () => clearInterval(Interval);
+
+      return () => clearInterval(interval);
     }
   }, [audioStream]);
 

@@ -22,7 +22,7 @@ export const socialLogin = async data => {
       setCookie("selectChildNum", 0);
     }
     useLoginTimerStart();
-    console.log(res);
+    // console.log(res);
     return res;
   } catch (error) {
     console.log(error);

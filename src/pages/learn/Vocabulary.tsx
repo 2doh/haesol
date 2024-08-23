@@ -6,7 +6,38 @@ import { PiSpeakerHighFill, PiSpeakerXFill } from "react-icons/pi";
 import { useRecoilState } from "recoil";
 import { speak } from "utils/speak";
 
-const Vocabulary = ({
+interface VocaDataItem {
+  wordQuePk?: number;
+  queId?: number;
+  word?: string;
+  answer?: string;
+  question?: string;
+  sentence?: string;
+  pic?: string;
+}
+
+interface VocabularyProps {
+  getObj: { data: { result: VocaDataItem[] } };
+  index: number;
+  setIndex: React.Dispatch<React.SetStateAction<number>>;
+  learnState: string;
+  resetTranscript: () => void;
+  audioStream: MediaStream | null;
+  setIsTranscript: React.Dispatch<React.SetStateAction<string>>;
+  tempArrUpdateHandler: (isCorrect: boolean | null) => void;
+  onAnswer: string;
+  setListen: React.Dispatch<React.SetStateAction<boolean>>;
+  listen: boolean;
+  setLearnState: React.Dispatch<React.SetStateAction<string>>;
+}
+
+interface SpeechOptions {
+  speechword: string;
+  speechlang: string;
+  speechvolume: number;
+}
+
+const Vocabulary: React.FC<VocabularyProps> = ({
   getObj,
   index,
   setIndex,
@@ -22,45 +53,37 @@ const Vocabulary = ({
 }) => {
   const initVolume = localStorage.getItem("initVolume");
   const voca = getObj?.data?.result[index];
-  // const [listen, setListen] = useState(false);
-  const [volume, setVolume] = useState(initVolume || 0.5);
-  const [isVolume, setIsVolume] = useState(volume);
+  const [volume, setVolume] = useState<number>(parseFloat(initVolume || "0.5"));
+  const [isVolume, setIsVolume] = useState<number>(volume);
 
-  localStorage.setItem("initVolume", volume);
+  localStorage.setItem("initVolume", volume.toString());
 
-  const tempObj = {
-    speechword: voca?.word,
+  const tempObj: SpeechOptions = {
+    speechword: voca?.word || "",
     speechlang: "en-US",
     speechvolume: volume,
   };
-  const temp = {
-    speechword: voca?.sentence,
+  const temp: SpeechOptions = {
+    speechword: voca?.sentence || "",
     speechlang: "en-US",
     speechvolume: volume,
   };
-  // console.log(tempObj);
-  // console.log(getObj);
-  // console.log(voca);
-  // console.log(index);
 
   const onSpeak = () => {
     if (!listen) {
       setListen(true);
       speak(tempObj, () => setListen(false), false); // 음성 시작
     } else {
-      // 이미 음성이 재생 중일 때 음성을 중단합니다.
       speak(tempObj, () => setListen(false), true); // 음성 중단
       setListen(false);
     }
   };
 
-  // console.log(listen);
   const onClick = () => {
     if (!listen) {
       setListen(true);
       speak(temp, () => setListen(false), false); // 음성 시작
     } else {
-      // 이미 음성이 재생 중일 때 음성을 중단합니다.
       speak(temp, () => setListen(false), true); // 음성 중단
       setListen(false);
     }
@@ -73,31 +96,25 @@ const Vocabulary = ({
 
   const onNext = async () => {
     if (index === getObj.data.result.length - 1) {
-      const isEnd = confirmEndWord(index);
+      const isEnd = confirmEndWord();
       if (isEnd) {
         setLearnState("result");
       }
+    } else {
+      if (!onAnswer) {
+        tempArrUpdateHandler(null);
+      }
+      setIndex(index + 1);
+      setIsTranscript("");
     }
-    if (!onAnswer) {
-      tempArrUpdateHandler(null);
-    }
-    setIndex(index + 1);
-    setIsTranscript("");
   };
+
   const onBack = () => {
-    if (index === 0) {
-      return;
+    if (index > 0) {
+      setIndex(index - 1);
+      setIsTranscript("");
     }
-    setIndex(index - 1);
-    setIsTranscript("");
   };
-
-  // console.log(index);
-  // console.log(getObj[index]);
-  // console.log(getObj.length);
-
-  // console.log(volume);
-  // console.log(isVolume);
 
   return (
     <>
@@ -168,9 +185,8 @@ const Vocabulary = ({
               }
             }}
           />
-          {/* <div className="voca-bottom-word">{voca.word}</div> */}
           <div className="voca-bottom-word">
-            {learnState === "listening" ? voca.question : voca.word}
+            {learnState === "listening" ? voca?.question : voca?.word}
           </div>
           <IoIosArrowForward
             size={30}

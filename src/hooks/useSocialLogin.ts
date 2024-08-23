@@ -11,7 +11,7 @@ const useSocialLogin = (result: LoginResult): string | undefined => {
   }
   if (result.data.parentsId !== -1) {
     alert("로그인 되었습니다");
-    return "/";
+    window.location.href = "/";
   }
   return;
 };
