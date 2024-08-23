@@ -1,4 +1,10 @@
-const audioContext = stream => {
+interface AudioContextResult {
+  analyser: AnalyserNode;
+  bufferLength: number;
+  dataArray: Uint8Array;
+}
+
+const audioContext = (stream: MediaStream): AudioContextResult => {
   const audioContext = new AudioContext();
   const analyser = audioContext.createAnalyser();
   const microphone = audioContext.createMediaStreamSource(stream);
@@ -8,4 +14,5 @@ const audioContext = stream => {
   const dataArray = new Uint8Array(bufferLength);
   return { analyser, bufferLength, dataArray };
 };
+
 export default audioContext;

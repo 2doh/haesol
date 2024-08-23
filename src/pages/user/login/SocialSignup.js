@@ -4,20 +4,15 @@ import SignupBt from "components/user/SignupBt";
 import SignupChildInput from "components/user/SignupChildInput";
 import SignupDrop from "components/user/SignupDrop";
 import SignupPhone from "components/user/SignupPhone";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import * as yup from "yup";
-import { signupSocialCode } from "api/signup/socialapi";
+import axios from "axios";
+import { signupSocialCode, signupSocialInfo } from "api/signup/socialapi";
 import { useNavigate } from "react-router";
 
-interface FormValues {
-  phone: string;
-  connet: string;
-  childecode: string;
-}
-
-const initSignupState: FormValues = {
+const initSignupState = {
   phone: "",
   connet: "none",
   childecode: "",
@@ -50,21 +45,24 @@ const SocialSignup = () => {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<FormValues>({
+  } = useForm({
     defaultValues: initSignupState,
     resolver: yupResolver(socialSignupSchema),
     mode: "onChange",
   });
 
-  const initData = JSON.parse(sessionStorage.getItem("sociallogin") || "{}");
+  const initData = JSON.parse(sessionStorage.getItem("sociallogin"));
 
-  const handleOnSubmit: SubmitHandler<FormValues> = async data => {
+  const handleOnSubmit = async data => {
     if (!isRandCode) {
       alert("자녀코드 확인을 해주세요");
       return;
     }
-    setIsRandCode(false);
-
+    if (isRandCode) {
+      setIsRandCode(false);
+    }
+    // console.log(data);
+    // console.log(initData);
     const reqData = {
       phone: data.phone,
       connect: data.connet,
@@ -74,14 +72,14 @@ const SocialSignup = () => {
       email: initData.useremail,
       name: initData.name,
     };
-
+    console.log(reqData);
     const result = await signupSocialCode(reqData);
-
     if (result === "fail") {
       return;
     }
     sessionStorage.removeItem("sociallogin");
-
+    // 회원가입 성공시 처리
+    // console.log(result);
     if (result.data === 1) {
       alert("회원등록 되었습니다.");
       navi("/");

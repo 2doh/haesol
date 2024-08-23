@@ -4,7 +4,7 @@ import base64 from "base-64";
 import useLoginTimerStart from "hooks/common/useLoginTimerStart";
 
 export const socialLogin = async data => {
-  console.log(data);
+  // console.log(data);
   try {
     const res = await axios.post(
       `/api/user/parents/sign-in/social-login`,
@@ -36,7 +36,7 @@ export const googleToken = async token => {
       `https://www.googleapis.com/oauth2/v3/tokeninfo?access_token=${token}`,
     );
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
     if (response.ok) {
       return data.sub; // 사용자 정보
     } else {
@@ -69,7 +69,7 @@ export const fetchUserInfo = async token => {
 
 // 토큰 정보 불러오기 네이버
 export const getNaverUserInfo = async data => {
-  console.log(data);
+  // console.log(data);
   try {
     const tokenResponse = await fetch(
       `https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&client_id=${data.id}&client_secret=${data.secret}&code=${data.token}&state=${data.state}`,
@@ -82,7 +82,7 @@ export const getNaverUserInfo = async data => {
     }
 
     const tokenData = await tokenResponse.json();
-    console.log("토큰 데이터:", tokenData);
+    // console.log("토큰 데이터:", tokenData);
     return tokenData;
   } catch (error) {
     console.log(error);
@@ -95,7 +95,7 @@ export const socialRandomCode = async data => {
       `/api/user/parents/sign-up/social-login/random-code`,
       data,
     );
-    console.log(response);
+    // console.log(response);
   } catch (error) {
     console.log(error);
   }

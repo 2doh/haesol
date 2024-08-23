@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
-const usePlaceholder = initPlaceholder => {
-  const [placeholder, setPlaceholder] = useState(initPlaceholder);
+const usePlaceholder = (initPlaceholder: string) => {
+  const [placeholder, setPlaceholder] = useState<string>(initPlaceholder);
 
   const handleFocus = () => setPlaceholder("");
   const handleBlur = () => setPlaceholder(initPlaceholder);
