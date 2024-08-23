@@ -20,11 +20,12 @@
 <h4>👩‍💼 페르소나</h4>
 
 - 이름 : 김리온 / 나이 : 35세 / 직업 : 마케팅 매니저
-- 특이사항 : 남편과 초등 3학년 아들을 둔 워킹맘, 자녀 교육에 관심이 많으나 잦은 야근으로 인해 시간이 부족함
+- 특이사항 : 남편과 초등 자녀들을 둔 워킹맘, 자녀 교육에 관심이 많으나 잦은 야근으로 인해 시간이 부족함
 
 <h4>📅 개발기간</h4>
 
-- 2024-06-24 ~ 2024-07-23
+- 2차 : 2024-06-24 ~ 2024-07-23
+- 3차 : 2024-07-24 ~ 2024-08-23
 
 <h4>📌 기술 스택</h4>
 <div style="margin: 0 auto; text-align: center;" align="center">
@@ -42,6 +43,11 @@
         <img src="https://img.shields.io/badge/Javascript-F7DF1E?style=for-the-badge&logo=Javascript&logoColor=white">
         <img src="https://img.shields.io/badge/StyledComponents-DB7093?style=for-the-badge&logo=StyledComponents&logoColor=white">
         <img src="https://img.shields.io/badge/Redux-764ABC?style=for-the-badge&logo=Redux&logoColor=white">
+        <img src="https://img.shields.io/badge/recoil-3578E5?style=for-the-badge&logo=recoil&logoColor=white">
+        <img src="https://img.shields.io/badge/axios-A29E4?style=for-the-badge&logo=axios&logoColor=white">
+        <img src="https://img.shields.io/badge/tailwindcss-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white">
+        <img src="https://img.shields.io/badge/typescript-3178C6?style=for-the-badge&logo=typescript&logoColor=white">
+        
 </div>
 
 <h4>📌 사전 기획</h4>
@@ -53,6 +59,6 @@
 https://www.notion.so/HAESOL-613a41f133324a2fa3f7a342110f0cfe
 
 <h4>👩‍💻 멤버구성</h4>
-- 이도현 : 깃허브 관리 / 로그인, 회원가입 / 차트 </br>
-- 김현주 : 문서 관리(노션, 회의록 etc.) / 메인 페이지 / 관리자 승인 / 내 정보 수정 </br>
-- 김수민 : 피그마 관리 / 성적 등록 등 교사 측 action 전반
+- 이도현 : 깃허브 관리 / 로그인, 회원가입 / 차트 / 소셜로그인 / 영어단어장</br>
+- 김현주 : 문서 관리(노션, 회의록 etc.) / 메인 페이지 / 관리자 승인 / 내 정보 수정 / 문제 풀이 및 오답노트 / ui 전반</br>
+- 김수민 : 피그마 관리 / 성적 등록 등 교사 측 action 전반 / 문제 출제 / 채팅
