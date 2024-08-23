@@ -14,12 +14,12 @@ const VocaResult = ({ tempArr }) => {
   const [score, setScore] = useState("");
   const [resultMsg, setResultMsg] = useState("");
   const [resultState, setResultState] = useState("");
-  console.log(tempArr);
+  // console.log(tempArr);
   useEffect(() => {
     const newArr = tempArr.filter(item => item.isCorrect === false);
     const spareArr = tempArr.filter(item => item.isCorrect === null);
     const point = 100 / tempArr.length;
-    const result = 100 - (newArr.length + spareArr.length) * point;
+    const result = Math.round(100 - (newArr.length + spareArr.length) * point);
     setScore(result);
     if (result === 100) {
       setResultMsg(initMsg.perfect);

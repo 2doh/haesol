@@ -169,9 +169,12 @@ const VocaLearn = () => {
         // 권한 요청
 
         // await navigator.mediaDevices
-        navigator.mediaDevices
-          .getUserMedia({ audio: true })
-          .then(stream => setAudioStream(stream));
+        //   .getUserMedia({ audio: true })
+        //   .then(stream => setAudioStream(stream));
+        const stream = await navigator.mediaDevices.getUserMedia({
+          audio: true,
+        });
+        setAudioStream(stream);
         // 권한이 허용된 경우
         SpeechRecognition.startListening({
           language: "en-US",
@@ -215,13 +218,13 @@ const VocaLearn = () => {
         }
         setOnListening(false);
       }
-      console.log(isTranscript.toLowerCase());
+      // console.log(isTranscript.toLowerCase());
       const isCorrect =
         isTranscript.toLowerCase() === getObj.data?.result[index].word;
       tempArrUpdateHandler(isCorrect);
-      console.log(getObj.data?.result[index].word);
-      console.log(isTranscript.toLowerCase());
-      console.log(isCorrect);
+      // console.log(getObj.data?.result[index].word);
+      // console.log(isTranscript.toLowerCase());
+      // console.log(isCorrect);
       if (isCorrect) {
         alert("정답");
       }
